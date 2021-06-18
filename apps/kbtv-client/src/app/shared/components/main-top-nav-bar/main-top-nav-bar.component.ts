@@ -33,7 +33,7 @@ export class MainTopNavBarComponent {
   };
 
   get showCancelButton(): boolean {
-    return this.alwaysShowCancelButton || this.deviceInfoService.isS || 
+    return this.config?.customCancelFn != null || this.alwaysShowCancelButton || this.deviceInfoService.isS || 
       (<MainSkeletonRouteData> this.route.snapshot.data).viewType === "overlay";
   } 
 
