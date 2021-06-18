@@ -13,7 +13,7 @@
     <app-list-item>
       <mat-icon left-side class="pl-2 pr-2">directions_car</mat-icon>
       Veibeskrivelse 
-      <div class="mat-caption color-warn" *ngIf="mission.position && !mission.position.isExact">Posisjonen kan være upresis</div>
+      <div class="mat-caption color-warn" *ngIf="mission.position && !mission.position.isExact">Posisjonen kan være feil</div>
       <span right-side class="color-accent">Åpne kart</span>
     </app-list-item>
     <mat-divider inset=true></mat-divider>
@@ -46,15 +46,6 @@
     <mat-divider inset=true></mat-divider>
   </ng-container>
 
-  <ng-container *ngIf="mission.employer">
-    <ng-container *ifRole="[roles.Ansatt, roles.Leder, roles.Mellomleder, roles.Admin]">
-      <div class="mat-body-2 ml-5 mt-3">Oppdragsgiver</div>
-      <app-employer-list-item [employer]="mission.employer">
-      </app-employer-list-item>   
-      <mat-divider inset=true></mat-divider> 
-    </ng-container>
-  </ng-container>
-
   <ng-container *ngIf="mission.description">
     <div class="mat-body-2 ml-5 mt-3">Beskrivelse</div>
     <app-list-item rippleDisabled=true>
@@ -62,6 +53,15 @@
       <span style="white-space:normal" class="mat-body">{{ mission.description }}</span>
     </app-list-item>
     <mat-divider inset=true></mat-divider>
+  </ng-container>
+
+  <ng-container *ngIf="mission.employer">
+    <ng-container *ifRole="[roles.Ansatt, roles.Leder, roles.Mellomleder, roles.Admin]">
+      <div class="mat-body-2 ml-5 mt-3">Oppdragsgiver</div>
+      <app-employer-list-item [employer]="mission.employer">
+      </app-employer-list-item>   
+      <mat-divider inset=true></mat-divider> 
+    </ng-container>
   </ng-container>
 
 </div>

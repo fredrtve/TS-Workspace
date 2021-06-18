@@ -6,9 +6,7 @@ import { Maybe } from "global-types";
 import { map } from 'rxjs/operators';
 import { Store } from 'state-management';
 
-@Injectable({
-  providedIn: 'any',
-})
+@Injectable({providedIn: 'any'})
 export class MissionNoteListFacade  {
 
   constructor(private store: Store<StateMissionNotes>) { }

@@ -1,4 +1,4 @@
-<app-main-skeleton *ngIf="vm$ | async; let vm" contentWrapperClass="bottom-bar-padding">
+<app-main-skeleton *ngIf="filteredMissions$ | async; let filtered" contentWrapperClass="bottom-bar-padding">
 
     <ng-container navbar>
   
@@ -12,11 +12,11 @@
         [extraButtons]="searchBarBtns">
       </app-search-bar>
 
-      <app-chips-bar [chips]="vm.criteriaChips"></app-chips-bar>
+      <app-chips-bar [chips]="filtered.criteriaChips"></app-chips-bar>
 
     </ng-container>
 
-    <app-mission-map-view [missions]="vm.missions"></app-mission-map-view>
+    <app-mission-map-view [missions]="filtered.missions"></app-mission-map-view>
 
 </app-main-skeleton>
 

@@ -4,7 +4,7 @@ import { GenericActionRequestMap } from '@core/configurations/optimistic/generic
 import { SaveModelFileEffect } from '@core/state/save-model-file/save-model-file.effect';
 import { SaveModelFileReducer } from '@core/state/save-model-file/save-model-file.reducer';
 import { SaveModelFileValidatorInterceptor } from '@core/state/save-model-file/save-model-file.validator';
-import { CreateMissionImagesEffect } from '@shared-mission/create-mission-images.effect';
+import { CreateMissionImagesEffect } from '@shared-mission/state/effects';
 import { SharedMissionModule } from '@shared-mission/shared-mission.module';
 import { ModelFormModule } from 'model/form';
 import { DeleteModelAction, ModelStateCommandsModule, SetSaveModelStateAction } from 'model/state-commands';
@@ -18,6 +18,8 @@ import { MissionListRoutingModule } from './mission-list-routing.module';
 import { MissionListViewComponent } from './mission-list/mission-list-view/mission-list-view.component';
 import { MissionListComponent } from './mission-list/mission-list.component';
 import { UpdateLastVisitedReducer } from './state/reducers.const';
+import { MissionListDefaultState } from './state/mission-list-default-state.const';
+import { SetMissionCriteriaReducer } from '@shared-mission/state/reducers.const';
 
 @NgModule({
   declarations: [
@@ -32,9 +34,10 @@ import { UpdateLastVisitedReducer } from './state/reducers.const';
     SharedMissionModule,
     MissionListRoutingModule,    
     StateManagementModule.forFeature({
-      reducers: [SaveModelFileReducer, UpdateLastVisitedReducer], 
+      reducers: [SaveModelFileReducer, UpdateLastVisitedReducer, SetMissionCriteriaReducer], 
       effects: [CreateMissionImagesEffect, SaveModelFileEffect], 
-      actionInterceptors: [SaveModelFileValidatorInterceptor]
+      actionInterceptors: [SaveModelFileValidatorInterceptor],
+      defaultState: MissionListDefaultState
     }), 
     ModelStateCommandsModule,
     ModelFormModule,     

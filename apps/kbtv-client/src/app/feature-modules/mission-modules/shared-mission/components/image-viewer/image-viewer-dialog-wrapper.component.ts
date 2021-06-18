@@ -5,7 +5,7 @@ import { AppConfirmDialogService } from '@core/services/app-confirm-dialog.servi
 import { DownloaderService } from '@core/services/downloader.service';
 import { _appFileUrl } from '@shared-app/helpers/app-file-url.helper';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
-import { ImageViewerDialogWrapperConfig } from './image-viewer-dialog-wrapper-config.const';
+import { ImageViewerDialogWrapperConfig } from './image-viewer-dialog-wrapper-config.interface';
 
 export const DialogClosedByUserEvent = "DIALOG_CLOSED_BY_USER";
 

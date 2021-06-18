@@ -10,7 +10,7 @@ import { DeleteModelAction } from 'model/state-commands';
 import { RelationInclude, _getModel } from 'model/core';
 import { StoreState } from './store-state';
 import { MailModelsAction } from "@core/state/mail-models/mail-models.action";
-import { CreateMissionImagesAction } from "@shared-mission/actions.const";
+import { CreateMissionImagesAction } from "@shared-mission/state/actions.const";
 
 @Injectable({providedIn: 'any'})
 export class MissionImageListFacade {

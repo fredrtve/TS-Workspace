@@ -1,5 +1,5 @@
 
-<app-main-skeleton *ngIf="vm$ | async; let vm" navTogglerDisabled=true contentWrapperClass="p-0">
+<app-main-skeleton *ngIf="filteredMissions$ | async; let filtered" navTogglerDisabled=true contentWrapperClass="p-0">
 
     <ng-container navbar>
   
@@ -13,11 +13,11 @@
         [extraButtons]="searchBarBtns">
       </app-search-bar>
 
-      <app-chips-bar [chips]="vm.criteriaChips"></app-chips-bar>
+      <app-chips-bar [chips]="filtered.criteriaChips"></app-chips-bar>
 
     </ng-container>
 
-    <app-mission-list-view *ngIf="vm.missions?.length; else loading" [missions]="vm.missions">
+    <app-mission-list-view *ngIf="filtered.missions?.length; else loading" [missions]="filtered.missions">
     </app-mission-list-view>
 
     <app-bottom-action-bar bottombar

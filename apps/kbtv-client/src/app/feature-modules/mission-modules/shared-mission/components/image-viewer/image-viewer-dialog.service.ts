@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AppDialogService } from "@core/services/app-dialog.service";
 import { filter, map, switchMap, tap } from "rxjs/operators";
-import { ImageViewerDialogWrapperConfig } from "./image-viewer-dialog-wrapper-config.const";
+import { ImageViewerDialogWrapperConfig } from "./image-viewer-dialog-wrapper-config.interface";
 import { DialogClosedByUserEvent, ImageViewerDialogWrapperComponent } from "./image-viewer-dialog-wrapper.component";
 
 @Injectable({providedIn: "root"})
