@@ -3,6 +3,7 @@ import { Model } from "@core/models";
 import { AppConfirmDialogService } from "@core/services/app-confirm-dialog.service";
 import { ModelState } from '@core/state/model-state.interface';
 import { AppModelStatePropTranslations } from "@shared-app/constants/model-state-prop-translations.const";
+import { _confirmDeleteDialogFactory } from "@shared-app/helpers/confirm-delete-dialog.factory";
 import { Prop } from "global-types";
 import { ModelFormService } from 'model/form';
 import { DeleteModelAction } from 'model/state-commands';
@@ -43,12 +44,9 @@ export class DataManagerFacade  {
         if(!ids?.length) return;
         const translation = AppModelStatePropTranslations[this.selectedProperty?.toLowerCase()];
         const word = ids.length > 1 ? translation?.plural : translation?.singular;
-        this.confirmService.dialog$.subscribe(x => x.open({
-          title: `Slett ${word}?`,
-          message: `Bekreft at du ønsker å slette ${ids.length} ${word}`,  
-          confirmText: 'Slett',
-          confirmCallback: () => this._deleteItems(ids)
-        }));
+        this.confirmService.dialog$.subscribe(x => 
+            x.open(_confirmDeleteDialogFactory(`${ids.length} ${word}`, () => this._deleteItems(ids)))
+        );
     }
 
     private _deleteItems(ids: string[]): void{

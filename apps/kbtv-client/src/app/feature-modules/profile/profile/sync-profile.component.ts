@@ -44,8 +44,8 @@ export class SyncProfileComponent {
 
   private confirmPurge = () => {
     this.confirmService.dialog$.subscribe(x => x.open({
-      title: 'Slett synkronisert data?',
-      message: 'All data må lastes ned på nytt. Vær varsom ved bruk av mobildata.', 
+      title: 'Bekreft sletting',
+      message: 'All data vil bli lastet ned på nytt. Vær varsom ved bruk av mobildata.', 
       confirmText: 'Slett',
       confirmCallback: this.facade.reloadData
     }));

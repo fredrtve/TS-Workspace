@@ -7,6 +7,7 @@ import { DeviceInfoService } from '@core/services/device-info.service';
 import { DownloaderService } from '@core/services/downloader.service';
 import { FileFolder } from "@shared-app/enums/file-folder.enum";
 import { _appFileUrl } from '@shared-app/helpers/app-file-url.helper';
+import { _confirmDeleteDialogFactory } from "@shared-app/helpers/confirm-delete-dialog.factory";
 import { _trackByModel } from "@shared-app/helpers/trackby/track-by-model.helper";
 import { AppButton } from "@shared-app/interfaces/app-button.interface";
 import { BaseSelectableContainerComponent } from "@shared-mission/components/base-selectable-container.component";
@@ -116,11 +117,9 @@ export class MissionImageListComponent extends BaseSelectableContainerComponent{
     this.facade.delete(payload);
 
   private  openConfirmDeleteDialog = () => {   
-    this.confirmService.dialog$.subscribe(x => x.open({
-      title: "Slett utvalgte bilder?",
-      confirmText: 'Slett',
-      confirmCallback: this.deleteSelectedImages
-    }))
+    this.confirmService.dialog$.subscribe(x => 
+      x.open(_confirmDeleteDialogFactory("utvalgte bilder", this.deleteSelectedImages))
+    )
   }
   
   private openMailImageSheet = (ids: string[]) => {    

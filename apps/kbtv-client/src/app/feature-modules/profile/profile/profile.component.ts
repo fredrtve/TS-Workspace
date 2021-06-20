@@ -56,7 +56,7 @@ export class ProfileComponent {
 
   private confirmClear = (): void => {
     this.confirmService.dialog$.subscribe(x => x.open({
-      title: 'Slett lokal data?',
+      title: 'Bekreft sletting',
       message: 'Lokale innstillinger vil bli borte og all data må lastes ned på nytt. Vær varsom ved bruk av mobildata.', 
       confirmText: 'Slett',
       confirmCallback: () => this.facade.clearAndLogout()

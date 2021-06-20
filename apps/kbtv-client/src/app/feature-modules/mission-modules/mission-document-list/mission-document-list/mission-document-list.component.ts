@@ -8,6 +8,7 @@ import { DownloaderService } from '@core/services/downloader.service';
 import { ModelState } from '@core/state/model-state.interface';
 import { FileFolder } from '@shared-app/enums/file-folder.enum';
 import { _appFileUrl } from '@shared-app/helpers/app-file-url.helper';
+import { _confirmDeleteDialogFactory } from '@shared-app/helpers/confirm-delete-dialog.factory';
 import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { BaseSelectableContainerComponent } from '@shared-mission/components/base-selectable-container.component';
 import { CreateMissionDocumentModelForm } from '@shared-mission/forms/create-mission-document-model-form.const';
@@ -71,7 +72,7 @@ export class MissionDocumentListComponent extends BaseSelectableContainerCompone
       };
 
       this.selectionBarConfig = {
-        customCancelFn: () => super.resetSelections,
+        customCancelFn: () => this.resetSelections(),
         buttons: [
           {icon: "send", aria: 'Send', callback: this.openMailDocumentSheet, allowedRoles: can.sendEmail}, 
           {icon: "delete_forever", aria: 'Slett', color: 'warn', callback: this.openConfirmDeleteDialog, allowedRoles: can.delete}
@@ -91,11 +92,9 @@ export class MissionDocumentListComponent extends BaseSelectableContainerCompone
   }
 
   private openConfirmDeleteDialog = () => {   
-    this.confirmService.dialog$.subscribe(x => x.open({
-      title: 'Slett utvalgte dokumenter?', 
-      confirmText: 'Slett',
-      confirmCallback: this.deleteSelectedDocuments
-    }));
+    this.confirmService.dialog$.subscribe(x => 
+      x.open(_confirmDeleteDialogFactory("utvalgte dokumenter", this.deleteSelectedDocuments))
+    )
   }
   
   private openMailDocumentSheet = () => {

@@ -4,6 +4,7 @@ import { ModelFile } from '@core/models';
 import { AppConfirmDialogService } from '@core/services/app-confirm-dialog.service';
 import { DownloaderService } from '@core/services/downloader.service';
 import { _appFileUrl } from '@shared-app/helpers/app-file-url.helper';
+import { _confirmDeleteDialogFactory } from '@shared-app/helpers/confirm-delete-dialog.factory';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { ImageViewerDialogWrapperConfig } from './image-viewer-dialog-wrapper-config.interface';
 
@@ -63,12 +64,9 @@ export class ImageViewerDialogWrapperComponent {
         _appFileUrl(this.currentImage.fileName, this.cfg.downloadFolder || this.cfg.fileFolder)
       ) : null
     
-    private openConfirmDeleteDialog = () => {  
-      this.confirmService.dialog$.subscribe(x => x.open({
-        title: 'Slett bilde?', 
-        confirmText: 'Slett',
-        confirmCallback: () => this.deleteCurrentImage()
-      }));
-    }
+    private openConfirmDeleteDialog = () => 
+      this.confirmService.dialog$.subscribe(x => 
+        x.open(_confirmDeleteDialogFactory("bilde", () => this.deleteCurrentImage()))
+      )
   
 }
