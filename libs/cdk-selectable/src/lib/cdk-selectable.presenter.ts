@@ -7,27 +7,27 @@ import { IdSelectPair, SelectedMap } from "./interfaces";
  * Responsible for providing the view logic shared by the selectable components in the scope. 
  */
 @Injectable()
-export class CdkSelectablePresenter {
+export class CdkSelectablePresenter<TId extends string | number = string | number> {
 
-    private selectedMapSubject = new BehaviorSubject<Readonly<SelectedMap>>({})
+    private selectedMapSubject = new BehaviorSubject<Readonly<SelectedMap<TId>>>({})
 
     /** An observable that emits the current selected status of all items 
      *  when a selected status changes. */
     selectedMap$ = this.selectedMapSubject.asObservable();
 
     /** Get the current select status of all items */
-    get selectedMap(): SelectedMap { return  {...this.selectedMapSubject.value} };
+    get selectedMap(): SelectedMap<TId> { return  {...this.selectedMapSubject.value} };
 
     constructor(){}
 
     /** Get an observable emitting the selected status 
      *  when the selected status changes for a specified id.
      *  @param id - The id of the item you desire to observe */
-    isSelected$ = (id: string | number): Observable<IdSelectPair> =>
+    isSelected$ = (id: string | number): Observable<IdSelectPair<TId>> =>
         this.selectedMap$.pipe(
             map(x => x[id]), 
             filter(x => x !== undefined),
-            distinctUntilKeyChanged<IdSelectPair>("selected")
+            distinctUntilKeyChanged<IdSelectPair<TId>>("selected")
         )
 
     /**
@@ -35,14 +35,14 @@ export class CdkSelectablePresenter {
      * @param id - The id of the item that should be updated
      * @param selected - A new selected status for the item
      */
-    updateEntry = (id: string | number, selected: boolean) => this.addEntry(id, selected)
+    updateEntry = (id: TId, selected: boolean) => this.addEntry(id, selected)
     
     /**
      * Add an item to keep track of its selected status. 
      * @param id - The id of the item that should be added
      * @param selected - An initial selected status for the item
      */
-    addEntry = (id: string | number, selected: boolean = false) => {
+    addEntry = (id: TId, selected: boolean = false) => {
         this.selectedMapSubject.next({
             ...this.selectedMapSubject.value, 
             [id]: {id, selected: selected ? true : false}
@@ -53,7 +53,7 @@ export class CdkSelectablePresenter {
      * Remove the specified item from the map
      * @param id - The id of the item that should be removed
      */
-    removeEntry = (id: string | number) => {
+    removeEntry = (id: TId) => {
         if(!id) return;
         const copy = this.selectedMap;
         copy[id] = undefined;
