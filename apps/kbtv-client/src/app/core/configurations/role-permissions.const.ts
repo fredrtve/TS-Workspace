@@ -4,7 +4,8 @@ export const RolePermissions = {
     DataManagement: {access: [Roles.Admin, Roles.Leder]},
     MissionDocumentList: {
         access: [Roles.Admin, Roles.Leder, Roles.Mellomleder, Roles.Ansatt],
-        create: [Roles.Admin, Roles.Leder], delete: [Roles.Leder],
+        create: [Roles.Admin, Roles.Leder], 
+        delete: [Roles.Admin, Roles.Leder],
         sendEmail: [Roles.Admin, Roles.Leder],
     },
     MissionImageList: {

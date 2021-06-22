@@ -1,14 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { RolePermissions } from '@core/configurations/role-permissions.const';
 import { ModelState } from '@core/state/model-state.interface';
 import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
 import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { CreateMissionNoteModelForm, EditMissionNoteModelForm } from '@shared-mission/forms/save-mission-note-model-form.const';
-import { Maybe } from 'global-types';
 import { ModelFormService } from 'model/form';
-import { SelectedMissionIdParam } from '../../mission-list/mission-list-route-params.const';
-import { MissionNoteListFacade } from '../mission-note-list.facade';
+import { MissionDetailsFacade } from '../../mission-details.facade';
 
 @Component({
   selector: 'app-mission-note-list',
@@ -18,17 +15,12 @@ import { MissionNoteListFacade } from '../mission-note-list.facade';
 export class MissionNoteListComponent {
   can = RolePermissions.MissionNoteList
   
-  notes$ = this.facade.getByMissionId$(this.missionId);
+  notes$ = this.facade.getChildren$("missionNotes");
 
   actionFab: AppButton;
-  
-  get missionId(): Maybe<string> { 
-    return this.route.parent?.parent?.snapshot.paramMap.get(SelectedMissionIdParam) 
-  }
 
   constructor( 
-    private facade: MissionNoteListFacade,
-    private route: ActivatedRoute,
+    private facade: MissionDetailsFacade,
     private modelFormService: ModelFormService<ModelState>
   ) {  
     this.actionFab = {
@@ -43,6 +35,6 @@ export class MissionNoteListComponent {
   trackByNote = _trackByModel("missionNotes")
   
   private openCreateNoteForm = () => 
-    this.modelFormService.open(CreateMissionNoteModelForm, {missionId: <string> this.missionId});
+    this.modelFormService.open(CreateMissionNoteModelForm, {missionId: <string> this.facade.missionId});
 
 }

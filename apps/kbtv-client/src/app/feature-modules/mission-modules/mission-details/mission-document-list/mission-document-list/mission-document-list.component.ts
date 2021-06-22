@@ -1,70 +1,44 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { RolePermissions } from '@core/configurations/role-permissions.const';
 import { MissionDocument } from '@core/models';
 import { AppConfirmDialogService } from '@core/services/app-confirm-dialog.service';
-import { DeviceInfoService } from '@core/services/device-info.service';
 import { DownloaderService } from '@core/services/downloader.service';
 import { ModelState } from '@core/state/model-state.interface';
 import { FileFolder } from '@shared-app/enums/file-folder.enum';
 import { _appFileUrl } from '@shared-app/helpers/app-file-url.helper';
 import { _confirmDeleteDialogFactory } from '@shared-app/helpers/confirm-delete-dialog.factory';
 import { AppButton } from '@shared-app/interfaces/app-button.interface';
-import { BaseSelectableContainerComponent } from '@shared-mission/components/base-selectable-container.component';
 import { CreateMissionDocumentModelForm } from '@shared-mission/forms/create-mission-document-model-form.const';
 import { EmailForm } from '@shared-mission/forms/email-form.const';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
+import { CdkSelectableContainerDirective } from 'cdk-selectable';
 import { FormService } from 'form-sheet';
-import { ImmutableArray, Maybe } from 'global-types';
 import { ModelFormService } from 'model/form';
-import { combineLatest, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { SelectedMissionIdParam } from '../../mission-list/mission-list-route-params.const';
-import { MissionDocumentListFacade } from '../mission-document-list.facade';
-
-interface ViewModel { 
-  documents: Maybe<ImmutableArray<MissionDocument>>, 
-  isXs: boolean,  
-  selectionsTitle: string
-}
+import { MissionDetailsFacade } from '../../mission-details.facade';
 
 @Component({
   selector: 'app-mission-document-list',
   templateUrl: './mission-document-list.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MissionDocumentListComponent extends BaseSelectableContainerComponent {
-
-  vm$: Observable<ViewModel> = combineLatest([
-    this.facade.getMissionDocuments$(this.missionId),
-    this.deviceInfoService.isXs$,
-    this.currentSelections$
-  ]).pipe(
-    map(([documents, isXs, selections]) => { return <ViewModel>{ 
-      documents, isXs, 
-      selectionsTitle: selections.length === 0 ? null :
-        `${selections.length} dokument${selections.length === 1 ? '' : 'er'} valgt`,
-    }})
-  )
-
-  private get missionId(): Maybe<string> { 
-    return this.route.parent?.parent?.snapshot.paramMap.get(SelectedMissionIdParam) 
-  }
+export class MissionDocumentListComponent {
+  @ViewChild('selectableContainer', {read: CdkSelectableContainerDirective}) 
+    selectableContainer: CdkSelectableContainerDirective<string>;
+    
+  documents$ = this.facade.getChildren$("missionDocuments");
 
   selectionBarConfig: MainTopNavConfig;
+  
+  selectionTitle: string | undefined;
 
   actionFab: AppButton;
 
-  constructor( 
-    private deviceInfoService: DeviceInfoService,     
+  constructor(   
     private formService: FormService, 
     private downloaderService: DownloaderService,
-    private facade: MissionDocumentListFacade,
-    private route: ActivatedRoute,
+    private facade: MissionDetailsFacade,
     private confirmService: AppConfirmDialogService,
     private modelFormService: ModelFormService<ModelState>) {
-      super();
-
       const can = RolePermissions.MissionDocumentList;
 
       this.actionFab = {
@@ -72,13 +46,18 @@ export class MissionDocumentListComponent extends BaseSelectableContainerCompone
       };
 
       this.selectionBarConfig = {
-        customCancelFn: () => this.resetSelections(),
+        customCancelFn: () => this.selectableContainer.resetSelections(),
         buttons: [
           {icon: "send", aria: 'Send', callback: this.openMailDocumentSheet, allowedRoles: can.sendEmail}, 
           {icon: "delete_forever", aria: 'Slett', color: 'warn', callback: this.openConfirmDeleteDialog, allowedRoles: can.delete}
         ]
       }
     }
+
+  onSelectionChange(selections: string[]): void{
+    this.selectionTitle = selections.length === 0 ? undefined :
+      `${selections.length} dokument${selections.length === 1 ? '' : 'er'} valgt`
+  }
 
   downloadDocument = (document: MissionDocument) => 
     document.fileName ? 
@@ -87,7 +66,7 @@ export class MissionDocumentListComponent extends BaseSelectableContainerCompone
   trackByFn = (index: number, entity: MissionDocument) => entity.id
 
   private deleteSelectedDocuments = () => {
-    this.facade.delete({ids: this.currentSelections});    
+    this.facade.deleteChildren("missionDocuments", {ids: this.selectableContainer.getSelectedIds()});    
     this.selectableContainer.resetSelections();
   }
 
@@ -98,21 +77,21 @@ export class MissionDocumentListComponent extends BaseSelectableContainerCompone
   }
   
   private openMailDocumentSheet = () => {
-    const email = this.facade.getMissionEmployerEmail(this.missionId)
+    const email = this.facade.getEmployerEmail()
     this.formService.open<EmailForm, null>(
       {
         formConfig: {...EmailForm, options: { allowPristine: email != null } }, 
-        navConfig: {title: "Send Dokumenter"},
+        navConfig: {title: "Send dokumenter"},
       }, 
       { initialValue: { email } },
       (val) => { 
-        this.facade.mailDocuments(val.email, this.currentSelections);
+        this.facade.mailChildren("missionDocuments", val.email, this.selectableContainer.getSelectedIds());
         this.selectableContainer.resetSelections();
       }
     )
   }
 
   private openDocumentForm = () => 
-    this.modelFormService.open(CreateMissionDocumentModelForm, {missionId: this.missionId || undefined});
+    this.modelFormService.open(CreateMissionDocumentModelForm, {missionId: this.facade.missionId || undefined});
 
 }

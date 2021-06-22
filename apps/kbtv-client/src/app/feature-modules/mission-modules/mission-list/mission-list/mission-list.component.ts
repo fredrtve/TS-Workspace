@@ -6,13 +6,12 @@ import { AppButton } from "@shared-app/interfaces/app-button.interface";
 import { WithUnsubscribe } from "@shared-app/mixins/with-unsubscribe.mixin";
 import { SearchBarConfig } from "@shared-mission/components/search-bar/search-bar-config.interface";
 import { CreateMissionModelForm } from "@shared-mission/forms/save-mission-model-form.const";
-import { FilteredMissionsResponse } from "@shared-mission/mission-filter.facade";
+import { FilteredMissionsResponse, MissionFilterFacade } from "@shared-mission/mission-filter.facade";
 import { BottomBarIconButton } from "@shared/components/bottom-action-bar/bottom-bar-icon-button.interface";
 import { MainTopNavConfig } from "@shared/components/main-top-nav-bar/main-top-nav.config";
 import { BottomIconButtons } from "@shared/constants/bottom-icon-buttons.const";
 import { ModelFormService } from 'model/form';
 import { Observable } from "rxjs";
-import { MissionListFacade } from '../mission-list.facade';
 
 @Component({
   selector: "app-mission-list",
@@ -21,8 +20,7 @@ import { MissionListFacade } from '../mission-list.facade';
 })
 export class MissionListComponent extends WithUnsubscribe(){
 
-  filteredMissions$: Observable<FilteredMissionsResponse> = 
-    this.facade.filteredMissions$;
+  filteredMissions$: Observable<FilteredMissionsResponse> = this.facade.filtered$;
 
   actionFab: AppButton;
   
@@ -40,7 +38,7 @@ export class MissionListComponent extends WithUnsubscribe(){
 
   constructor(
     private modelFormService: ModelFormService<ModelState>,
-    private facade: MissionListFacade,
+    private facade: MissionFilterFacade,
     private router: Router
   ) {
     super();

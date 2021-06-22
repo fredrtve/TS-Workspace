@@ -20,31 +20,29 @@ import { ModelCommand } from 'model/state-commands/public-api';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { UserTimesheetListCriteriaQueryParam } from 'src/app/feature-modules/timesheet-modules/user-timesheet-list/user-timesheet-list/user-timesheet-list-route-params.const';
-import { SelectedMissionIdParam } from '../mission-list-route-params.const';
-import { MissionListFacade } from '../mission-list.facade';
+import { MissionDetailsFacade } from '../mission-details.facade';
 
 interface ViewModel { mission: Maybe<Immutable<Mission>>, bottomActions: AppButton[] }
 
 @Component({
   selector: 'app-mission-details',
   templateUrl: './mission-details.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [MissionDetailsFacade]
 })
 export class MissionDetailsComponent extends WithUnsubscribe() {
   @ViewChild('headerImageInput') headerImageInput: ElementRef<HTMLElement>;
   @ViewChild('missionImageInput') missionImageInput: ElementRef<HTMLElement>;
+
+  private can = RolePermissions.MissionList;
 
   FileFolder = FileFolder;
   Roles = Roles;
   
   baseHeaderImgButton: Partial<AppButton> = {type: ButtonTypes.Stroked}
 
-  private can = RolePermissions.MissionList;
-
-  get missionId() { return this.route.snapshot.paramMap.get(SelectedMissionIdParam) }
-
   vm$: Observable<ViewModel> =  this.route.paramMap.pipe(
-    switchMap(x =>  this.facade.getMissionDetails$(x.get(SelectedMissionIdParam))),
+    switchMap(x => this.facade.getDetails$()),
     map(mission => { return { 
       bottomActions: this.getBottomActions(mission), 
       mission
@@ -64,7 +62,7 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
   }
 
   constructor(
-    private facade: MissionListFacade,
+    private facade: MissionDetailsFacade,
     private route: ActivatedRoute,
     private router: Router,
     private location: Location,
@@ -74,17 +72,17 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
   ) { super() }
 
   updateHeaderImage = (files: FileList): void => 
-    (files?.length && this.missionId) ? this.facade.updateHeaderImage(this.missionId, files[0]) : undefined;
+    files?.length ? this.facade.updateHeaderImage(files[0]) : undefined;
 
   addMissionImages = (files: FileList): void => 
-    (files?.length && this.missionId) ? this.facade.addMissionImages(this.missionId, files) : undefined;
+    files?.length ? this.facade.addImages(files) : undefined;
 
   openImageViewer(mission: Mission) {
     this.imageViewer.open({currentImage: mission, fileFolder: FileFolder.MissionHeader})
   }
 
   private openMissionPositionPicker = () => 
-    this.positionPickerService.open(this.missionId!);
+    this.positionPickerService.open(this.facade.missionId);
  
   private openImageInput = (ref: ElementRef<HTMLElement>): void => ref?.nativeElement?.click();
 

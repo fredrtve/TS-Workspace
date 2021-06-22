@@ -1,12 +1,12 @@
-<app-main-skeleton *ngIf="vm$ | async; let vm" [bottomBarHidden]="vm.selectionsTitle">
+<app-main-skeleton [bottomBarHidden]="selectionTitle">
 
-    <app-main-top-nav-bar navbar [config]="vm.selectionsTitle ? selectionBarConfig : null" >
-        {{ vm.selectionsTitle || 'Dokumenter' }}
+    <app-main-top-nav-bar navbar [config]="selectionTitle ? selectionBarConfig : null" >
+        {{ selectionTitle || 'Dokumenter' }}
     </app-main-top-nav-bar>
 
-    <div cdkSelectableContainer #selectableContainer *ngIf="vm.documents?.length; else loading"
+    <div cdkSelectableContainer #selectableContainer *ngIf="documents$ | async; let documents; else loading"
         (selectionChanged)="onSelectionChange($event)">
-        <app-selectable-card *ngFor="let doc of vm.documents; trackBy: trackByFn" [id]="doc.id" selectedText="Dokument valgt">
+        <app-selectable-card *ngFor="let doc of documents; trackBy: trackByFn" [id]="doc.id" selectedText="Dokument valgt">
             <app-list-item (tap)="downloadDocument(doc)" [rippleDisabled]="true">
                 <mat-icon left-side [svgIcon]="doc.fileName | fileExtension | fileExtensionIcon"></mat-icon>
                 <div class="ellipsis">{{ doc.name }}</div>  

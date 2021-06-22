@@ -1,11 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { SearchBarConfig } from '@shared-mission/components/search-bar/search-bar-config.interface';
-import { FilteredMissionsResponse } from '@shared-mission/mission-filter.facade';
+import { FilteredMissionsResponse, MissionFilterFacade } from '@shared-mission/mission-filter.facade';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { BottomIconButtons } from '@shared/constants/bottom-icon-buttons.const';
 import { Observable } from 'rxjs';
-import { MissionMapFacade } from '../mission-map.facade';
 
 @Component({
   selector: 'app-mission-map',
@@ -14,8 +13,7 @@ import { MissionMapFacade } from '../mission-map.facade';
 })
 export class MissionMapComponent {
 
-  filteredMissions$: Observable<FilteredMissionsResponse> = 
-    this.facade.filteredMissions$;
+  filteredMissions$: Observable<FilteredMissionsResponse> = this.facade.filtered$;
 
   actionFab: AppButton;
 
@@ -27,7 +25,7 @@ export class MissionMapComponent {
 
   searchBarHidden: boolean = true;
 
-  constructor(private facade: MissionMapFacade) {
+  constructor(private facade: MissionFilterFacade) {
     this.navConfig = {buttons: [
       { ...BottomIconButtons.Filter, callback: this.openMissionFilter },
       { ...BottomIconButtons.Search, callback: this.toggleSearchBar },

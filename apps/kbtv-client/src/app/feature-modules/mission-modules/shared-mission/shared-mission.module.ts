@@ -1,5 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { SharedModule } from '@shared/shared.module';
+import { HeaderLayoutSkeletonComponent } from './components/header-layout-skeleton/header-layout-skeleton.component';
 import { ImageViewerDialogWrapperComponent } from './components/image-viewer/image-viewer-dialog-wrapper.component';
 import { ImageViewerComponent } from './components/image-viewer/image-viewer.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
@@ -14,6 +15,8 @@ import { MissionDirectionsUrlPipe } from './mission-directions-url.pipe';
     ImageViewerComponent,
     SearchBarComponent,
     SelectableCardComponent,
+    HeaderLayoutSkeletonComponent,
+    
     MissionDirectionsUrlPipe,
     
     ImageErrorPlaceholderDirective,
@@ -25,6 +28,7 @@ import { MissionDirectionsUrlPipe } from './mission-directions-url.pipe';
   exports: [
     SharedModule,
     
+    HeaderLayoutSkeletonComponent,
     ImageViewerDialogWrapperComponent,
     ImageViewerComponent,
     SearchBarComponent,
