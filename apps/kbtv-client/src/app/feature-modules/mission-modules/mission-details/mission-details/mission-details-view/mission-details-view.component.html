@@ -21,7 +21,7 @@
 
   <div class="mat-body-2 ml-5 mt-3">Ressurser</div>
 
-  <app-list-item [routerLink]="['/oppdrag', mission.id, 'detaljer','bilder']">
+  <app-list-item [routerLink]="['bilder']">
       <mat-icon left-side class="pl-2 pr-2">photo_library</mat-icon>
       Bilder
       <span right-side *ngIf="mission.missionImages?.length">{{ mission.missionImages?.length }}</span>
@@ -29,7 +29,7 @@
   <mat-divider inset=true></mat-divider>
 
   <ng-container *ifRole="permissions.MissionDocumentList.access">
-    <app-list-item [routerLink]="['/oppdrag', mission.id, 'detaljer','dokumenter']">
+    <app-list-item [routerLink]="['dokumenter']">
       <mat-icon left-side class="pl-2 pr-2">folder</mat-icon>
       Dokumenter
       <span right-side *ngIf="mission.missionDocuments?.length">{{ mission.missionDocuments?.length }}</span>
@@ -38,7 +38,7 @@
   </ng-container>
 
   <ng-container *ifRole="permissions.MissionNoteList.access">
-    <app-list-item  [routerLink]="['/oppdrag', mission.id, 'detaljer','notater']">
+    <app-list-item  [routerLink]="['notater']">
       <mat-icon left-side class="pl-2 pr-2">rate_review</mat-icon>
       Notater
       <span right-side *ngIf="mission.missionNotes?.length">{{ mission.missionNotes?.length }}</span>

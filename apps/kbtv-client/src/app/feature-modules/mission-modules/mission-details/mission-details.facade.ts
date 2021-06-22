@@ -33,7 +33,6 @@ export class MissionDetailsFacade {
     ) {}
 
     getDetails$(): Observable<Maybe<Immutable<Mission>>> {
-        console.log(this.route, this.missionId)
         if(!this.missionId) return of(null);
         
         this.store.dispatch(<UpdateLastVisitedAction>{ type: UpdateLastVisitedAction, id: this.missionId })

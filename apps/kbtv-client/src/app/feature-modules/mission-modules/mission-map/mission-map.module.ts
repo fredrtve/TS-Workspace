@@ -4,6 +4,7 @@ import { SharedMissionModule } from '@shared-mission/shared-mission.module';
 import { SetMissionCriteriaReducer } from '@shared-mission/state/reducers.const';
 import { StateManagementModule } from 'state-management';
 import { MissionMapRoutingModule } from './mission-map-routing.module';
+import { MissionMapInfoWindowComponent } from './mission-map/mission-map-info-window.component';
 import { MissionMapViewComponent } from './mission-map/mission-map-view/mission-map-view.component';
 import { MissionMapComponent } from './mission-map/mission-map.component';
 import { MissionMarkerOptionsPipe } from './pipes/mission-marker-options.pipe';
@@ -12,7 +13,8 @@ import { MissionMarkerOptionsPipe } from './pipes/mission-marker-options.pipe';
   declarations: [
     MissionMapComponent,
     MissionMapViewComponent,
-    MissionMarkerOptionsPipe
+    MissionMarkerOptionsPipe,
+    MissionMapInfoWindowComponent
   ],
   imports: [
     SharedMissionModule,

@@ -19,14 +19,13 @@ const routes: MissionListRoute[] = [
         data: {viewSize: "60%", viewType: "card"},
         loadChildren: () => import('src/app/feature-modules/mission-modules/mission-details/mission-details.module').then(m => m.MissionDetailsModule),
       },
-      {
-        path: 'kart',
-        data: {preload: false, disableMaxWidth: true, viewType: "overlay"},
-        loadChildren: () => import('src/app/feature-modules/mission-modules/mission-map/mission-map.module').then(m => m.MissionMapModule),
-      },
     ]
   },
-
+  {
+    path: 'kart',
+    data: { preload: false },
+    loadChildren: () => import('src/app/feature-modules/mission-modules/mission-map/mission-map.module').then(m => m.MissionMapModule),
+  },
 ];
 @NgModule({
   imports: [RouterModule.forChild(routes)],

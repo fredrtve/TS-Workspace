@@ -42,6 +42,9 @@ export class MainSkeletonPresenter extends WithUnsubscribe() {
         
         if(this.data.viewType === 'card') 
             parent.classList.add("main-skeleton-card"); 
+        
+        if(this.data.componentClass)
+            parent.classList.add(this.data.componentClass);
 
         parent.style.width = this.data.viewSize || "100%";
     }

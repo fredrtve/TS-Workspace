@@ -13,7 +13,6 @@ const routes: MissionListRoute[] = [
     {
         path: ``,
         component: MissionDetailsComponent,
-        data: {viewSize: "60%", viewType: "card"},
         children: [
           {
             path: 'timer',

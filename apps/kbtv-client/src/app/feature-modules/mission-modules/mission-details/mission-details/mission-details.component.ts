@@ -101,8 +101,8 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
       {icon: "timer", text: "Timer", callback: () => this.goToTimesheets(mission), allowedRoles: RolePermissions.UserTimesheetList.access},
       // {icon: "more_vert", callback: this.openBottomSheetMenu, params: [mission], allowedRoles: this.can.update},
       {...BottomIconButtons.Edit, callback: () => this.openMissionForm(mission?.id), allowedRoles: this.can.update},
-      {...this.addHeaderImgBtn, text: 'Nytt forsidebilde'}, 
-      { icon: "pin_drop", text: "Merk posisjon manuelt", callback: this.openMissionPositionPicker, allowedRoles: this.can.update },
+      {...this.addHeaderImgBtn, text: 'Ny banner'}, 
+      { icon: "pin_drop", text: "Merk posisjon", callback: this.openMissionPositionPicker, allowedRoles: this.can.update },
     ]
   }
 
