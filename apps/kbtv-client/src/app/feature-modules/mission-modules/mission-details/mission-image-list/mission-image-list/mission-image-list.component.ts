@@ -53,6 +53,7 @@ export class MissionImageListComponent{
         {icon: "camera_enhance", aria: 'Ta bilde', callback: this.openImageInput, allowedRoles: this.can.create};
 
       this.selectionBarConfig = {
+        optimisitcSpinnerDisabled: true,
         customCancelFn: () => this.selectableContainer.resetSelections(),
         buttons: [
           {icon: "send", aria: 'Send', callback: () => this.openMailImageSheet(this.selectableContainer.getSelectedIds()), allowedRoles: this.can.sendEmail}, 

@@ -9,7 +9,8 @@
 
     </span>
 
-    <app-optimistic-loading-spinner></app-optimistic-loading-spinner>
+    <app-optimistic-loading-spinner *ngIf="config?.optimisitcSpinnerDisabled !== true">
+    </app-optimistic-loading-spinner>
     
     <span class="custom-buttons">
         <ng-container *ngIf="config && config.buttons">

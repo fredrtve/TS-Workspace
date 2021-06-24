@@ -46,6 +46,7 @@ export class MissionDocumentListComponent {
       };
 
       this.selectionBarConfig = {
+        optimisitcSpinnerDisabled: true,
         customCancelFn: () => this.selectableContainer.resetSelections(),
         buttons: [
           {icon: "send", aria: 'Send', callback: this.openMailDocumentSheet, allowedRoles: can.sendEmail}, 

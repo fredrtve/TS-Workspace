@@ -1,6 +1,7 @@
 <app-main-skeleton [bottomBarHidden]="selectionTitle">
 
-    <app-main-top-nav-bar navbar [config]="selectionTitle ? selectionBarConfig : null" >
+    <app-main-top-nav-bar navbar 
+        [config]="selectionTitle ? selectionBarConfig : null">
         {{ selectionTitle || 'Dokumenter' }}
     </app-main-top-nav-bar>
 
