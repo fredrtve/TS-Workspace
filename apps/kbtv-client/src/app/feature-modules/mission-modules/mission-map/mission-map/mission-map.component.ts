@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { SearchBarConfig } from '@shared-mission/components/search-bar/search-bar-config.interface';
 import { FilteredMissionsResponse, MissionFilterFacade } from '@shared-mission/mission-filter.facade';
@@ -26,12 +25,8 @@ export class MissionMapComponent {
 
   searchBarHidden: boolean = true;
 
-  constructor(
-    private facade: MissionFilterFacade,
-    private router: Router
-  ) {
+  constructor(private facade: MissionFilterFacade) {
     this.navConfig = {
-      customCancelFn: () => this.router.navigate(['oppdrag']),
       buttons: [
         { ...BottomIconButtons.Filter, callback: this.openMissionFilter },
         { ...BottomIconButtons.Search, callback: this.toggleSearchBar },

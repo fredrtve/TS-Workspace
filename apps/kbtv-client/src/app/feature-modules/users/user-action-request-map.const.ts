@@ -17,7 +17,7 @@ export const UserActionRequestMap : ActionRequestMap<SetSaveUserStateAction | De
             genericSave({...action, type: SetSaveModelStateAction});
 
         if(action.saveAction === ModelCommand.Create){
-            let {employer, ...rest} = action.saveModelResult.fullModel
+            let {employer, createdAt, ...rest} = action.saveModelResult.fullModel
             request.body = {...rest, password: action.password};
             request.type = CreateUserRequest;
         }

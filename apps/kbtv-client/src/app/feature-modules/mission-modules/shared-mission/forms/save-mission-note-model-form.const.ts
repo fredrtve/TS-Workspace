@@ -2,6 +2,7 @@ import { Validators } from '@angular/forms';
 import { MissionNote } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
 import { ValidationRules } from '@shared-app/constants/validation-rules.const';
+import { _appFormToSaveModelConverter } from '@shared/app-form-to-save-model.converter';
 import { InputQuestion, InputQuestionComponent } from '@shared/scam/dynamic-form-questions/input-question.component';
 import { TextAreaQuestion, TextAreaQuestionComponent } from '@shared/scam/dynamic-form-questions/text-area-question.component';
 import { DynamicControl } from 'dynamic-forms';
@@ -23,6 +24,7 @@ const ContentControl = <Immutable<DynamicControl<string, null, TextAreaQuestion>
 
 export const CreateMissionNoteModelForm: Immutable<ModelFormConfig<ModelState, MissionNote, SaveMissionNoteForm>> = {
     includes: {prop: "missionNotes"}, 
+    actionConverter: _appFormToSaveModelConverter,
     dynamicForm: {
         submitText: "Legg til",
         controls: {

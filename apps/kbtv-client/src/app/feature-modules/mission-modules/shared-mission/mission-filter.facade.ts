@@ -4,7 +4,7 @@ import { StateEmployers, StateMissions, StateMissionTypes } from "@core/state/gl
 import { AppChip } from "@shared-app/interfaces/app-chip.interface";
 import { MissionCriteria } from "@shared/interfaces";
 import { MissionFilter } from "@shared/mission-filter.model";
-import { _filter } from "array-helpers";
+import { _filter, _sortByDate } from "array-helpers";
 import { FormService } from "form-sheet";
 import { Immutable } from "global-types";
 import { combineLatest, Observable } from "rxjs";
@@ -37,11 +37,13 @@ export class MissionFilterFacade {
     
     filtered$: Observable<FilteredMissionsResponse> = combineLatest([
         this.partialResponse$,
-        this.store.selectProperty$("missions")
+        this.store.selectProperty$("missions").pipe(
+          map(missions => _sortByDate<Mission>(missions, "createdAt", "desc"))
+        )
       ]).pipe(
         map(([vm, missions]) => { 
           const filter = new MissionFilter(vm.criteria, undefined, true)
-          return { ...vm, missions: _filter(missions, (entity) => filter.check(entity)) } 
+          return { ...vm, missions: _filter<Mission>(missions, (entity) => filter.check(entity)) } 
         })
       );
 

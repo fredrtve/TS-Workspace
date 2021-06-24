@@ -13,7 +13,9 @@
     <app-list-item>
       <mat-icon left-side class="pl-2 pr-2">directions_car</mat-icon>
       Veibeskrivelse 
-      <div class="mat-caption color-warn" *ngIf="mission.position && !mission.position.isExact">Posisjonen kan være feil</div>
+      <ng-container *ngIf="mission.position && !mission.position.isExact" >
+        <div class="mat-caption color-warn" *ifRole="permissions.MissionList.update">Posisjonen kan være feil</div>
+      </ng-container>
       <span right-side class="color-accent">Åpne kart</span>
     </app-list-item>
     <mat-divider inset=true></mat-divider>

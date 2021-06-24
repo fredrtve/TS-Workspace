@@ -1,4 +1,5 @@
 import { _idGenerator } from "@shared-app/helpers/id/id-generator.helper";
+import { UnknownState } from "global-types";
 import { DeleteModelAction, ModelCommand, SetSaveModelStateAction } from "model/state-commands";
 import { ActionRequestMap } from "optimistic-http";
 import { ApiUrl } from "../../api-url.enum";
@@ -14,17 +15,16 @@ export type GenericOptimisticActions = SetSaveModelStateAction<ModelState, Model
 
 export const GenericActionRequestMap: ActionRequestMap<GenericOptimisticActions> = {
     [SetSaveModelStateAction]: (a): SaveModelRequest<Model> => { 
+        const {createdAt, ...body} = a.saveModelResult.fullModel;
         return a.saveAction === ModelCommand.Create ? 
             { 
-                method: "POST", stateProp: a.stateProp, 
-                body: a.saveModelResult.fullModel,
+                method: "POST", stateProp: a.stateProp, body,
                 apiUrl: ModelBaseUrls[a.stateProp],
                 headers: { [CommandIdHeader]: _idGenerator(4) },
                 type: SaveModelRequest
             } : 
             { 
-                method: "PUT", stateProp: a.stateProp, 
-                body: a.saveModelResult.fullModel, 
+                method: "PUT", stateProp: a.stateProp, body, 
                 apiUrl: `${ModelBaseUrls[a.stateProp]}/${a.saveModelResult.fullModel[<keyof Model> ModelIdProps[a.stateProp]]}`,
                 headers: { [CommandIdHeader]: _idGenerator(4) },
                 type: SaveModelRequest
@@ -33,11 +33,11 @@ export const GenericActionRequestMap: ActionRequestMap<GenericOptimisticActions>
     [SetSaveModelFileStateAction]: (a): SaveModelFileRequest<ModelFile> => { 
         const isCreate = a.saveAction === ModelCommand.Create;
 
-        const {fileName, ...entity} = a.saveModelResult.fullModel;
+        const {fileName, createdAt, ...entity} = a.saveModelResult.fullModel;
         
         const apiUrl = a.stateProp === "missions" ? 
             `${ApiUrl.Mission}/${entity.id}/UpdateHeaderImage` :
-            ModelBaseUrls[a.stateProp] + (isCreate ? '' : `/${entity[<keyof Model> ModelIdProps[a.stateProp]]}`);
+            ModelBaseUrls[a.stateProp] + (isCreate ? '' : `/${(<UnknownState> entity)[ModelIdProps[a.stateProp]]}`);
 
         const headers =  { [CommandIdHeader]: _idGenerator(4) };
 

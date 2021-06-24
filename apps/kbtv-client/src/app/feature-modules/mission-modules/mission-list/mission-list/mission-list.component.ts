@@ -10,8 +10,10 @@ import { FilteredMissionsResponse, MissionFilterFacade } from "@shared-mission/m
 import { BottomBarIconButton } from "@shared/components/bottom-action-bar/bottom-bar-icon-button.interface";
 import { MainTopNavConfig } from "@shared/components/main-top-nav-bar/main-top-nav.config";
 import { BottomIconButtons } from "@shared/constants/bottom-icon-buttons.const";
+import { _sortByDate } from "array-helpers";
 import { ModelFormService } from 'model/form';
 import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
 
 @Component({
   selector: "app-mission-list",
