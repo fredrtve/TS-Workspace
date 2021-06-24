@@ -56,7 +56,7 @@ export interface Reducer<TState, TAction extends StateAction> {
  *  the {@link Store} in its provider scope. 
  *  Provided with token {@link STORE_ACTION_INTERCEPTORS} */
 export interface ActionInterceptor {
-    intercept(action: Immutable<StateAction>): Maybe<StateAction>
+    intercept(action: Immutable<StateAction>): Maybe<Immutable<StateAction>>
 }
 
 /** Represents a function for intercepting reducers before they are processed.

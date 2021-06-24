@@ -45,8 +45,8 @@ export abstract class StoreBase<TState> {
         const modifiedAction = _applyInterceptors(action, this.storeProviders.actionInterceptors);
         if(!modifiedAction) return;
         const stateSnapshot = this.base.storeState;
-        this.reduceState(action);
-        this.actionDispatcher.dispatch(action, stateSnapshot);
+        this.reduceState(modifiedAction);
+        this.actionDispatcher.dispatch(modifiedAction, stateSnapshot);
     }
 
     /**
