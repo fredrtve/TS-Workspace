@@ -81,7 +81,7 @@ export class ModelColDefFactory {
             } 
         }
 
-        if(propDef.editable) def['editable'] = propDef.editable;
+        if(propDef.editable !== undefined) def['editable'] = propDef.editable;
         
         const fkRel = fkIdLookup[modelProp];
         if(fkRel){

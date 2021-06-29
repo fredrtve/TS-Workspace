@@ -8,7 +8,7 @@ export const ModelDataTables: ModelDataTablesConfig<ModelDataTableState> = {
     baseColDef: {sortable: true, resizable: true, editable: true, lockPosition: true},
     tables: {
         missions: {selectable: true, propertyColDefs: {
-            id: {}, 
+            id: {editable: false}, 
             address: {}, 
             finished: {boolean: true}, 
             phoneNumber: {}, 
@@ -16,13 +16,13 @@ export const ModelDataTables: ModelDataTablesConfig<ModelDataTableState> = {
             employerId: {}
         }},
         employers: {selectable: true, propertyColDefs: {
-            id: {}, name: {}, phoneNumber: {}, address: {}, email: {}
+            id: {editable: false}, name: {}, phoneNumber: {}, address: {}, email: {}
         }},
         missionTypes: {selectable: true, propertyColDefs: {
-            id: {}, name: {}
+            id: {editable: false}, name: {}
         }},
         inboundEmailPasswords: {selectable: true, propertyColDefs: {
-            id: {}, password: {editable: false}, 
+            id: {editable: false}, password: {editable: false}, 
             email: {editable: false, valueGetter: (val: InboundEmailPassword) => `${val.password}@${environment.inboundEmailDomain}`}
         }},
     }
