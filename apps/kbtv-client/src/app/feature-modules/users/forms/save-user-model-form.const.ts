@@ -41,7 +41,7 @@ const RoleControl: Immutable<DynamicControl<string, null, SelectQuestion<string,
 }
 const PasswordControl: Immutable<DynamicControl<string, null, InputQuestion>> = { 
     required: true, questionComponent: InputQuestionComponent, 
-    question: {placeholder: "Passord", hideable: true, defaultHidden: true, autoComplete: false},
+    question: {placeholder: "Passord", hideable: true, defaultHidden: true, autoComplete: "new-password"},
     validators: [Validators.minLength(7), Validators.maxLength(100)] 
 }
 
