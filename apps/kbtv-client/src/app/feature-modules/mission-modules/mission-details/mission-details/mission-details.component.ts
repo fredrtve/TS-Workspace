@@ -7,7 +7,7 @@ import { Roles } from '@core/roles.enum';
 import { ModelState } from '@core/state/model-state.interface';
 import { ButtonTypes } from '@shared-app/enums/button-types.enum';
 import { DateRangePresets } from '@shared-app/enums/date-range-presets.enum';
-import { FileFolder } from '@shared-app/enums/file-folder.enum';
+import { FileFolder } from '@shared-app/constants/file-folder.const';
 import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { ImageViewerDialogService } from '@shared-mission/components/image-viewer/image-viewer-dialog.service';
@@ -101,7 +101,7 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
       {icon: "timer", text: "Timer", callback: () => this.goToTimesheets(mission), allowedRoles: RolePermissions.UserTimesheetList.access},
       // {icon: "more_vert", callback: this.openBottomSheetMenu, params: [mission], allowedRoles: this.can.update},
       {...BottomIconButtons.Edit, callback: () => this.openMissionForm(mission?.id), allowedRoles: this.can.update},
-      {...this.addHeaderImgBtn, text: 'Ny banner'}, 
+      {...this.addHeaderImgBtn, text: 'Forsidebilde'}, 
       { icon: "pin_drop", text: "Merk posisjon", callback: this.openMissionPositionPicker, allowedRoles: this.can.update },
     ]
   }

@@ -4,7 +4,7 @@ import { MissionDocument } from '@core/models';
 import { AppConfirmDialogService } from '@core/services/app-confirm-dialog.service';
 import { DownloaderService } from '@core/services/downloader.service';
 import { ModelState } from '@core/state/model-state.interface';
-import { FileFolder } from '@shared-app/enums/file-folder.enum';
+import { FileFolder } from '@shared-app/constants/file-folder.const';
 import { _appFileUrl } from '@shared-app/helpers/app-file-url.helper';
 import { _confirmDeleteDialogFactory } from '@shared-app/helpers/confirm-delete-dialog.factory';
 import { AppButton } from '@shared-app/interfaces/app-button.interface';

@@ -6,9 +6,16 @@ export const environment = {
   production: false,
   apiUrl: 'https://localhost:44379/api',
   baseUrl: '',
-  fileServerUrl: 'https://bjbygg-assets.azureedge.net',
   googleMapsKey: 'AIzaSyBUWZmwjGN92B3PoNS6x6qpOmc3xrP55d8', 
-  inboundEmailDomain: 'rapporter.bjbygg.no'
+  inboundEmailDomain: 'rapporter.bjbygg.no',
+  resourceFolders: {
+    baseUrl: 'https://bjbygg-assets.azureedge.net',
+    missionImage: 'oppdrag-bilder',
+    missionImageThumbnail: 'oppdrag-thumbnail',
+    originalMissionImage: 'oppdrag-original',
+    document: 'documents',
+    missionHeader: 'missionheader',
+  },
 };
 /*
  * For easier debugging in development mode, you can import the following file

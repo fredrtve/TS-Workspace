@@ -1,10 +1,9 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { ModelFile } from '@core/models';
-import { FileFolder } from "@shared-app/enums/file-folder.enum";
+import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { Maybe } from 'global-types';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { debounceTime, distinctUntilKeyChanged } from 'rxjs/operators';
-import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 
 @Component({
   selector: 'app-image-viewer',
@@ -17,7 +16,7 @@ export class ImageViewerComponent {
   @Input() images: Maybe<ModelFile[]>;
   @Input() currentImage: ModelFile;
   @Input() navConfig: MainTopNavConfig;
-  @Input() folder: FileFolder;
+  @Input() folder: string;
 
   @Output() currentImageChanged = new EventEmitter();
 

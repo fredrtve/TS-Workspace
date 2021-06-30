@@ -3,7 +3,7 @@ import { RolePermissions } from "@core/configurations/role-permissions.const";
 import { MissionImage, ModelFile } from '@core/models';
 import { AppConfirmDialogService } from "@core/services/app-confirm-dialog.service";
 import { DownloaderService } from '@core/services/downloader.service';
-import { FileFolder } from "@shared-app/enums/file-folder.enum";
+import { FileFolder } from "@shared-app/constants/file-folder.const";
 import { _appFileUrl } from '@shared-app/helpers/app-file-url.helper';
 import { _confirmDeleteDialogFactory } from "@shared-app/helpers/confirm-delete-dialog.factory";
 import { _trackByModel } from "@shared-app/helpers/trackby/track-by-model.helper";
