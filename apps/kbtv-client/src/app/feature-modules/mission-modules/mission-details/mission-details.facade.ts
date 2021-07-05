@@ -13,7 +13,7 @@ import { DeleteModelAction, ModelCommand } from 'model/state-commands';
 import { Observable, of } from "rxjs";
 import { map } from "rxjs/operators";
 import { Store } from 'state-management';
-import { UpdateLastVisitedAction } from "./state/actions.const";
+import { DeleteMissionHeaderImageAction, UpdateLastVisitedAction } from "./state/actions.const";
 import { MissionDetailsStoreState } from "./state/store-state.interface";
 
 type StoreState = MissionDetailsStoreState;
@@ -65,6 +65,12 @@ export class MissionDetailsFacade {
         return email || "";
     }
 
+    deleteHeaderImage() { 
+        this.store.dispatch<DeleteMissionHeaderImageAction>({ 
+            type: DeleteMissionHeaderImageAction, id: this.missionId 
+        })
+    }
+    
     getChildren$<TProp extends keyof Children>(stateProp: TProp): Observable<Immutable<Children[TProp]>> {
         return this.store.selectProperty$(stateProp).pipe(
             map(resources => <Immutable<Children[TProp]>> 
@@ -82,4 +88,5 @@ export class MissionDetailsFacade {
         this.store.dispatch<MailModelsAction<StateModels<Mailable>>>({
             type: MailModelsAction, stateProp, ids, toEmail
         })
+
 }

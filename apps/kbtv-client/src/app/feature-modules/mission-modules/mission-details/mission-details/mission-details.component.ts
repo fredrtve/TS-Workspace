@@ -5,9 +5,9 @@ import { RolePermissions } from '@core/configurations/role-permissions.const';
 import { Mission } from '@core/models';
 import { Roles } from '@core/roles.enum';
 import { ModelState } from '@core/state/model-state.interface';
+import { FileFolder } from '@shared-app/constants/file-folder.const';
 import { ButtonTypes } from '@shared-app/enums/button-types.enum';
 import { DateRangePresets } from '@shared-app/enums/date-range-presets.enum';
-import { FileFolder } from '@shared-app/constants/file-folder.const';
 import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { ImageViewerDialogService } from '@shared-mission/components/image-viewer/image-viewer-dialog.service';
@@ -78,7 +78,11 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
     files?.length ? this.facade.addImages(files) : undefined;
 
   openImageViewer(mission: Mission) {
-    this.imageViewer.open({currentImage: mission, fileFolder: FileFolder.MissionHeader})
+    this.imageViewer.open({
+      currentImage: mission, 
+      fileFolder: FileFolder.MissionHeader, 
+      deleteAction: { callback: () => this.facade.deleteHeaderImage(), allowedRoles: this.can.update } 
+    })
   }
 
   private openMissionPositionPicker = () => 

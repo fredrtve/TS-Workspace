@@ -79,3 +79,9 @@ export interface CreateUserRequest extends Pick<AppOptimisticHttpRequest, "body"
     body: Immutable<Partial<User> & {password: string}>;
     type: typeof CreateUserRequest;
 }
+
+export const DeleteMissionHeaderImageRequest = "DeleteMissionHeaderImageRequest";
+export interface DeleteMissionHeaderImageRequest extends AppOptimisticHttpRequest {
+    method: "PUT";
+    type: typeof DeleteMissionHeaderImageRequest;
+}

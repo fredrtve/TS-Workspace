@@ -10,11 +10,12 @@ import { ModelFormModule } from 'model/form';
 import { DeleteModelAction, ModelStateCommandsModule, SetSaveModelStateAction } from 'model/state-commands';
 import { OptimisticHttpModule } from 'optimistic-http';
 import { StateManagementModule } from 'state-management';
-import { UpdateLastVisitedReducer } from './state/reducers.const';
+import { DeleteMissionHeaderImageReducer, UpdateLastVisitedReducer } from './state/reducers.const';
 import { MissionDetailsRoutingModule } from './mission-details-routing.module';
 import { EmployerListItemComponent } from './mission-details/mission-details-view/employer-list-item.component';
 import { MissionDetailsViewComponent } from './mission-details/mission-details-view/mission-details-view.component';
 import { MissionDetailsComponent } from './mission-details/mission-details.component';
+import { MissionDetailsActionRequestMap } from './mission-details-action-request-map.const';
 
 @NgModule({
     declarations: [
@@ -26,17 +27,13 @@ import { MissionDetailsComponent } from './mission-details/mission-details.compo
         SharedMissionModule,
         MissionDetailsRoutingModule,    
         StateManagementModule.forFeature({
-          reducers: [SaveModelFileReducer, UpdateLastVisitedReducer], 
+          reducers: [SaveModelFileReducer, UpdateLastVisitedReducer, DeleteMissionHeaderImageReducer], 
           effects: [CreateMissionImagesEffect, SaveModelFileEffect], 
           actionInterceptors: [SaveModelFileValidatorInterceptor],
         }), 
         ModelStateCommandsModule,
         ModelFormModule,     
-        OptimisticHttpModule.forFeature({
-          [SetSaveModelStateAction]: GenericActionRequestMap[SetSaveModelStateAction],  
-          [DeleteModelAction]: GenericActionRequestMap[DeleteModelAction],   
-          [SetSaveModelFileStateAction]: GenericActionRequestMap[SetSaveModelFileStateAction], 
-        }),  
+        OptimisticHttpModule.forFeature(MissionDetailsActionRequestMap),  
     ],
     exports: []
 })
