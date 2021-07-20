@@ -22,11 +22,11 @@ export function _saveModelRequestDescriber(request: Request, state: Immutable<St
 
     if(displayValue)
         description = `${saveWord} av ${entityWord} '${displayValue}'`;
-
-    const idPropValue = request.body[<Prop<Immutable<Model>>> modelConfig.idProp];
-    const idWord = translations[modelConfig.idProp.toLowerCase()] || modelConfig.idProp;
-
-    description = `${saveWord} av ${entityWord} med ${idWord.toLowerCase()} '${idPropValue}'`;
+    else{
+        const idPropValue = request.body[<Prop<Immutable<Model>>> modelConfig.idProp];
+        const idWord = translations[modelConfig.idProp.toLowerCase()] || modelConfig.idProp;
+        description = `${saveWord} av ${entityWord} med ${idWord.toLowerCase()} '${idPropValue}'`;
+    }
 
     for(const fk in modelConfig.foreigns){ 
         const fkRel = (<{[key: string]: ForeignRelation<StateMissions,any,any>}> modelConfig.foreigns)[fk];
