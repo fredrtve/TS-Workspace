@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Mission } from '@core/models';
+import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
 import { ImmutableArray } from 'global-types';
 
 @Component({
@@ -13,5 +14,7 @@ export class HomeMissionCardComponent {
     @Input() missions: ImmutableArray<Mission>;
 
     constructor() {} 
+
+    trackByMission = _trackByModel("missions");
 
 }

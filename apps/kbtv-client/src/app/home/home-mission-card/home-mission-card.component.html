@@ -9,7 +9,7 @@
     <div  class="mission-list">
 
       <ng-container *ngIf="missions?.length; else loading">
-        <app-list-item *ngFor="let mission of missions" [routerLink]="['/oppdrag', mission.id, 'detaljer']">
+        <app-list-item *ngFor="let mission of missions; trackBy: trackByMission" [routerLink]="['/oppdrag', mission.id, 'detaljer']">
           <mat-icon left-side>history</mat-icon>
           {{mission.address}}
           <mat-icon right-side>chevron_right</mat-icon>
