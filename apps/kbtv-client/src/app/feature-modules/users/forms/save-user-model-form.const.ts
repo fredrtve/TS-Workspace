@@ -20,7 +20,7 @@ export interface SaveUserForm extends Pick<User, "userName" | "role" | "employer
 
 type FormState = StateUsers & StateEmployers;
 
-const AvailableRoles = Object.keys(Roles).filter(x => x !== Roles.Leder).map(key => Roles[key as keyof typeof Roles]);
+const AvailableRoles = Object.keys(Roles).filter(x => x !== Roles.Leder && x !== Roles.Admin).map(key => Roles[key as keyof typeof Roles]);
 
 const UniqueUserNameControl: Immutable<DynamicControl<string, FormState, InputQuestion>> = {
     ...UserNameControl, 
@@ -34,7 +34,6 @@ const RoleControl: Immutable<DynamicControl<string, null, SelectQuestion<string,
     required: true, questionComponent: SelectQuestionComponent,
     question: {
         placeholder: "Rolle",
-        lazyOptions: "all",
         stateBindings: { options: AvailableRoles }
     },  
     validators: [ Validators.maxLength(100)] 

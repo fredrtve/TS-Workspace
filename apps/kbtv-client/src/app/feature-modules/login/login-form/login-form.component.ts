@@ -15,13 +15,12 @@ export class LoginFormComponent {
   authForm: FormGroup;
   hidePassword = true;
 
-
   constructor(
     private fb: FormBuilder
   ) {
     this.authForm = this.fb.group({
-      userName: ['leder', Validators.required],
-      password: ['passord1', Validators.required]
+      userName: [null, Validators.required],
+      password: [null, Validators.required]
     });
   }
 

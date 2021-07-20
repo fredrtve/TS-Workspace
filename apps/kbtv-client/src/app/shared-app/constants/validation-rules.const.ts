@@ -1,5 +1,5 @@
 export const ValidationRules = {
-    PhoneNumberMinLength: 2,
+    PhoneNumberMinLength: 4,
     PhoneNumberMaxLength: 12,
 
     NameMaxLength: 45,
