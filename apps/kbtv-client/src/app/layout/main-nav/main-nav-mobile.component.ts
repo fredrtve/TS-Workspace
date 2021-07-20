@@ -17,9 +17,6 @@ import { MainNavService } from '../main-nav.service';
             flex-direction: row;
             flex: 1 1 1e-09px;
         }
-        @media (min-width: 600px) {
-            .outlet-container{ margin-left: 230px!important }
-        }
     </style>
     <div class="outlet-container">
         <router-outlet></router-outlet>
