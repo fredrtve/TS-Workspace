@@ -54,7 +54,7 @@ export class ImageViewerDialogWrapperComponent {
     close = () => this.dialogRef.close(DialogClosedByUserEvent);
     
     private deleteCurrentImage(): void{
-      this.dialogRef.close();
+      this.close();
       this.cfg.deleteAction?.callback(<string> this.currentImage.id)
     }
     
