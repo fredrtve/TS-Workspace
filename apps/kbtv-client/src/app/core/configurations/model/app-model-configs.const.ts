@@ -70,7 +70,7 @@ export const ModelConfigMap: AppModelConfigMap = {
     missionNotes: {
         stateProp: "missionNotes",
         idProp: ModelIdProps.missionNotes,
-        displayFn: (m) => `(${m.id}) ${m.title || 'Uten tittel'}`, 
+        displayFn: (m) => `${m.title || 'Uten tittel'}`, 
         idGenerator: _idGenerator,
         children: {},
         foreigns: { 

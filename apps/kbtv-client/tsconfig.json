@@ -68,6 +68,10 @@
         "../../dist/google-places-autocomplete"
       ],        
       "model/*": ["../../dist/model/*"],
+      "global-utils": [
+        "../../dist/global-utils/global-utils",
+        "../../dist/global-utils"
+      ],
     },
   },
   "files": [

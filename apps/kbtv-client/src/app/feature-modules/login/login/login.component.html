@@ -35,4 +35,19 @@
 
 </ng-container>
 
+<div #demoPanel class="pt-2 pb-4 pl-4 pr-4" 
+  style="position:fixed;top:16px;right:16px;background: rgba(0,0,0,.5);color:white;display:flex;flex-direction:column">
+  <span>
+    <span class="mat-body-2" style="text-align: center;">Demo logg inn</span>
+    <button mat-icon-button style="margin-left:auto;margin-right:-12px"
+      (click)="demoPanel.style.display = 'none'">
+      <mat-icon>close</mat-icon>
+    </button>
+  </span>
+  <button (click)="authenticate({userName: 'leder', password: 'passord1'})" mat-flat-button class="mt-2">Leder</button>
+  <button (click)="authenticate({userName: 'mellomleder', password: 'passord1'})" mat-flat-button class="mt-2">Mellomleder</button>
+  <button (click)="authenticate({userName: 'ansatt', password: 'passord1'})" mat-flat-button class="mt-2">Ansatt</button>
+  <button (click)="authenticate({userName: 'oppdragsgiver', password: 'passord1'})" mat-flat-button class="mt-2">Oppdragsgiver</button>
+</div>
+
 

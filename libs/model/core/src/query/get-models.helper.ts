@@ -1,4 +1,5 @@
-import { _convertArrayToObject, _filter, _groupBy, _weakMemoizer } from 'array-helpers';
+import { _convertArrayToObject, _filter, _groupBy } from 'array-helpers';
+import { _weakMemoizer }  from "global-utils";
 import { Immutable, ImmutableArray, UnknownState } from 'global-types';
 import { ModelConfig, RelationInclude, StateModels } from '../interfaces';
 import { _getModelConfig } from '../model-state-config-helpers';

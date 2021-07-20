@@ -1,5 +1,5 @@
 import { Compiler, Injectable, Injector } from '@angular/core';
-import { _tryWithLogging } from 'array-helpers';
+import { _tryWithLogging } from "global-utils";
 import { ConfirmDialogService } from 'confirm-dialog';
 import { from, Observable, of } from 'rxjs';
 import { map, shareReplay, switchMap } from 'rxjs/operators';

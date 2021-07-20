@@ -1,6 +1,6 @@
 import { Immutable, ImmutableArray, Maybe, Prop } from 'global-types';
 import { _convertArrayToObject } from './convert-array-to-object.helper';
-import { _weakMemoizer } from './util/weak-memoizer.helper';
+import { _weakMemoizer } from 'global-utils';
 
 /**
  * Get a range of objects

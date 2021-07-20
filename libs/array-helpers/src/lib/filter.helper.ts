@@ -1,5 +1,5 @@
 import { Immutable, ImmutableArray, Maybe } from 'global-types';
-import { _weakMemoizer } from './util/weak-memoizer.helper';
+import { _weakMemoizer } from 'global-utils';
 
 /**
  * Filter an array of items, only returning the ones who pass the specified expression

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
-import { _tryWithLogging } from 'array-helpers';
+import { _tryWithLogging } from "global-utils";
 import { BottomSheetAction } from './bottom-sheet-action.interface';
 
 @Component({

@@ -1,4 +1,5 @@
-import { _filter, _find, _weakMemoizer } from 'array-helpers';
+import { _filter, _find } from 'array-helpers';
+import { _weakMemoizer }  from "global-utils";
 import { Immutable, Maybe, UnknownState } from 'global-types';
 import { ChildRelation, ForeignRelation, RelationInclude, StateModels, UnknownModelState } from '../interfaces';
 import { _getModelConfig } from '../model-state-config-helpers';

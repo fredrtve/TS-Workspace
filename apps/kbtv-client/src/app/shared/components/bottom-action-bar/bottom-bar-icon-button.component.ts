@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { _tryWithLogging } from 'array-helpers';
+import { _tryWithLogging } from "global-utils";
 import { BottomBarIconButton } from './bottom-bar-icon-button.interface';
 
 @Component({

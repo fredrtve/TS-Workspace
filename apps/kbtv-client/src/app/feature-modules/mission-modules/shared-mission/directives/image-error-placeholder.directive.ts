@@ -10,7 +10,7 @@ export class ImageErrorPlaceholderDirective {
     @HostListener('error') onError(): void {
         if(this.hasSetPlaceholder) return;
         this.hasSetPlaceholder = true; 
-        this.el.nativeElement.src =  "/assets/notfound.png?";     
+        this.el.nativeElement.src =  "/demo/assets/notfound.png?";     
     }
 
 }

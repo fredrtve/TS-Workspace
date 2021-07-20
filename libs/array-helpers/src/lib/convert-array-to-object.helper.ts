@@ -1,5 +1,5 @@
 import { Immutable, ImmutableArray, Maybe, Prop} from 'global-types';
-import { _weakMemoizer } from './util/weak-memoizer.helper';
+import { _weakMemoizer } from 'global-utils';
 
 type Response<T> = { [key: string]: Immutable<T> }
 

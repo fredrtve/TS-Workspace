@@ -8,7 +8,7 @@
     "noImplicitThis": true,
     "noFallthroughCasesInSwitch": true,
     "strictNullChecks": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
@@ -52,6 +52,10 @@
         "dist/optimistic-http/optimistic-http",
         "dist/optimistic-http"
       ],
+      "global-utils": [
+        "dist/global-utils/global-utils",
+        "dist/global-utils"
+      ],
       "google-places-autocomplete": [
         "dist/google-places-autocomplete/google-places-autocomplete",
         "dist/google-places-autocomplete"
@@ -80,7 +84,9 @@
         "dist/cdk-selectable/cdk-selectable",
         "dist/cdk-selectable"
       ],   
-      "model/*": ["dist/model/*"],
+      "model/*": [
+        "dist/model/*"
+      ],
     }
   },
   "angularCompilerOptions": {

@@ -6,7 +6,7 @@ import { _getDailySummaries } from "./get-daily-summaries.helper";
 import { _getMonthlySummaries } from "./get-monthly-summaries.helper";
 import { _getWeeklySummaries } from "./get-weekly-summaries.helper";
 import { _getYearlySummaries } from "./get-yearly-summaries.helper";
-import { _weakMemoizer } from "array-helpers";
+import { _weakMemoizer } from "global-utils";
 
 const getSummariesByType = (
   type: Maybe<GroupByPeriod>, 

@@ -1,5 +1,5 @@
 import { ImmutableArray, Immutable, Maybe, Prop } from 'global-types';
-import { _weakMemoizer } from './util/weak-memoizer.helper';
+import { _weakMemoizer } from 'global-utils';
 
 /**
  * Group an array of objects by a specified key
