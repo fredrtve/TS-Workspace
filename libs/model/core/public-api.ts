@@ -1,7 +1,7 @@
-/*
- * Public API Surface of model-core
+/**
+ * A library consisting of core logic required for configuring, querying and saving models.
+ * @packageDocumentation
  */
-
 export * from './src/interfaces';
 export * from './src/model-state-config-helpers';
 export * from './src/get-relation-include-state-props.helper';

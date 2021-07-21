@@ -9,6 +9,8 @@ import { Question, QuestionComponent, StateBindingsMap, ValidationErrorMap } fro
 import { selectState } from '../select-state.operator';
 import { _isFormStateBinding } from '../type.helpers';
 
+/** A base component class for implementing a question component. 
+ *  Responsible for declaring the neccesary inputs & exposing state bindings. */
 @Directive()
 export abstract class BaseQuestionComponent<TBindings extends object | null, TQuestion extends Question<TBindings, object | null>>
     implements QuestionComponent<TBindings, object | null> {

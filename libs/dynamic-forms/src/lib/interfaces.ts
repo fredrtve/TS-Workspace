@@ -33,14 +33,17 @@ export type ValidControl<TForm, TProp extends keyof TForm = keyof TForm, TFormSt
 
 type NotFound = "$$PROP_NOT_FOUND";
 
+/** Check if the given properties TSlice are found on TForm, also searching in nested objects. */
 export type ValidFormSlice<TForm, TSlice extends string> = keyof { 
     [ P in TSlice as DeepPropType<TForm, P, NotFound> extends NotFound ? NotFound  : never ]: true 
 } extends never ? TSlice : never;  
 
+/** Check if the given properties TSlice are found on TState, not searching in nested objects. */
 export type ValidStateSlice<TState, TSlice extends string> = keyof { 
     [ P in TSlice as P extends keyof TState ? P : never]: true 
 } 
 
+/** Represents the setter function of a form state setter {@link FormStateSetter} */
 export type FormStateSetterFn<TForm, TFormState, TInputState, TFormSlice extends string, TStateSlice extends string> = (
     form: DeepPropsObject<TForm, TFormSlice>,
     state: DeepPropsObject<TInputState, TStateSlice>, 
@@ -59,12 +62,16 @@ export interface FormStateSetter<
     keepActive?: boolean
 } 
 
+/** Represents a generic form state setter */
 export type GenericFormStateSetter = FormStateSetter<object, object | null, object | null, string, string> | object
 
+/** Represents the setter function of a form state binding {@link FormStateBinding} */
 export type FormStateBindingSetter<TState, TSlice extends string, TOutput> = (s: DeepPropsObject<TState, TSlice>) => TOutput 
 
+/** Represents a generic form state binding */
 export type GenericFormStateBinding = FormStateBinding<object, string, unknown> | unknown
 
+/** Represents a setter for a given output with selected state as input */
 export type FormStateBinding<TState, TSlice extends string, TOutput> = { 
     props: TSlice[], 
     setter: FormStateBindingSetter<TState, TSlice, TOutput>
@@ -101,6 +108,7 @@ export interface DynamicControlGroup<
     label?: string,
 }
 
+/** Describes a group of controls. */
 export interface DynamicAbstractGroup<TForm, TFormState extends object | null = null> {
     /** The form controls that make up the group */
     controls: ValidControlObject<TForm, TFormState>

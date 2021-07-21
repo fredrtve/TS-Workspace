@@ -1,5 +1,6 @@
-/*
- * Public API Surface of model/state-fetcher
+/**
+ * A library for fetching external model state to store in global state.
+ * @packageDocumentation
  */
 
 export * from './src/model-state-fetcher.module';

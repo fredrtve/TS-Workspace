@@ -1,6 +1,6 @@
-/*
- * Public API Surface of google-places-autocomplete
+/**
  * Clone of https://www.npmjs.com/package/ngx-google-places-autocomplete without use of CommonJS
+ * @packageDocumentation
  */
 export * from './lib/google-places-autocomplete.module';
 export * from './lib/google-places-autocomplete.directive';
