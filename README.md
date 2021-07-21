@@ -1,27 +1,35 @@
-# FredtvWorkspace
+# Fredtvet Ts Workspace
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.8.
+A mono repo workspace with a collection of typescript/angular libraries and applications. 
 
-## Development server
+## Applications
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+|  Application | Description |
+|  --- | --- |
+|  [Bjbygg-client](./docs/apps/bjbygg-client.md) | An app for managing missions and work hours for a small renovation company |
 
-## Code scaffolding
+## Libraries
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+|  Library | Description |
+|  --- | --- |
+|  [array-helpers](./docs/array-helpers.md) | A library of helper functions related to arrays &amp; object arrays |
+|  [cdk-selectable](./docs/cdk-selectable.md) | A component development kit used to create a set of selectable components |
+|  [confirm-dialog](./docs/confirm-dialog.md) | A library for rendering a confirmation dialog that forces the user to take action |
+|  [date-time-helpers](./docs/date-time-helpers.md) | A library of helper functions for date logic |
+|  [dynamic-forms](./docs/dynamic-forms.md) | A library for rendering forms dynamically by specifiying a set of controls and components |
+|  [form-sheet](./docs/form-sheet.md) | A library for rendering dynamic forms in a mat bottom sheet. |
+|  [global-types](./docs/global-types.md) | A library of generic typescript types |
+|  [global-utils](./docs/global-utils.md) | A collection of generic utility functions |
+|  [google-places-autocomplete](./docs/google-places-autocomplete.md) | Clone of https://www.npmjs.com/package/ngx-google-places-autocomplete without use of CommonJS |
+|  [model-core](./docs/model-core.md) | A library consisting of core logic required for configuring, querying and saving models. |
+|  [model-data-table](./docs/model-data-table.md) | A library that wraps an AgGrid data table with model data from specified property in state. |
+|  [model-form](./docs/model-form.md) | A library for rendering dynamic forms for models specified in the app . |
+|  [model-shared](./docs/model-shared.md) | A library with shared items for model libs |
+|  [model-state-commands](./docs/model-state-commands.md) | A library for managing relational state in the application and in communications with an external api. |
+|  [model-state-fetcher](./docs/model-state-fetcher.md) | A library for fetching external model state to store in global state. |
+|  [notification](./docs/notification.md) | A library for notifying the user of a system with a snack bar popup. |
+|  [optimistic-http](./docs/optimistic-http.md) | A library for sending optimistic http requests. |
+|  [state-auth](./docs/state-auth.md) | A library with services that assists in authorizing users. |
+|  [state-db](./docs/state-db.md) | A library for persisting state in a local db. |
+|  [state-management](./docs/state-management.md) | A library for managing local and global state. |
+|  [state-sync](./docs/state-sync.md) | A library for synchronizing state with an external api. |
