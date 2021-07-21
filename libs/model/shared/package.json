@@ -1,4 +1,5 @@
 {
+  "name": "model-shared",
   "sideEffects": false,
   "peerDependencies": {
     "@angular/core": "^12.0.2"

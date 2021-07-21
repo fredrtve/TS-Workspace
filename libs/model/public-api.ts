@@ -1,5 +1,6 @@
 /**
- * Public API Surface of model
+ * A collection of libraries used to handle relational model state.
+ * @packageDocumentation
  */
 
 export * from 'model/core';

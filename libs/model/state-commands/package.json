@@ -1,4 +1,5 @@
 {
+  "name": "model-state-commands",
   "sideEffects": false,
   "peerDependencies": {},
   "ngPackage": {

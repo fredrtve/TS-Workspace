@@ -2,6 +2,11 @@ type InnerCache = WeakMap<object, unknown> | Map<unknown, unknown>;
 
 var cache = new WeakMap();
 
+/** An higher order function that memoizes the results of the input function.
+ *  Object arguments are stored as weak references. 
+ * @param fn - The function that should be memoized
+ * @returns A function that memoizes the results of the input function
+  */
 export function _weakMemoizer<TFunction extends (...args: unknown[]) => unknown>(fn: TFunction): TFunction{ 
   return <TFunction> function(...args: Parameters<TFunction>): ReturnType<TFunction> {
     var fnCache = cache.get(fn);

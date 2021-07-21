@@ -1,5 +1,6 @@
 var shell = require("shelljs");
 shell.exec("ng build global-types --prod");
+shell.exec("ng build global-utils --prod");
 shell.exec("ng build array-helpers --prod");
 shell.exec("ng build date-time-helpers --prod");
 shell.exec("ng build state-management --prod");
