@@ -1,24 +1,20 @@
-# ModelForm
+[Root](../../README.md) &gt; [model](./README.md)
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.5.
+# Model
 
-## Code scaffolding
+A collection of libraries used to handle relational model state.
 
-Run `ng generate component component-name --project model` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project model`.
-> Note: Don't forget to add `--project model` or else it will be added to the default project in your `angular.json` file. 
+## Libraries
 
-## Build
+[API documentation](../../docs/index.md)
 
-Run `ng build model` to build the project. The build artifacts will be stored in the `dist/` directory.
+|  Library | Description |
+|  --- | --- |
+|  [core](./core/README.md) | A library consisting of core logic required for configuring, querying and saving models. |
+|  [data-table](./data-table/README.md) | A library that wraps an AgGrid data table with model data from specified property in state. |
+|  [form](./form/README.md) | A library for rendering dynamic forms for models specified in the app . |
+|  [shared](./shared/README.md) | A library with shared items for model libs |
+|  [state-commands](./state-commands/README.md) | A library for saving or deleting relational model state saved in global state via state management actions. |
+|  [state-fetcher](./state-fetcher/README.md) | A library for fetching external model state to store in global state. |
 
-## Publishing
 
-After building your library with `ng build model`, go to the dist folder `cd dist/model` and run `npm publish`.
-
-## Running unit tests
-
-Run `ng test model` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.

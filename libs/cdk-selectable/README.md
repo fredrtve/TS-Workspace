@@ -1,24 +1,7 @@
+[Root](../../README.md) &gt; [cdk-selectable](./README.md)
+
 # CdkSelectable
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.5.
+A component development kit used to create a set of selectable components
 
-## Code scaffolding
-
-Run `ng generate component component-name --project cdk-selectable` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project cdk-selectable`.
-> Note: Don't forget to add `--project cdk-selectable` or else it will be added to the default project in your `angular.json` file. 
-
-## Build
-
-Run `ng build cdk-selectable` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Publishing
-
-After building your library with `ng build cdk-selectable`, go to the dist folder `cd dist/cdk-selectable` and run `npm publish`.
-
-## Running unit tests
-
-Run `ng test cdk-selectable` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+[API documentation](../../docs/cdk-selectable.md)

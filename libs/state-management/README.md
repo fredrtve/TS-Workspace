@@ -1,24 +1,7 @@
+[Root](../../README.md) &gt; [state-management](./README.md)
+
 # StateManagement
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.5.
+A library for managing local and global state in a redux like pattern. 
 
-## Code scaffolding
-
-Run `ng generate component component-name --project state-management` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project state-management`.
-> Note: Don't forget to add `--project state-management` or else it will be added to the default project in your `angular.json` file. 
-
-## Build
-
-Run `ng build state-management` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Publishing
-
-After building your library with `ng build state-management`, go to the dist folder `cd dist/state-management` and run `npm publish`.
-
-## Running unit tests
-
-Run `ng test state-management` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+[API documentation](../../docs/state-management.md)

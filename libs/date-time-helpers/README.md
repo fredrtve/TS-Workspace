@@ -1,24 +1,7 @@
+[Root](../../README.md) &gt; [date-time-helpers](./README.md)
+
 # DateTimeHelpers
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.5.
+A library of helper functions for date logic
 
-## Code scaffolding
-
-Run `ng generate component component-name --project date-time-helpers` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project date-time-helpers`.
-> Note: Don't forget to add `--project date-time-helpers` or else it will be added to the default project in your `angular.json` file. 
-
-## Build
-
-Run `ng build date-time-helpers` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Publishing
-
-After building your library with `ng build date-time-helpers`, go to the dist folder `cd dist/date-time-helpers` and run `npm publish`.
-
-## Running unit tests
-
-Run `ng test date-time-helpers` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+[API documentation](../../docs/date-time-helpers.md)

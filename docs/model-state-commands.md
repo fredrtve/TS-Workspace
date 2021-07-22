@@ -4,11 +4,11 @@
 
 ## model-state-commands package
 
-A library for managing relational state in the application and in communications with an external api.
+A library for saving or deleting relational model state saved in global state via state management actions.
 
 ## Remarks
 
-The library treats commands sent to the external api optimistically, and therefore expects no state returned. The library does not support many-to-many relationships.
+The library depends on the 'state-management' library to dispatch relevant actions. The library does not support many-to-many relationships.
 
 ## Classes
 

@@ -21,7 +21,7 @@
 |  [model-data-table](./model-data-table.md) | A library that wraps an AgGrid data table with model data from specified property in state. |
 |  [model-form](./model-form.md) | A library for rendering dynamic forms for models specified in the app . |
 |  [model-shared](./model-shared.md) | A library with shared items for model libs |
-|  [model-state-commands](./model-state-commands.md) | A library for managing relational state in the application and in communications with an external api. |
+|  [model-state-commands](./model-state-commands.md) | A library for saving or deleting relational model state saved in global state via state management actions. |
 |  [model-state-fetcher](./model-state-fetcher.md) | A library for fetching external model state to store in global state. |
 |  [notification](./notification.md) | A library for notifying the user of a system with a snack bar popup. |
 |  [optimistic-http](./optimistic-http.md) | A library for sending optimistic http requests. |
