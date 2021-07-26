@@ -27,8 +27,11 @@ export interface TimesheetForm extends UserTimesheetForm {
     user: User;
 }
 
-const _timeValueDefault = (date: Maybe<string>, hours: number = 0, minutes: number = 0): string => 
-    new Date((date ? new Date(date) : new Date).getFullYear(), 1, 1, hours, minutes, 0).toISOString();
+const _timeValueDefault = (hours: number = 0, minutes: number = 0): string => 
+    new Date(new Date().getFullYear(), 1, 1, hours, minutes, 0).toISOString();
+
+const _minMaxTime = (hours: number = 0, minutes: number = 0): string => 
+    new Date(Date.UTC(new Date().getFullYear(), 1, 1, hours, minutes, 0)).toISOString();
 
 const _modelToForm: Converter<Timesheet, Partial<TimesheetForm>> = 
     ({id, mission, startTime, endTime, comment, user}) => {
@@ -89,13 +92,15 @@ const CommentControl: Immutable<DynamicControl<string, null, TextAreaQuestion>> 
 const CommonControls = { mission: {...MissionAutoCompleteControl, required: true}, dateTime: DateTimeControlGroup, comment: CommentControl }
 
 const CommonStateSetters = [
-    _formStateSetter<UserTimesheetForm, FormState>()(["dateTime.startTime"], [], f => { return {          
-        endTimeMin:  f['dateTime.startTime'] ? new Date(new Date( f['dateTime.startTime']).getTime() + 60e4).toLocaleTimeString() : undefined } 
+    _formStateSetter<UserTimesheetForm, FormState>()(["dateTime.startTime"], [], f => { 
+        const date = f["dateTime.startTime"] ? new Date(new Date(f["dateTime.startTime"]).getTime() + 60e4) : null;
+        return { endTimeMin: date ? _minMaxTime(date.getHours(), date.getMinutes()) : _minMaxTime(0, 15) } 
     }),
-    _formStateSetter<UserTimesheetForm, FormState>()(["dateTime.endTime"], [], f => { return {        
-        startTimeMax:  f["dateTime.endTime"] ? new Date(new Date(f["dateTime.endTime"]).getTime() - 60e4).toLocaleTimeString()  : undefined } 
+    _formStateSetter<UserTimesheetForm, FormState>()(["dateTime.endTime"], [], f => { 
+        const date = f["dateTime.endTime"] ? new Date(new Date(f["dateTime.endTime"]).getTime() - 60e4) : null;
+        return { startTimeMax:  date ? _minMaxTime(date.getHours(), date.getMinutes()) : _minMaxTime(23, 30) } 
     }),
-    { defaultStartTime:  _timeValueDefault(null, 7), defaultEndTime: _timeValueDefault(null, 12) }
+    { defaultStartTime:  _timeValueDefault(7), defaultEndTime: _timeValueDefault(12) }
 ]
 
 export const CreateUserTimesheetModelForm: Immutable<ModelFormConfig<StateUserTimesheets & StateMissions, UserTimesheet, UserTimesheetForm, FormState>> = {
