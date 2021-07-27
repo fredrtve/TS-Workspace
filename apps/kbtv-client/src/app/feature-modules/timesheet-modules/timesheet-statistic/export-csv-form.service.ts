@@ -35,9 +35,9 @@ export class ExportCsvFormService {
     private onSubmit = (formVal: Immutable<MultiCheckboxForm<Record<string, boolean>>>, grid: AgGridAngular): void => {
         const colKeys = [];
 
-        for(const key in formVal)
+        for(const key in formVal.selections)
             if(formVal.selections[key]) colKeys.push(key);
-   
+
         this.exportAsCsv(colKeys, grid)   
     }   
 
