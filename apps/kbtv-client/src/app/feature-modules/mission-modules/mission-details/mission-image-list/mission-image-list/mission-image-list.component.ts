@@ -13,7 +13,8 @@ import { EmailForm } from '@shared-mission/forms/email-form.const';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { CdkSelectableContainerDirective } from "cdk-selectable";
 import { FormService } from "form-sheet";
-import { ImmutableArray } from 'global-types';
+import { Immutable, ImmutableArray, Maybe } from 'global-types';
+import { tap } from "rxjs/operators";
 import { MissionDetailsFacade } from "../../mission-details.facade";
 
 @Component({
@@ -31,7 +32,7 @@ export class MissionImageListComponent{
 
   FileFolder = FileFolder;
   
-  images$ = this.facade.getChildren$("missionImages");
+  images$ = this.facade.getChildren$("missionImages").pipe(tap(x => this.images = x));
   
   selectionTitle: string | undefined;
 
@@ -41,7 +42,7 @@ export class MissionImageListComponent{
 
   selectionBarConfig: MainTopNavConfig;
 
-  private images: ImmutableArray<MissionImage>;
+  private images: Maybe<Immutable<MissionImage[]>>;
 
   constructor( 
     private downloaderService: DownloaderService,
@@ -63,7 +64,7 @@ export class MissionImageListComponent{
 
       this.bottomActions = [
         {icon: 'send', text: 'Send', callback: () => this.openMailImageSheet(<string[]> this.images?.map(x => x.id)), allowedRoles: this.can.sendEmail},
-        {icon: "cloud_download", text: "Last ned", callback: () => this.downloadImages(this.images)},
+        {icon: "cloud_download", text: "Last ned", callback: () => this.downloadImages(this.images || [])},
       ]
     }
 
