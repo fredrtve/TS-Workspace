@@ -11,7 +11,7 @@ import { Immutable, Maybe } from "global-types"
 import { _getModelDisplayValue } from "model/core"
 
 const TimesheetCriteriaChipOptions: {[key in keyof TimesheetCriteria]: CriteriaChipOptions<TimesheetCriteria[key]> } = {
-    user: { valueFormatter: (val) => val ? (val.lastName + ', ' + val.lastName) : undefined }, 
+    user: { valueFormatter: (val) => val ? (val.lastName + ', ' + val.firstName) : undefined }, 
     mission: { valueFormatter: (val) => val ? _getModelDisplayValue<ModelState, Mission>("missions", val) : undefined },
     dateRange: { valueFormatter: (val) => val ? _formatDateRange(val, _formatShortDate) : undefined }, 
     dateRangePreset: { ignored: true },
