@@ -25,3 +25,6 @@ Primary motivation for this project is assisting a small renovation company in m
 9. Profile page for various settings, updating profile or password, and logging out. 
 10. Offline support for most use cases.
 11. Responsive design that works on both mobile and desktop
+
+## Related projects
+- [Kbtv-webapi](https://github.com/fredtvet/Kbtv-webapi/blob/master/README.md) - A compatible web api for use with this application. 
