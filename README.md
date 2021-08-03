@@ -2,7 +2,7 @@
 
 # Fredtvet Ts Workspace
 
-A mono repo workspace with a collection of typescript/angular libraries and application. Libraries are built for learning purposes, and the majority lack tests as this moment.  
+A mono repo workspace with a collection of typescript/angular libraries and application primarily built for learning purposes.  
 
 ## Applications
 
@@ -31,3 +31,9 @@ A mono repo workspace with a collection of typescript/angular libraries and appl
 |  [state-db](./libs/state-db/README.md) | A library for persisting state in a local db. |
 |  [state-management](./libs/state-management/README.md) | A library for managing local and global state in a redux like pattern. |
 |  [state-sync](./libs/state-sync/README.md) | A library for synchronizing state with an external api. |
+
+## Running unit tests
+
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+
+However the majority lack tests at this moment except 'model/core' & 'array-helpers'.

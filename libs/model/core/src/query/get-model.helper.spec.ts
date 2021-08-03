@@ -86,7 +86,7 @@ const state: Partial<TestState> = {
     ],
 }
 
-describe('_deleteModel', () => {
+describe('_getModel', () => {
 
   beforeEach(() => {});
 
