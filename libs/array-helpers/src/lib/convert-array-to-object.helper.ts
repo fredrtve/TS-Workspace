@@ -13,7 +13,7 @@ export const _convertArrayToObject = _weakMemoizer(convertArrayToObject)
 
 function convertArrayToObject<T>(
   array: Maybe<ImmutableArray<T>>, 
-  key?: Prop<Immutable<T>> | ((t: Immutable<T>) => string) | null
+  key?: Prop<Immutable<T>> | ((t: Immutable<T>) => string | number) | null
 ): Response<T> {
     if(!array?.length) return {};
 

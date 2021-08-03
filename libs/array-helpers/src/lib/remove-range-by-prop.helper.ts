@@ -17,7 +17,7 @@ export function _removeRangeByProp<T>(
     let delCount = 0;
     if(!Array.isArray(value))
         for(let i = 0; i < originals.length; i++) {
-            const item = copy[i];	
+            const item = originals[i];	
             if(item && item[prop] === value){ 
                 copy.splice(i - delCount, 1);
                 delCount = delCount + 1;
@@ -26,7 +26,7 @@ export function _removeRangeByProp<T>(
     else {
         const lookup = _convertArrayToObject(value)
         for(let i = 0; i < originals.length; i++) 	{
-            const item = copy[i];	
+            const item = originals[i];	
             if( item && lookup[<string> item[prop]] !== undefined){              
                 copy.splice(i - delCount, 1);
                 delCount = delCount + 1;

@@ -15,7 +15,7 @@ function getRangeById<T>(
   ids: ImmutableArray<unknown>, 
   idProp: Prop<Immutable<T>>): Immutable<T>[]{       
     if(!originals?.length) return []; //If initial array empty, just return empty array  
-    if(!ids?.length) return originals.slice(); //If no deleted ids, just return originals
+    if(!ids?.length) return []; //If no deleted ids, just return originals
     
     let originalsObj = _convertArrayToObject<T>(originals, idProp);
     let result: Immutable<T>[] = [];

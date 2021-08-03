@@ -11,7 +11,7 @@ export function _addOrUpdate<T extends {}>(
     array: Maybe<ImmutableArray<T>>, 
     updatedObj: Partial<Immutable<T>>, 
     idProp: Prop<Immutable<T>>): Immutable<T>[] {
-      if(!array?.length) return [];
+      if(!array?.length) return [<Immutable<T>> updatedObj];
       const arr = array.slice();
       let updated = false;
       for(let i = 0; i < arr.length; i++){

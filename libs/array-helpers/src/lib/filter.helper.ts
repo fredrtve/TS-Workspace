@@ -11,7 +11,7 @@ export const _filter = _weakMemoizer(filter);
 
 function filter<T>(
   originals: Maybe<ImmutableArray<T>>, 
-  expression: (value: Immutable<T>, index?: number, Array?: unknown[]) => boolean): Immutable<T>[] {
+  expression: (value: Immutable<T>) => boolean): Immutable<T>[] {
     if(!originals?.length) return [];
     let filtered = [];
     for(let i = 0; i < originals.length; i++){
