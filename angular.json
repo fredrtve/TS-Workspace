@@ -148,18 +148,6 @@
             ]
           }
         },
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "apps/kbtv-client/e2e/protractor.conf.js",
-            "devServerTarget": "kbtv-client:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "kbtv-client:serve:production"
-            }
-          }
-        }
       }
     },
     "test-proj": {
@@ -270,18 +258,6 @@
             ]
           }
         },
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "apps/test-proj/e2e/protractor.conf.js",
-            "devServerTarget": "test-proj:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "test-proj:serve:production"
-            }
-          }
-        }
       }
     },
     "global-types": {
