@@ -1,4 +1,4 @@
-import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { AbstractControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Prop } from 'global-types';
 
 export function isSamePasswordsValidator<TForm>(controlName1: Prop<TForm>, controlName2: Prop<TForm>): ValidatorFn {

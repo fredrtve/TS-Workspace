@@ -1,6 +1,6 @@
 export const environment = {
     production: true,
-    apiUrl: 'https://bjbyggdemo.azurewebsites.net/api',
+    apiUrl: 'https://bjbyggdemoapi.azurewebsites.net/api',
     baseUrl: '/demo',
     googleMapsKey: 'AIzaSyBUWZmwjGN92B3PoNS6x6qpOmc3xrP55d8', 
     inboundEmailDomain: 'rapporter.bjbygg.no',
