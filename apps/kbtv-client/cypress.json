@@ -1,0 +1,9 @@
+{
+  "integrationFolder": "apps/kbtv-client/cypress/integration",
+  "supportFile": "apps/kbtv-client/cypress/support/index.ts",
+  "videosFolder": "apps/kbtv-client/cypress/videos",
+  "screenshotsFolder": "apps/kbtv-client/cypress/screenshots",
+  "pluginsFile": "apps/kbtv-client/cypress/plugins/index.ts",
+  "fixturesFolder": "apps/kbtv-client/cypress/fixtures",
+  "baseUrl": "http://localhost:4200"
+}

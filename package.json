@@ -19,7 +19,9 @@
     "buildAll": "node scripts/build-all.js",
     "buildLibs": "node scripts/build-libs.js",
     "generateApiDocs": "node scripts/generate-api-docs.js",
-    "buildDebug": "env NG_BUILD_MANGLE=false NG_BUILD_MINIFY=false NG_BUILD_BEAUTIFY=true ng build --project kbtv-client --prod --stats-json"
+    "buildDebug": "env NG_BUILD_MANGLE=false NG_BUILD_MINIFY=false NG_BUILD_BEAUTIFY=true ng build --project kbtv-client --prod --stats-json",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   },
   "private": true,
   "dependencies": {
@@ -53,6 +55,7 @@
     "@angular/compiler-cli": "^12.0.2",
     "@angular/language-service": "^12.0.2",
     "@compodoc/compodoc": "^1.1.11",
+    "@cypress/schematic": "^1.5.0",
     "@types/jasmine": "^3.6.7",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^14.14.41",
@@ -70,6 +73,7 @@
     "tslint": "~6.1.0",
     "typedoc": "^0.20.34",
     "typescript": "^4.2.3",
-    "webpack-bundle-analyzer": "^3.9.0"
+    "webpack-bundle-analyzer": "^3.9.0",
+    "cypress": "8.1.0"
   }
 }

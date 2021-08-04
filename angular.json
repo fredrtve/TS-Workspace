@@ -45,7 +45,7 @@
                 "input": "apps/kbtv-client/src/styles/lazy-styles/mat-sidenav.scss",
                 "bundleName": "mat-sidenav",
                 "inject": false
-              }      
+              }
             ],
             "scripts": [],
             "vendorChunk": true,
@@ -117,37 +117,52 @@
             }
           }
         },
-        // "test": {
-        //   "builder": "@angular-devkit/build-angular:karma",
-        //   "options": {
-        //     "main": "apps/kbtv-client/src/test.ts",
-        //     "polyfills": "apps/kbtv-client/src/polyfills.ts",
-        //     "tsConfig": "tsconfig.spec.json",
-        //     "karmaConfig": "karma.conf.js",
-        //     "assets": [
-        //       "apps/kbtv-client/src/favicon.ico",
-        //       "apps/kbtv-client/src/assets",
-        //       "apps/kbtv-client/src/manifest.json"
-        //     ],
-        //     "styles": [
-        //       "apps/kbtv-client/src/styles/styles.scss"
-        //     ],
-        //     "scripts": []
-        //   }
-        // },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
               "apps/kbtv-client/tsconfig.app.json",
               "apps/kbtv-client/tsconfig.spec.json",
-              "apps/kbtv-client/e2e/tsconfig.json"
+              "apps/kbtv-client/cypress/tsconfig.json"
             ],
             "exclude": [
               "**/node_modules/**"
             ]
           }
         },
+        "cypress-run": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "kbtv-client:serve",
+            "configFile": "apps/kbtv-client/cypress.json"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "kbtv-client:serve:production"
+            }
+          }
+        },
+        "cypress-open": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "watch": true,
+            "headless": false,
+            "configFile": "apps/kbtv-client/cypress.json"
+          }
+        },
+        "e2e": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "kbtv-client:serve",
+            "watch": true,
+            "headless": false
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "kbtv-client:serve:production"
+            }
+          }
+        }
       }
     },
     "test-proj": {
@@ -176,7 +191,7 @@
             ],
             "extractCss": true,
             "styles": [
-              "apps/test-proj/src/styles/styles.scss"   
+              "apps/test-proj/src/styles/styles.scss"
             ],
             "scripts": [],
             "vendorChunk": true,
@@ -201,18 +216,7 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "budgets": [
-                // {
-                //   "type": "initial",
-                //   "maximumWarning": "1mb",
-                //   "maximumError": "2mb"
-                // },
-                // {
-                //   "type": "anyComponentStyle",
-                //   "maximumWarning": "2kb",
-                //   "maximumError": "4kb"
-                // }
-              ]
+              "budgets": []
             }
           }
         },
@@ -227,37 +231,52 @@
             }
           }
         },
-        // "test": {
-        //   "builder": "@angular-devkit/build-angular:karma",
-        //   "options": {
-        //     "main": "apps/test-proj/src/test.ts",
-        //     "polyfills": "apps/test-proj/src/polyfills.ts",
-        //     "tsConfig": "tsconfig.spec.json",
-        //     "karmaConfig": "karma.conf.js",
-        //     "assets": [
-        //       "apps/test-proj/src/favicon.ico",
-        //       "apps/test-proj/src/assets",
-        //       "apps/test-proj/src/manifest.json"
-        //     ],
-        //     "styles": [
-        //       "apps/test-proj/src/styles/styles.scss"
-        //     ],
-        //     "scripts": []
-        //   }
-        // },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
               "apps/test-proj/tsconfig.app.json",
               "apps/test-proj/tsconfig.spec.json",
-              "apps/test-proj/e2e/tsconfig.json"
+              "apps/test-proj/cypress/tsconfig.json"
             ],
             "exclude": [
               "**/node_modules/**"
             ]
           }
         },
+        "cypress-run": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "test-proj:serve",
+            "configFile": "apps/test-proj/cypress.json"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "test-proj:serve:production"
+            }
+          }
+        },
+        "cypress-open": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "watch": true,
+            "headless": false,
+            "configFile": "apps/test-proj/cypress.json"
+          }
+        },
+        "e2e": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "test-proj:serve",
+            "watch": true,
+            "headless": false
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "test-proj:serve:production"
+            }
+          }
+        }
       }
     },
     "global-types": {
