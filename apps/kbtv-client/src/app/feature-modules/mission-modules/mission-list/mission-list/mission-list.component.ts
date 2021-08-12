@@ -13,7 +13,6 @@ import { BottomIconButtons } from "@shared/constants/bottom-icon-buttons.const";
 import { _sortByDate } from "array-helpers";
 import { ModelFormService } from 'model/form';
 import { Observable } from "rxjs";
-import { map } from "rxjs/operators";
 
 @Component({
   selector: "app-mission-list",

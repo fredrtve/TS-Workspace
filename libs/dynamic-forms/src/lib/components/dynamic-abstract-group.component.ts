@@ -79,6 +79,7 @@ export abstract class DynamicAbstractGroupComponent<
         componentRef.instance.question = <any> controlCfg.question || {};  
         componentRef.instance.required = controlCfg.required;  
         componentRef.location.nativeElement.style.marginTop = "3vh";
+        componentRef.location.nativeElement.classList.add('form-' + controlName);
 
         if(controlCfg.panelClass)
             componentRef.location.nativeElement.classList.add(controlCfg.panelClass)   
@@ -96,7 +97,8 @@ export abstract class DynamicAbstractGroupComponent<
         componentRef.instance.config = groupCfg;
         componentRef.instance.formGroup = formGroup;
         componentRef.instance.formOptions = this.formOptions;
-
+        componentRef.location.nativeElement.classList.add('form-' + controlName);
+        
         if(groupCfg.panelClass) 
             componentRef.location.nativeElement.classList.add(groupCfg.panelClass)
 

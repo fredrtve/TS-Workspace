@@ -1,4 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Injector, NgZone } from '@angular/core';
+import { environment } from 'src/environments/environment';
+import { Store } from 'state-management';
 
 @Component({
   selector: 'app-root',
@@ -7,5 +9,11 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'test-client';
-  constructor(){ }
+  constructor(store: Store<unknown>, ngZone: NgZone){ 
+    const testWindow = <any> window;
+    if(environment.testing) {
+      testWindow.store = store;
+      testWindow.ngZone = ngZone;
+    };
+  }
 }

@@ -1,0 +1,20 @@
+{
+    "user": {
+      "userName": "Leder",
+      "firstName": "Peder2",
+      "lastName": "Lan",
+      "phoneNumber": "94446434",
+      "email": "test@test.com",
+      "role": "Leder",
+      "updatedAt": 1625054432000
+    },
+    "accessToken": {
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJMZWRlciIsImp0aSI6IjVmNjM0MjFjLTBhNTEtNGY0NS04YmE1LTNlNDVmMmM2NGI4YSIsImlhdCI6MTYyODUwOTE1OSwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiTGVkZXIiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiTGVkZXIiLCJyb2wiOiJhcGlfYWNjZXNzIiwiaWQiOiJjZGY5M2I4OC1hZjdlLTRhZWMtODk3Yi02ZjU2YjVkZjhiMDIiLCJuYmYiOjE2Mjg1MDkxNTksImV4cCI6MTYyODUxMDA1OSwiaXNzIjoiQmpCeWdnV2ViQXBpIiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo0NDM3OS8ifQ.1s6p86NZrA_oeqhDRVY3a1nO7-JJbs5AV65fQxi96pI",
+      "expiresIn": 900
+    },
+    "refreshToken": "YxhO6nfKglTSnTV4AxgXrJNVTHw81qZpSQw+mIQZjbM=",
+    "syncConfig": {
+      "initialTimestamp": 1564610400000,
+      "refreshTime": 1800
+    }
+}

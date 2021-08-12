@@ -14,4 +14,40 @@
 // ***********************************************************
 
 // When a command from ./commands is ready to use, import with `import './commands'` syntax
-// import './commands';
+import { Immutable } from 'global-types';
+import { StateAction } from 'state-management';
+import './commands';
+
+const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+const charLength = chars.length;
+export function _stringGen(length: number): string{
+    var id = '';
+    for ( var i = 0; i < length; i++ ) {
+        id += chars.charAt(Math.floor(Math.random() * charLength));
+    }
+    return id;
+}
+
+declare global {
+    namespace Cypress {
+    interface Chainable {
+      /**
+       * Custom command to select DOM element by data-cy attribute.
+       * @example cy.dataCy('greeting')
+       */
+      login(role: 'Leder' | 'Mellomleder' | 'Ansatt', redirectUrl: string, syncState?: object): Chainable
+      
+      navigateBack(): Chainable
+
+      closeForm(): Chainable
+
+      mainFabClick(): Chainable
+
+      storeDispatch<TAction extends StateAction>(action: Immutable<TAction>): Chainable
+
+      storeState<TState>(): Chainable<Immutable<TState>>
+
+      confirmDelete(): Chainable
+    }
+  }
+}

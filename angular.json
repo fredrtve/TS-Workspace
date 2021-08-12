@@ -103,6 +103,24 @@
               "buildOptimizer": true,
               "serviceWorker": true,
               "ngswConfigPath": "apps/kbtv-client/ngsw-config.json"
+            },
+            "e2e": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/kbtv-client/src/environments/environment.ts",
+                  "with": "apps/kbtv-client/src/environments/environment.e2e.ts"
+                }
+              ],
+              "sourceMap": false,
+              "optimization": true,
+              "outputHashing": "all",
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "serviceWorker": true,
+              "ngswConfigPath": "apps/kbtv-client/ngsw-config.json"
             }
           }
         },

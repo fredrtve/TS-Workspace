@@ -1,0 +1,10 @@
+{
+    "timestamp": 321321,
+    "arrays": {},
+    "values": {
+      "currentUser": null,
+      "leaderSettings": {
+        "confirmTimesheetsMonthly": true
+      }
+    }
+  }
