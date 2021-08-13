@@ -2,17 +2,17 @@ import { Validators } from '@angular/forms';
 import { Employer, Mission, User } from '@core/models';
 import { StateEmployers, StateMissions, StateUsers } from '@core/state/global-state.interfaces';
 import { _compareProp } from '@shared-app/helpers/compare-with-prop.helper';
+import { IonDateQuestion, IonDateQuestionComponent } from '@shared/scam/dynamic-form-questions/ion-date-time-question.component';
 import { isObjectValidator } from '@shared/validators/is-object.validator';
+import { DateRange } from 'date-time-helpers';
 import { DynamicControl, DynamicControlGroup, _formStateBinding } from 'dynamic-forms';
 import { Immutable } from 'global-types';
+import { ValidationRules } from '../../shared-app/constants/validation-rules.const';
 import { AutoCompleteQuestionComponent } from '../scam/dynamic-form-questions/auto-complete-question/auto-complete-question.component';
 import { AutoCompleteQuestion } from '../scam/dynamic-form-questions/auto-complete-question/auto-complete-question.interface';
 import { GooglePlacesAutoCompleteQuestion, GooglePlacesAutoCompleteQuestionComponent } from '../scam/dynamic-form-questions/google-places-autocomplete-question.component';
 import { InputQuestion, InputQuestionComponent } from '../scam/dynamic-form-questions/input-question.component';
 import { SelectQuestion, SelectQuestionComponent } from '../scam/dynamic-form-questions/select-question.component';
-import { ValidationRules } from '../../shared-app/constants/validation-rules.const';
-import { DateRange } from 'date-time-helpers';
-import { IonDateQuestion, IonDateQuestionComponent } from '@shared/scam/dynamic-form-questions/ion-date-time-question.component';
 
 export const PhoneNumberControl: Immutable<DynamicControl<string, null, InputQuestion>> = { 
     questionComponent: InputQuestionComponent,
@@ -60,7 +60,7 @@ export const MissionAutoCompleteControl: Immutable<DynamicControl<Mission, State
             options: _formStateBinding<StateMissions, Mission[]>()( ["missions"] , (s) => s.missions || [] )
         }
     }, 
-    validators: [isObjectValidator()], 
+    validators:[ isObjectValidator("mission") ],
 }
 export const EmployerSelectControl: Immutable<DynamicControl<Employer, StateEmployers, SelectQuestion<Employer, StateEmployers>>> = { 
     questionComponent: SelectQuestionComponent,
