@@ -11,9 +11,9 @@ import { ActiveStringFilterConfig } from '../interfaces/active-string-filter-con
 })
 export class ActiveStringFilterDirective<TRecord> {
 
-    private optionsSubject = new BehaviorSubject<ImmutableArray<unknown>>([]);
+    private optionsSubject = new BehaviorSubject<ImmutableArray<TRecord>>([]);
 
-    @Input('appActiveStringFilterOptions') set options(value: ImmutableArray<unknown>){
+    @Input('appActiveStringFilterOptions') set options(value: ImmutableArray<TRecord>){
         if(value === this.optionsSubject.value) return;
         this.optionsSubject.next(value)
     }
@@ -57,7 +57,7 @@ export class ActiveStringFilterDirective<TRecord> {
                     options?.slice(0, this._config.maxChecks) : options; 
                 else {
                     this.searchLower = criteria.toLowerCase();
-                    return _filter(options, this.filterRecord);
+                    return _filter<TRecord>(options, (t) => this.filterRecord(t));
                 }
         }))
     }
