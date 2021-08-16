@@ -1,25 +1,23 @@
+import { Mission } from "@core/models";
+
 describe('Home', () => {
+
+    const mission1 : Mission = { id: '1', address: 'address1', lastVisited: new Date().getTime() } 
+    const mission2 : Mission = { id: '2', address: 'address2', lastVisited: new Date().getTime() - 1000 }
 
     const firstMission = () => cy.get(".mission-list").children().first();
 
     beforeEach(() => {
-        cy.login('Leder', '/'); 
+        cy.login('Leder', '/', { missions: [mission1, mission2]}); 
     })
 
-    it('Should display latest visited missions first', () => {        
-        const lastMission = () => cy.get(".mission-list").children().last();
-        lastMission().find(".list-item-content").invoke('text').then((text) => {
-            lastMission().click();
-            cy.navigateBack();
-            firstMission().find(".list-item-content").should('have.text', text);
-        });
+    it('Should display latest visited missions first', () => {    
+        firstMission().should('contain', mission1.address)   
     });
 
     it('Should navigate to mission', () => { 
-        firstMission().find(".list-item-content").invoke('text').then((text) => {
-            firstMission().click();
-            cy.get(".content-header-title").should(el => expect(el.text().trim()).to.eq(text.trim()))
-        });
+        firstMission().click();
+        cy.url().should('contain', mission1.id + '/detaljer');
     })
 
     // Navigating to closest mission

@@ -1,8 +1,15 @@
+import { DatePipe } from "@angular/common";
 import { StateMissionCriteria } from "@shared-mission/interfaces";
 import { MissionCriteria } from "@shared/interfaces";
 import { _getISO } from "date-time-helpers";
+import { registerLocaleData } from '@angular/common';
+import norwayLocale from '@angular/common/locales/nb';
+
+registerLocaleData(norwayLocale, 'nb-NO');
 
 describe('Mission Filter', () => {
+
+    const datePipe = new DatePipe("nb-NO");
 
     const existingCriteria: MissionCriteria = { 
         searchString: "test", employer: {id: "test", name: "test"}, missionType: {id: "test", name: "test"},
@@ -23,13 +30,13 @@ describe('Mission Filter', () => {
     it('Shows existing values & can update values', () => {  
 
         const finishTxt = (finished: boolean) => finished ? 'Ferdig' : 'Aktiv';
-
+        
         //Check that existing values are filled in
         cy.get('.form-searchString input').invoke('val').should('eq', existingCriteria.searchString)    
         cy.get('.form-employer').should('contain', existingCriteria.employer!.name)  
         cy.get('.form-missionType').should('contain', existingCriteria.missionType!.name)  
-        cy.get('.form-end input').invoke('val').should('not.be.undefined');
-        cy.get('.form-start input').invoke('val').should('not.be.undefined');
+        cy.get('.form-end input').invoke('val').should('eq', datePipe.transform(existingCriteria.dateRange!.end, "MMM d, y"));
+        cy.get('.form-start input').invoke('val').should('eq', datePipe.transform(existingCriteria.dateRange!.start, "MMM d, y"));
         cy.get('.form-finished .mat-radio-checked').contains(finishTxt(existingCriteria.finished!)) 
 
         //Update values

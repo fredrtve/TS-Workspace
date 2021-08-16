@@ -48,6 +48,16 @@ declare global {
       storeState<TState>(): Chainable<Immutable<TState>>
 
       confirmDelete(): Chainable
+
+      ionSelect(col: number, i: number): Chainable
+
+      ionTimeSelect(params: { hour: number, minutes: number }, minuteInterval?: number): Chainable
+
+      ionDateSelect(params: {year: number, month: number, day: number}): Chainable
+
+      goOffline(): Chainable
+  
+      goOnline(): Chainable
     }
   }
 }

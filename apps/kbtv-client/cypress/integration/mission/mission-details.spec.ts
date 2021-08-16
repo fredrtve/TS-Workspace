@@ -80,4 +80,13 @@ describe('Mission Details', () => {
         cy.url().should('contain', '/timer').navigateBack();
     })
 
+    it('Updates last visited on mission on entry', () => {
+        cy.login('Leder', '/oppdrag', { missions: [mission] });
+        cy.contains(mission.address).click();
+        cy.storeState<StateMissions>().then(state => {
+            const updated = state.missions?.filter(x => x.id === mission.id)[0];
+            console.log(updated);
+            expect(updated!.lastVisited).is.closeTo(new Date().getTime(), 1000);
+        })
+    })
 });

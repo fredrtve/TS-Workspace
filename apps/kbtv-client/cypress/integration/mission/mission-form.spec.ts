@@ -19,7 +19,6 @@ describe('Mission Form', () => {
         cy.intercept('DELETE', '**' + ApiUrl.Mission + '/**', { statusCode: 204, delay: 100 }).as('deleteMission');  
     })
 
-    // Create mission with only required fields (check that form cant submit for each field filled)
     it('can fill in form and create mission', () => {  
         cy.login('Leder', '/oppdrag', { missionTypes: [missionType], employers: [employer]}); 
         cy.mainFabClick();
@@ -87,7 +86,6 @@ describe('Mission Form', () => {
         })
     });
 
-    // Create mission with new employer & new mission type
     it('can create mission with new employer & mission type', () => {  
         cy.login('Leder', '/oppdrag');   
         cy.mainFabClick();
@@ -115,7 +113,6 @@ describe('Mission Form', () => {
 
     })
 
-    // Show current values and update
     it('shows current values on update & updates changed values', () => {
         cy.login('Leder', '/oppdrag/' + mission.id + '/detaljer' , { missionTypes: [missionType], employers: [employer], missions: [mission]});  
         cy.contains('Mer').click();
@@ -150,7 +147,6 @@ describe('Mission Form', () => {
         })
     })
 
-    //Can delete
     it('Can delete current mission', () => {
         cy.login('Leder', '/oppdrag/' + mission.id + '/detaljer' , { missionTypes: [missionType], employers: [employer], missions: [mission]});  
         cy.contains('Mer').click();

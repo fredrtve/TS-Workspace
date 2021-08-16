@@ -49,7 +49,7 @@ describe('Mission Image List', () => {
     it('should add new image to start of list', () => {
         cy.intercept('POST', '**' + ApiUrl.MissionImage, { statusCode: 204, delay: 100 }).as('createMissionImage');
         cy.get('app-mission-image-list > input').first().invoke('removeAttr', 'style').attachFile('sample-image-1.jpg');
-        getImages().should('have.length', 3);
+        getImages().should('have.length', 4);
         getImage(1).should('have.attr', 'src').should('include', "blob:");
     });
 

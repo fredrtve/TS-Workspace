@@ -9,6 +9,7 @@ Cypress.Commands.add('login', (role: 'Leder' | 'Mellomleder' | 'Ansatt', redirec
   window.localStorage.clear();
   window.indexedDB.deleteDatabase("kbtvDb");
   cy.intercept('https://localhost:44379/api/SyncAll/**', { fixture: 'sync-response'}).as('sync');
+  cy.intercept('https://localhost:44379/api/SyncAll', { fixture: 'sync-response'});
   cy.fixture('initial-state').then((initialState: LoginResponse & StateSyncConfig) => {
       initialState.user.role = role;
       localStorage.setItem('accessToken', JSON.stringify(initialState.accessToken.token));
@@ -52,4 +53,54 @@ Cypress.Commands.add('storeState', () => {
 
 Cypress.Commands.add('confirmDelete', () => {
   cy.get('.mat-dialog-actions').contains('Slett').click();
+});
+
+Cypress.Commands.add('ionSelect', (col: number, i: number) => {
+  return cy.get('ion-picker-column').eq(col)
+           .find(`.picker-opts > button[opt-index="${i}"]`);
+});
+
+Cypress.Commands.add('ionDateSelect', (params: {year: number, month: number, day: number}) => {
+  return cy.ionSelect(0, new Date().getFullYear() - params.year).click({force: true})
+    .ionSelect(1, params.month).click({force: true})
+    .ionSelect(2, params.day - 1).click({force: true});
+});
+
+Cypress.Commands.add('ionTimeSelect', (params: { hour: number, minutes: number }, minuteInterval = 15) => {
+  return cy.ionSelect(0, params.hour).click({force: true})
+           .ionSelect(1, params.minutes / minuteInterval).click({force: true}); 
+});
+
+Cypress.Commands.add('goOffline', () => {
+  Cypress.automation('remote:debugger:protocol',
+  {
+    command: 'Network.enable',
+  })
+  Cypress.automation('remote:debugger:protocol',
+  {
+    command: 'Network.emulateNetworkConditions',
+    params: {
+      offline: true,
+      latency: -1,
+      downloadThroughput: -1,
+      uploadThroughput: -1,
+    },
+  })
+});
+
+Cypress.Commands.add('goOnline', () => {
+  Cypress.automation('remote:debugger:protocol',
+      {
+        command: 'Network.emulateNetworkConditions',
+        params: {
+          offline: false,
+          latency: -1,
+          downloadThroughput: -1,
+          uploadThroughput: -1,
+        },
+      })
+  Cypress.automation('remote:debugger:protocol',
+      {
+        command: 'Network.disable',
+      })
 });
