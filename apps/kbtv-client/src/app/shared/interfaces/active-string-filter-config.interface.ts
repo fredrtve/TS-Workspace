@@ -1,10 +1,9 @@
-import { Immutable, Prop } from 'global-types';
-import { Observable } from 'rxjs';
+import { Immutable, Maybe } from 'global-types';
 
-export interface ActiveStringFilterConfig<TRecord>{
-    stringProps: Prop<Immutable<TRecord>>[];  
-    stringChanges$: Observable<string>;
-    initialString?: string;
+export interface ActiveStringFilterConfig<TRecord, TCriteria>{
+    criteriaFormatter?: (t: Maybe<TCriteria>) => Maybe<TCriteria>;
+    filter: (x: Immutable<TRecord>, y: TCriteria) => boolean;
+    nullFilter?: (x: Immutable<TRecord>) => boolean;
     maxChecks?: number;
     customDebounceTime?: number;
 }

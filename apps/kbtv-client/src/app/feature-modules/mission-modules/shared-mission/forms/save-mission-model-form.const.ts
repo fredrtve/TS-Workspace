@@ -38,7 +38,10 @@ const EmployerControl: Immutable<DynamicControl<string, FormState, AutoCompleteQ
         hint: "Lag ny eller velg eksisterende oppdragsgiver",
         valueFormatter: (val) => val.name, 
         resetable: true,
-        activeFilter: { stringProps: ["name"] },
+        activeFilter: { 
+            criteriaFormatter: (s) => s?.toLowerCase(), 
+            filter: (e, s) => e.name.toLowerCase().indexOf(s) !== -1 
+        },
         stateBindings:{ options: _formStateBinding<FormState, Employer[]>()(["employers"], s => s.employers || []) }
     },  
 }
@@ -52,7 +55,10 @@ const MissionTypeControl: Immutable<DynamicControl<string, FormState, AutoComple
         hint: "Lag ny eller velg eksisterende oppdragstype",
         valueFormatter: (val) => val.name, 
         resetable: true,
-        activeFilter: { stringProps: ["name"] },
+        activeFilter: { 
+            criteriaFormatter: (s) => s?.toLowerCase(),
+            filter: (e, s) => e.name.toLowerCase().indexOf(s) !== -1 ,
+        },
         stateBindings: { options: _formStateBinding<FormState, MissionType[]>()(["missionTypes"], s => s.missionTypes || []) }
     } 
 }

@@ -10,6 +10,6 @@ export interface AutoCompleteQuestion<T, TFormState extends object | null> exten
     resetable?: boolean;
     valueFormatter?: (val: T) => unknown;  
     displayWith?: (value: T) => string;
-    activeFilter?: Omit<ActiveStringFilterConfig<T>, "stringChanges$">;
+    activeFilter?: ActiveStringFilterConfig<T, string>;
     lazyOptions: LazySelectOption;
 }

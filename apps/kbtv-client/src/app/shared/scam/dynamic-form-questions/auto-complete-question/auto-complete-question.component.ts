@@ -18,8 +18,7 @@ export class AutoCompleteQuestionComponent<T>
     extends BaseQuestionComponent<AutoCompleteQuestionBindings<T>, AutoCompleteQuestion<T, object | null>> {
 
     options$: Observable<ImmutableArray<unknown>>;
-
-    activeFilter: Immutable<ActiveStringFilterConfig<UnknownState>>;
+    criteria$: Observable<string>;
 
     private get _options$(): Observable<ImmutableArray<unknown>> {
         return this.stateBindings.options || of([])
@@ -32,12 +31,7 @@ export class AutoCompleteQuestionComponent<T>
         }
 
     ngOnInit(): void {
-        if(this.question.activeFilter)
-            this.activeFilter = {
-                ...this.question.activeFilter || {}, 
-                stringChanges$: this.control?.valueChanges || of(null)
-            }
-
+        this.criteria$ = this.control?.valueChanges || of(null);
         if(_shouldEagerOptions(this.question.lazyOptions, this.control)) 
             this.options$ = this._options$;
     }

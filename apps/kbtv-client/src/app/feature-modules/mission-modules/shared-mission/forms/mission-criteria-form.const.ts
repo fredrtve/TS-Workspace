@@ -28,7 +28,11 @@ const SearchStringControl: Immutable<DynamicControl<string, FormState, AutoCompl
         lazyOptions: "all",
         placeholder: "Søk med adresse",
         resetable: true,
-        activeFilter: { stringProps: ["address"], maxChecks: 50 },
+        activeFilter: { 
+            criteriaFormatter: (s) => s?.toLowerCase(), 
+            filter: (e, s) => e.address!.toLowerCase().indexOf(s) !== -1, 
+            maxChecks: 50 
+        },
         stateBindings: {
             options: _formStateBinding<FormState, Mission[]>()(["missions"], (s) => s.missions || [])
         }

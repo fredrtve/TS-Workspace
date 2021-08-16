@@ -55,7 +55,11 @@ export const MissionAutoCompleteControl: Immutable<DynamicControl<Mission, State
         valueFormatter: (val) => val.address,
         displayWith: (mission) => mission?.address || "",
         resetable: true,
-        activeFilter: { stringProps: ["address"], maxChecks: 50 },
+        activeFilter: { 
+            criteriaFormatter: (s) => (s !== null && typeof s === "object") ? null : s?.toLowerCase(),
+            filter: (m, s) => m.address!.toLowerCase().indexOf(s) !== -1, 
+            maxChecks: 50 
+        },
         stateBindings: { 
             options: _formStateBinding<StateMissions, Mission[]>()( ["missions"] , (s) => s.missions || [] )
         }
