@@ -5,7 +5,8 @@ import { IPosition } from '@core/models/sub-interfaces/iposition.interface';
 import { DeviceInfoService } from '@core/services/device-info.service';
 import { GoogleMapsMarkerIcons } from '@shared-app/constants/google-maps-marker-icons.const';
 import { Immutable } from 'global-types';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-mission-position-picker',
@@ -18,7 +19,9 @@ export class MissionPositionPickerComponent {
     @Input() mission: Immutable<Mission> | undefined;
     @Output() positionSelected = new EventEmitter<IPosition>()
 
-    userPosition$: Observable<GeolocationPosition> = this.deviceInfoService.userLocation$;
+    userPosition$: Observable<GeolocationPosition | null> = this.deviceInfoService.userLocation$.pipe(
+        catchError(x => { return of(null) })
+    );
 
     selectedPosition: google.maps.LatLngLiteral | null;
 
@@ -34,7 +37,7 @@ export class MissionPositionPickerComponent {
         draggable: false, icon: { url: GoogleMapsMarkerIcons.Red } 
     } 
 
-    constructor(private deviceInfoService: DeviceInfoService) {  }
+    constructor(private deviceInfoService: DeviceInfoService) { }
 
     openInfoWindow(marker: MapMarker, description: string) {
         this.infoWindow.infoWindow?.setContent(description);

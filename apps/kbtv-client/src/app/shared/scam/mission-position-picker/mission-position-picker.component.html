@@ -9,21 +9,22 @@
         flex: 1 1 0;
     }
     button { height: 50px; }
+    .no-user-position-text{ text-align: center }
 </style>
-<ng-container *ngIf="userPosition$ | async; let userPosition">
+<ng-container *ngIf="{userPosition: userPosition$ | async} as values">
 
     <google-map height="auto" width="100%" [zoom]="8" 
-    [center]="userPosition.coords | appConvertToGooglePosition" 
+    [center]="(values.userPosition?.coords || mission?.position) | appConvertToGooglePosition" 
     (mapClick)="updateSelectedMarker($event)">
 
         <map-marker #userMarker="mapMarker"
-            [position]="userPosition.coords | appConvertToGooglePosition"
+            [position]="values.userPosition?.coords | appConvertToGooglePosition"
             [options]="userPositionMarkerOptions"
             (mapClick)="openInfoWindow(userMarker, 'Min posisjon')">
         </map-marker>
         
         <map-marker *ngIf="mission?.position" #missionMarker="mapMarker"
-            [position]="mission!.position! | appConvertToGooglePosition"
+            [position]="mission!.position | appConvertToGooglePosition"
             [options]="missionMarkerOptions"
             (mapClick)="openInfoWindow(missionMarker, 'Oppdragets nåværende posisjon')">
         </map-marker>
@@ -38,10 +39,14 @@
 
     </google-map>
 
-    <button mat-button 
-        (click)="submitPosition(userPosition.coords.latitude, userPosition.coords.longitude)">
+    <button mat-button *ngIf="values.userPosition; else noPosition"
+        (click)="submitPosition(values.userPosition.coords.latitude, values.userPosition.coords.longitude)">
         Bruk min posisjon
     </button>
+
+    <ng-template #noPosition>
+        <div class="no-user-position-text mat-body-2 p-3">Del posisjon med nettleseren for å velge din nåværende posisjon.</div>
+    </ng-template>
 
     <mat-divider></mat-divider>
 

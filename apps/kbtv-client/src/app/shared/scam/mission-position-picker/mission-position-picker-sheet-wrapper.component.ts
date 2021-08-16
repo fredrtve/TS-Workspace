@@ -48,7 +48,8 @@ export class MissionPositionPickerSheetWrapperComponent {
             if(mission?.position) return of(mission);
             else return this.geocoder.geocode({ address: mission?.address, region: "no"}).pipe(map(x => {
                 const position = x.results?.[0]?.geometry.location.toJSON();
-                return {...mission, position: { latitude: position.lat, longitude: position.lng }}
+                return { ...mission, 
+                    position: position ? { latitude: position.lat, longitude: position.lng } : undefined }
             }))
         })
     );
