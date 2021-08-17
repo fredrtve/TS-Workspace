@@ -79,7 +79,8 @@ export abstract class DynamicAbstractGroupComponent<
         componentRef.instance.question = <any> controlCfg.question || {};  
         componentRef.instance.required = controlCfg.required;  
         componentRef.location.nativeElement.style.marginTop = "3vh";
-        componentRef.location.nativeElement.classList.add('form-' + controlName);
+
+        componentRef.location.nativeElement.setAttribute('data-cy', 'form-' + controlName);
 
         if(controlCfg.panelClass)
             componentRef.location.nativeElement.classList.add(controlCfg.panelClass)   

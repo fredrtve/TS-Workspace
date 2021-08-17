@@ -7,15 +7,15 @@ import { Employer } from '@core/models';
     <app-list-item rippleDisabled=true *ngIf="employer">
         <mat-icon left-side class="pl-2 pr-2">work</mat-icon>
      
-          <div>{{ employer.name }}</div>
+          <div data-cy="employer-name">{{ employer.name }}</div>
  
           <span right-side>
 
-            <a *ngIf="employer.phoneNumber" href="tel:{{ employer.phoneNumber }}">
+            <a *ngIf="employer.phoneNumber" href="tel:{{ employer.phoneNumber }}" data-cy="employer-phoneNumber">
               <button mat-icon-button color="accent"><mat-icon>phone</mat-icon></button>
             </a>
             
-            <a *ngIf="employer.address" 
+            <a *ngIf="employer.address" data-cy="employer-directions"
               href="https://www.google.com/maps/dir/?api=1&destination={{ employer.address }}&travelmode=driving"
               target="_blank">
               <button mat-icon-button color="accent">

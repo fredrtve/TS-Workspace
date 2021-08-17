@@ -7,7 +7,7 @@
     <ng-container *ngIf="notes$ | async; else loading; let notes">
         <ng-container *ngIf="notes.length; else loading">
             <ng-container *ngFor="let note of notes; trackBy: trackByNote">
-                <app-note-item [note]="note" (editClicked)="openEditNoteForm($event)">         
+                <app-note-item [note]="note" (editClicked)="openEditNoteForm($event)" data-cy="mission-note-item">         
                 </app-note-item>
                 <mat-divider></mat-divider>
             </ng-container>

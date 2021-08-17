@@ -20,7 +20,7 @@
 </style>
 <div class="actions-container">
 
-    <button mat-button class="left-button"
+    <button mat-button class="left-button" data-cy="reset-form"
       *ngIf="showReset; else cancelButton"
       [disabled]="resetDisabled"
       color="warn"
@@ -29,12 +29,12 @@
     </button>
 
     <ng-template #cancelButton>
-      <button mat-button color="warn" class="left-button" (tap)="canceled.emit()">
+      <button mat-button data-cy="cancel-form" color="warn" class="left-button" (tap)="canceled.emit()">
         Avbryt
       </button>
     </ng-template>
 
-    <button *ngIf="vm$ | async; let vm" class="right-button"
+    <button *ngIf="vm$ | async; let vm" class="right-button" data-cy="submit-form"
       mat-raised-button
       color="accent"
       [disabled]="(!vm.isOnline && onlineRequired) || submitDisabled"

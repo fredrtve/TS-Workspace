@@ -19,7 +19,7 @@ import { MainNavService } from '../main-nav.service';
         }
     </style>
 
-    <mat-toolbar class="mb-4 mt-4" *ngIf="config">
+    <mat-toolbar class="mb-4 mt-4" *ngIf="config" data-cy="side-bar-header">
 
         <ng-container *ngIf="config.isOnline else offlineHeader">
         <span class="mat-small color-accent ellipsis"> Tilkoblet internett</span>

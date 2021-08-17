@@ -5,10 +5,11 @@
         {{ selectionTitle || 'Dokumenter' }}
     </app-main-top-nav-bar>
 
-    <div cdkSelectableContainer #selectableContainer *ngIf="documents$ | async; let documents; else loading"
+    <div cdkSelectableContainer #selectableContainer
+        *ngIf="documents$ | async; let documents; else loading"
         (selectionChanged)="onSelectionChange($event)">
         <app-selectable-card *ngFor="let doc of documents; trackBy: trackByFn" [id]="doc.id" selectedText="Dokument valgt">
-            <app-list-item (tap)="downloadDocument(doc)" [rippleDisabled]="true">
+            <app-list-item (tap)="downloadDocument(doc)" [rippleDisabled]="true" data-cy="mission-document-item">
                 <mat-icon left-side [svgIcon]="doc.fileName | fileExtension | fileExtensionIcon"></mat-icon>
                 <div class="ellipsis">{{ doc.name }}</div>  
                 <div class="mat-caption">Filtype: {{ doc.fileName | fileExtension | uppercase }}</div>

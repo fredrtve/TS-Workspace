@@ -9,13 +9,13 @@ import { AppChip } from '@shared-app/interfaces/app-chip.interface';
 
         <mat-chip-list aria-orientation="horizontal" class="horizontal-chips">
 
-        <mat-chip *ngFor="let chip of chips; trackBy: trackByChip" selected="true"
+        <mat-chip data-cy="bar-chip" *ngFor="let chip of chips; trackBy: trackByChip" selected="true"
             [color]="chip.color || 'background'"
             [removable]="chip.onRemoved"  
             (click)="handleFn(chip.onClick)"
             (removed)="handleFn(chip.onRemoved)">   
             <span class="ellipsis">{{ chip.text }}</span>
-            <mat-icon *ngIf="chip.onRemoved" matChipRemove>cancel</mat-icon>
+            <mat-icon *ngIf="chip.onRemoved" matChipRemove data-cy="bar-chip-remove">cancel</mat-icon>
         </mat-chip>
 
         </mat-chip-list>

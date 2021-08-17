@@ -47,7 +47,7 @@ declare global {
 
       storeState<TState>(): Chainable<Immutable<TState>>
 
-      confirmDelete(): Chainable
+      dialogConfirm(): Chainable
 
       ionSelect(col: number, i: number): Chainable
 
@@ -58,6 +58,8 @@ declare global {
       goOffline(): Chainable
   
       goOnline(): Chainable
+
+      getCy(value: string, extendedSelector?: string): Chainable
     }
   }
 }

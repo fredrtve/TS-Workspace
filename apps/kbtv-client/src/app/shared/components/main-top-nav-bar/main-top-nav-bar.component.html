@@ -1,20 +1,21 @@
 <mat-toolbar #navBar [ngClass]="overlayMode ? 'main-top-nav-overlay' : ''">
 
-    <app-button *ngIf="showCancelButton" class="cancel-button" [config]="cancelButton">
+    <app-button *ngIf="showCancelButton" class="cancel-button" [config]="cancelButton" data-cy="cancel">
     </app-button>
 
-    <span class="title-container ellipsis">
+    <span class="title-container ellipsis" data-cy="top-nav-title">
 
         <ng-content></ng-content>
 
     </span>
 
-    <app-optimistic-loading-spinner *ngIf="config?.optimisitcSpinnerDisabled !== true">
+    <app-optimistic-loading-spinner *ngIf="config?.optimisitcSpinnerDisabled !== true" data-cy="optimistic-spinner">
     </app-optimistic-loading-spinner>
     
     <span class="custom-buttons">
         <ng-container *ngIf="config && config.buttons">
-            <app-button *ngFor="let button of config.buttons | transformButtons: baseActionBtn; trackBy: TrackByButton"
+            <app-button data-cy="top-nav-action" 
+                *ngFor="let button of config.buttons | transformButtons: baseActionBtn; trackBy: TrackByButton"
                 [config]="button">
             </app-button>
         </ng-container>

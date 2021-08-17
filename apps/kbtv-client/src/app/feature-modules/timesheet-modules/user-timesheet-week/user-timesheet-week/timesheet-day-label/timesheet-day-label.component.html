@@ -7,7 +7,7 @@
     align-items: center;
   }
 </style>
-<span class="mat-elevation-z1 pt-2 label-container" matRipple *ngIf="date"
+<span class="mat-elevation-z1 pt-2 label-container" matRipple *ngIf="date" data-cy="day-label"
   [ngClass]="(date | isToday) ? 'accent' : 'foreground-card color-accent'"
   (click)="labelClicked.emit(date.getTime())">
 

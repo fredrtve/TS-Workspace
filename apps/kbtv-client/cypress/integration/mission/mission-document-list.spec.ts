@@ -5,7 +5,7 @@ import { SaveModelAction } from "model/state-commands";
 
 describe('Mission Document List', () => {
 
-    const getDocuments = () => cy.get('app-mission-document-list .main-content > div').children();
+    const getDocuments = () => cy.getCy('mission-document-item');
     const getDocument = (i: number) => getDocuments().eq(i - 1);
 
     const employer : Employer = { id: '1', name: "test", email: "test@email.com" };
@@ -32,21 +32,17 @@ describe('Mission Document List', () => {
     it('can select documents, get selection count and delete selected documents', () => {
         cy.intercept('POST', '**' + ApiUrl.MissionDocument + '/DeleteRange', { statusCode: 204, delay: 100 }).as('deleteMissionDoc');  
 
-        cy.get('app-selectable-card').eq(0)
-            .trigger('pointerdown', { button: 0});
+        getDocument(1).trigger('pointerdown', { button: 0});
 
-        cy.get('app-main-top-nav-bar .title-container').should('contain', '1 dokument valgt');
+        cy.getCy('top-nav-title').should('contain', '1 dokument valgt');
 
-        cy.get('app-selectable-card').eq(2)
-            .trigger('pointerdown', { button: 0});
+        getDocument(2).trigger('pointerdown', { button: 0});
 
-        cy.get('app-mission-document-list app-main-top-nav-bar .title-container')
-            .should('contain', '2 dokumenter valgt');
+        cy.getCy('top-nav-title').should('contain', '2 dokumenter valgt');
 
-        cy.get('app-mission-document-list app-main-top-nav-bar')
-            .contains('delete_forever').click().confirmDelete();
+        cy.getCy('top-nav-action').filter(":contains('delete_forever')").click().dialogConfirm();
 
-        cy.get('app-selectable-card').should('have.length', 1);
+        getDocuments().should('have.length', 1);
     }); 
 
     it('should add new document to start of list', () => {
@@ -59,11 +55,11 @@ describe('Mission Document List', () => {
     });
 
     it('can open mail form for selected documents with employer email prefilled', () => {
-        cy.get('app-selectable-card').eq(0)
-            .trigger('pointerdown', { button: 0});
-        cy.get('app-mission-document-list app-main-top-nav-bar').contains('send').click();
-        cy.contains('Send dokumenter');
-        cy.get('.form-email input').invoke('val').should('contain', employer.email)
+        getDocument(1).trigger('pointerdown', { button: 0});
+        cy.wait(500);
+        cy.getCy('top-nav-action').filter(":contains('send')").click();
+        cy.getCy('form-sheet-title').should('contain', 'Send dokumenter');
+        cy.getCy('form-email','input').invoke('val').should('contain', employer.email)
     });
     
 })

@@ -2,7 +2,7 @@
     
     <app-header-layout-skeleton [title]="vm.mission?.address" [navOverlayDisabled]="!vm.mission?.fileName">
 
-        <img header appImageErrorPlaceholder style="max-width:100%; width:100%;" alt="Forsidebilde"  
+        <img header appImageErrorPlaceholder style="max-width:100%; width:100%;" alt="Forsidebilde" data-cy="mission-header-image" 
             *ngIf="vm.mission?.fileName; else addHeaderImage" 
             [appImageRatioResizer]="vm.mission?.fileName | appImageUrlRatio"    
             [src]="vm.mission.fileName | appFileUrl: FileFolder.MissionHeader"     
@@ -20,10 +20,10 @@
 
 </app-main-skeleton>
   
-<input type="file" style="display:none" #headerImageInput (change)="updateHeaderImage($event.target.files)">
-<input type="file" style="display:none" multiple #missionImageInput (change)="addMissionImages($event.target.files)">
+<input type="file" style="display:none" #headerImageInput (change)="updateHeaderImage($event.target.files)" data-cy="upload-header-image-input" >
+<input type="file" style="display:none" multiple #missionImageInput (change)="addMissionImages($event.target.files)" data-cy="upload-images-input" >
 
 <ng-template #addHeaderImage>
-    <app-button [config]="addHeaderImgBtn | transformButton : baseHeaderImgButton">
+    <app-button [config]="addHeaderImgBtn | transformButton : baseHeaderImgButton" data-cy="upload-header-image-button">
     </app-button>
 </ng-template>

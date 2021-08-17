@@ -1,11 +1,17 @@
+import { ApiUrl } from "@core/api-url.enum";
+
 describe('Login', () => {
 
-  it('Should redirect to home, get access & refresh token when logged in', () => {
-    cy.visit('/')
-    cy.get("#mat-input-0").type("leder");
-    cy.get("#mat-input-1").type("passord1");
-    cy.contains("Logg inn").click();
-    cy.wait(2000)
+  beforeEach(() => {
+    cy.intercept('**' + ApiUrl.Auth + '/login').as('login');
+    cy.visit('/');
+  })
+
+  it('Should redirect to home, get access & refresh token when logged in', { browser: '!firefox' }, () => {
+    cy.getCy("form-userName","input").type("leder");
+    cy.getCy("form-password","input").type("passord1");
+    cy.getCy("submit").click();
+    cy.wait("@login");
     cy.url().should('contain', '/hjem');
     cy.should(() => {
       expect(localStorage.getItem('refreshToken')).not.null;
@@ -13,12 +19,12 @@ describe('Login', () => {
     });
   })
 
-  it('Should get unauthorized warning when wrong credentials', () => {
-    cy.visit('/')
-    cy.get("#mat-input-0").type("leder");
-    cy.get("#mat-input-1").type("wrongpw");
-    cy.contains("Logg inn").click();
-    cy.wait(2000)
-    cy.contains("Brukernavn eller passord er feil!").should('exist')
+  it('Should get unauthorized warning when wrong credentials', { browser: '!firefox' }, () => {
+    cy.getCy("form-userName","input").type("leder");
+    cy.getCy("form-password","input").type("wrongpw");
+    cy.getCy("submit").click();
+    cy.wait("@login");
+    cy.getCy('notification').should('exist');
+    cy.getCy('notification-title').should('contain', "Brukernavn eller passord er feil!");
   })
 })

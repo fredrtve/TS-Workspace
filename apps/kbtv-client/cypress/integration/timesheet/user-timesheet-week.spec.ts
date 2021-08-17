@@ -2,6 +2,7 @@ import { ApiUrl } from "@core/api-url.enum";
 import { UserTimesheet } from "@core/models";
 import { StateUserTimesheets } from "@core/state/global-state.interfaces";
 import { TimesheetStatus } from "@shared-app/enums/timesheet-status.enum";
+import { cyTag } from "cypress/support/commands";
 import { _getFirstDayOfWeek, _getWeekYear } from "date-time-helpers";
 import { SaveModelAction } from "model/state-commands";
 
@@ -11,13 +12,14 @@ describe('User Timesheet Week', () => {
     const oneDay = 24*oneHour;
     const startOfWeek = _getFirstDayOfWeek().getTime();
 
-    const timesheetBars = () => cy.get('app-timesheet-mission-bar');
+    const timesheetBars = () => cy.getCy('timesheet-bar');
     const assertTimesheetBar = (timesheet: UserTimesheet) => {
         const timesheetWeekDay = new Date(timesheet.startTime!).getDate();
         const colorClass = timesheet.status === TimesheetStatus.Confirmed ? 'accent' : 'warn';
-        cy.get('app-timesheet-day-label')
-            .filter(`:contains("${timesheetWeekDay}")`).parent()
-            .find('.mission-bar')
+        cy.getCy('day-label')
+            .filter(`:contains("${timesheetWeekDay}")`)
+            .parents(cyTag('day-container'))
+            .find(cyTag('timesheet-bar'))
             .should('contain', timesheet.totalHours)
             .should('have.class', colorClass);
     }
@@ -35,14 +37,15 @@ describe('User Timesheet Week', () => {
         endTime: startOfWeek - 4*oneDay + 4*oneHour
     }
 
+    before(() => cy.clock(startOfWeek))
+
     beforeEach(() => {   
-        cy.clock(startOfWeek);
         cy.login('Leder', '/mine-timer', { userTimesheets: [timesheet1, timesheet2, timesheet3]});
     })
 
     it('Should display date information for current week as default', () => {   
-        const title = () => cy.get('app-user-timesheet-week .title-container');
-        const dayLabels = () => cy.get('app-timesheet-day-label'); 
+        const title = () => cy.getCy('top-nav-title');
+        const dayLabels = () => cy.getCy('day-label'); 
         //Should displays current week and year in title
         title().contains(_getWeekYear(new Date).year);
         title().contains(_getWeekYear(new Date).weekNr);
@@ -52,7 +55,7 @@ describe('User Timesheet Week', () => {
             dayLabels().eq(i).should('contain', new Date(startOfWeek).getDate() + i);
        
         //Should highlight current day, which is start of week
-        dayLabels().first().find('.label-container').should('have.class', 'accent')
+        dayLabels().first().should('have.class', 'accent')
         
     })
 
@@ -71,12 +74,12 @@ describe('User Timesheet Week', () => {
 
         //Check that confirmed timesheets open info dialog
         timesheetBars().eq(0).click();
-        cy.get('app-timesheet-card').should('contain.text', 'Timeregistrering')
+        cy.getCy('timesheet-card-dialog').should('exist')
     })
 
     it('Can change week on desktop and get correct timesheets', () => {
         cy.viewport(1280, 875); //Force desktop to switch week (swipe neccesary for mobile)
-        cy.get('.title-container').contains('chevron_left').click(); //switch week
+        cy.getCy('previous-week').click(); //switch week
         timesheetBars().should('have.length', 1);
         assertTimesheetBar(timesheet3);
     })

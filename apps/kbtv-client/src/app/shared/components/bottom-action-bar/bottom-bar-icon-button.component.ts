@@ -5,7 +5,7 @@ import { BottomBarIconButton } from './bottom-bar-icon-button.interface';
 @Component({
   selector: 'app-bottom-bar-icon-button',
   template: `
-    <button *ngIf="config" mat-button [disabled]="config.disabled" 
+    <button *ngIf="config" mat-button [disabled]="config.disabled" data-cy="bottom-bar-action"
         style="line-height:1;min-width:58px;padding: 4px;width:auto;border-radius:0;display:block"
         [attr.aria-label]="config.aria"
         (click)="handleFn(config.callback)">

@@ -15,8 +15,8 @@ describe("User Timesheet Form", () => {
 
     const datePipe = new DatePipe("nb-NO");
 
-    const isSubmittable = () =>  cy.contains('Legg til').should('not.have.class', 'mat-button-disabled');
-    const isNotSubmittable = () => cy.contains('Legg til').should('have.class', 'mat-button-disabled');
+    const isSubmittable = () =>  cy.getCy('submit-form').should('not.be.disabled');
+    const isNotSubmittable = () => cy.getCy('submit-form').should('be.disabled');
 
     const oneHour = 3.6e6;
     const mission: Mission = {id: '1', address: 'testaddress', lastVisited: new Date().getTime(), createdAt: new Date().getTime() }
@@ -40,14 +40,14 @@ describe("User Timesheet Form", () => {
 
         isNotSubmittable();
         
-        cy.get('.form-mission input').type(mission.address!).type('{enter}'); 
-        cy.get('.form-mission mat-error').should('exist'); //Check for error until item clicked
+        cy.getCy('form-mission','input').type(mission.address!).type('{enter}'); 
+        cy.getCy('form-mission','mat-error').should('exist'); //Check for error until item clicked
         cy.get('mat-option').first().click();
 
         isNotSubmittable(); 
 
         const dateParams = { year: 1996, month: 4, day: 12 }
-        cy.get('.form-date').wait(1000).click().wait(1000);//Ensure ion picker shows up
+        cy.getCy('form-date').wait(1000).click().wait(1000);//Ensure ion picker shows up
         cy.get('ion-picker').should('exist'); 
         cy.wait(2000); //Have to wait for selection to work on first
         cy.ionDateSelect(dateParams);
@@ -56,7 +56,7 @@ describe("User Timesheet Form", () => {
         isNotSubmittable(); 
 
         const startParams = { hour: 12, minutes: 30 }
-        cy.get('.form-startTime').click();
+        cy.getCy('form-startTime').click();
         cy.get('ion-picker').should('exist'); //Ensure ion picker shows up 
         cy.wait(200); 
         cy.ionTimeSelect(startParams);
@@ -65,7 +65,7 @@ describe("User Timesheet Form", () => {
         isNotSubmittable(); 
 
         const endParams = { hour: 15, minutes: 30 }
-        cy.get('.form-endTime').click();
+        cy.getCy('form-endTime').click();
         cy.get('ion-picker').should('exist'); //Ensure ion picker shows up
         cy.wait(200);
         cy.ionTimeSelect(endParams);
@@ -75,18 +75,18 @@ describe("User Timesheet Form", () => {
 
         //Check that it is not submittable with invalid comment
         const invalidComment = _stringGen(ValidationRules.TimesheetCommentMaxLength + 1);
-        cy.get('.form-comment textarea').clear().type(invalidComment, {delay: 0}).type('{enter}');
-        cy.get('.form-comment mat-error').should('exist')
+        cy.getCy('form-comment','textarea').clear().type(invalidComment, {delay: 0}).type('{enter}');
+        cy.getCy('form-comment','mat-error').should('exist')
 
         isNotSubmittable();
 
         const comment = 'thisisatestcomment';
-        cy.get('.form-comment textarea').clear().type(comment); 
+        cy.getCy('form-comment','textarea').clear().type(comment); 
 
         isSubmittable();
 
         //Submit and check that new mission exists in state
-        cy.contains('Legg til').click();
+        cy.getCy('submit-form').click();
         cy.wait('@createTimesheet');
         cy.storeState<StateUserTimesheets>().then(state => {
             expect(state.userTimesheets).to.have.lengthOf(1);
@@ -109,11 +109,11 @@ describe("User Timesheet Form", () => {
         cy.wait(200);   
         
         //Check that existing values are filled in
-        cy.get('.form-mission input').invoke('val').should('equal', mission.address);      
-        cy.get('.form-date input').invoke('val').should('equal', datePipe.transform(timesheet.startTime, "MMM d, y"));   
-        cy.get('.form-startTime input').invoke('val').should('equal', datePipe.transform(timesheet.startTime, "HH:mm"));   
-        cy.get('.form-endTime input').invoke('val').should('equal', datePipe.transform(timesheet.endTime, "HH:mm"));  
-        cy.get('.form-comment textarea').invoke('val').should('equal', timesheet.comment);
+        cy.getCy('form-mission','input').invoke('val').should('equal', mission.address);      
+        cy.getCy('form-date','input').invoke('val').should('equal', datePipe.transform(timesheet.startTime, "MMM d, y"));   
+        cy.getCy('form-startTime','input').invoke('val').should('equal', datePipe.transform(timesheet.startTime, "HH:mm"));   
+        cy.getCy('form-endTime','input').invoke('val').should('equal', datePipe.transform(timesheet.endTime, "HH:mm"));  
+        cy.getCy('form-comment','textarea').invoke('val').should('equal', timesheet.comment);
 
         const updated = { mission: mission2, 
             date: { year: 2019, month: 4, day: 12 }, 
@@ -122,26 +122,26 @@ describe("User Timesheet Form", () => {
         };
 
         //Update values
-        cy.get('.form-mission input').clear().type(updated.mission.address!); 
+        cy.getCy('form-mission','input').clear().type(updated.mission.address!); 
         cy.wait(500).get('mat-option').first().click();
 
-        cy.get('.form-date').wait(1000).click().wait(1000);//Ensure ion picker shows up
+        cy.getCy('form-date').wait(1000).click().wait(1000);//Ensure ion picker shows up
         cy.wait(2000); //Have to wait for selection to work on first
         cy.ionDateSelect(updated.date);
         cy.contains("Ferdig").click();
 
-        cy.get('.form-startTime').click();//Ensure ion picker shows up
+        cy.getCy('form-startTime').click();//Ensure ion picker shows up
         cy.wait(200); //Have to wait for selection to work on first
         cy.ionTimeSelect(updated.start);
         cy.contains("Ferdig").click();
 
-        cy.get('.form-endTime').click();//Ensure ion picker shows up
+        cy.getCy('form-endTime').click();//Ensure ion picker shows up
         cy.wait(200); //Have to wait for selection to work on first
         cy.ionTimeSelect(updated.end);
         cy.contains("Ferdig").click();
 
 
-        cy.get('.actions-container').contains('Oppdater').click();
+        cy.getCy('submit-form').click();
         cy.wait('@updateTimesheet');
 
         const {year, month, day} = updated.date;
@@ -164,7 +164,7 @@ describe("User Timesheet Form", () => {
         cy.get('app-timesheet-mission-bar').click();
         cy.wait(200);   
 
-        cy.get('lib-form-sheet-nav-bar').contains('delete_forever').click().confirmDelete();
+        cy.getCy('form-sheet-action').filter(":contains('delete_forever')").click().dialogConfirm();
         cy.wait('@deleteTimesheet');
 
         cy.storeState<StateUserTimesheets>().then(state => {
@@ -185,7 +185,7 @@ describe("User Timesheet Form", () => {
         cy.mainFabClick();
         cy.wait(200);
 
-        cy.get('.form-mission input').click();
+        cy.getCy('form-mission','input').click();
         cy.wait(200);
         for(let i = 0; i < 50; i++){
             cy.get(`.mat-autocomplete-visible > #mat-option-${i + 1}`)

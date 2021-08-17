@@ -14,13 +14,13 @@ describe('Mission Position Picker', () => {
     })
 
     it('Should display information and update position without user location', () => {       
-        cy.contains('Mer').click()
+        cy.getCy('bottom-bar-action').filter(":contains('Mer')").click()
         cy.contains('Merk posisjon').click();
-        cy.get('app-mission-position-picker-sheet-wrapper').should('contain', mission.address);
-        cy.get('.no-user-position-text').should('be.visible');
-        cy.contains('Bruk markert posisjon').should('be.disabled');
+        cy.getCy('position-picker-address').should('contain', mission.address);
+        cy.getCy('no-user-position').should('be.visible');
+        cy.getCy('submit-marked-position').should('be.disabled');
         cy.get('google-map').click();
-        cy.contains('Bruk markert posisjon').click();
+        cy.getCy('submit-marked-position').click();
         
         cy.storeState<StateMissions>().then(s => {
             const updated = s.missions![0];
@@ -35,9 +35,10 @@ describe('Mission Position Picker', () => {
               .callsFake(cb => cb({ coords })) 
         }) 
       
-        cy.contains('Mer').click()
+        cy.getCy('bottom-bar-action').filter(":contains('Mer')").click()
         cy.contains('Merk posisjon').click();
-        cy.contains('Bruk min posisjon').click();
+        cy.getCy('submit-user-position').click();
+        
         cy.storeState<StateMissions>().then(s => {
             const updated = s.missions![0];
             expect(updated?.position?.latitude).equals(coords.latitude);

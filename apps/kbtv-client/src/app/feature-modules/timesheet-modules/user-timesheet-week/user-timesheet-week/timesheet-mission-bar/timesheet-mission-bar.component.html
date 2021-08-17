@@ -1,4 +1,4 @@
-<div class="mission-bar mat-elevation-z1" *ngIf="timesheet" matRipple
+<div class="mission-bar mat-elevation-z1" *ngIf="timesheet" matRipple data-cy="timesheet-bar"
     [style.height.px]="((timesheet.totalHours || 0) / 10)*300"
     [ngClass]="timesheet.status === 2 ? 'accent' : 'warn'"
     (click)="clickBar()">

@@ -3,9 +3,9 @@ import { StateCurrentUser } from "@core/state/global-state.interfaces";
 describe('Side bar', () => {
 
     const getPage = (page: string) => 
-        cy.get('app-nav-item > a').filter(`:contains("${page}")`);
+        cy.getCy('nav-item').filter(`:contains("${page}")`);
 
-    const openMenu = () => cy.contains('menu').click();
+    const openMenu = () => cy.getCy("menu-button").click();
 
     beforeEach(() => {
         cy.login('Leder', '/', {});
@@ -13,21 +13,21 @@ describe('Side bar', () => {
     })
 
     it('Should open and close', () => {
-        cy.get('mat-sidenav').should('be.visible');
+        cy.getCy('side-bar').should('be.visible');
         cy.get('body').click(310, 250);
-        cy.get('mat-sidenav').should('not.be.visible');
+        cy.getCy('side-bar').should('not.be.visible');
     })
 
-    it('Should display name, connection status and highlight current page', () => {  
+    it('Should display name, connection status and highlight current page', { browser: '!firefox' }, () => {  
         getPage("Hjem").should('have.class', 'color-accent');  
         cy.storeState<StateCurrentUser>().then(s => {
-            cy.get('app-main-side-nav-header')
+            cy.getCy('side-bar-header')
                 .should('contain', `${s.currentUser!.firstName!} ${s.currentUser!.lastName!}`)
                 .should('contain', "Tilkoblet internett");
 
             cy.goOffline();
 
-            cy.get('app-main-side-nav-header')
+            cy.getCy('side-bar-header')
                 .should('contain', "Frakoblet internett");
 
             cy.goOnline()
@@ -60,7 +60,7 @@ describe('Side bar', () => {
         for(const {page, href} of assertions)
             getPage(page).should('have.attr', 'href').and('include', href);
 
-        cy.get('app-nav-item').filter(`:contains("Administrering")`).within(() => {
+        getPage("Administrering").parent().within(() => {
             for(const {page, href} of adminAssertions)
                 getPage(page).should('have.attr', 'href').and('include', href);
         })

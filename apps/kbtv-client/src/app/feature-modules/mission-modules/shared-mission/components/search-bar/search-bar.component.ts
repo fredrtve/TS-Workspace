@@ -11,7 +11,7 @@ import { SearchBarConfig } from './search-bar-config.interface';
       
         <mat-icon>search</mat-icon>
 
-        <input #searchInput appInputListener 
+        <input #searchInput appInputListener data-cy="search-bar-input"
             [placeholder]="config.placeholder" 
             [value]="config.initialValue || ''"
             (inputChanged)="handleSearchFn($event);">

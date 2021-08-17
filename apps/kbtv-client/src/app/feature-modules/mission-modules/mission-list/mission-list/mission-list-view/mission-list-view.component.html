@@ -16,7 +16,7 @@
 
         <ng-container *cdkVirtualFor="let mission of missions; trackBy: trackByFn;" >
 
-            <app-list-item [routerLink]="[mission.id, 'detaljer']">
+            <app-list-item data-cy="mission-list-item" [routerLink]="[mission.id, 'detaljer']">
                 <mat-icon left-side>home_work</mat-icon>
                 {{ mission.address }}
             </app-list-item>

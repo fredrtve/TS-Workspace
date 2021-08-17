@@ -9,16 +9,17 @@
 
 <mat-toolbar #navBar *ngIf="config">
 
-    <button mat-icon-button aria-label="Lukk skjema"
+    <button mat-icon-button aria-label="Lukk skjema" data-cy="form-sheet-close"
         (click)="closed.emit(true)">
         <mat-icon>close</mat-icon>
     </button>
 
-    <span class="title" *ngIf="config.title">
+    <span class="title" *ngIf="config.title" data-cy="form-sheet-title">
         {{ config.title }} 
     </span> 
 
-    <button mat-icon-button *ngFor="let button of config.buttons || []"
+    <button mat-icon-button data-cy="form-sheet-action"
+        *ngFor="let button of config.buttons || []"
         [color]="button.color"
         [attr.aria-label]="button.aria"
         (click)="handleCallback(button.callback)">

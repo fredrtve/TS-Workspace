@@ -10,7 +10,7 @@
     {{ contentScrolledToTop ? title : "" }}
 </app-main-top-nav-bar>
 
-<div class="content-container">
+<div class="content-container" data-cy="header-layout-scroll-container">
 
     <div class="header-container" #header>
         <ng-content select="[header]"></ng-content>
@@ -21,7 +21,7 @@
 
         <mat-icon class="drag-handle">drag_handle</mat-icon>
 
-        <div class="content-header-title">{{ title }}</div>
+        <div class="content-header-title" data-cy="header-title">{{ title }}</div>
 
     </div>
     

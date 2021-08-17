@@ -20,16 +20,18 @@
     }
 </style>
 
-<div class="notification-container">
+<div class="notification-container" data-cy="notification">
 
     <mat-icon style="float:right">close</mat-icon>
 
     <span class="notification-title">
         <mat-icon>{{data.icon}}</mat-icon>
-        <span class="title" *ngIf="data.title">{{ data.title }}</span>
+        <span class="title" *ngIf="data.title" data-cy="notification-title">
+            {{ data.title }}
+        </span>
     </span>
 
-    <ul *ngIf="data.details" class="details mat-body">
+    <ul *ngIf="data.details" class="details mat-body" data-cy="notification-details">
         <li *ngFor="let detail of data.details">
             {{ detail }}
         </li>

@@ -1,8 +1,8 @@
-<div class="dialog-container">
+<div class="dialog-container" data-cy="optimistic-error-dialog">
 
     <span class="mat-title">Endringer har blitt reversert!</span>
 
-    <app-list-item rippleDisabled=true>
+    <app-list-item rippleDisabled=true data-cy="error-request-item">
     
         <mat-icon left-side class="pl-2 pr-2" color="warn">error</mat-icon>
     
@@ -30,7 +30,9 @@
     </ng-container>
     
     <span class="close-button-container">
-        <button class="close-button" mat-button [mat-dialog-close]="true" cdkFocusInitial>Lukk</button>
+        <button data-cy="close-dialog" class="close-button" mat-button [mat-dialog-close]="true" cdkFocusInitial>
+            Lukk
+        </button>
     </span>
     
 </div>

@@ -14,7 +14,7 @@ import { SharedLayoutModule } from './shared-layout.module';
     <mat-sidenav-container style="height:0">
 
         <mat-sidenav fixedInViewport #drawer class="mat-elevation-z1" 
-            role="dialog" mode="over" opened="false">
+            role="dialog" mode="over" opened="false" data-cy="side-bar">
     
         <app-main-side-nav-header [config]="config$ | async"></app-main-side-nav-header>
     

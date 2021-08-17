@@ -5,10 +5,14 @@
 <app-main-skeleton contentWrapperClass="bottom-bar-padding">
 
   <app-main-top-nav-bar navbar *ngIf="titles$ | async; let titles">
-      <button mat-icon-button class="week-button" (click)="previousWeek()"><mat-icon>chevron_left</mat-icon></button>
+      <button mat-icon-button class="week-button" (click)="previousWeek()" data-cy="previous-week">
+          <mat-icon>chevron_left</mat-icon>
+      </button>
       <span>{{ titles.title }}</span>
       <span class="mat-caption ml-1">{{ titles.subTitle }}</span>
-      <button mat-icon-button class="week-button" (click)="nextWeek()"><mat-icon>chevron_right</mat-icon></button>
+      <button mat-icon-button class="week-button" (click)="nextWeek()" data-cy="next-week">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
   </app-main-top-nav-bar>
 
   <app-user-timesheet-week-view [vm]="vm$ | async"

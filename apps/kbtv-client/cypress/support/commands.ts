@@ -5,6 +5,8 @@ import { SetPersistedStateAction } from "state-db";
 import { Store } from "state-management";
 import { StateSyncConfig } from "state-sync";
 
+export const cyTag = (value: string) => `[data-cy="${value}"]`;
+
 Cypress.Commands.add('login', (role: 'Leder' | 'Mellomleder' | 'Ansatt', redirectUrl: string, initState: object) => {
   window.localStorage.clear();
   window.indexedDB.deleteDatabase("kbtvDb");
@@ -24,17 +26,16 @@ Cypress.Commands.add('login', (role: 'Leder' | 'Mellomleder' | 'Ansatt', redirec
 });
 
 Cypress.Commands.add('navigateBack', () => {
-  cy.get('.cancel-button > .mat-button').last().click();
+  cy.getCy('cancel').last().click();
 });
 
 Cypress.Commands.add('closeForm', () => {
-  cy.get('mat-bottom-sheet-container').contains('close').click();
+  cy.getCy('form-sheet-close').click();
   cy.wait(400);
 });
 
 Cypress.Commands.add('mainFabClick', () => {
-  Cypress.log({ name: 'mainFabClick' });
-  cy.get('.fab-container').find('.mat-fab').last().click();
+  cy.getCy('main-fab').last().click();
 });
 
 Cypress.Commands.add('storeDispatch', (action) => {
@@ -51,8 +52,8 @@ Cypress.Commands.add('storeState', () => {
   })
 });
 
-Cypress.Commands.add('confirmDelete', () => {
-  cy.get('.mat-dialog-actions').contains('Slett').click();
+Cypress.Commands.add('dialogConfirm', () => {
+  cy.getCy('dialog-confirm').click();
 });
 
 Cypress.Commands.add('ionSelect', (col: number, i: number) => {
@@ -103,4 +104,8 @@ Cypress.Commands.add('goOnline', () => {
       {
         command: 'Network.disable',
       })
+});
+
+Cypress.Commands.add('getCy', (value: string, extendedSelector: string = '') => {
+  return cy.get(`${cyTag(value)} ` + extendedSelector);
 });

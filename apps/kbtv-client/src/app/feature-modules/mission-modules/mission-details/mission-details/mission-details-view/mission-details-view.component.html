@@ -1,6 +1,6 @@
 <div *ngIf="mission">
 
-  <a *ngIf="mission.phoneNumber" href="tel:{{ mission.phoneNumber }}">
+  <a *ngIf="mission.phoneNumber" href="tel:{{ mission.phoneNumber }}" data-cy="mission-phoneNumber">
     <app-list-item>
       <mat-icon left-side class="pl-2 pr-2">phone</mat-icon>
       {{ mission.phoneNumber }}
@@ -9,7 +9,7 @@
     <mat-divider inset=true></mat-divider>
   </a>
  
-  <a href="{{ mission | appMissionDirectionsUrl }}" target="_blank">
+  <a href="{{ mission | appMissionDirectionsUrl }}" target="_blank"  data-cy="mission-directions">
     <app-list-item>
       <mat-icon left-side class="pl-2 pr-2">directions_car</mat-icon>
       Veibeskrivelse 
@@ -23,7 +23,7 @@
 
   <div class="mat-body-2 ml-5 mt-3">Ressurser</div>
 
-  <app-list-item [routerLink]="['bilder']">
+  <app-list-item [routerLink]="['bilder']" data-cy="mission-images">
       <mat-icon left-side class="pl-2 pr-2">photo_library</mat-icon>
       Bilder
       <span right-side *ngIf="mission.missionImages?.length">{{ mission.missionImages?.length }}</span>
@@ -31,7 +31,7 @@
   <mat-divider inset=true></mat-divider>
 
   <ng-container *ifRole="permissions.MissionDocumentList.access">
-    <app-list-item [routerLink]="['dokumenter']">
+    <app-list-item [routerLink]="['dokumenter']" data-cy="mission-documents">
       <mat-icon left-side class="pl-2 pr-2">folder</mat-icon>
       Dokumenter
       <span right-side *ngIf="mission.missionDocuments?.length">{{ mission.missionDocuments?.length }}</span>
@@ -40,7 +40,7 @@
   </ng-container>
 
   <ng-container *ifRole="permissions.MissionNoteList.access">
-    <app-list-item  [routerLink]="['notater']">
+    <app-list-item  [routerLink]="['notater']" data-cy="mission-notes">
       <mat-icon left-side class="pl-2 pr-2">rate_review</mat-icon>
       Notater
       <span right-side *ngIf="mission.missionNotes?.length">{{ mission.missionNotes?.length }}</span>
@@ -50,7 +50,7 @@
 
   <ng-container *ngIf="mission.description">
     <div class="mat-body-2 ml-5 mt-3">Beskrivelse</div>
-    <app-list-item rippleDisabled=true>
+    <app-list-item rippleDisabled=true data-cy="mission-comment">
       <mat-icon left-side class="pl-2 pr-2">comment</mat-icon>
       <span style="white-space:normal" class="mat-body">{{ mission.description }}</span>
     </app-list-item>

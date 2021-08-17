@@ -5,7 +5,7 @@ describe('Home', () => {
     const mission1 : Mission = { id: '1', address: 'address1', lastVisited: new Date().getTime() } 
     const mission2 : Mission = { id: '2', address: 'address2', lastVisited: new Date().getTime() - 1000 }
 
-    const firstMission = () => cy.get(".mission-list").children().first();
+    const firstMission = () => cy.getCy('mission-list-item').first();
 
     beforeEach(() => {
         cy.login('Leder', '/', { missions: [mission1, mission2]}); 

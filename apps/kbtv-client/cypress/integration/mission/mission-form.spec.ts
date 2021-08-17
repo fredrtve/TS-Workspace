@@ -5,8 +5,8 @@ import { _stringGen } from "cypress/support";
 
 describe('Mission Form', () => {
     
-    const isSubmittable = () =>  cy.contains('Legg til').should('not.have.class', 'mat-button-disabled');
-    const isNotSubmittable = () => cy.contains('Legg til').should('have.class', 'mat-button-disabled');
+    const isSubmittable = () =>  cy.getCy('submit-form').should('not.be.disabled');
+    const isNotSubmittable = () => cy.getCy('submit-form').should('be.disabled');
 
     const missionType = {id: '1', name: 'type'};
     const employer = {id: '1', name: 'employer'}
@@ -27,18 +27,18 @@ describe('Mission Form', () => {
         isNotSubmittable();
 
         //Check that google autocomplete exist and has items
-        cy.get('.form-address input').type('Furuberget 17');   
+        cy.getCy('form-address','input').type('Furuberget 17');   
         cy.get('.pac-container').children().should('have.length.above', 1)
 
         //Check that it is submittable with only address
         const addr = 'testaddress';
-        cy.get('.form-address input').clear().type(addr);   
+        cy.getCy('form-address','input').clear().type(addr);   
         isSubmittable();
 
         //Check that it is not submittable with invalid phoneNumbers
         const isInvalidPhoneNumber = (num: string) => {
-            cy.get('.form-phoneNumber input').clear().type(num).type('{enter}');
-            cy.get('.form-phoneNumber mat-error').should('exist')
+            cy.getCy('form-phoneNumber','input').clear().type(num).type('{enter}');
+            cy.getCy('form-phoneNumber','mat-error').should('exist')
             isNotSubmittable();
         }
 
@@ -47,33 +47,33 @@ describe('Mission Form', () => {
 
         //Check that it is submittable with valid phoneNumber
         const validNum = _stringGen(ValidationRules.PhoneNumberMinLength)
-        cy.get('.form-phoneNumber input').clear().type(validNum);
+        cy.getCy('form-phoneNumber','input').clear().type(validNum);
         isSubmittable();
 
         //Check that it is not submittable with invalid description
         const invalidDesc = _stringGen(ValidationRules.MissionDescriptionMaxLength + 1);
-        cy.get('.form-description textarea').clear().type(invalidDesc, {delay: 0}).type('{enter}');
-        cy.get('.form-description mat-error').should('exist')
+        cy.getCy('form-description','textarea').clear().type(invalidDesc, {delay: 0}).type('{enter}');
+        cy.getCy('form-description','mat-error').should('exist')
         isNotSubmittable();
 
         //Check that it is submittable with valid description
         const validDesc = _stringGen(ValidationRules.MissionDescriptionMaxLength);
-        cy.get('.form-description textarea').clear().type(validDesc, {delay: 0});
+        cy.getCy('form-description','textarea').clear().type(validDesc, {delay: 0});
         isSubmittable();
 
         const autoCompleteItems = () => cy.get(".mat-autocomplete-panel").children();
 
         //Check autocompletes are visible and can be selected
-        cy.get('.form-employerName').click();
+        cy.getCy('form-employerName').click();
         cy.wait(500);
         autoCompleteItems().should('have.length', 1).first().click();
 
-        cy.get('.form-missionTypeName').click();
+        cy.getCy('form-missionTypeName').click();
         cy.wait(500);
         autoCompleteItems().should('have.length', 1).first().click();
 
         //Submit and check that new mission exists in state
-        cy.contains('Legg til').click();
+        cy.getCy('submit-form').click();
         cy.wait('@createMission');
         cy.storeState<StateMissions>().then(state => {
             const missions = state.missions?.filter(x => x.address === addr);
@@ -92,12 +92,12 @@ describe('Mission Form', () => {
         cy.wait(200);
 
         const data = {address: 'createMissionTest2', missionTypeName: 'newMissionType', employerName: 'newEmployer'};
-        cy.get('.form-address input').type(data.address);   
+        cy.getCy('form-address','input').type(data.address);   
 
-        cy.get('.form-missionTypeName input').type(data.missionTypeName);
-        cy.get('.form-employerName input').type(data.employerName);
+        cy.getCy('form-missionTypeName','input').type(data.missionTypeName);
+        cy.getCy('form-employerName','input').type(data.employerName);
 
-        cy.contains('Legg til').click();
+        cy.getCy('submit-form').click();
         cy.wait('@createMission');
         cy.storeState<StateMissions & StateEmployers & StateMissionTypes>().then(state => {
             const mission = state.missions?.filter(x => x.address === data.address)[0];
@@ -121,20 +121,20 @@ describe('Mission Form', () => {
 
         const updatedValues = { address: "updatedAddress", phoneNumber: "3424" }
         //Check that existing values are filled in
-        cy.get('.form-address input').invoke('val').should('equal', mission.address);      
-        cy.get('.form-phoneNumber input').invoke('val').should('equal', mission.phoneNumber);   
-        cy.get('.form-description textarea').invoke('val').should('equal', mission.description);        
-        cy.get('.form-employerName input').invoke('val').should('equal', employer.name);
-        cy.get('.form-missionTypeName input').invoke('val').should('equal', missionType.name);
-        cy.get('.form-finished input').should('not.be.checked');
+        cy.getCy('form-address','input').invoke('val').should('equal', mission.address);      
+        cy.getCy('form-phoneNumber','input').invoke('val').should('equal', mission.phoneNumber);   
+        cy.getCy('form-description','textarea').invoke('val').should('equal', mission.description);        
+        cy.getCy('form-employerName','input').invoke('val').should('equal', employer.name);
+        cy.getCy('form-missionTypeName','input').invoke('val').should('equal', missionType.name);
+        cy.getCy('form-finished','input').should('not.be.checked');
 
         //Update values
-        cy.get('.form-address input').clear().type(updatedValues.address);
-        cy.get('.form-phoneNumber input').clear().type(updatedValues.phoneNumber);
-        cy.get('.form-employerName input').clear();
-        cy.get('.form-missionTypeName input').clear();
+        cy.getCy('form-address','input').clear().type(updatedValues.address);
+        cy.getCy('form-phoneNumber','input').clear().type(updatedValues.phoneNumber);
+        cy.getCy('form-employerName','input').clear();
+        cy.getCy('form-missionTypeName','input').clear();
 
-        cy.get('.actions-container').contains('Oppdater').click();
+        cy.getCy('submit-form').click();
         cy.wait('@updateMission');
 
         cy.storeState<StateMissions>().then(state => {
@@ -149,11 +149,11 @@ describe('Mission Form', () => {
 
     it('Can delete current mission', () => {
         cy.login('Leder', '/oppdrag/' + mission.id + '/detaljer' , { missionTypes: [missionType], employers: [employer], missions: [mission]});  
-        cy.contains('Mer').click();
+        cy.getCy('bottom-bar-action').filter(":contains('Mer')").click();
         cy.contains('Rediger').click();
         cy.wait(200);
 
-        cy.get('lib-form-sheet-nav-bar').contains('delete_forever').click().confirmDelete();
+        cy.getCy('form-sheet-action').filter(":contains('delete_forever')").click().dialogConfirm();
         cy.wait('@deleteMission');
 
         cy.storeState<StateMissions>().then(state => {

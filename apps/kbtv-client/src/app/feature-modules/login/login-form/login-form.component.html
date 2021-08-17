@@ -10,12 +10,12 @@
 
 <form [formGroup]="authForm" (ngSubmit)="submitForm()">
 
-  <mat-form-field color="accent">
+  <mat-form-field color="accent" data-cy="form-userName">
     <mat-icon matSuffix color="accent">person</mat-icon>
     <input matInput autocomplete="username" formControlName="userName" placeholder="Brukernavn" type="text" />
   </mat-form-field>
 
-  <mat-form-field color="accent">
+  <mat-form-field color="accent" data-cy="form-password">
     <mat-icon matSuffix color="accent" (tap)="hidePassword = !hidePassword">
       {{hidePassword ? 'visibility_off' : 'visibility'}}
     </mat-icon>
@@ -23,7 +23,8 @@
       autocomplete="current-password" [type]="hidePassword ? 'password' : 'text'" />
   </mat-form-field>
 
-  <button mat-raised-button color="accent" [disabled]="disabled || !authForm.valid" type="submit" class="form-button">
+  <button mat-raised-button color="accent" type="submit" class="form-button" data-cy="submit"
+    [disabled]="disabled || !authForm.valid">
     <mat-icon>lock_open</mat-icon>
     Logg inn
   </button>

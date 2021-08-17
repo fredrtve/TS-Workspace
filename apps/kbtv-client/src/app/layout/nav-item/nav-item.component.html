@@ -8,14 +8,14 @@
     }
 </style>
 <ng-container *ifRole="navButton.allowedRoles">
-    <a matRipple *ngIf="navButton.routerLink else categoryButton" 
+    <a matRipple *ngIf="navButton.routerLink else categoryButton" data-cy="nav-item"
         (click)="alertNavigation()" [routerLink]="navButton.routerLink" [routerLinkActive]="['color-accent']">
         <mat-icon>{{navButton.icon}}</mat-icon>
         <span class="ml-6 mr-2 mat-body-2">{{navButton.text}}</span>
     </a>
 
     <ng-template #categoryButton>
-        <a matRipple (click)="toggleChildren()">
+        <a matRipple (click)="toggleChildren()" data-cy="nav-item">
             <mat-icon>{{navButton.icon}}</mat-icon>
             <span class="ml-6 mr-2 mat-body-2">{{navButton.text}}</span>
             <mat-icon *ngIf="navButton.children && navButton.children.length > 0" 

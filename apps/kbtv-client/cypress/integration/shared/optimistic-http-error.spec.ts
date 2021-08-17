@@ -23,7 +23,7 @@ describe('Optimistic Http Error', () => {
         cy.login('Leder', '/oppdrag', {});
     })
 
-    it('Should fail subsequent requests & reset state to before request', () => {
+    it('Should fail subsequent requests & reset state to before request', { browser: '!firefox' }, () => {
         cy.goOffline();
         //First do one successful to ensure it does not reset
         createEntity<MissionType>("missionTypes", {id: "1", name: "testtype"});
@@ -50,7 +50,7 @@ describe('Optimistic Http Error', () => {
         })
     })
 
-    it('Should display dialog on http error with failed requests', () => {
+    it('Should display dialog on http error with failed requests', { browser: '!firefox' }, () => {
         cy.goOffline();
         const missions = [{id: '1', address: 'testaddress1'},{id: '2', address: 'testaddress2'},{id: '3', address: 'testaddress3'}]
         for(const mission of missions) 
@@ -58,16 +58,16 @@ describe('Optimistic Http Error', () => {
 
         cy.goOnline();
 
-        cy.get('app-optimistic-http-error-dialog').should('exist').within(() => {
-            cy.get('app-list-item').first().should('contain', missions[0].address);
-            const failedItems = () => cy.get('app-failed-command-list').find('app-list-item');
+        cy.getCy('optimistic-error-dialog').should('exist').within(() => {
+            cy.getCy('error-request-item').first().should('contain', missions[0].address);
+            const failedItems = () => cy.getCy('failed-request-item');
             failedItems().should('have.length', missions.length - 1);
             failedItems().eq(0).should('contain', missions[1].address);
             failedItems().eq(1).should('contain', missions[2].address);
-            cy.contains('Lukk').click();
+            cy.getCy('close-dialog').click();
         })
 
-        cy.get('app-optimistic-http-error-dialog').should('not.exist')  
+        cy.getCy('optimistic-error-dialog').should('not.exist')  
     })
     
 

@@ -2,7 +2,7 @@
   
   <ng-container *ngFor="let weekDay of vm.numberOfWeekDays | arrayFromNumber">
 
-    <div class="day-container">
+    <div class="day-container" data-cy="day-container">
 
       <app-timesheet-day-label class="mb-1 day-label"
         [date]="vm.weekCriteria | getDateByDateParams : weekDay"

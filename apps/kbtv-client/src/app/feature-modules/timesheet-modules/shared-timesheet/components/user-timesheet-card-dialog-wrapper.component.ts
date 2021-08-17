@@ -11,7 +11,7 @@ import { StoreState } from '../../user-timesheet-week/store-state.interface';
 @Component({
   selector: 'app-user-timesheet-card-dialog-wrapper',
   template: `
-  <app-timesheet-card 
+  <app-timesheet-card data-cy="timesheet-card-dialog"
     [timesheet]="timesheet$ | async">
   </app-timesheet-card>
   `,

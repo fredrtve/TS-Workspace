@@ -6,7 +6,7 @@ import { SideNavNavigations } from '../side-nav-navigations';
 @Component({
   selector: 'app-main-side-nav-list',
   template: `
-    <app-nav-item *ngFor="let navButton of navigations" 
+    <app-nav-item *ngFor="let navButton of navigations"
         [navButton]="navButton" (hasNavigated)="onNavClick()">
     </app-nav-item>
     `,

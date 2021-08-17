@@ -5,13 +5,13 @@
     }">
     
         <div class="bottom-bar-side left mat-elevation-z3">
-            <button *ngIf="vm.isXs" mat-icon-button aria-label="Toggle sidenav" (click)="toggleDrawer()">
+            <button *ngIf="vm.isXs" data-cy="menu-button" mat-icon-button aria-label="Toggle sidenav" (click)="toggleDrawer()">
                 <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
             </button>
         </div>
     
         <div class="fab-container">
-            <app-button class="fab zoomIn" [config]="fab | transformButton : baseFabBtn"></app-button>
+            <app-button class="fab zoomIn" data-cy="main-fab" [config]="fab | transformButton : baseFabBtn"></app-button>
         </div>
     
         <div class="bottom-bar-side right mat-elevation-z3">
@@ -23,7 +23,8 @@
     </mat-toolbar>
 
     <ng-template #noActionsTemplate>
-        <button *ngIf="vm.isXs" mat-mini-fab aria-label="Toggle sidenav" (click)="toggleDrawer()" class="no-actions-drawer">
+        <button *ngIf="vm.isXs" data-cy="menu-button" mat-mini-fab aria-label="Toggle sidenav" 
+            (click)="toggleDrawer()" class="no-actions-drawer">
             <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
         </button>
     </ng-template>

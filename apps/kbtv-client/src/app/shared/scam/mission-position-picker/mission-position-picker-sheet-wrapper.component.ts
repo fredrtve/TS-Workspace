@@ -30,7 +30,9 @@ export const SheetClosedByUserEvent = "CLOSED_BY_USER";
     </style>
     <ng-container *ngIf="mission$ | async; let mission">
         <app-main-top-nav-bar [config]="navConfig">Velg posisjon på kart</app-main-top-nav-bar>
-        <span class="mb-3 ml-6 mr-6 ellipsis mat-body-2">Oppdrag: {{ mission?.address }}</span>
+        <span class="mb-3 ml-6 mr-6 ellipsis mat-body-2" data-cy="position-picker-address">
+            Oppdrag: {{ mission?.address }}
+        </span>
         <app-mission-position-picker [mission]="mission" 
             (positionSelected)="updateSelectedPosition($event)">
         </app-mission-position-picker>

@@ -32,23 +32,23 @@ describe('Mission Filter', () => {
         const finishTxt = (finished: boolean) => finished ? 'Ferdig' : 'Aktiv';
         
         //Check that existing values are filled in
-        cy.get('.form-searchString input').invoke('val').should('eq', existingCriteria.searchString)    
-        cy.get('.form-employer').should('contain', existingCriteria.employer!.name)  
-        cy.get('.form-missionType').should('contain', existingCriteria.missionType!.name)  
-        cy.get('.form-end input').invoke('val').should('eq', datePipe.transform(existingCriteria.dateRange!.end, "MMM d, y"));
-        cy.get('.form-start input').invoke('val').should('eq', datePipe.transform(existingCriteria.dateRange!.start, "MMM d, y"));
-        cy.get('.form-finished .mat-radio-checked').contains(finishTxt(existingCriteria.finished!)) 
+        cy.getCy('form-searchString','input').invoke('val').should('eq', existingCriteria.searchString)    
+        cy.getCy('form-employer').should('contain', existingCriteria.employer!.name)  
+        cy.getCy('form-missionType').should('contain', existingCriteria.missionType!.name)  
+        cy.getCy('form-end','input').invoke('val').should('eq', datePipe.transform(existingCriteria.dateRange!.end, "MMM d, y"));
+        cy.getCy('form-start','input').invoke('val').should('eq', datePipe.transform(existingCriteria.dateRange!.start, "MMM d, y"));
+        cy.getCy('form-finished','.mat-radio-checked').contains(finishTxt(existingCriteria.finished!)) 
 
         //Update values
         const newValues: Partial<MissionCriteria> = { 
             searchString: "newtest", finished: false
         }
 
-        cy.get('.form-searchString input').clear().type(newValues.searchString!);
-        cy.get('.form-finished').contains(finishTxt(newValues.finished!)).click();
+        cy.getCy('form-searchString','input').clear().type(newValues.searchString!);
+        cy.getCy('form-finished').contains(finishTxt(newValues.finished!)).click();
 
         //Submit and check that new mission exists in state
-        cy.contains('Bruk').click();
+        cy.getCy('submit-form').click();
         cy.storeState<StateMissionCriteria>().then(state => {
             expect(state.missionCriteria.searchString).to.equal(newValues.searchString);
             expect(state.missionCriteria.finished).to.equal(newValues.finished);
@@ -56,15 +56,15 @@ describe('Mission Filter', () => {
     });
 
     it('can reset values', () => {
-        cy.contains('Nullstill').click();
+        cy.getCy('reset-form').click();
 
-        cy.get('.form-searchString input').invoke('val').should('be.empty')    
-        cy.get('.form-employer').should('not.contain', existingCriteria.employer!.name)  
-        cy.get('.form-missionType').should('not.contain', existingCriteria.missionType!.name)  
-        cy.get('.form-end input').invoke('val').should('be.empty');
-        cy.get('.form-start').click(); 
-        cy.get('.form-start input').invoke('val').should('be.empty')
-        cy.get('.form-finished .mat-radio-checked').contains(finishTxt(false)) 
+        cy.getCy('form-searchString','input').invoke('val').should('be.empty')    
+        cy.getCy('form-employer').should('not.contain', existingCriteria.employer!.name)  
+        cy.getCy('form-missionType').should('not.contain', existingCriteria.missionType!.name)  
+        cy.getCy('form-end','input').invoke('val').should('be.empty');
+        cy.getCy('form-start').click(); 
+        cy.getCy('form-start','input').invoke('val').should('be.empty')
+        cy.getCy('form-finished','.mat-radio-checked').contains(finishTxt(false)) 
     })
 
 });

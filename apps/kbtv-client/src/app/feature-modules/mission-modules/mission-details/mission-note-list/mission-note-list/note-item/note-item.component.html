@@ -10,16 +10,17 @@
 </style>
 <div class="p-4 bg-card" *ngIf="note">
 
-    <div *ngIf="note.title" class="mat-title">{{ note.title }}</div>
-    <div class="mat-body">{{ note.content }}</div>
+    <div *ngIf="note.title" class="mat-title" data-cy="note-title">{{ note.title }}</div>
+    <div class="mat-body" data-cy="note-content">{{ note.content }}</div>
 
     <div class="note-content">
-        <span class="mat-caption">
+        <span class="mat-caption" data-cy="note-footer">
             {{ note.createdAt | date: 'dd.MMM yyyy' }} {{ note.createdBy ? ("av " + note.createdBy) : "" }}
         </span>
 
         
-        <button *ifRole="can.update" (click)="editNote()" mat-button color="accent" aria-label="Rediger notat">
+        <button data-cy="edit-note" *ifRole="can.update" 
+            (click)="editNote()" mat-button color="accent" aria-label="Rediger notat">
             Oppdater
         </button>       
     </div>  
