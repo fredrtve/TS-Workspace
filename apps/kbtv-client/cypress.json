@@ -6,7 +6,7 @@
   "pluginsFile": "./apps/kbtv-client/cypress/plugins/index.ts",
   "fixturesFolder": "./apps/kbtv-client/cypress/fixtures",
   "chromeWebSecurity": false,
-  "baseUrl": "http://172.18.224.1:8080/#",
+  "baseUrl": "http://localhost:8080/#",
   "viewportWidth": 320,
   "viewportHeight": 568
 }

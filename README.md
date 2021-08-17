@@ -45,6 +45,7 @@ However the majority lack tests at this moment except 'model/core' & 'array-help
 
 ## Running e2e tests
 
-Run `ng run kbtv-client:cypress-open` to open test panel via [Cypress](https://www.cypress.io).
-
-
+1. Build libraries if not already built.
+2. Run `npm run buildTest` to build e2e application.
+3. Run `http-server dist/kbtv-client-e2e` to host the application on localhost.
+3. Run `ng run kbtv-client:cypress-open` to open test panel via [Cypress](https://www.cypress.io).

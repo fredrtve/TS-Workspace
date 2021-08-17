@@ -5,7 +5,6 @@ import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { _getSummariesByType } from '@shared-timesheet/helpers/get-summaries-by-type.helper';
 import { _noEmployersFilter } from '@shared-timesheet/no-employers-filter.helper';
 import { AgGridConfig } from '@shared/components/abstracts/ag-grid-config.interface';
-import { TimesheetCriteriaFormState } from '@shared-timesheet/forms/timesheet-criteria-form.const';
 import { GroupByPeriod } from '@shared-app/enums/group-by-period.enum';
 import { filterRecords } from '@shared/operators/filter-records.operator';
 import { Immutable, ImmutableArray } from 'global-types';
@@ -27,11 +26,6 @@ export class TimesheetStatisticFacade extends WithUnsubscribe() {
 
     criteria$ = this.store.selectProperty$("timesheetStatisticTimesheetCriteria");
     get criteria() { return this.store.state.timesheetStatisticTimesheetCriteria }
-
-    criteriaFormState$: Observable<Immutable<Partial<TimesheetCriteriaFormState>>> = 
-        this.store.select$(["missions", "users"]).pipe(
-            map(state => { return { ...state, users: _noEmployersFilter(state.users) }})
-        )
 
     groupBy$ = this.store.selectProperty$("timesheetStatisticGroupBy");
 
