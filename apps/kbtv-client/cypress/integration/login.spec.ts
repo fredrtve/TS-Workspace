@@ -3,11 +3,13 @@ import { ApiUrl } from "@core/api-url.enum";
 describe('Login', () => {
 
   beforeEach(() => {
-    cy.intercept('**' + ApiUrl.Auth + '/login').as('login');
     cy.visit('/');
   })
 
-  it('Should redirect to home, get access & refresh token when logged in', { browser: '!firefox' }, () => {
+  it('Should redirect to home, get access & refresh token when logged in', () => {
+    cy.fixture('credentials-response').then(response => {
+      cy.intercept('**' + ApiUrl.Auth + '/login', { statusCode: 200, body: response}).as('login');
+    })
     cy.getCy("form-userName","input").type("leder");
     cy.getCy("form-password","input").type("passord1");
     cy.getCy("submit").click();
@@ -19,7 +21,10 @@ describe('Login', () => {
     });
   })
 
-  it('Should get unauthorized warning when wrong credentials', { browser: '!firefox' }, () => {
+  it('Should get unauthorized warning when wrong credentials', () => {
+    cy.fixture('wrong-credentials-response').then(response => {
+      cy.intercept('**' + ApiUrl.Auth + '/login', { statusCode: 401, body: response}).as('login');
+    })
     cy.getCy("form-userName","input").type("leder");
     cy.getCy("form-password","input").type("wrongpw");
     cy.getCy("submit").click();
