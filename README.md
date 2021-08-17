@@ -32,8 +32,19 @@ A mono repo workspace with a collection of typescript/angular libraries and appl
 |  [state-management](./libs/state-management/README.md) | A library for managing local and global state in a redux like pattern. |
 |  [state-sync](./libs/state-sync/README.md) | A library for synchronizing state with an external api. |
 
+## Building libraries
+
+Run `npm run buildLibs` to build all libraries. 
+Optionally run `ng build <library>` to build a specified library.
+
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
 However the majority lack tests at this moment except 'model/core' & 'array-helpers'.
+
+## Running e2e tests
+
+Run `ng run kbtv-client:cypress-open` to open test panel via [Cypress](https://www.cypress.io).
+
+

@@ -18,3 +18,6 @@ A collection of libraries used to handle relational model state.
 |  [state-fetcher](./state-fetcher/README.md) | A library for fetching external model state to store in global state. |
 
 
+## Running unit tests
+
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
