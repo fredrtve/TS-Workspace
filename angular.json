@@ -17,7 +17,6 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/kbtv-client",
             "index": "apps/kbtv-client/src/index.html",
             "main": "apps/kbtv-client/src/main.ts",
             "polyfills": "apps/kbtv-client/src/polyfills.ts",
@@ -63,6 +62,7 @@
                   "with": "apps/kbtv-client/src/environments/environment.prod.ts"
                 }
               ],
+              "outputPath": "dist/kbtv-client-prod",
               "sourceMap": false,
               "optimization": true,
               "outputHashing": "all",
@@ -93,6 +93,7 @@
                   "with": "apps/kbtv-client/src/environments/environment.demo.ts"
                 }
               ],
+              "outputPath": "dist/kbtv-client-demo",
               "sourceMap": true,
               "optimization": true,
               "outputHashing": "all",
@@ -111,6 +112,7 @@
                   "with": "apps/kbtv-client/src/environments/environment.e2e.ts"
                 }
               ],
+              "outputPath": "dist/kbtv-client-e2e",
               "sourceMap": false,
               "optimization": true,
               "outputHashing": "all",
