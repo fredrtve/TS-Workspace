@@ -26,5 +26,12 @@ Primary motivation for this project is assisting a small renovation company in m
 10. Offline support for most use cases.
 11. Responsive design that works on both mobile and desktop
 
+## Running e2e tests
+
+1. Build libraries if not already built.
+2. Run `npm run buildTest` to build e2e application.
+3. Run `http-server dist/kbtv-client-e2e` to host the application on localhost.
+3. Run `ng run kbtv-client:cypress-open` to open test panel via [Cypress](https://www.cypress.io).
+
 ## Related projects
 - [Kbtv-webapi](https://github.com/fredtvet/Kbtv-webapi/blob/master/README.md) - A compatible web api for use with this application. 
