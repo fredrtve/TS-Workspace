@@ -37,13 +37,12 @@ describe('User Timesheet Week', () => {
         endTime: startOfWeek - 4*oneDay + 4*oneHour
     }
 
-    before(() => cy.clock(startOfWeek))
-
-    beforeEach(() => {   
+    beforeEach(() => { 
         cy.login('Leder', '/mine-timer', { userTimesheets: [timesheet1, timesheet2, timesheet3]});
     })
 
     it('Should display date information for current week as default', () => {   
+        cy.viewport(1280, 875).wait(200); //Force desktop to see all days
         const title = () => cy.getCy('top-nav-title');
         const dayLabels = () => cy.getCy('day-label'); 
         //Should displays current week and year in title
@@ -51,12 +50,13 @@ describe('User Timesheet Week', () => {
         title().contains(_getWeekYear(new Date).weekNr);
 
         //Should display labels with correct day of month (for mobile with 5 weekday view)
-        for(let i = 0; i < 5; i++) 
-            dayLabels().eq(i).should('contain', new Date(startOfWeek).getDate() + i);
-       
-        //Should highlight current day, which is start of week
-        dayLabels().first().should('have.class', 'accent')
-        
+        for(let i = 0; i < 7; i++) {
+            const day = new Date(startOfWeek).getDate() + i;
+            dayLabels().eq(i).should('contain', day);
+            //Should highlight current day
+            if(day === new Date().getDay()) 
+                dayLabels().eq(i).should('have.class', 'accent')   
+       }            
     })
 
     it('Should display current week timesheets correctly', () => {

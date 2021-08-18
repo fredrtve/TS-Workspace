@@ -109,3 +109,7 @@ Cypress.Commands.add('goOnline', () => {
 Cypress.Commands.add('getCy', (value: string, extendedSelector: string = '') => {
   return cy.get(`${cyTag(value)} ` + extendedSelector);
 });
+
+Cypress.Commands.add('submitForm', () => {
+  return cy.getCy('submit-form').click({force:true})
+});

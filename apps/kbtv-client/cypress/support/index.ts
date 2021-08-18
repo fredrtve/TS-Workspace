@@ -60,6 +60,8 @@ declare global {
       goOnline(): Chainable
 
       getCy(value: string, extendedSelector?: string): Chainable
+
+      submitForm(): Chainable
     }
   }
 }

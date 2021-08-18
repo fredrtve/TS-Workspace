@@ -34,7 +34,8 @@ describe('Mission Note List', () => {
         cy.storeDispatch<SaveModelAction<any, MissionNote>>({ 
             type: SaveModelAction, stateProp: "missionNotes", saveAction: 0, entity: newNote
         });
-        getNote(1).find(cyTag('note-content')).invoke('text').should('eq', newNote.content);;
+        cy.wait('@createMissionNote');
+        getNote(1).find(cyTag('note-content')).invoke('text').should('eq', newNote.content);
     });
 
     

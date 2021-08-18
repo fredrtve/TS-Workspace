@@ -51,6 +51,7 @@ describe('Mission Document List', () => {
         cy.storeDispatch<SaveModelFileAction<MissionDocument>>({ 
             type: SaveModelAction, stateProp: "missionDocuments", saveAction: 0, entity: newDoc, file: new File([], "test.txt")
         });
+        cy.wait('@createMissionDoc');
         getDocument(1).should('contain', newDoc.name);
     });
 

@@ -13,9 +13,14 @@ describe('Mission Position Picker', () => {
         cy.login('Leder', '/oppdrag/' + mission.id + '/detaljer', { missions: [mission] });
     })
 
-    it('Should display information and update position without user location', () => {       
+    it('Should display information and update position without user location', () => {   
+        cy.window().then(win => {
+            cy.stub(win.navigator.geolocation, 'getCurrentPosition').throws()
+        }) 
+
         cy.getCy('bottom-bar-action').filter(":contains('Mer')").click()
         cy.contains('Merk posisjon').click();
+        cy.wait(1000);
         cy.getCy('position-picker-address').should('contain', mission.address);
         cy.getCy('no-user-position').should('be.visible');
         cy.getCy('submit-marked-position').should('be.disabled');

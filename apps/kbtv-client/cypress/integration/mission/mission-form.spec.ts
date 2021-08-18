@@ -37,8 +37,8 @@ describe('Mission Form', () => {
 
         //Check that it is not submittable with invalid phoneNumbers
         const isInvalidPhoneNumber = (num: string) => {
-            cy.getCy('form-phoneNumber','input').clear().type(num).type('{enter}');
-            cy.getCy('form-phoneNumber','mat-error').should('exist')
+            cy.getCy('form-phoneNumber','input').clear().type(num);
+            cy.submitForm().getCy('form-phoneNumber','mat-error').should('exist');
             isNotSubmittable();
         }
 
@@ -52,8 +52,8 @@ describe('Mission Form', () => {
 
         //Check that it is not submittable with invalid description
         const invalidDesc = _stringGen(ValidationRules.MissionDescriptionMaxLength + 1);
-        cy.getCy('form-description','textarea').clear().type(invalidDesc, {delay: 0}).type('{enter}');
-        cy.getCy('form-description','mat-error').should('exist')
+        cy.getCy('form-description','textarea').clear().type(invalidDesc, {delay: 0});
+        cy.submitForm().getCy('form-description','mat-error').should('exist')
         isNotSubmittable();
 
         //Check that it is submittable with valid description

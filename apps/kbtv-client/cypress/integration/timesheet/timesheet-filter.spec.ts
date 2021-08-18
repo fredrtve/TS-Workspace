@@ -36,14 +36,14 @@ describe('Timesheet Filter', () => {
     }
 
     beforeEach(() => {
-        cy.intercept('GET', '**' + ApiUrl.Users, { statusCode: 204, body: [user, user2] }, );
-        cy.intercept('GET', '**' + ApiUrl.Timesheet + '**', { statusCode: 204, body: [] }, );
+        cy.intercept('GET', '**' + ApiUrl.Users, { statusCode: 200, body: [user, user2], delay: 200 }).as('getUsers');
+        cy.intercept('GET', '**' + ApiUrl.Timesheet + '**', { statusCode: 200, body: [] }, );
 
         cy.login('Leder', '/timestatistikk', { 
-            timesheetStatisticTimesheetCriteria: existingCriteria, users: [user, user2], missions: [mission, mission2] 
+            timesheetStatisticTimesheetCriteria: existingCriteria, missions: [mission, mission2] 
         });  
         cy.getCy('bottom-bar-action').filter(":contains('Filtre')").click();
-        cy.wait(200); 
+        cy.wait("@getUsers"); 
     })
 
     it('Shows existing values & can update values', () => {  
@@ -63,7 +63,7 @@ describe('Timesheet Filter', () => {
             dateRangePreset: DateRangePresets.CurrentYear,
         }
 
-        cy.getCy('form-user').click().wait(700);
+        cy.getCy('form-user').click().wait(1500);
         cy.get('mat-option').filter(`:contains("${getFullName(user2)}")`).click();
 
         cy.getCy('form-mission','input').clear().type(mission2.address!).wait(500);

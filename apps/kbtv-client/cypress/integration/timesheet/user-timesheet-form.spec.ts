@@ -40,9 +40,22 @@ describe("User Timesheet Form", () => {
 
         isNotSubmittable();
         
-        cy.getCy('form-mission','input').type(mission.address!).type('{enter}'); 
-        cy.getCy('form-mission','mat-error').should('exist'); //Check for error until item clicked
+        cy.getCy('form-mission','input').type(mission.address!); 
+        cy.submitForm().getCy('form-mission','mat-error').should('exist'); //Check for error until item clicked
+        cy.getCy('form-mission','input').click().wait(1000);
         cy.get('mat-option').first().click();
+
+        isNotSubmittable();
+
+        //Check that it is not submittable with invalid comment
+        const invalidComment = _stringGen(ValidationRules.TimesheetCommentMaxLength + 1);
+        cy.getCy('form-comment','textarea').clear().type(invalidComment, {delay: 0});
+        cy.submitForm().getCy('form-comment','mat-error').should('exist')
+
+        isNotSubmittable();
+
+        const comment = 'thisisatestcomment';
+        cy.getCy('form-comment','textarea').clear().type(comment); 
 
         isNotSubmittable(); 
 
@@ -70,18 +83,6 @@ describe("User Timesheet Form", () => {
         cy.wait(200);
         cy.ionTimeSelect(endParams);
         cy.contains("Ferdig").click();
-
-        isNotSubmittable();
-
-        //Check that it is not submittable with invalid comment
-        const invalidComment = _stringGen(ValidationRules.TimesheetCommentMaxLength + 1);
-        cy.getCy('form-comment','textarea').clear().type(invalidComment, {delay: 0}).type('{enter}');
-        cy.getCy('form-comment','mat-error').should('exist')
-
-        isNotSubmittable();
-
-        const comment = 'thisisatestcomment';
-        cy.getCy('form-comment','textarea').clear().type(comment); 
 
         isSubmittable();
 
