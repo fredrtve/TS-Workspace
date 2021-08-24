@@ -23,6 +23,7 @@ describe('Mission Image List', () => {
         getImages().should('have.length', 3)
         getImage(1).should('have.attr', 'src').should('include', image1.fileName);
         getImage(2).should('have.attr', 'src').should('include', image3.fileName);
+        cy.wait(200);
         getImage(3).should('have.attr', 'src').should('include', "notfound.png");
     });
 
