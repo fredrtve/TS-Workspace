@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Mission } from "@core/models";
 import { StateEmployers, StateMissions, StateMissionTypes } from "@core/state/global-state.interfaces";
+import { ModelState } from "@core/state/model-state.interface";
 import { AppChip } from "@shared-app/interfaces/app-chip.interface";
 import { MissionCriteria } from "@shared/interfaces";
 import { MissionFilter } from "@shared/mission-filter.model";
@@ -15,6 +16,7 @@ import { MissionCriteriaForm, MissionCriteriaFormSheet, MissionCriteriaFormState
 import { StateMissionCriteria } from "./interfaces";
 import { _missionCriteriaChipsFactory } from "./mission-criteria-chips-factory.helper";
 import { SetMissionCriteriaAction } from "./state/actions.const";
+
 
 export interface FilteredMissionsResponse {
     criteriaChips: AppChip[],
@@ -52,7 +54,7 @@ export class MissionFilterFacade {
     }
 
     constructor(
-      private store: Store<StoreState>,
+      private store: Store<StoreState & ModelState>,
       private formService: FormService,
     ) {}
 

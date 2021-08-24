@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { DynamicForm, FormComponent } from 'dynamic-forms';
 import { Immutable, Maybe } from 'global-types';
-import { StateModels, _getModel, _getModelConfig } from 'model/core';
+import { StateModels, _getModelConfig, ModelContext, RelationInclude } from 'model/core';
 import { ModelCommand, SaveAction } from 'model/state-commands';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { first, map } from 'rxjs/operators';
@@ -98,12 +98,24 @@ export class ModelFormComponent<
       let modelValue: Maybe<Immutable<Partial<TForm>>> = null;
 
       if(this.entityId && state){
-        const model = state ? _getModel(state, this.entityId, this.config!.includes) : null;
+        const model = state ? this.getModel(state, this.entityId, this.config!.includes) : null;
         if(model) modelValue = this.config!.modelConverter! ? this.config!.modelConverter(model) : <Immutable<TForm>> model;
       }
 
       return !modelValue ? 
         (this.initialValue || {}) : {...this.initialValue, ...modelValue}
+    }
+
+    private getModel(    
+      state: Immutable<Partial<TState>>,
+      id: unknown,   
+      include: Immutable<RelationInclude<TState, TModel>>
+    ): Immutable<TModel> | null {
+      const { idProp } = _getModelConfig(include.prop);
+      const query = new ModelContext<TState>().get(<any> include.prop).where(x => (<any> x)[idProp] === id);
+      if(include.includes?.length) 
+        for(const relProp of include.includes) query.include(<any> relProp);
+      return <null> query.first(state);
     }
 }
   

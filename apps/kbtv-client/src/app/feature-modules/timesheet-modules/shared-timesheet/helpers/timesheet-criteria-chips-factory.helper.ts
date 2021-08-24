@@ -1,18 +1,16 @@
-import { Mission } from "@core/models"
-import { ModelState } from "@core/state/model-state.interface"
+import { modelCtx } from "@core/configurations/model/app-model-context"
+import { translations } from "@shared-app/constants/translations.const"
+import { TimesheetStatus } from "@shared-app/enums/timesheet-status.enum"
 import { CriteriaChipOptions, _criteriaChipsFactory } from "@shared-app/helpers/chips/criteria-chips-factory.helper"
 import { AppChip } from "@shared-app/interfaces/app-chip.interface"
-import { translations } from "@shared-app/constants/translations.const"
 import { TimesheetCriteria } from "@shared-timesheet/timesheet-filter/timesheet-criteria.interface"
-import { TimesheetStatus } from "@shared-app/enums/timesheet-status.enum"
-import { _weakMemoizer } from "global-utils"
 import { _formatDateRange, _formatShortDate } from "date-time-helpers"
 import { Immutable, Maybe } from "global-types"
-import { _getModelDisplayValue } from "model/core"
+import { _weakMemoizer } from "global-utils"
 
 const TimesheetCriteriaChipOptions: {[key in keyof TimesheetCriteria]: CriteriaChipOptions<TimesheetCriteria[key]> } = {
     user: { valueFormatter: (val) => val ? (val.lastName + ', ' + val.firstName) : undefined }, 
-    mission: { valueFormatter: (val) => val ? _getModelDisplayValue<ModelState, Mission>("missions", val) : undefined },
+    mission: { valueFormatter: (val) => val ? modelCtx.getDisplayValue("missions", val) : undefined },
     dateRange: { valueFormatter: (val) => val ? _formatDateRange(val, _formatShortDate) : undefined }, 
     dateRangePreset: { ignored: true },
     status: { valueFormatter: (val) => val ? translations[TimesheetStatus[val]?.toLowerCase()] : undefined }, 

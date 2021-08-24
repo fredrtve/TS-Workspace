@@ -45,7 +45,7 @@ const PasswordControl: Immutable<DynamicControl<string, null, InputQuestion>> = 
 }
 
 export const CreateUserModelForm: Immutable<ModelFormConfig<FormState, User,  SaveUserForm, FormState>> = {
-    includes: {prop: "users", foreigns: "all"}, 
+    includes: {prop: "users", includes: ["employer"]}, 
     actionConverter: _userFormToSaveUserConverter,
     dynamicForm: {
         submitText: "Legg til",
@@ -64,7 +64,7 @@ export const CreateUserModelForm: Immutable<ModelFormConfig<FormState, User,  Sa
 }
 
 export const EditUserModelForm: Immutable<ModelFormConfig<FormState, User, SaveUserForm, FormState>> = {
-    includes: {prop: "users", foreigns: "all"},
+    includes: {prop: "users", includes: ["employer"]},
     actionConverter: _userFormToSaveUserConverter,
     dynamicForm: {
         submitText: "Oppdater", options: { getRawValue: true }, 

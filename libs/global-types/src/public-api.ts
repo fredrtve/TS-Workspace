@@ -3,6 +3,15 @@
  * @packageDocumentation
  */
 
+/** A value with immutable object properties */
+export type ShallowCopy<T> ={
+    [P in keyof T]: Immutable<T[P]>;
+}
+
+export type UnionOmit<TUnion extends string | number | symbol, TOmit extends string | number | symbol> =  keyof {
+    [P in TUnion as P extends TOmit ? never : P]: any 
+};
+
 /** A value that can't be mutated */
 export type Immutable<T> =
     T extends (infer R)[] ? ImmutableArray<R> :

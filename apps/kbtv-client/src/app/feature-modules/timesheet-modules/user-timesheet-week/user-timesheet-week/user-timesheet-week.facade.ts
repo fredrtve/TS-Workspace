@@ -9,13 +9,13 @@ import { GroupByPeriod } from '@shared-app/enums/group-by-period.enum';
 import { filterRecords } from '@shared/operators/filter-records.operator';
 import { WeekYear, _getWeekYear } from 'date-time-helpers';
 import { Immutable, Maybe } from 'global-types';
-import { RelationInclude, _getModels } from 'model/core';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ComponentStore, Store } from 'state-management';
 import { TimesheetSummary } from '../../shared-timesheet/interfaces';
 import { ComponentStoreState, StoreState } from '../store-state.interface';
 import { NextWeekAction, PreviousWeekAction, SetTimesheetCriteriaAction } from './component.reducers';
+import { modelCtx } from '@core/configurations/model/app-model-context';
 
 @Injectable()
 export class UserTimesheetWeekFacade {
@@ -36,8 +36,7 @@ export class UserTimesheetWeekFacade {
     ]).pipe(
         map(([userTimesheets, missions]) =>  {
             if(!userTimesheets?.length) return;
-            const cfg: RelationInclude<ModelState, UserTimesheet> = {prop: "userTimesheets", foreigns: ["mission"]}; 
-            const timesheets = _getModels<ModelState, UserTimesheet>({userTimesheets, missions: missions || []}, cfg);
+            const timesheets = modelCtx.get("userTimesheets").include("mission").run({userTimesheets, missions});
             const summaries = _getSummariesByType(GroupByPeriod.Day, timesheets);
             return _mapObjectsToWeekdays<TimesheetSummary>(summaries, "date")
         }),

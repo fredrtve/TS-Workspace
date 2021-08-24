@@ -1,9 +1,8 @@
 
-import { Test1Child1, Test1Foreign1 } from '../../test-types';
+import { Test1Child1, Test1Child1Child1, Test1Foreign1 } from '../../test-types';
 import { ModelConfigMap } from '../interfaces';
-import { _registerModelStateConfig } from '../model-state-config-helpers';
-import { _getModel } from './get-model.helper';
-import { _getModels } from './get-models.helper';
+import { _getModelConfig, _registerModelStateConfig } from '../model-state-config-helpers';
+import { ModelContext } from './model-context';
 
 interface Test1 { id?: string, children1?: Test1Child1[], children2?: Test1Child1[] 
     foreignKey1?: string, foreign1?:Test1Foreign1, foreignKey2?: string, foreign2?: Test1Foreign1,  }
@@ -14,7 +13,8 @@ interface TestState  {
     test1Foreign2s: Test1Foreign1[],
     test1Child1s: Test1Child1[],  
     test1Child2s: Test1Child1[], 
-  }
+    test1Child1Child1s: Test1Child1Child1[],  
+}
   
 function getModelConfigMap(idGenerator?: any): ModelConfigMap<TestState>{
     return <any>{
@@ -49,7 +49,9 @@ function getModelConfigMap(idGenerator?: any): ModelConfigMap<TestState>{
           stateProp: "test1Child1s",
           idProp: "id",
           idGenerator,
-          children: { }, 
+          children: {
+              children: { stateProp: "test1Child1Child1s", childKey: "test1Child1Id"}
+           }, 
           foreigns: { }
       }, 
       test1Child2s: {
@@ -79,6 +81,12 @@ const state: Partial<TestState> = {
         {id: 'modelChild11', test1Id: 'model1', foreignKey1: 'modelChildForeign1'}, 
         {id: 'modelChild12', test1Id: 'model1', foreignKey1: 'modelChildForeign1'}, 
         {id: 'modelChild13', test1Id: 'model2', foreignKey1: 'modelChildForeign2'} 
+    ],  
+    test1Child1Child1s: [ 
+        {id: 'modelChild11', test1Child1Id: 'modelChild11'}, 
+        {id: 'modelChild12', test1Child1Id: 'modelChild11'}, 
+        {id: 'modelChild13', test1Child1Id: 'modelChild12'}, 
+        {id: 'modelChild14', test1Child1Id: 'modelChild13'} 
     ],
     test1Child2s: [ 
         {id: 'modelChild21', test1Id: 'model1', foreignKey1: 'modelChildForeign1'}, 
@@ -87,13 +95,18 @@ const state: Partial<TestState> = {
     ],
 }
 
-describe('_getModels', () => {
+const ctx = new ModelContext<TestState>();
 
-  beforeEach(() => {});
+describe('ModelContext', () => {
 
-  it('should get all models with all relations', () => {
-    _registerModelStateConfig<TestState>(getModelConfigMap());
-    var result = _getModels<Partial<TestState>, Test1>(state, { prop: "test1s", children: 'all', foreigns: 'all' } )
+  beforeEach(() => { _registerModelStateConfig<TestState>(getModelConfigMap()); });
+
+  it('Should get all models with all relations', () => {
+    const config = _getModelConfig<TestState, Test1>("test1s");
+    var query = ctx.get("test1s");
+    for(const child in config.children) query.include(<any> child);
+    for(const foreign in config.foreigns) query.include(<any> foreign);
+    var result = query.run(state);
     var m1 = result[0];
     var m2 = result[1];
 
@@ -131,8 +144,8 @@ describe('_getModels', () => {
   });
 
   it('should get all models with only 1 foreign relation', () => {
-    _registerModelStateConfig<TestState>(getModelConfigMap());
-    var result = _getModels<Partial<TestState>, Test1>(state, { prop: "test1s", foreigns: ['foreign1'] } )
+    var result = ctx.get("test1s").include("foreign1").run(state);
+
     var m1 = result[0];
     var m2 = result[1];
     expect(m1).toBeDefined();
@@ -157,8 +170,7 @@ describe('_getModels', () => {
   });
 
   it('should get all models with only 2 foreign relation', () => {
-    _registerModelStateConfig<TestState>(getModelConfigMap());
-    var result = _getModels<Partial<TestState>, Test1>(state, { prop: "test1s", foreigns: ['foreign1', 'foreign2'] } )
+    var result = ctx.get("test1s").include("foreign1").include("foreign2").run(state);
     var m1 = result[0];
     var m2 = result[1];
 
@@ -186,8 +198,7 @@ describe('_getModels', () => {
   });
 
   it('should get all models with only 1 child relation', () => {
-    _registerModelStateConfig<TestState>(getModelConfigMap());
-    var result = _getModels<Partial<TestState>, Test1>(state, { prop: "test1s", children: ['children2'] } )
+    var result = ctx.get("test1s").include("children2").run(state);
     var m1 = result[0];
     var m2 = result[1];
 
@@ -212,8 +223,7 @@ describe('_getModels', () => {
   });
 
   it('should get all models with only 2 child relations', () => {
-    _registerModelStateConfig<TestState>(getModelConfigMap());
-    var result = _getModels<Partial<TestState>, Test1>(state, { prop: "test1s", children: ['children1', 'children2'] } )
+    var result = ctx.get("test1s").include("children1").include("children2").run(state);
     var m1 = result[0];
     var m2 = result[1];
     expect(m1).toBeDefined();
@@ -245,16 +255,58 @@ describe('_getModels', () => {
     expect(m1!.foreign2).toBeUndefined();  
   });
 
+  it('should get models with nested child relations', () => {
+    var result = ctx.get("test1s").include("children1", q => q.include("children")).run(state);
+    
+    var m1 = result[0];
+
+    expect(result.length).toEqual(2);
+
+    expect(m1).toBeDefined();
+    expect(m1!.id).toEqual("model1");
+
+    expect(m1?.children1).toBeDefined();
+    expect(m1!.children1!.length).toEqual(2);
+    expect(m1!.children1![0].children?.length).toEqual(2);
+    expect(m1!.children1![1].children?.length).toEqual(1);       
+  });
+
+  it('should get models with nested child relation with condition', () => {
+    var result = ctx.get("test1s").include("children1", q => q.where(x => x.test1Id !== "model2").include("children")).run(state);
+
+    expect(result.length).toEqual(2);
+
+    var m1 = result[0];
+
+    expect(m1).toBeDefined();
+    expect(m1!.id).toEqual("model1");
+
+    expect(m1?.children1).toBeDefined();
+    expect(m1!.children1!.length).toEqual(2);
+    expect(m1!.children1![0].children?.length).toEqual(2);
+    expect(m1!.children1![1].children?.length).toEqual(1);  
+    
+    var m2 = result[1];
+
+    expect(m2).toBeDefined();
+    expect(m2!.id).toEqual("model2");
+    expect(m2!.children1).toBeUndefined();
+
+  });
+
   it('should get all models by condition', () => {
-    _registerModelStateConfig<TestState>(getModelConfigMap());
-    var result = _getModels<Partial<TestState>, Test1>(state, { prop: "test1s" }, (t) => t.id === "model1")
+    var result = ctx.get("test1s").where((t) => t.id === "model1").run(state);
     expect(result.length).toEqual(1);
     expect(result[0].id).toEqual("model1")
   });
 
+  it('should get first model by condition', () => {
+    var result = ctx.get("test1s").where((t) => t.id === "model1").first(state);
+    expect(result!.id).toEqual("model1")
+  });
+
   it('should get all models with no relations', () => {
-    _registerModelStateConfig<TestState>(getModelConfigMap());
-    var result = _getModels<Partial<TestState>, Test1>(state, { prop: "test1s" } )
+    var result = ctx.get("test1s").run(state);
     var m1 = result[0];
     var m2 = result[1];
 
@@ -275,15 +327,14 @@ describe('_getModels', () => {
     expect(m2!.foreign2).toBeUndefined();    
   });  
 
-  it('should return undefined if model not found', () => {
-    _registerModelStateConfig<TestState>(getModelConfigMap());
-    var result = _getModel<Partial<TestState>, Test1>(state, "notfound", { prop: "test1s" } )
-    expect(result).toBeUndefined();   
+  it('should return empty array if none matches conditions', () => {
+    var result = ctx.get("test1s").where(x => x.id === "noonehasthiskey").run(state);
+    expect(result.length).toEqual(0);   
   });
   
   it('should return empty array if empty model state', () => {
-    _registerModelStateConfig<TestState>(getModelConfigMap());
-    var result = _getModels<Partial<TestState>, Test1>({}, { prop: "test1s" } )
+    var result = ctx.get("test1s").run({});
     expect(result.length).toEqual(0);   
   });
+  
 });

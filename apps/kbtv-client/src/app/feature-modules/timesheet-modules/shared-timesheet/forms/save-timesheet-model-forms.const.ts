@@ -104,7 +104,7 @@ const CommonStateSetters = [
 ]
 
 export const CreateUserTimesheetModelForm: Immutable<ModelFormConfig<StateUserTimesheets & StateMissions, UserTimesheet, UserTimesheetForm, FormState>> = {
-    includes: {prop: "userTimesheets", foreigns: "all"}, 
+    includes: {prop: "userTimesheets", includes: ["mission"]}, 
     actionConverter: _userTimesheetFormToSaveModelConverter,
     dynamicForm: {
         submitText: "Legg til", options: { getRawValue: true },   
@@ -114,7 +114,7 @@ export const CreateUserTimesheetModelForm: Immutable<ModelFormConfig<StateUserTi
 }
 
 export const EditUserTimesheetModelForm: Immutable<ModelFormConfig<StateUserTimesheets & StateMissions, UserTimesheet, UserTimesheetForm, FormState>> = {
-    includes: {prop: "userTimesheets", foreigns: "all"},
+    includes: {prop: "userTimesheets", includes: ["mission"]},
     actionConverter: _userTimesheetFormToSaveModelConverter,
     modelConverter: _modelToForm,
     dynamicForm: {
@@ -128,7 +128,7 @@ export const EditUserTimesheetModelForm: Immutable<ModelFormConfig<StateUserTime
 }
 
 export const EditTimesheetModelForm: Immutable<ModelFormConfig<StateTimesheets & StateMissions & StateUsers, Timesheet, TimesheetForm, FormState>> = {
-    includes: {prop: "timesheets", foreigns: "all"},
+    includes: {prop: "timesheets", includes: ["mission", "user"]},
     actionConverter: _timesheetFormToSaveModelConverter,
     modelConverter: _modelToForm,
     dynamicForm: {
@@ -143,7 +143,7 @@ export const EditTimesheetModelForm: Immutable<ModelFormConfig<StateTimesheets &
 }
 
 export const CreateTimesheetModelForm: Immutable<ModelFormConfig<StateTimesheets & StateMissions & StateUsers, Timesheet, TimesheetForm, FormState>> = {
-    includes: {prop: "timesheets", foreigns: "all"}, 
+    includes: {prop: "timesheets", includes: ["mission", "user"]}, 
     actionConverter: _timesheetFormToSaveModelConverter,
     dynamicForm: {
         submitText: "Legg til", options: { getRawValue: true },   

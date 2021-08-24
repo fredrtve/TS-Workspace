@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
+import { modelCtx } from "@core/configurations/model/app-model-context";
 import { Mission } from "@core/models";
 import { StateMissionDocuments, StateMissionImages, StateMissionNotes } from "@core/state/global-state.interfaces";
 import { MailModelsAction } from "@core/state/mail-models/mail-models.action";
@@ -8,7 +9,7 @@ import { CreateMissionImagesAction } from "@shared-mission/state/actions.const";
 import { ModelFileForm, _formToSaveModelFileConverter } from '@shared/constants/form-to-save-model-file.converter';
 import { _filter } from "array-helpers";
 import { Immutable, Maybe, Prop } from 'global-types';
-import { RelationInclude, StateModels, _getModel } from "model/core";
+import { StateModels } from "model/core";
 import { DeleteModelAction, ModelCommand } from 'model/state-commands';
 import { Observable, of } from "rxjs";
 import { map } from "rxjs/operators";
@@ -37,11 +38,12 @@ export class MissionDetailsFacade {
         
         this.store.dispatch(<UpdateLastVisitedAction>{ type: UpdateLastVisitedAction, id: this.missionId })
 
-        const children: Prop<StoreState>[] = ["missionNotes", "missionDocuments", "missionImages"];
-
-        return this.store.select$(["missions", "employers", ...children]).pipe(
-            map(state => _getModel<StoreState, Mission>(state, this.missionId, 
-                {prop: "missions", children: ["missionNotes", "missionDocuments", "missionImages"], foreigns: ['employer']}))
+        return this.store.select$(["missions", "employers", "missionNotes", "missionDocuments", "missionImages"]).pipe(
+            map(state => modelCtx.get("missions")
+                .where(x => x.id === this.missionId)
+                .include("missionNotes").include("missionDocuments").include("missionImages").include("employer")
+                .first(state)
+            )
         )
     }
 
@@ -59,10 +61,12 @@ export class MissionDetailsFacade {
         });
 
     getEmployerEmail(): string{  
-        const cfg: RelationInclude<StoreState, Mission> = {prop: "missions", foreigns: ["employer"]}
-        const mission = _getModel<StoreState, Mission>(this.store.state, this.missionId, cfg);
-        const email = mission?.employer?.email;
-        return email || "";
+        const mission = modelCtx.get("missions")
+            .where(x => x.id === this.missionId)
+            .include("employer")
+            .first(this.store.state);
+
+        return mission?.employer?.email || "";
     }
 
     deleteHeaderImage() { 

@@ -19,5 +19,6 @@ export function _getModelConfig<
 >(
   prop: Immutable<StatePropByModel<TState, TModel>>
 ): Immutable<TConfig> {
+  if(!_modelConfigs) throw Error('Trying to get model config before ')
   return _modelConfigs[<keyof object> prop];
 }

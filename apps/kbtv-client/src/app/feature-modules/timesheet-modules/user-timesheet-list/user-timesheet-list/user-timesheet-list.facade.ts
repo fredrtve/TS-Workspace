@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Timesheet, UserTimesheet } from '@core/models';
+import { modelCtx } from '@core/configurations/model/app-model-context';
+import { Timesheet } from '@core/models';
 import { StateMissions, StateUserTimesheets } from '@core/state/global-state.interfaces';
 import { DateRangePresets } from '@shared-app/enums/date-range-presets.enum';
 import { TimesheetCriteria } from '@shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { TimesheetFilter } from '@shared-timesheet/timesheet-filter/timesheet-filter.model';
 import { filterRecords } from '@shared/operators/filter-records.operator';
 import { Immutable, Maybe } from 'global-types';
-import { RelationInclude, _getModels } from 'model/core';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ComponentStore, Store } from 'state-management';
@@ -33,11 +33,9 @@ export class UserTimesheetListFacade {
         this.filteredTimesheets$, 
         this.store.selectProperty$("missions")
       ]).pipe(
-          map(([userTimesheets, missions]) =>  {
-            if(!userTimesheets) return;
-            const cfg: RelationInclude<State, UserTimesheet> = {prop: "userTimesheets", foreigns: ["mission"]};     
-            return _getModels<State, UserTimesheet>({userTimesheets, missions: missions || []}, cfg);
-          })
+          map(([userTimesheets, missions]) =>  !userTimesheets ? null :
+            modelCtx.get("userTimesheets").include("mission").run({userTimesheets, missions})
+          )
       );
 
       constructor(

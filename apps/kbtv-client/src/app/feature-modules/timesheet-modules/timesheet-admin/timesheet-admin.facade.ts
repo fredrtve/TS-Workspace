@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { modelCtx } from '@core/configurations/model/app-model-context';
 import { Timesheet } from '@core/models';
 import { LeaderSettings } from '@core/models/leader-settings.interface';
 import { ModelState } from '@core/state/model-state.interface';
@@ -12,7 +13,6 @@ import { _noEmployersFilter } from '@shared-timesheet/no-employers-filter.helper
 import { filterRecords } from '@shared/operators/filter-records.operator';
 import { _find } from 'array-helpers';
 import { Immutable, ImmutableArray, Maybe } from 'global-types';
-import { _getModels } from 'model/core';
 import { ModelFormService } from 'model/form';
 import { FetchModelsAction } from 'model/state-fetcher';
 import { combineLatest, Observable } from 'rxjs';
@@ -56,14 +56,13 @@ export class TimesheetAdminFacade {
     selectedWeekTimesheets$: Observable<Maybe<Immutable<Timesheet>[]>> = combineLatest([
         this.weeklySummaries$,
         this.store.select$(['timesheetAdminSelectedWeekNr', 'missions'])
-    ]).pipe(map(([summaries, state]) => {
-        const summary = _find<TimesheetSummary>(summaries, state.timesheetAdminSelectedWeekNr, "weekNr");
+    ]).pipe(map(([summaries, {timesheetAdminSelectedWeekNr, missions}]) => {
+        const summary = _find<TimesheetSummary>(summaries, timesheetAdminSelectedWeekNr, "weekNr");
         if(!summary?.timesheets?.length) return;
-        let timesheets = _getModels<StoreState, Timesheet>(
-            {...state, timesheets: summary.timesheets}, 
-            {prop: "timesheets", foreigns: ["mission"]}
-        )
-        return timesheets?.slice().map(x => { return <Timesheet> {...x, fullName: summary.fullName}});
+        return modelCtx.get("timesheets")
+            .include("mission")
+            .select({missions, timesheets: summary.timesheets}, 
+                x => { return <Timesheet> {...x, fullName: summary.fullName}})
     }))
     
     constructor(

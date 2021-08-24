@@ -5,7 +5,10 @@ export type ValidStateModel<TModel> = Maybe<Immutable<TModel>>;
 export type ValidStateModelArray<TModel> = Maybe<ImmutableArray<Maybe<TModel>>>;
 export type ValidModelIdKey<TModel> = Prop<PickProperties<DeepRequired<TModel>, string | number>>;
 
-export type StateModels<TState> = ValueOf<{[key in keyof TState]: TState[key] extends ValidStateModelArray<(infer M)> ? M : never}>;
+export type ModelByStateProp<TState, TProp extends keyof TState> = 
+  TState[TProp] extends ValidStateModelArray<(infer M)> ? M : never;
+
+export type StateModels<TState> = ValueOf<{[key in keyof TState]: ModelByStateProp<TState, key> }>;
 
 export type ValueOf<T> = T extends {[K in keyof T]: (infer M)} ? M : never;
 
@@ -21,6 +24,9 @@ export type ValidModelForeigns<TState, TModel extends StateModels<TState>> =
 export type ValidModelForeignProperties<TState, TModel extends StateModels<TState>> = 
   keyof ValidModelForeigns<TState, TModel>
 
+export type ValidRelationProps<TState, TModel extends StateModels<TState>> = 
+  ValidModelForeignProperties<TState, TModel> | ValidModelChildProperties<TState, TModel> | ""
+  
 // export  type ValidModelState = {[key: string]: Maybe<Maybe<object>[]> }
 // export type ValidModel = UnknownState ??
 export type StatePropByModel<TState, TModel extends StateModels<TState>> = {
@@ -45,6 +51,9 @@ export type StatePropByModelForeignProp<TState, TModel extends StateModels<TStat
 
 export type ModelChildByChildProp<TModel, TChildProp> = TChildProp extends keyof TModel ? 
       TModel[TChildProp] extends ValidStateModelArray<(infer M)> ?  M : never : never;
+
+export type ModelForeignByForeignProp<TModel, TForeignProp> = TForeignProp extends keyof TModel ? 
+      TModel[TForeignProp] extends ValidStateModel<(infer M)> ?  M : never : never;
 
 export type ModelForeignsMap<TState, TModel extends StateModels<TState>> = 
   {[P in ValidModelForeignProperties<TState, TModel>]: ForeignRelation< TState, TModel, P >};
@@ -108,9 +117,7 @@ export interface RelationInclude<TState, TModel extends StateModels<TState>> {
   /** The model property */
   prop: StatePropByModel<TState, TModel>;
   /** Foreign properties that should be included. Set to 'all' to get all relationships */
-  foreigns?: ValidModelForeignProperties<TState, TModel>[] | 'all';
-  /** Child properties that should be included. Set to 'all' to get all relationships */
-  children?: ValidModelChildProperties<TState, TModel>[] | 'all';
+  includes?: ValidRelationProps<TState, TModel>[];
 }
 
 /** A state slice of unknown model state */

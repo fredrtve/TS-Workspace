@@ -6,7 +6,7 @@ import { MissionCriteria } from "@shared/interfaces";
 import { _weakMemoizer } from "global-utils";
 import { _formatDateRange, _formatShortDate } from "date-time-helpers";
 import { Maybe, Immutable } from "global-types";
-import { _getModelDisplayValue } from "model/core";
+import { modelCtx } from "@core/configurations/model/app-model-context";
 
 export const _missionCriteriaChipsFactory = _weakMemoizer(missionCriteriaChipsFactory);
 
@@ -24,8 +24,8 @@ function missionCriteriaChipsFactory(
       },      
       {
         finished: { valueFormatter: (val) => val ? "Ferdig" : undefined },
-        employer: { valueFormatter: (val) => val ? _getModelDisplayValue<ModelState, Employer>("employers", val) : undefined },
-        missionType: { valueFormatter: (val) => val ? _getModelDisplayValue<ModelState, MissionType>("missionTypes", val) : undefined },
+        employer: { valueFormatter: (val) => val ? modelCtx.getDisplayValue("employers", val) : undefined },
+        missionType: { valueFormatter: (val) => val ? modelCtx.getDisplayValue("missionTypes", val) : undefined },
         dateRange: { valueFormatter: (val) => val ? _formatDateRange(val, _formatShortDate) : undefined }, 
       },
     )
