@@ -1,18 +1,21 @@
 .content-container{
     flex-direction: row;
-    place-content: center flex-start;
+    align-content: center;
+    justify-content: flex-start;
     align-items: center;
     *{
         margin-right: 16px;
     }
     .date-content{
         flex-direction: column;
-        place-content: center;
+        align-content: center;
+        justify-content: center;
         align-items: center;
     }
     .content{
         flex-direction: column;
-        place-content: flex-start center;
+        align-content: flex-start;
+        justify-content: center;
         align-items: flex-start;
     }
 }

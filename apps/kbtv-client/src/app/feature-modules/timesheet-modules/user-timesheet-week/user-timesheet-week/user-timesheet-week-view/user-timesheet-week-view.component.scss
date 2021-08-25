@@ -16,7 +16,8 @@
     flex-direction: column;
     box-sizing: border-box;
     display: flex;
-    place-content: stretch flex-start;
+    align-content: stretch;
+    justify-content: flex-start;
     align-items: stretch;
     flex: 1 1 0%;
     width: 100%;

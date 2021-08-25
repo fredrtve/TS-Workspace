@@ -44,12 +44,14 @@
 
 .left{
     border-radius: 0px 9px 0px 0px;
-    place-content: center flex-start;
+    align-content: center;
+    justify-content: flex-start;
 }
 
 .right{
     border-radius: 9px 0px 0px 0px;        
-    place-content: center flex-end;
+    align-content: center;
+    justify-content: flex-end;
 }
 
 .bottom-bar-no-fab{

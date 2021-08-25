@@ -13,7 +13,8 @@ import { DynamicAbstractGroupComponent } from './dynamic-abstract-group.componen
       flex-direction: row;
       box-sizing: border-box;
       display: flex;
-      place-content: center flex-start;
+      align-content: center;
+      justify-content: flex-start;
       align-items: center;
     }
   </style>

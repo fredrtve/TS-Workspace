@@ -14,7 +14,8 @@
     flex-direction: column;
     box-sizing: border-box;
     display: flex;
-    place-content: stretch flex-start;
+    align-content: stretch;
+    justify-content: flex-start;
     align-items: stretch;
     max-width: 100%;
     .card-title{

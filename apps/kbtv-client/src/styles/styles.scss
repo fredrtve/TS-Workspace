@@ -128,7 +128,8 @@ a {
     flex-flow: row wrap!important;
     box-sizing: border-box!important;
     display: flex!important;
-    place-content: center flex-start!important;
+    align-content: center!important;
+    justify-content: flex-start!important;
     align-items: center!important;
   }
 }
