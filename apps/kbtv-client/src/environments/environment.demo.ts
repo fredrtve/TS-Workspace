@@ -1,6 +1,7 @@
 export const environment = {
     production: true,
     testing: false,
+    demo: true,
     apiUrl: 'https://bjbyggdemoapi.azurewebsites.net/api',
     baseUrl: '/demo',
     googleMapsKey: 'AIzaSyBUWZmwjGN92B3PoNS6x6qpOmc3xrP55d8', 

@@ -4,6 +4,7 @@ import { DeviceInfoService } from '@core/services/device-info.service';
 import { LoadingService } from '@core/services/loading.service';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { AuthReturnUrlQueryParam, AuthService, Credentials } from 'state-auth';
 
 @Component({
@@ -13,6 +14,8 @@ import { AuthReturnUrlQueryParam, AuthService, Credentials } from 'state-auth';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent {
+
+  isDemo: boolean = environment.demo;
 
   get returnUrl(): string{
     let url = this.route.snapshot.queryParams[AuthReturnUrlQueryParam]
