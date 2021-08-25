@@ -37,15 +37,15 @@ export class MainSkeletonPresenter extends WithUnsubscribe() {
 
         parent.classList.remove("main-skeleton-card", "main-skeleton-overlay");
 
+        if(this.data.componentClass)
+            parent.classList.add(this.data.componentClass);
+
         if(isS || this.data.viewType === 'overlay') 
             return parent.classList.add("main-skeleton-overlay"); 
         
         if(this.data.viewType === 'card') 
             parent.classList.add("main-skeleton-card"); 
-        
-        if(this.data.componentClass)
-            parent.classList.add(this.data.componentClass);
-
+         
         parent.style.width = this.data.viewSize || "100%";
     }
 }
