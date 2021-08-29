@@ -10,8 +10,8 @@ export const cyTag = (value: string) => `[data-cy="${value}"]`;
 Cypress.Commands.add('login', (role: 'Leder' | 'Mellomleder' | 'Ansatt', redirectUrl: string, initState: object) => {
   window.localStorage.clear();
   window.indexedDB.deleteDatabase("kbtvDb");
-  cy.intercept('https://localhost:44379/api/SyncAll/**', { fixture: 'sync-response'}).as('sync');
-  cy.intercept('https://localhost:44379/api/SyncAll', { fixture: 'sync-response'});
+  cy.intercept('https://localhost:44379/api/SyncAll/**', { fixture: 'empty-sync-response'});
+  cy.intercept('https://localhost:44379/api/SyncAll**', { fixture: 'empty-sync-response'});
   cy.fixture('initial-state').then((initialState: LoginResponse & StateSyncConfig) => {
       initialState.user.role = role;
       localStorage.setItem('accessToken', JSON.stringify(initialState.accessToken.token));
@@ -106,8 +106,12 @@ Cypress.Commands.add('goOnline', () => {
       })
 });
 
-Cypress.Commands.add('getCy', (value: string, extendedSelector: string = '') => {
-  return cy.get(`${cyTag(value)} ` + extendedSelector);
+Cypress.Commands.add('getCy', (value: string | string[], extendedSelector: string = '') => {
+  let selector : string = "";
+  if(Array.isArray(value)) 
+    for(const val of value) selector = selector + ' ' + cyTag(val);
+  else selector = cyTag(value);
+  return cy.get(`${selector} ` + extendedSelector);
 });
 
 Cypress.Commands.add('submitForm', () => {

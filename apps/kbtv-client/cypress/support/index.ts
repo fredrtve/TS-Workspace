@@ -59,7 +59,7 @@ declare global {
   
       goOnline(): Chainable
 
-      getCy(value: string, extendedSelector?: string): Chainable
+      getCy(value: string | string[], extendedSelector?: string): Chainable
 
       submitForm(): Chainable
     }

@@ -22,7 +22,7 @@ describe('Mission Form', () => {
     it('can fill in form and create mission', () => {  
         cy.login('Leder', '/oppdrag', { missionTypes: [missionType], employers: [employer]}); 
         cy.mainFabClick();
-        cy.wait(400);
+        cy.wait(600);
 
         isNotSubmittable();
 

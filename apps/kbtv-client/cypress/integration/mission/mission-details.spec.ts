@@ -86,7 +86,6 @@ describe('Mission Details', () => {
         cy.wait(500);
         cy.storeState<StateMissions>().then(state => {
             const updated = state.missions?.filter(x => x.id === mission.id)[0];
-            console.log(updated);
             expect(updated!.lastVisited).is.closeTo(new Date().getTime(), 100000);
         })
     })

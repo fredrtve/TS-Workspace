@@ -1,10 +1,122 @@
 {
-    "timestamp": 321321,
-    "arrays": {},
-    "values": {
-      "currentUser": null,
-      "leaderSettings": {
-        "confirmTimesheetsMonthly": true
-      }
-    }
+  "timestamp": 1630266220000,
+  "arrays": {
+    "employers": {
+      "entities": [
+        {
+          "id": "O4qBwg8",
+          "name": "FSU AS",
+          "phoneNumber": "92278489",
+          "address": "Tjøme 20, 0619 Ålesund",
+          "email": "ivar@eksempel.no",
+          "createdAt": 1623780287000
+        },
+        {
+          "id": "8rnHLcM",
+          "name": "FSU AS",
+          "phoneNumber": "92278489",
+          "address": "Karl Johans gate 21, 1940 Bjørkelangen",
+          "email": "ivar@eksempel.no",
+          "createdAt": 1623693887000
+        }
+      ],
+      "deletedEntities": []
+    },
+    "missionTypes": {
+      "entities": [
+        { "id": "syaKz7k", "name": "gdfs", "createdAt": 1628425084000 },
+        { "id": "JTu345c", "name": "Oppbygging", "createdAt": 1625508287000 }
+      ],
+      "deletedEntities": []
+    },
+    "userTimesheets": {
+      "entities": [
+        {
+          "id": "f4tyd1r",
+          "missionId": "Z7oQBx2",
+          "startTime": 1629867600000,
+          "endTime": 1629892800000,
+          "totalHours": 7,
+          "status": 1,
+          "comment": "ftfgh",
+          "createdAt": 1630146479000
+        },
+        {
+          "id": "2VNtHYe",
+          "missionId": "OgQSI16",
+          "startTime": 1625447095000,
+          "endTime": 1625465095000,
+          "totalHours": 5,
+          "status": 2,
+          "comment": "test",
+          "createdAt": 1625447095000
+        }
+      ],
+      "deletedEntities": []
+    },
+    "missions": {
+      "entities": [  
+        {
+          "id": "HT0tzv2",
+          "address": "Testmission",
+          "finished": false,
+          "phoneNumber": "654654654",
+          "description": "dfghfhfdghgfdhfgdhdfgh",
+          "missionTypeId": "JTu345c",
+          "employerId": "SZ4sm6I",
+          "missionType": null,
+          "employer": null,
+          "fileName": null,
+          "position": {
+            "latitude": 51.2431429,
+            "longitude": -0.5894664,
+            "isExact": false
+          },
+          "createdAt": 1628169948000
+        },
+        {
+          "id": "1zW4tWp",
+          "address": "Re",
+          "finished": false,
+          "phoneNumber": null,
+          "description": null,
+          "missionTypeId": null,
+          "employerId": null,
+          "missionType": null,
+          "employer": null,
+          "fileName": null,
+          "position": {
+            "latitude": 59.4157002,
+            "longitude": 10.2512192,
+            "isExact": false
+          },
+          "createdAt": 1628160381000
+        }
+      ],
+      "deletedEntities": ["1", "2"]
+    },
+    "missionImages": {
+      "entities": [
+        {
+          "id": "GlSaEvt",
+          "missionId": "LMY37Zw",
+          "fileName": "sample8_ratio=1.25.jpg",
+          "createdAt": 1381341892000
+        },
+        {
+          "id": "ibNxM9E",
+          "missionId": "NdekPJp",
+          "fileName": "sample1_ratio=1.33.jpg",
+          "createdAt": 1328551492000
+        }
+      ],
+      "deletedEntities": []
+    },
+    "missionNotes": null,
+    "missionDocuments": null
+  },
+  "values": {
+    "currentUser": null,
+    "leaderSettings": { "confirmTimesheetsMonthly": false }
   }
+}

@@ -2,7 +2,7 @@
 </app-main-top-nav-bar>
 
 <ng-container *ngIf="loadingImage$ | async; let loadingImage">
-  <img appImageErrorPlaceholder [appHide]="loadingImage.loading" alt="oppdragsbilde"
+  <img appImageErrorPlaceholder [appHide]="loadingImage.loading" alt="oppdragsbilde" data-cy="current-image"
     [src]="currentImage.fileName | appFileUrl: this.folder" layout-fill
     (swiperight)="previousImage()" 
     (swipeleft)="nextImage()" 
@@ -13,10 +13,10 @@
 
 <div *ngIf="images?.length" class="page-counter-container">
   
-  <span class="page-counter">
-    <button mat-icon-button (click)="previousImage()"><mat-icon>chevron_left</mat-icon></button>
+  <span class="page-counter" data-cy="image-counter">
+    <button mat-icon-button data-cy="previous" (click)="previousImage()"><mat-icon>chevron_left</mat-icon></button>
     {{ index + 1 }} / {{ images?.length }}
-    <button mat-icon-button (click)="nextImage()"><mat-icon>chevron_right</mat-icon></button>
+    <button mat-icon-button data-cy="next" (click)="nextImage()"><mat-icon>chevron_right</mat-icon></button>
   </span>
   
 </div>

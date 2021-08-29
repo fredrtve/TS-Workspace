@@ -19,11 +19,11 @@
         itemSize="96" maxBufferPx="800" minBufferPx="800" appScrollNavElevationToggler>
         <ng-container *cdkVirtualFor="let timesheet of timesheets | sortByDate : 'startTime'; trackBy: trackByTimesheet">
                 
-            <app-list-item (click)="onTimesheetClick(timesheet)">
+            <app-list-item (click)="onTimesheetClick(timesheet)" data-cy="timesheet-list-item">
 
                 <ng-container left-side>
-                    <mat-icon *ngIf="timesheet.status === 1 else closedIcon" color="warn">lock_open</mat-icon>
-                    <ng-template #closedIcon><mat-icon color="accent">lock</mat-icon></ng-template>
+                    <mat-icon data-cy="status-icon" *ngIf="timesheet.status === 1 else closedIcon" color="warn">lock_open</mat-icon>
+                    <ng-template #closedIcon><mat-icon data-cy="status-icon" color="accent">lock</mat-icon></ng-template>
                 </ng-container>
 
                 <app-timesheet-list-item-content [timesheet]="timesheet">
