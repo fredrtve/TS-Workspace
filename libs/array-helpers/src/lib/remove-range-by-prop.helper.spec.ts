@@ -1,10 +1,4 @@
-import { _convertArrayToObject } from "./convert-array-to-object.helper";
-import { _filter } from "./filter.helper";
-import { _find } from "./find.helper";
-import { _getRangeById } from "./get-range-by-id.helper";
-import { _groupBy } from "./group-by.helper";
-import { _removeById } from "./remove-by-id.helper";
-import { _removeRangeById } from "./remove-range-by-id.helper";
+
 import { _removeRangeByProp } from "./remove-range-by-prop.helper";
 
 describe('_removeRangeByProp', () => {

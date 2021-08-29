@@ -1,4 +1,4 @@
-import { _convertArrayToObject } from "./convert-array-to-object.helper";
+
 import { _filter } from "./filter.helper";
 
 const entities = [{id: 1, value: 10}, {id: 2, value: 20}, {id: 3, value: 30}, {id: 4, value: 40}]

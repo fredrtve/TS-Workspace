@@ -4,9 +4,8 @@ import { MatInputModule } from '@angular/material/input';
 import { _shouldEagerOptions } from '@shared-app/helpers/should-eager-options.helper';
 import { SharedModule } from '@shared/shared.module';
 import { BaseQuestionComponent, DynamicFormStore, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
-import { Immutable, ImmutableArray, UnknownState } from 'global-types';
+import { ImmutableArray } from 'global-types';
 import { Observable, of } from 'rxjs';
-import { ActiveStringFilterConfig } from '../../../interfaces';
 import { AutoCompleteQuestion, AutoCompleteQuestionBindings } from './auto-complete-question.interface';
 
 @Component({

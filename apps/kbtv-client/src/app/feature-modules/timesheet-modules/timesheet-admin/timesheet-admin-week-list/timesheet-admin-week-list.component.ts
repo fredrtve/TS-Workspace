@@ -1,13 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Timesheet, User } from '@core/models';
+import { Timesheet } from '@core/models';
 import { DeviceInfoService } from '@core/services/device-info.service';
 import { TimesheetStatus } from '@shared-app/enums/timesheet-status.enum';
 import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { TimesheetForm } from '@shared-timesheet/forms/save-timesheet-model-forms.const';
 import { WeekCriteriaForm, WeekCriteriaFormState } from '@shared-timesheet/forms/week-criteria-controls.const';
-import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { BottomIconButtons } from '@shared/constants/bottom-icon-buttons.const';
 import { FormService } from 'form-sheet';
 import { Immutable, Maybe } from 'global-types';

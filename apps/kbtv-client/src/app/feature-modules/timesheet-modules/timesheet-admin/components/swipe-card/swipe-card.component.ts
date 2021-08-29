@@ -1,7 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { AppButton } from '@shared-app/interfaces/app-button.interface';
-import { Maybe } from 'global-types';
 
 @Component({
   selector: 'app-swipe-card',

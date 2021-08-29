@@ -1,6 +1,6 @@
 import { Inject, Injectable } from "@angular/core";
 import { ColDef } from "ag-grid-community";
-import { ImmutableArray, KeyVal, Maybe, UnknownState } from "global-types";
+import { ImmutableArray, Maybe, UnknownState } from "global-types";
 import { UnknownModelState, _getModelConfig } from "model/core";
 import { FetchModelsAction, StateIsFetching } from "model/state-fetcher";
 import { BehaviorSubject, combineLatest, Observable, of } from "rxjs";

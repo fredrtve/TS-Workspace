@@ -1,7 +1,6 @@
 import { translations } from '@shared-app/constants/translations.const';
 import { _formatMb } from '@shared-app/helpers/format-mb.helper';
 import { ValidationErrorMap } from 'dynamic-forms';
-import { Maybe } from 'global-types';
 
 export const ValidationErrorMessages: ValidationErrorMap = {
     required: () => "Dette feltet er obligatorisk.",

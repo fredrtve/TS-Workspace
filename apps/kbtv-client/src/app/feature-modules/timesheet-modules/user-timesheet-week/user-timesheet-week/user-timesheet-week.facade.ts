@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Timesheet, UserTimesheet } from '@core/models';
-import { ModelState } from '@core/state/model-state.interface';
+import { Timesheet } from '@core/models';
 import { _mapObjectsToWeekdays } from '@shared-app/helpers/object/map-objects-to-weekdays.helper';
 import { _getSummariesByType } from '@shared-timesheet/helpers/get-summaries-by-type.helper';
 import { WeekCriteria } from '@shared-timesheet/interfaces/week-criteria.interface';

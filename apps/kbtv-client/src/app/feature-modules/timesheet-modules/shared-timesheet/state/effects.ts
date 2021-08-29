@@ -5,7 +5,7 @@ import { _isCriteriaContainedInCache } from '@shared-app/helpers/is-criteria-con
 import { _timesheetCriteriaQueryParamsFactory } from '@shared-timesheet/timesheet-criteria-query-params.factory';
 import { Immutable, ImmutableArray, Maybe } from 'global-types';
 import { merge, Observable, of } from 'rxjs';
-import { filter, map, switchMap, take } from 'rxjs/operators';
+import { filter, map, switchMap } from 'rxjs/operators';
 import { DispatchedAction, Effect, listenTo, StateAction } from 'state-management';
 import { TimesheetCriteria } from '../timesheet-filter/timesheet-criteria.interface';
 import { TimesheetFilter } from '../timesheet-filter/timesheet-filter.model';

@@ -8,7 +8,7 @@ import { SelectedMissionIdParam } from "@shared-mission/params";
 import { CreateMissionImagesAction } from "@shared-mission/state/actions.const";
 import { ModelFileForm, _formToSaveModelFileConverter } from '@shared/constants/form-to-save-model-file.converter';
 import { _filter } from "array-helpers";
-import { Immutable, Maybe, Prop } from 'global-types';
+import { Immutable, Maybe } from 'global-types';
 import { StateModels } from "model/core";
 import { DeleteModelAction, ModelCommand } from 'model/state-commands';
 import { Observable, of } from "rxjs";

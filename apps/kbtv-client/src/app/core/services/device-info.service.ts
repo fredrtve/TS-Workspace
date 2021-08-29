@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { fromEvent, Observable, merge, combineLatest, of, bindCallback } from 'rxjs';
+import { fromEvent, Observable, merge, combineLatest, of } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { environment } from 'src/environments/environment';

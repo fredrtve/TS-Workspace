@@ -1,5 +1,4 @@
-import { Employer, MissionType } from "@core/models";
-import { ModelState } from "@core/state/model-state.interface";
+
 import { _criteriaChipsFactory } from "@shared-app/helpers/chips/criteria-chips-factory.helper";
 import { AppChip } from "@shared-app/interfaces/app-chip.interface";
 import { MissionCriteria } from "@shared/interfaces";

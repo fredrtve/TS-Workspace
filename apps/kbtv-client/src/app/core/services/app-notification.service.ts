@@ -1,5 +1,4 @@
 import { Compiler, Injectable, Injector } from '@angular/core';
-import { _tryWithLogging } from "global-utils";
 import { AppNotification, NotificationService } from 'notification';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter, first } from 'rxjs/operators';

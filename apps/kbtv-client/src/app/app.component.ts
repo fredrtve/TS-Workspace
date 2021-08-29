@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Injector, NgZone } from '@angular/core';
+import { ChangeDetectionStrategy, Component, NgZone } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Store } from 'state-management';
 

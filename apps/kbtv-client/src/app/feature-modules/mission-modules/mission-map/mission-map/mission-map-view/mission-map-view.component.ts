@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, Injector, Input, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ComponentFactory, ComponentFactoryResolver, Injector, Input, ViewChild } from '@angular/core';
 import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { Mission } from '@core/models';
 import { DeviceInfoService } from '@core/services/device-info.service';

@@ -1,6 +1,4 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { combineLatest, Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
 import { MainSideNavConfig } from '../interfaces/main-side-nav-config.interface';
 import { MainNavService } from '../main-nav.service';
 
