@@ -4,7 +4,9 @@
   "lib": {
     "entryFile": "src/public-api.ts",    
     "umdModuleIds": {
-      "state-management": "state-management"
+      "state-management": "state-management",
+      "global-utils": "global-utils",
+      "global-types": "global-types"
     }
   }
 }
