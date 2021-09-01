@@ -28,11 +28,11 @@
     <cdk-virtual-scroll-viewport itemSize="82" maxBufferPx="800" minBufferPx="800" appScrollNavElevationToggler>
         <ng-container *cdkVirtualFor="let summary of summaries; trackBy: trackByWeek; templateCacheSize:0" >
             
-            <app-swipe-card openWidth="82px" closedWidth="5px"
+            <app-swipe-card openWidth="82px" closedWidth="5px" data-cy="timesheet-week-item"
                 [position]="summary.openHours === 0 ? null : isXs ? 'closed' : 'open'"
                 [isLocked]="summary.openHours === 0">
                 
-                <div swipeContent matRipple class="hidden-swipe-content h-100"
+                <div swipeContent matRipple class="hidden-swipe-content h-100" data-cy="confirm-button"
                     [ngClass]="summary.openHours > 0 ? 'warn' : 'accent'" 
                     (press)="changeTimesheetStatuses(summary.timesheets)">
                     <mat-icon style="transform:scale(1.25)">{{ summary.openHours > 0 ? 'lock_open' : 'lock' }}</mat-icon>

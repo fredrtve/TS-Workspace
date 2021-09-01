@@ -7,7 +7,7 @@
     <ng-container *ngIf="(users$ | async) else loading; let users;">
         <div *ngIf="users.length else loading;">
             <ng-container *ngFor="let user of users; trackBy: trackByUser">
-                <app-list-item (click)="goToWeekList(user)"> 
+                <app-list-item (click)="goToWeekList(user)" data-cy="user-list-item"> 
                     <mat-icon left-side>person</mat-icon>
                     {{user.firstName + ' ' +user.lastName}}
                 </app-list-item>

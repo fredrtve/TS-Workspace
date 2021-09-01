@@ -20,21 +20,22 @@
 
         <ng-container *cdkVirtualFor="let timesheet of timesheets; trackBy: trackById">
 
-            <app-list-item rippleDisabled="true">
+            <app-list-item rippleDisabled="true" data-cy="timesheet-item">
                 
                 <ng-container left-side>
-                    <button mat-icon-button color="warn" *ngIf="timesheet.status === 1 else closedIcon" 
+                    <button mat-icon-button color="warn" *ngIf="timesheet.status === 1 else closedIcon" data-cy="confirm-button"
                         (click)="onLockClick(timesheet)">
                         <mat-icon>lock_open</mat-icon>
                     </button>
                     <ng-template #closedIcon>
-                        <button mat-icon-button color="accent" (click)="onLockClick(timesheet)">
+                        <button mat-icon-button color="accent" data-cy="confirm-button"
+                            (click)="onLockClick(timesheet)">
                             <mat-icon>lock</mat-icon>
                         </button>
                     </ng-template>
                 </ng-container>
 
-                <app-timesheet-list-item-content matRipple [timesheet]="timesheet" (click)="onClick(timesheet)">
+                <app-timesheet-list-item-content matRipple [timesheet]="timesheet" (click)="onClick(timesheet)" data-cy="item-content">
                 </app-timesheet-list-item-content>
            
             </app-list-item>

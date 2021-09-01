@@ -51,10 +51,10 @@ describe('User Timesheet Week', () => {
 
         //Should display labels with correct day of month (for mobile with 5 weekday view)
         for(let i = 0; i < 7; i++) {
-            const day = new Date(startOfWeek).getDate() + i;
+            const day = new Date(startOfWeek + oneDay*i).getDate();
             dayLabels().eq(i).should('contain', day);
             //Should highlight current day
-            if(day === new Date().getDay()) 
+            if(day === new Date().getDate()) 
                 dayLabels().eq(i).should('have.class', 'accent')   
        }            
     })

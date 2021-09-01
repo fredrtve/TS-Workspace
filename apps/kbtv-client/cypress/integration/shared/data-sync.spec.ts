@@ -3,6 +3,7 @@ import { ModelState } from "@core/state/model-state.interface";
 describe("Data Sync", () => {
     it('should merge new data with existing, also deleting specified ids in sync response', () => {
         cy.login("Leder", "/", { missions: [ { id: '1', address: 'test' }, { id: '2', address: 'test2' }]});
+        cy.wait(500);
         cy.intercept('https://localhost:44379/api/SyncAll**', { fixture: 'sync-response'}).as('sync');
         cy.getCy('sync-button').click();
         cy.wait('@sync');
