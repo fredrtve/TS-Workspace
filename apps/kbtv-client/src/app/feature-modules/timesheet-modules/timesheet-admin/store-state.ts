@@ -1,4 +1,5 @@
 import { StateLeaderSettings, StateMissions, StateTimesheets, StateUsers } from '@core/state/global-state.interfaces';
+import { Maybe } from 'global-types';
 import { WeekCriteria } from '../shared-timesheet/interfaces';
 import { TimesheetCriteria } from '../shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 
@@ -9,5 +10,5 @@ export interface StoreState extends
     StateLeaderSettings {
         timesheetAdminTimesheetCriteria: TimesheetCriteria,
         timesheetAdminWeekCriteria: Omit<WeekCriteria, "weekNr" | "weekDay">
-        timesheetAdminSelectedWeekNr: number;
+        timesheetAdminSelectedWeekNr: Maybe<number>;
     }

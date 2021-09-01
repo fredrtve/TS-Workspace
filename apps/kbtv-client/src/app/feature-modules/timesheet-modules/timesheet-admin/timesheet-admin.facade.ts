@@ -22,7 +22,7 @@ import { TimesheetSummary } from '../shared-timesheet/interfaces';
 import { WeekCriteria } from '../shared-timesheet/interfaces/week-criteria.interface';
 import { TimesheetCriteria } from '../shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { TimesheetFilter } from '../shared-timesheet/timesheet-filter/timesheet-filter.model';
-import { SetTimesheetCriteriaWithWeekCriteriaAction, SetSelectedWeekAction, UpdateTimesheetStatusesAction, UpdateLeaderSettingsAction } from './state/actions.const';
+import { SetSelectedWeekAction, SetTimesheetCriteriaWithWeekCriteriaAction, UpdateLeaderSettingsAction, UpdateTimesheetStatusesAction } from './state/actions.const';
 import { StoreState } from './store-state';
 
 @Injectable({providedIn: 'any'})
@@ -83,10 +83,8 @@ export class TimesheetAdminFacade {
             type: SetTimesheetCriteriaWithWeekCriteriaAction, weekCriteria 
         })
 
-    updateWeekNr = (weekNr: number | string): void => {  
-        weekNr = (typeof weekNr === "number") ? weekNr : parseInt(weekNr);
+    updateWeekNr = (weekNr: Maybe<number | string>): void =>  
         this.store.dispatch(<SetSelectedWeekAction>{ type: SetSelectedWeekAction, weekNr })
-    }
     
     updateStatuses(ids: string[], status: TimesheetStatus): void{
         if(ids.length == 0) return;

@@ -7,8 +7,9 @@ import { StoreState } from "../store-state";
 import { SetSelectedWeekAction, SetTimesheetCriteriaWithWeekCriteriaAction, UpdateLeaderSettingsSuccessAction, UpdateTimesheetStatusesAction } from "./actions.const";
 
 export const SetSelectedWeekReducer = _createReducer<StoreState,SetSelectedWeekAction>(
-    SetSelectedWeekAction, (state, action) => {
-        return {timesheetAdminSelectedWeekNr: action.weekNr}
+    SetSelectedWeekAction, (state, {weekNr}) => {
+        weekNr = (!weekNr || (typeof weekNr === "number")) ? <number> weekNr : parseInt(weekNr);
+        return {timesheetAdminSelectedWeekNr: (!weekNr || (typeof weekNr === "number")) ? weekNr : parseInt(weekNr)}
     }   
 )
 

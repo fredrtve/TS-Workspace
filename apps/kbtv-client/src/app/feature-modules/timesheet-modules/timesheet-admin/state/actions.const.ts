@@ -1,6 +1,7 @@
 import { LeaderSettings } from "@core/models/leader-settings.interface";
 import { TimesheetStatus } from "@shared-app/enums/timesheet-status.enum";
 import { WeekCriteria } from "@shared-timesheet/interfaces";
+import { Maybe } from "global-types";
 import { StateAction } from "state-management";
 
 
@@ -11,7 +12,7 @@ export interface SetTimesheetCriteriaWithWeekCriteriaAction extends StateAction<
 
 export const SetSelectedWeekAction = "SET_SELECTED_WEEK_ACTION";
 export interface SetSelectedWeekAction extends StateAction<typeof SetSelectedWeekAction> {
-    weekNr: number
+    weekNr: Maybe<number | string>
 }
 
 export const UpdateTimesheetStatusesAction = "UPDATE_TIMESHEET_STATUSES_ACTION";

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Timesheet } from '@core/models';
 import { AppDialogService } from '@core/services/app-dialog.service';
 import { TimesheetStatus } from '@shared-app/enums/timesheet-status.enum';
@@ -8,7 +8,6 @@ import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { TimesheetForm } from '@shared-timesheet/forms/save-timesheet-model-forms.const';
 import { BottomIconButtons } from '@shared/constants/bottom-icon-buttons.const';
-import { _getWeekYear } from 'date-time-helpers';
 import { FormService } from 'form-sheet';
 import { Immutable, Maybe } from 'global-types';
 import { combineLatest, Observable } from 'rxjs';
@@ -27,13 +26,16 @@ export class TimesheetAdminListComponent extends WithUnsubscribe() {
 
   timesheets$ = this.facade.selectedWeekTimesheets$;
 
-  titles$: Observable<{title: string, subTitle: string}> = combineLatest([
-    this.facade.selectedWeekNr$.pipe(map(weekNr => "Uke " + (weekNr || ""))),
+  titles$: Observable<{title: string, subTitle: string}> = combineLatest([  
     this.facade.weekCriteria$.pipe(
       map(({year, user}) => (year || "") + ' - ' + (user ? (user.firstName + ' ' + user.lastName) : ''))
-    )
+    ),
+    this.facade.selectedWeekNr$.pipe(
+      tap(weekNr => !weekNr ? this.router.navigate(['/timeadministrering']) : null),
+      map(weekNr => "Uke " + weekNr)
+    ),
   ]).pipe(
-    map(([title, subTitle]) => { return { title, subTitle } })
+    map(([subTitle, title]) => { return { title, subTitle } })
   )
 
   bottomActions: AppButton[];
@@ -47,12 +49,13 @@ export class TimesheetAdminListComponent extends WithUnsubscribe() {
     private facade: TimesheetAdminFacade,
     private dialogService: AppDialogService,
     private route: ActivatedRoute,
+    private router: Router,
     private formService: FormService) {
       super();
       this.bottomActions = [{...BottomIconButtons.Filter, callback: this.openWeekFilter}];
       
       this.route.paramMap.pipe(
-        tap(x => this.facade.updateWeekNr(x.get(TimesheetAdminListWeekNrQueryParam) || _getWeekYear().weekNr)), 
+        tap(x => this.facade.updateWeekNr(x.get(TimesheetAdminListWeekNrQueryParam))), 
         takeUntil(this.unsubscribe)
       ).subscribe();
     }

@@ -1,5 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { DateParams } from '@shared-app/interfaces/date-params.interface';
+import { _getDateByDateParams } from '../helpers/get-date-by-date-params.helper';
 import { _getDateOfWeek, _getFirstDayOfWeek } from 'date-time-helpers';
 import { Immutable, Maybe } from 'global-types';
 
@@ -8,12 +9,8 @@ export class GetDateByDateParamsPipe implements PipeTransform {
   constructor(){}
 
   transform(dp: Maybe<DateParams>, weekDayOverride: number): Immutable<Date> {
-    if(!dp || !dp.weekNr) return new Date();
-    let date = _getFirstDayOfWeek(_getDateOfWeek(dp.weekNr, dp.year || new Date().getFullYear()));
-    if(weekDayOverride || dp.weekDay)
-      date.setDate(date.getDate() + (weekDayOverride - 1) || dp.weekDay || 0);
-
-    return date;
+    if(!dp) return new Date();
+    return _getDateByDateParams(dp.year, dp.weekNr, (weekDayOverride - 1) || dp.weekDay);
   }
 
 }
