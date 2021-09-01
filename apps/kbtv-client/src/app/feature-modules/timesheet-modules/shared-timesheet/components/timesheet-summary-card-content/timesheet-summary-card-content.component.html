@@ -1,6 +1,6 @@
-  <div *ngIf="summary" class="p-3 bg-card content-container">
+  <div *ngIf="summary" class="p-3 bg-card content-container" data-cy="summary-card-content">
 
-    <div class="date-content" *ngIf="summary.weekNr; else yearView">
+    <div class="date-content" *ngIf="summary.weekNr; else yearView" data-cy="week-label">
         <span class="mat-body m-0 line-height-100">Uke</span>
         <span class="mat-headline m-0 line-height-100">{{ summary.weekNr }}</span>
     </div>
@@ -24,11 +24,11 @@
         </span>
       </ng-template>
 
-      <span class="mat-body m-0 line-height-100">
-        {{ summary.openHours }} timer åpne
+      <span class="mat-body m-0 line-height-100" data-cy="open-hours">
+        {{ summary.openHours | number : '1.0-1' }} timer åpne
       </span>
-      <span class="mat-body m-0 line-height-100">
-        {{ summary.confirmedHours }} timer låst
+      <span class="mat-body m-0 line-height-100" data-cy="confirmed-hours">
+        {{ summary.confirmedHours | number : '1.0-1' }} timer låst
       </span>
       <span *ngIf="summary.fullName" class="mat-body-2 m-0 line-height-100">
         {{summary.fullName}}

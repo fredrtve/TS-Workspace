@@ -32,14 +32,14 @@ export class ColDefsFactoryService extends WithUnsubscribe() {
       { field: "month", valueFormatter: this.convertMonthIndex },
       { field: "weekNr" },
       { field: "fullName" },
-      { field: "openHours" },
-      { field: "confirmedHours" },
+      { field: "openHours", valueFormatter: this.convertHours },
+      { field: "confirmedHours", valueFormatter: this.convertHours },
     ];
 
     this.timesheetColDefs = [
       { colId: "date", field: "startTime", headerName: translations["date"], valueFormatter: this.convertDate},
       { field: "fullName" },
-      { field: "totalHours", maxWidth: 75 },
+      { field: "totalHours", maxWidth: 75, valueFormatter: this.convertHours },
       { field: "startTime", valueFormatter: this.convertTime },
       { field: "endTime", valueFormatter: this.convertTime },
       { field: "status", valueFormatter: this.convertStatus },
@@ -75,18 +75,23 @@ export class ColDefsFactoryService extends WithUnsubscribe() {
   }
 
   private convertMonthIndex = (params: ValueFormatterParams): string =>
-    params?.value != null
+    params.value != null
       ? (this.datePipe.transform(new Date().setMonth(params.value), "MMM") || "")
       : "";
 
   private convertDate = (params: ValueFormatterParams): string =>
-    params?.value 
+    params.value 
       ? (this.datePipe.transform(params.value) || "")
       : "";
 
   private convertTime = (params: ValueFormatterParams): string =>
-    params?.value
+    params.value
       ? (this.datePipe.transform(params.value, "shortTime") || "")
+      : "";
+
+  private convertHours = (params: ValueFormatterParams): string => 
+    params.value 
+      ? <string><unknown> (Math.round(params.value * 10) / 10)
       : "";
 
   private convertStatus = (params: ValueFormatterParams): string => 
