@@ -2,7 +2,7 @@ import { Validators } from '@angular/forms';
 import { DefaultState } from '@core/configurations/default-state.const';
 import { IonDateQuestion, IonDateQuestionComponent } from '@shared/scam/dynamic-form-questions/ion-date-time-question.component';
 import { SliderQuestion, SliderQuestionComponent } from '@shared/scam/dynamic-form-questions/slider-question.component';
-import { _getDateYearsAgo, _getISO } from 'date-time-helpers';
+import { _getISO } from 'date-time-helpers';
 import { DynamicForm } from 'dynamic-forms';
 import { FormSheetViewConfig } from 'form-sheet';
 import { Immutable } from 'global-types';
@@ -33,9 +33,10 @@ export const SyncConfigForm: Immutable<DynamicForm<SyncConfigForm, null>> = {
                  placeholder: "Synkroniseringsdato", 
                  hint: "Hvor gammel data skal lastes inn? Kun data opprettet eller oppdatert etter gitt dato lastes inn.",
                  ionFormat:"YYYY-MMMM",
-                 min: _getISO(_getDateYearsAgo(4)),
-                 max: _getISO(new Date()),
                  datePipeFormat: "MMMM, y",
+                 stateBindings: {
+                    max: _getISO(new Date())
+                 }
             }, 
         } ,
     },
