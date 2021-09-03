@@ -15,8 +15,13 @@ export const ValidationRules = {
     TimesheetCommentMaxLength: 400,
 
     UserPasswordMinLength: 7,
-    UserPasswordMaxLength: 100,
-    
+    UserPasswordMaxLength: 100, 
+
+    UserNameMinLength: 4,
+    UserNameMaxLength: 45,
+
+    InboundEmailPasswordLength: 250,
+
     ContentMaxByteLength: 62914560,
 
     MissionDocumentFileExtensions: [

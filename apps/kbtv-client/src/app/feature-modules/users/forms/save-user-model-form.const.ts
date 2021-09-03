@@ -4,6 +4,7 @@ import { IContactable } from '@core/models/sub-interfaces/icontactable.interface
 import { IFullName } from '@core/models/sub-interfaces/ifullname.interface';
 import { Roles } from '@core/roles.enum';
 import { StateEmployers, StateUsers } from '@core/state/global-state.interfaces';
+import { ValidationRules } from '@shared-app/constants/validation-rules.const';
 import { UserNameControl, FirstNameControl, LastNameControl, EmployerSelectControl, PhoneNumberControl, EmailControl } from '@shared/constants/common-controls.const';
 import { InputQuestion, InputQuestionComponent } from '@shared/scam/dynamic-form-questions/input-question.component';
 import { SelectQuestion, SelectQuestionComponent } from '@shared/scam/dynamic-form-questions/select-question.component';
@@ -36,12 +37,14 @@ const RoleControl: Immutable<DynamicControl<string, null, SelectQuestion<string,
         placeholder: "Rolle",
         stateBindings: { options: AvailableRoles }
     },  
-    validators: [ Validators.maxLength(100)] 
 }
 const PasswordControl: Immutable<DynamicControl<string, null, InputQuestion>> = { 
     required: true, questionComponent: InputQuestionComponent, 
     question: {placeholder: "Passord", hideable: true, defaultHidden: true, autoComplete: "new-password"},
-    validators: [Validators.minLength(7), Validators.maxLength(100)] 
+    validators: [
+        Validators.minLength(ValidationRules.UserPasswordMinLength), 
+        Validators.maxLength(ValidationRules.UserPasswordMaxLength)
+    ] 
 }
 
 export const CreateUserModelForm: Immutable<ModelFormConfig<FormState, User,  SaveUserForm, FormState>> = {

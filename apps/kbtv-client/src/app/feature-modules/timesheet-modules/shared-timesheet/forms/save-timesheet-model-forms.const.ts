@@ -1,6 +1,7 @@
 import { Validators } from '@angular/forms';
 import { Mission, Timesheet, User, UserTimesheet } from '@core/models';
 import { StateMissions, StateTimesheets, StateUsers, StateUserTimesheets } from '@core/state/global-state.interfaces';
+import { ValidationRules } from '@shared-app/constants/validation-rules.const';
 import { _timesheetFormToSaveModelConverter, _userTimesheetFormToSaveModelConverter } from '@shared-timesheet/forms/timesheet-form-to-save-model.converter';
 import { MissionAutoCompleteControl, UserSelectControl } from '@shared/constants/common-controls.const';
 import { IonDateQuestion, IonDateQuestionComponent } from '@shared/scam/dynamic-form-questions/ion-date-time-question.component';
@@ -86,7 +87,7 @@ const DateTimeControlGroup: Immutable<DynamicControlGroup<TimesheetDateTime, For
 const CommentControl: Immutable<DynamicControl<string, null, TextAreaQuestion>> = { 
     required: true, questionComponent: TextAreaQuestionComponent,
     question: { placeholder: "Kommentar", rows: 3 },
-    validators: [Validators.maxLength(400)], 
+    validators: [Validators.maxLength(ValidationRules.TimesheetCommentMaxLength)], 
 }
 
 const CommonControls = { mission: {...MissionAutoCompleteControl, required: true}, dateTime: DateTimeControlGroup, comment: CommentControl }

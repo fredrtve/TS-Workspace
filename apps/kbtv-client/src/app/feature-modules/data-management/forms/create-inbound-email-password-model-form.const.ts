@@ -1,6 +1,7 @@
 import { Validators } from '@angular/forms';
 import { InboundEmailPassword } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
+import { ValidationRules } from '@shared-app/constants/validation-rules.const';
 import { _appFormToSaveModelConverter } from '@shared/app-form-to-save-model.converter';
 import { InputQuestionComponent, InputQuestion } from '@shared/scam/dynamic-form-questions/input-question.component';
 import { Immutable } from 'global-types';
@@ -17,7 +18,7 @@ export const CreateInboundEmailPasswordModelForm: Immutable<ModelFormConfig<Mode
             password: { required: true,
                 questionComponent: InputQuestionComponent,    
                 question: <InputQuestion> { placeholder: "Epostpassord" },
-                validators: [Validators.maxLength(250)] 
+                validators: [Validators.maxLength(ValidationRules.InboundEmailPasswordLength)] 
             } 
         },
     }
