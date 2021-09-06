@@ -24,12 +24,10 @@ describe('Mission Document Form', () => {
 
         isNotSubmittable();
 
-        //Check validation rules for name
-        cy.getCy('form-name','input').type(_stringGen(ValidationRules.NameMaxLength + 1));   
-        cy.submitForm().getCy('form-name','mat-error').should('exist');
-        isNotSubmittable();
-
-        cy.getCy('form-name','input').clear().type(newDoc.name);   
+        //Check validation rules for name 
+        cy.assertTextFormControl("name", newDoc.name, [
+            _stringGen(ValidationRules.NameMaxLength + 1)
+        ]) 
         isNotSubmittable();
 
         //Check validation rules for file

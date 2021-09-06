@@ -48,15 +48,10 @@ describe("User Timesheet Form", () => {
         isNotSubmittable();
 
         //Check that it is not submittable with invalid comment
-        const invalidComment = _stringGen(ValidationRules.TimesheetCommentMaxLength + 1);
-        cy.getCy('form-comment','textarea').clear().type(invalidComment, {delay: 0});
-        cy.submitForm().getCy('form-comment','mat-error').should('exist')
-
-        isNotSubmittable();
-
         const comment = 'thisisatestcomment';
-        cy.getCy('form-comment','textarea').clear().type(comment); 
-
+        cy.assertTextFormControl("comment", comment, [
+            _stringGen(ValidationRules.TimesheetCommentMaxLength + 1)
+        ], "textarea")
         isNotSubmittable(); 
 
         const dateParams = { year: 1996, month: 4, day: 12 }

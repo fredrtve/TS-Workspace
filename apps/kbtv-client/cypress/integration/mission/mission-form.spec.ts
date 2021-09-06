@@ -1,4 +1,5 @@
 import { ApiUrl } from "@core/api-url.enum";
+import { Mission } from "@core/models";
 import { StateEmployers, StateMissions, StateMissionTypes } from "@core/state/global-state.interfaces";
 import { ValidationRules } from "@shared-app/constants/validation-rules.const";
 import { _stringGen } from "cypress/support";
@@ -26,39 +27,29 @@ describe('Mission Form', () => {
 
         isNotSubmittable();
 
+        const newModel : Mission = { address: 'testaddress', phoneNumber: 'asdadsa', description: "testdesc" }
+
         //Check that google autocomplete exist and has items
         cy.getCy('form-address','input').type('Furuberget 17');   
         cy.get('.pac-container').children().should('have.length.above', 1)
 
         //Check that it is submittable with only address
-        const addr = 'testaddress';
-        cy.getCy('form-address','input').clear().type(addr);   
+        cy.assertTextFormControl("address", newModel.address!, [
+            _stringGen(ValidationRules.AddressMaxLength + 1)
+        ])
         isSubmittable();
 
         //Check that it is not submittable with invalid phoneNumbers
-        const isInvalidPhoneNumber = (num: string) => {
-            cy.getCy('form-phoneNumber','input').clear().type(num);
-            cy.submitForm().getCy('form-phoneNumber','mat-error').should('exist');
-            isNotSubmittable();
-        }
-
-        isInvalidPhoneNumber(_stringGen(ValidationRules.PhoneNumberMinLength - 1))
-        isInvalidPhoneNumber(_stringGen(ValidationRules.PhoneNumberMaxLength + 1))
-
-        //Check that it is submittable with valid phoneNumber
-        const validNum = _stringGen(ValidationRules.PhoneNumberMinLength)
-        cy.getCy('form-phoneNumber','input').clear().type(validNum);
+        cy.assertTextFormControl("phoneNumber", newModel.phoneNumber!, [
+            _stringGen(ValidationRules.PhoneNumberMaxLength + 1),
+            _stringGen(ValidationRules.PhoneNumberMinLength - 1)
+        ])
         isSubmittable();
 
         //Check that it is not submittable with invalid description
-        const invalidDesc = _stringGen(ValidationRules.MissionDescriptionMaxLength + 1);
-        cy.getCy('form-description','textarea').clear().type(invalidDesc, {delay: 0});
-        cy.submitForm().getCy('form-description','mat-error').should('exist')
-        isNotSubmittable();
-
-        //Check that it is submittable with valid description
-        const validDesc = _stringGen(ValidationRules.MissionDescriptionMaxLength);
-        cy.getCy('form-description','textarea').clear().type(validDesc, {delay: 0});
+        cy.assertTextFormControl("description", newModel.description!, [
+            _stringGen(ValidationRules.MissionDescriptionMaxLength + 1),
+        ], "textarea")
         isSubmittable();
 
         const autoCompleteItems = () => cy.get(".mat-autocomplete-panel").children();
@@ -76,11 +67,11 @@ describe('Mission Form', () => {
         cy.getCy('submit-form').click();
         cy.wait('@createMission');
         cy.storeState<StateMissions>().then(state => {
-            const missions = state.missions?.filter(x => x.address === addr);
+            const missions = state.missions?.filter(x => x.address === newModel.address);
             expect(missions).to.have.lengthOf(1);
-            const mission = state.missions?.filter(x => x.address === addr)[0];
-            expect(mission!.phoneNumber).to.equal(validNum);
-            expect(mission!.description).to.equal(validDesc);
+            const mission = missions![0];
+            expect(mission!.phoneNumber).to.equal(newModel.phoneNumber);
+            expect(mission!.description).to.equal(newModel.description);
             expect(mission!.employerId).to.equal(employer.id);
             expect(mission!.missionTypeId).to.equal(missionType.id);
         })

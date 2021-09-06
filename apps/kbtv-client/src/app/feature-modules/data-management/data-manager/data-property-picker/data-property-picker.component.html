@@ -1,7 +1,7 @@
-<mat-form-field color="accent" class="data-picker">
+<mat-form-field color="accent" class="data-picker" data-cy="data-property-picker">
   <mat-label>Velg data</mat-label>
   <mat-select [ngModel]="selectedProperty" (ngModelChange)="changeProperty($event)" #select>
-    <mat-option *ngFor="let prop of properties" value="{{ prop }}">{{ prop | translateModelProp }}</mat-option>
+    <mat-option *ngFor="let prop of properties"  [attr.data-cy]="'select-' + prop" [value]="prop">{{ prop | translateModelProp }}</mat-option>
   </mat-select>
   <mat-hint *ngIf="propertyHints[select.value]">
       {{ propertyHints[select.value] }}

@@ -29,7 +29,7 @@ export class UsersFacade {
     let grouped = _groupBy(users, "role"); 
     let result: Immutable<User>[] = [];
 
-    for(let role of Object.keys(Roles).map(key => Roles[key as keyof typeof Roles])) 
+    for(let role of [Roles.Leder, Roles.Mellomleder, Roles.Ansatt, Roles.Oppdragsgiver]) 
       if(grouped[role]) result = result.concat(grouped[role])
 
     return result;

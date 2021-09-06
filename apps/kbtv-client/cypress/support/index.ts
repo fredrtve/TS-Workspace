@@ -53,7 +53,7 @@ declare global {
 
       ionTimeSelect(params: { hour: number, minutes: number }, minuteInterval?: number): Chainable
 
-      ionDateSelect(params: {year: number, month: number, day: number}): Chainable
+      ionDateSelect(params: {year: number, month: number, day?: number}): Chainable
 
       goOffline(): Chainable
   
@@ -62,6 +62,8 @@ declare global {
       getCy(value: string | string[], extendedSelector?: string): Chainable
 
       submitForm(): Chainable
+
+      assertTextFormControl(field: string, validState: string, invalidStates: string[], type?: string): Chainable
     }
   }
 }

@@ -5,7 +5,7 @@
         display: flex;
     }
 </style>
-<app-list-item rippleDisabled="true" >
+<app-list-item rippleDisabled="true" data-cy="user-list-card">
     <mat-icon left-side>{{ (user.role === Roles.Oppdragsgiver) ? 'work' : 'person' }}</mat-icon>
     
     {{ user.lastName }}, {{ user.firstName }}
@@ -14,7 +14,9 @@
         <a *ngIf="user.phoneNumber" style="color:green" mat-icon-button href="tel:{{ user.phoneNumber }}">
             <mat-icon>phone</mat-icon>
         </a>   
-        <app-button *ngIf="newPasswordButton && user.role != Roles.Leder" [config]="newPasswordButton"></app-button>
-        <app-button *ngIf="editButton && user.role != Roles.Leder" [config]="editButton"></app-button>
+        <app-button *ngIf="newPasswordButton && user.role != Roles.Leder" data-cy="new-password-button" 
+            [config]="newPasswordButton"></app-button>
+        <app-button *ngIf="editButton && user.role != Roles.Leder" data-cy="edit-button"
+            [config]="editButton"></app-button>
     </span>
 </app-list-item>

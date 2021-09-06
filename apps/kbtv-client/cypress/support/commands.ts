@@ -61,14 +61,15 @@ Cypress.Commands.add('ionSelect', (col: number, i: number) => {
            .find(`.picker-opts > button[opt-index="${i}"]`);
 });
 
-Cypress.Commands.add('ionDateSelect', (params: {year: number, month: number, day: number}) => {
-  return cy.ionSelect(0, new Date().getFullYear() - params.year).click({force: true})
-    .ionSelect(1, params.month).click({force: true})
-    .ionSelect(2, params.day - 1).click({force: true});
+Cypress.Commands.add('ionDateSelect', (params: {year: number, month: number, day?: number}) => {
+    cy.ionSelect(0, new Date().getFullYear() - params.year).click({force: true})
+      .ionSelect(1, params.month).click({force: true});
+    if(params.day)
+      cy.ionSelect(2, params.day - 1).click({force: true});
 });
 
 Cypress.Commands.add('ionTimeSelect', (params: { hour: number, minutes: number }, minuteInterval = 15) => {
-  return cy.ionSelect(0, params.hour).click({force: true})
+    cy.ionSelect(0, params.hour).click({force: true})
            .ionSelect(1, params.minutes / minuteInterval).click({force: true}); 
 });
 
@@ -116,4 +117,16 @@ Cypress.Commands.add('getCy', (value: string | string[], extendedSelector: strin
 
 Cypress.Commands.add('submitForm', () => {
   return cy.getCy('submit-form').click({force:true})
+});
+
+Cypress.Commands.add('assertTextFormControl', (field: string, validState: string, invalidStates: string[], type: string = "input") => {
+  for(const invalid of invalidStates){
+    cy.getCy('form-'+field, type).clear().type(invalid, {delay: 0});   
+
+    cy.submitForm().getCy('form-'+field,'mat-error').should('exist');
+    
+    cy.getCy('submit-form').should('be.disabled');
+  }
+
+  cy.getCy('form-'+field, type).clear().type(validState, {delay: 0});  
 });

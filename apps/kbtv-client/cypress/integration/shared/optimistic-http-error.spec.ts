@@ -16,7 +16,7 @@ describe('Optimistic Http Error', () => {
 
     beforeEach(() => {
         cy.intercept('POST', '**' + ApiUrl.Mission, { statusCode: 401 });
-        cy.intercept('POST', '**' + ApiUrl.Timesheet, { statusCode: 401 });
+        cy.intercept('POST', '**' + ApiUrl.Timesheet, { statusCode: 401 }).as("createTimesheet");
         cy.intercept('PUT', '**' + ApiUrl.Timesheet + '/**', { statusCode: 401 });
         cy.intercept('POST', '**' + ApiUrl.Employer, { statusCode: 401 });
         cy.intercept('POST', '**' + ApiUrl.MissionType, { statusCode: 204 });
@@ -41,7 +41,7 @@ describe('Optimistic Http Error', () => {
         })
 
         cy.goOnline(); 
-        cy.wait(1500);
+        cy.wait("@createTimesheet").wait(1000);
         cy.storeState<ModelState>().then(s => {
             expect(s.userTimesheets).to.be.undefined;
             expect(s.employers).to.be.undefined;

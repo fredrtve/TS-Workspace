@@ -49,11 +49,10 @@ describe('Timesheet Statistic', () => {
         }
 
         login(getAllCriteria, [timesheet]); 
-        
-        getChipWithText('Ingen').click();
-        
-        cy.get('[row-index="0"]').should('exist')
-        cy.get('[row-index="0"]').within(() => {
+        cy.wait('@getUsers');
+        getChipWithText('Ingen').click();  
+
+        cy.get('[row-index="0"]').should('exist').within(() => {
             cy.get(colId('date')).should('contain', datePipe.transform(timesheet.startTime, "d. MMM YYYY"))   
             cy.get(colId('startTime')).should('contain', datePipe.transform(timesheet.startTime, "HH:mm"))
             cy.get(colId('endTime')).should('contain', datePipe.transform(timesheet.endTime, "HH:mm"))
@@ -75,11 +74,11 @@ describe('Timesheet Statistic', () => {
         }
 
         login(getAllCriteria, [openTimesheet, confirmedTimesheet]); 
-        
+
+        cy.wait('@getUsers');
         getChipWithText('Dag').click();
         
-        cy.get('[row-index="0"]').should('exist')
-        cy.get('[row-index="0"]').within(() => {
+        cy.get('[row-index="0"]').should('exist').within(() => {
             cy.get(colId('date')).should('contain', datePipe.transform(today, "d. MMM YYYY"))   
             cy.get(colId('fullName')).should('contain', getFullName(user))
             cy.get(colId('openHours')).should('contain', openTimesheet.totalHours)
@@ -97,14 +96,14 @@ describe('Timesheet Statistic', () => {
             id: '2', totalHours: 3, status: TimesheetStatus.Confirmed, userName: user.userName, startTime: thisWeek + 6e6 
         }
 
-        login(getAllCriteria, [openTimesheet, confirmedTimesheet]); 
-        
+        login(getAllCriteria, [openTimesheet, confirmedTimesheet]);
+
+        cy.wait('@getUsers');
         getChipWithText('Uke').click();
-        
+
         const weekYear = _getWeekYear(thisWeek);
 
-        cy.get('[row-index="0"]').should('exist')
-        cy.get('[row-index="0"]').within(() => {
+        cy.get('[row-index="0"]').should('exist').within(() => {
             cy.get(colId('year')).should('contain', weekYear.year)          
             cy.get(colId('weekNr')).should('contain', weekYear.weekNr)  
             cy.get(colId('fullName')).should('contain', getFullName(user))
@@ -124,11 +123,11 @@ describe('Timesheet Statistic', () => {
         }
 
         login(getAllCriteria, [openTimesheet, confirmedTimesheet]); 
-        
+
+        cy.wait('@getUsers');
         getChipWithText('Måned').click();
 
-        cy.get('[row-index="0"]').should('exist')
-        cy.get('[row-index="0"]').within(() => {
+        cy.get('[row-index="0"]').should('exist').within(() => {
             cy.get(colId('year')).should('contain', new Date(thisMonth).getFullYear())          
             cy.get(colId('month')).should('contain', datePipe.transform(thisMonth, "MMM"))  
             cy.get(colId('fullName')).should('contain', getFullName(user))
@@ -148,11 +147,11 @@ describe('Timesheet Statistic', () => {
         }
 
         login(getAllCriteria, [openTimesheet, confirmedTimesheet]); 
-        
+
+        cy.wait('@getUsers');
         getChipWithText('År').click();
 
-        cy.get('[row-index="0"]').should('exist')
-        cy.get('[row-index="0"]').within(() => {
+        cy.get('[row-index="0"]').should('exist').within(() => {
             cy.get(colId('year')).should('contain', new Date(thisYear).getFullYear())       
             cy.get(colId('fullName')).should('contain', getFullName(user))
             cy.get(colId('openHours')).should('contain', openTimesheet.totalHours)
@@ -174,6 +173,7 @@ describe('Timesheet Statistic', () => {
 
         login(getAllCriteria, timesheets); 
 
+        cy.wait('@getUsers');
         getChipWithText('Ingen').click();
 
         cy.get('.ag-floating-bottom').should('exist').within(() => {
@@ -181,7 +181,7 @@ describe('Timesheet Statistic', () => {
         })
 
         getChipWithText('Dag').click();
-
+        cy.wait(300);
         cy.get('.ag-floating-bottom').should('exist').within(() => {
             cy.get(colId('confirmedHours')).should('contain', Math.round(totalConfirmedHours * 10) / 10)
         })

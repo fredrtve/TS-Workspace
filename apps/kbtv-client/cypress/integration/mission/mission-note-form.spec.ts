@@ -28,20 +28,15 @@ describe('Mission Note Form', () => {
         const newNote: MissionNote = { title: "testtitle", content: "testcontent" };
 
         //Check validation rules for title
-        cy.getCy('form-content','textarea').type(_stringGen(ValidationRules.MissionNoteContentMaxLength + 1), {delay: 0});   
-        cy.submitForm().getCy('form-content','mat-error').should('exist');
-        isNotSubmittable();
-
-        cy.getCy('form-content','textarea').clear().type(newNote.content!);   
-        //Check that it is submittable with only content
-        isSubmittable(); 
+        cy.assertTextFormControl("content", newNote.content!, [
+            _stringGen(ValidationRules.MissionNoteContentMaxLength + 1),
+        ], "textarea")
+        isSubmittable();
 
         //Check validation rules for title
-        cy.getCy('form-title','input').type(_stringGen(ValidationRules.MissionNoteTitleMaxLength + 1));   
-        cy.submitForm().getCy('form-title','mat-error').should('exist');
-        isNotSubmittable();
-
-        cy.getCy('form-title','input').clear().type(newNote.title!);   
+        cy.assertTextFormControl("title", newNote.title!, [
+            _stringGen(ValidationRules.MissionNoteTitleMaxLength + 1),
+        ])
         isSubmittable();
 
         //Submit and check that new note exists in state
