@@ -33,6 +33,6 @@ import { map } from 'rxjs/operators';
   
     constructor() {}
   
-    onSubmit = () => (!this.submitDisabled ? this.submitted.emit() : null);
+    onSubmit = (isOnline: boolean) => ((!isOnline && this.onlineRequired) || this.submitDisabled) ? null : this.submitted.emit();
   }
   

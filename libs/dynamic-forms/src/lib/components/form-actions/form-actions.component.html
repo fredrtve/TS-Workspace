@@ -39,8 +39,8 @@
       mat-raised-button
       color="accent"
       [disabled]="(!vm.isOnline && onlineRequired) || submitDisabled"
-      (tap)="onSubmit()">
-      {{ (!vm.isOnline && onlineRequired) ? 'Ikke på nett' : submitText }}
+      (tap)="onSubmit(vm.isOnline)">
+      {{ (!vm.isOnline && onlineRequired) ? 'Krever nett' : submitText }}
     </button>
     
 </div>
