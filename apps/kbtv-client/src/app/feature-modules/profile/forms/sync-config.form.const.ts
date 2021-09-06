@@ -15,7 +15,10 @@ export interface SyncConfigForm extends Pick<SyncConfig, "refreshTime"> {
 export const SyncConfigForm: Immutable<DynamicForm<SyncConfigForm, null>> = {
     submitText: "Lagre", 
     resettable: true, 
-    resetState: {...DefaultState.syncConfig, refreshTime: DefaultState.syncConfig.refreshTime / 60}, 
+    resetState: { 
+        initialMonthISO: _getISO(DefaultState.syncConfig.initialTimestamp), 
+        refreshTime: DefaultState.syncConfig.refreshTime / 60 
+    }, 
     controls: {
         refreshTime: { required: true,
             questionComponent:  SliderQuestionComponent,
