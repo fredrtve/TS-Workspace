@@ -3,8 +3,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { SharedModule } from '@shared/shared.module';
 import { BaseQuestionComponent, DynamicFormStore, Question, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
-import { Observable } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { combineLatest, merge, Observable, of } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 
 export interface IonDateQuestionBindings { min: string, max: string, defaultValue: string}
 
@@ -23,13 +23,14 @@ const _monthShortNames = ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug"
 @Component({
   selector: 'app-ion-date-question',
   template:`
-   <div (tap)="dateTime.click()" class="w-100" [ngStyle]="{'pointer-events': control?.disabled ? 'none' : 'auto'}">
+   <div (tap)="dateTime.click()" class="w-100" [ngStyle]="{'pointer-events': control?.disabled ? 'none' : 'auto'}"
+      *ngIf="vm$ | async; let vm">
      
       <mat-form-field style="pointer-events:none!important;" class="w-100" [color]="question.color || 'accent'">
         <mat-label *ngIf="question.label">{{ question.label }}</mat-label>
         <input matInput required 
           [disabled]="control?.disabled" 
-          [value]="question.datePipeFormat ? (control?.value | date : question.datePipeFormat) : control?.value" 
+          [value]="question.datePipeFormat ? (vm.value | date : question.datePipeFormat) : vm.value" 
           [placeholder]="question.placeholder" 
           [attr.aria-label]="question.ariaLabel">  
             <mat-hint *ngIf="question.hint">{{ question.hint }}</mat-hint>
@@ -49,7 +50,7 @@ const _monthShortNames = ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug"
         [attr.month-short-names]="monthShortNames"
         [attr.display-format]="question.ionFormat"
         [attr.minute-values]="question.minuteValues"
-        [value]="control?.value || (stateBindings.defaultValue | async)"
+        [value]="vm.value || vm.defaultValue"
         (ionChange)="onChange($event.detail.value);">
       </ion-datetime>
     </div>
@@ -65,6 +66,7 @@ export class IonDateQuestionComponent extends BaseQuestionComponent<IonDateQuest
 
   min$?: Observable<string>;
   max$?: Observable<string>;
+  vm$: Observable<{value: string, defaultValue: string | null }>;
 
   constructor(
     @Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap, 
@@ -72,6 +74,15 @@ export class IonDateQuestionComponent extends BaseQuestionComponent<IonDateQuest
     formStore: DynamicFormStore<object>
   ) { 
     super(validationErrorMessages,formStore);
+  }
+
+  ngOnInit(): void {
+    this.vm$ = combineLatest([
+      merge(of(this.control!.value), this.control!.valueChanges),
+      this.stateBindings.defaultValue || of(null)
+    ]).pipe(
+      map(([value, defaultValue])=> ({value, defaultValue}))
+    );
   }
 
   onChange(val: string){

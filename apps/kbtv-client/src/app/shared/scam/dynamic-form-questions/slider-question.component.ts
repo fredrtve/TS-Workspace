@@ -3,6 +3,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSliderModule } from '@angular/material/slider';
 import { SharedModule } from '@shared/shared.module';
 import { BaseQuestionComponent, DynamicFormStore, Question, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
+import { merge, Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 export interface SliderQuestion extends Question {
   tickInterval?: number;
@@ -31,8 +33,8 @@ export interface SliderQuestion extends Question {
     <mat-hint *ngIf="question.hint" class="mat-caption">{{ question.hint }}</mat-hint>
     
     <div class="slider-container">
-        <span class="mat-body">{{ (control?.value || '') + " " + (question?.valueSuffix || '') }}</span>
-        <mat-slider [color]="question.color || 'accent'" [value]="control?.value" 
+        <span class="mat-body">{{ (controlValue$ | async) + " " + (question?.valueSuffix || '') }}</span>
+        <mat-slider [color]="question.color || 'accent'" [value]="(controlValue$ | async)" 
             (input)="updateValue($event.value)"
             [thumbLabel]="question.thumbLabel"
             [tickInterval]="question.tickInterval || 1"
@@ -49,11 +51,19 @@ export interface SliderQuestion extends Question {
 })
 export class SliderQuestionComponent extends BaseQuestionComponent<null, SliderQuestion> {
 
+    controlValue$: Observable<string>;
+
     constructor(
       @Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap, 
       formStore: DynamicFormStore
     ) { 
-        super(validationErrorMessages, formStore) 
+        super(validationErrorMessages, formStore);
+    }
+    
+    ngOnInit(): void {
+      this.controlValue$ = merge(of(this.control!.value), this.control!.valueChanges).pipe(
+        map(x => x || '0')
+      );
     }
 
     updateValue(val: number){
