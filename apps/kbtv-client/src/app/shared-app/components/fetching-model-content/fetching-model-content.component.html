@@ -1,11 +1,18 @@
 <style> ion-spinner { transform: scale(2); } </style>
 <ng-container *ngIf="vm$ | async; let vm">
-    <app-no-content *ngIf="!vm.isFetching else fetching">
+
+    <app-no-content *ngIf="(!vm.fetchingStatus || vm.fetchingStatus === 'success') else hasFailed">
         Finner ingen {{ modelProp | translateModelProp : false : true }}
         <ng-content></ng-content>
     </app-no-content>
 
-    <ng-template #fetching>
+    <ng-template #hasFailed>
+        <app-no-content *ngIf="vm.fetchingStatus === 'failed' else isFetching">       
+            <p>Det oppsto en feil ved innhenting av {{ modelProp | translateModelProp : false : true }}</p>
+        </app-no-content>
+    </ng-template>
+
+    <ng-template #isFetching>
         <app-no-content *ngIf="vm.isOnline else notOnline">       
             <ion-spinner name="dots"></ion-spinner>
             <p>Laster inn {{ modelProp | translateModelProp : false : true }}</p>
@@ -15,4 +22,5 @@
     <ng-template #notOnline>
         <app-no-content icon="cloud_off">Mangler internett-tilkobling</app-no-content>
     </ng-template>
+
 </ng-container>

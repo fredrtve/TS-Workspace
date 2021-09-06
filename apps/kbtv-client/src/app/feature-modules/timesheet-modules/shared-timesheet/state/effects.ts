@@ -9,7 +9,7 @@ import { filter, map, switchMap } from 'rxjs/operators';
 import { DispatchedAction, Effect, listenTo, StateAction } from 'state-management';
 import { TimesheetCriteria } from '../timesheet-filter/timesheet-criteria.interface';
 import { TimesheetFilter } from '../timesheet-filter/timesheet-filter.model';
-import { FetchTimesheetsAction, SetCriteriaCacheAction, SetFetchedTimesheetsAction } from './actions.const';
+import { FetchingTimesheetsFailedAction, FetchTimesheetsAction, SetCriteriaCacheAction, SetFetchedTimesheetsAction } from './actions.const';
 import { StateSharedTimesheet } from './state-shared-timesheet.interface';
 
 @Injectable()
@@ -27,6 +27,9 @@ export class FetchTimesheetsHttpEffect implements Effect<FetchTimesheetsAction> 
       )), 
     )
   }
+
+  onErrorAction = () => <FetchingTimesheetsFailedAction> { type: FetchingTimesheetsFailedAction };
+
 
   private isContained(criteria: Maybe<Immutable<TimesheetCriteria>>, criteriaCache: Maybe<ImmutableArray<TimesheetCriteria>>): boolean {
     return _isCriteriaContainedInCache(criteria, criteriaCache, TimesheetFilter);

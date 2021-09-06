@@ -1,24 +1,30 @@
 import { AppSyncStateConfig } from '../configurations/app-sync-state.config';
 import { Immutable, Prop } from 'global-types';
 import { _createReducer } from 'state-management';
-import { StateSyncTimestamp, SyncStateAction, SyncStateSuccessAction } from 'state-sync';
-import { StateIsFetching } from 'model/state-fetcher';
+import { StateSyncTimestamp, SyncStateAction, SyncStateSuccessAction, SyncStateFailedAction } from 'state-sync';
+import { FetchingStatus, StateFetchingStatus } from 'model/state-fetcher';
 import { ModelState } from './model-state.interface';
 
-export const SetSyncModelsFetchingReducer = _createReducer(
+export const SetSyncModelsFetchingStatusReducer = _createReducer(
     SyncStateAction, 
-    (state: Immutable<StateIsFetching<ModelState> & StateSyncTimestamp>) => 
-        state.syncTimestamp ? null : setSyncFetching(state, true)
+    (state: Immutable<StateFetchingStatus<ModelState> & StateSyncTimestamp>) => 
+        state.syncTimestamp ? null : setSyncFetching(state, "fetching")
 )
 
-export const SetSyncModelsFetchedReducer = _createReducer(
+export const SetSyncModelsSuccessStatusReducer = _createReducer(
     SyncStateSuccessAction, 
-    (state: Immutable<StateIsFetching<ModelState>>) => 
-        state.isFetching?.missions !== true ? null : setSyncFetching(state, false)
+    (state: Immutable<StateFetchingStatus<ModelState>>) => 
+        state.fetchingStatus?.missions !== "fetching" ? null : setSyncFetching(state, "success")
 )
 
-function setSyncFetching(state: StateIsFetching<ModelState>, val: boolean): StateIsFetching<ModelState>{
-    const isFetching = {...state.isFetching};
-    for(const prop in AppSyncStateConfig) isFetching[<Prop<ModelState>> prop] = val;     
-    return {isFetching};
+export const SetSyncModelsFailedStatusReducer = _createReducer(
+    SyncStateFailedAction, 
+    (state: Immutable<StateFetchingStatus<ModelState>>) => 
+        state.fetchingStatus?.missions !== "fetching" ? null : setSyncFetching(state, "failed")
+)
+
+function setSyncFetching(state: StateFetchingStatus<ModelState>, val: FetchingStatus): StateFetchingStatus<ModelState>{
+    const fetchingStatus = {...state.fetchingStatus};
+    for(const prop in AppSyncStateConfig) fetchingStatus[<Prop<ModelState>> prop] = val;     
+    return {fetchingStatus};
 }

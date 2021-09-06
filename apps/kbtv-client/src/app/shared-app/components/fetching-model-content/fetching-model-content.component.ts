@@ -6,7 +6,7 @@ import { combineLatest } from 'rxjs';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Store } from 'state-management';
-import { StateIsFetching } from 'model/state-fetcher';
+import { FetchingStatus, StateFetchingStatus } from 'model/state-fetcher';
 
 @Component({
   selector: 'app-fetching-model-content',
@@ -16,17 +16,18 @@ import { StateIsFetching } from 'model/state-fetcher';
 export class FetchingModelContentComponent{
     @Input() modelProp: Prop<ModelState>;
 
-    vm$: Observable<{isOnline: boolean, isFetching: boolean}> = combineLatest([
-        this.store.selectProperty$('isFetching'),
+    vm$: Observable<{isOnline: boolean, fetchingStatus: FetchingStatus | null }> = combineLatest([
+        this.store.selectProperty$('fetchingStatus'),
         this.deviceInfoService.isOnline$
     ]).pipe(
-        map(([isFetching, isOnline]) => { return { 
-            isFetching: isFetching && isFetching[this.modelProp], 
+        map(([fetchingStatusMap, isOnline]) => { return { 
+            fetchingStatus: !fetchingStatusMap ? null : fetchingStatusMap[this.modelProp], 
             isOnline 
         }})
     )
+
     constructor(
-        private store: Store<StateIsFetching<ModelState>>,
+        private store: Store<StateFetchingStatus<ModelState>>,
         private deviceInfoService: DeviceInfoService,
     ){}
 }

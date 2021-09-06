@@ -1,22 +1,22 @@
 import { Injectable } from '@angular/core';
 import { Timesheet } from '@core/models';
+import { GroupByPeriod } from '@shared-app/enums/group-by-period.enum';
 import { _setFullNameOnUserForeigns } from '@shared-app/helpers/add-full-name-to-user-foreign.helper';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { _getSummariesByType } from '@shared-timesheet/helpers/get-summaries-by-type.helper';
+import { SetTimesheetCriteriaAction } from '@shared-timesheet/state/actions.const';
 import { AgGridConfig } from '@shared/components/abstracts/ag-grid-config.interface';
-import { GroupByPeriod } from '@shared-app/enums/group-by-period.enum';
 import { filterRecords } from '@shared/operators/filter-records.operator';
 import { Immutable, ImmutableArray } from 'global-types';
-import { FetchModelsAction } from 'model/state-fetcher';
+import { FetchingStatus, FetchModelsAction } from 'model/state-fetcher';
 import { combineLatest, Observable } from 'rxjs';
-import { distinctUntilChanged, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Store } from 'state-management';
 import { TimesheetSummary } from '../shared-timesheet/interfaces';
 import { TimesheetCriteria } from '../shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { TimesheetFilter } from '../shared-timesheet/timesheet-filter/timesheet-filter.model';
-import { StoreState } from './state/store-state';
 import { SetGroupByAction } from './state/actions.const';
-import { SetTimesheetCriteriaAction } from '@shared-timesheet/state/actions.const';
+import { StoreState } from './state/store-state';
 
 type ValidRecord = Timesheet | TimesheetSummary;
 
@@ -27,10 +27,6 @@ export class TimesheetStatisticFacade extends WithUnsubscribe() {
     get criteria() { return this.store.state.timesheetStatisticTimesheetCriteria }
 
     groupBy$ = this.store.selectProperty$("timesheetStatisticGroupBy");
-
-    isFetching$: Observable<boolean> = 
-        this.store.selectProperty$('isFetching').pipe(
-            map(x => x && x.timesheets), distinctUntilChanged())
 
     private filteredTimesheets$ = this.store.select$(['timesheets', 'timesheetStatisticTimesheetCriteria']).pipe(
         map(x => <[ImmutableArray<Timesheet>, Immutable<TimesheetCriteria>]> [x.timesheets, x.timesheetStatisticTimesheetCriteria]),
@@ -50,6 +46,9 @@ export class TimesheetStatisticFacade extends WithUnsubscribe() {
     ]).pipe(
         map(x =>  { return { data: _setFullNameOnUserForeigns<ValidRecord>(x[0], x[1]) }}
     ));
+
+    fetchingStatus$: Observable<FetchingStatus> = 
+        this.store.selectProperty$("fetchingStatus").pipe(map(x => x.timesheets))
 
     constructor(private store: Store<StoreState>){
         super();

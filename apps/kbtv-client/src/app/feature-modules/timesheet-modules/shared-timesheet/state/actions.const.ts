@@ -8,6 +8,9 @@ export interface FetchTimesheetsAction extends StateAction<typeof FetchTimesheet
     timesheetCriteria: TimesheetCriteria
 }
 
+export const FetchingTimesheetsFailedAction = "FETCHING_TIMESHEETS_FAILED_ACTION";
+export interface FetchingTimesheetsFailedAction extends StateAction<typeof FetchingTimesheetsFailedAction> {}
+
 export const  SetCriteriaCacheAction = "SET_CRITERIA_CACHE_ACTION";
 export interface  SetCriteriaCacheAction extends StateAction<typeof  SetCriteriaCacheAction> { criteria: TimesheetCriteria }
 

@@ -12,6 +12,7 @@ import { AgGridConfig } from '@shared/components/abstracts/ag-grid-config.interf
 import { BottomBarIconButton } from '@shared/components/bottom-action-bar/bottom-bar-icon-button.interface';
 import { BottomIconButtons } from '@shared/constants/bottom-icon-buttons.const';
 import { Immutable, ImmutableArray, Maybe } from 'global-types';
+import { FetchingStatus } from 'model/state-fetcher';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ExportCsvFormService } from '../export-csv-form.service';
@@ -55,9 +56,9 @@ export class TimesheetStatisticComponent {
     this.facade.groupBy$.pipe(map(x => this.getGroupByChips(x))),
     this.criteriaChips$,
     this.partialVm$,
-    this.facade.isFetching$,
-  ]).pipe(map(([groupByChips, criteriaChips, {tableConfig, bottomActions}, isFetching]) => { 
-    return {groupByChips, criteriaChips, tableConfig, bottomActions, noRowsText: this.getNoRowsText(isFetching)} 
+    this.facade.fetchingStatus$,
+  ]).pipe(map(([groupByChips, criteriaChips, {tableConfig, bottomActions}, status]) => { 
+    return {groupByChips, criteriaChips, tableConfig, bottomActions, noRowsText: this.getNoRowsText(status)} 
   }))
   
   constructor( 
@@ -88,9 +89,13 @@ export class TimesheetStatisticComponent {
     return _timesheetCriteriaChipsFactory(criteria, (x) => this.facade.updateCriteria(x))
   }
 
-  private getNoRowsText(isFetching: boolean): string {
+  private getNoRowsText(status: FetchingStatus): string {
     if(!navigator.onLine) return "Mangler internett-tilkobling";
-    return isFetching ? 'Laster inn timer...' : 'Finner ingen timer med gitte filtre';
+    switch(status){
+      case 'failed': return 'Det oppsto en feil ved innhenting av timer';
+      case 'fetching': return 'Laster inn timer...';
+      default: return 'Finner ingen timer med gitte filtre';
+    }
   }
 
 }

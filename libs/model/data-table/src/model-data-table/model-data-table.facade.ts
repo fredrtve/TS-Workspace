@@ -2,7 +2,7 @@ import { Inject, Injectable } from "@angular/core";
 import { ColDef } from "ag-grid-community";
 import { ImmutableArray, Maybe, UnknownState } from "global-types";
 import { UnknownModelState, _getModelConfig } from "model/core";
-import { FetchModelsAction, StateIsFetching } from "model/state-fetcher";
+import { FetchModelsAction, StateFetchingStatus } from "model/state-fetcher";
 import { BehaviorSubject, combineLatest, Observable, of } from "rxjs";
 import { distinctUntilChanged, map, switchMap } from "rxjs/operators";
 import { Store } from 'state-management';
@@ -37,7 +37,7 @@ export class ModelDataTableFacade  {
     )
 
     constructor(
-        private store: Store<UnknownModelState & StateIsFetching<UnknownState>>,
+        private store: Store<UnknownModelState & StateFetchingStatus<UnknownState>>,
         private colDefFactory: ModelColDefFactory,    
         @Inject(MODEL_STATE_PROP_TRANSLATIONS) private translations: ModelStatePropTranslations
     ) { }
@@ -48,14 +48,15 @@ export class ModelDataTableFacade  {
     }
 
     private getNoRowsText$(prop: Maybe<string>): Observable<string>{
-        return this.store.selectProperty$("isFetching").pipe(map(isFetchingMap => {
-            const isFetching = prop != null && isFetchingMap != null && isFetchingMap[prop];
+        return this.store.selectProperty$("fetchingStatus").pipe(map(fetchingStatus => {
             if(!prop) return 'Ingen data model valgt';
             if(!navigator.onLine) return "Mangler internett-tilkobling";
-            
             const translatedProp = this.translations[prop.toLowerCase()]?.plural.toLowerCase() || 'data';
-            if(isFetching) return `Laster inn ${translatedProp}...`;
-            return `Finner ingen ${translatedProp}`;
+            switch(fetchingStatus[prop]){
+                case 'failed': return `Det oppsto en feil ved innhenting av ${translatedProp}`;
+                case 'fetching': return `Laster inn ${translatedProp}...`;
+                default: return `Finner ingen ${translatedProp}`;
+            }
         }), distinctUntilChanged())
     }
 }

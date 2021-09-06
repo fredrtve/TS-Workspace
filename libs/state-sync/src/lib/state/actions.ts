@@ -11,6 +11,9 @@ export interface SyncStateSuccessAction extends StateAction<typeof SyncStateSucc
     syncStateConfig: SyncStateConfig<UnknownState>
 }   
 
+export const SyncStateFailedAction = "SYNC_STATE_FAILED_ACTION"; 
+export interface SyncStateFailedAction extends StateAction<typeof SyncStateFailedAction> {}
+
 export const UpdateSyncConfigAction = "UPDATE_SYNC_CONFIG_ACTION";
 export interface UpdateSyncConfigAction extends StateAction<typeof UpdateSyncConfigAction> {
     syncConfig: SyncConfig

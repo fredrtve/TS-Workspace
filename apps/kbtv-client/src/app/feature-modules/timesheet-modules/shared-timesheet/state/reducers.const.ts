@@ -3,9 +3,9 @@ import { DateRangePresets } from '@shared-app/enums/date-range-presets.enum';
 import { _getRangeByDateRangePreset } from '@shared-app/helpers/get-range-by-date-range-preset.helper';
 import { _addOrUpdateRange } from 'array-helpers';
 import { DateRange } from 'date-time-helpers';
-import { StateIsFetching } from 'model/state-fetcher/public-api';
+import { StateFetchingStatus } from 'model/state-fetcher/public-api';
 import { _createReducer } from 'state-management';
-import { SetCriteriaCacheAction, SetFetchedTimesheetsAction, SetTimesheetCriteriaAction } from './actions.const';
+import { FetchingTimesheetsFailedAction, SetCriteriaCacheAction, SetFetchedTimesheetsAction, SetTimesheetCriteriaAction } from './actions.const';
 import { StateSharedTimesheet } from './state-shared-timesheet.interface';
 
 export const SetTimesheetCriteriaReducer = _createReducer<unknown, SetTimesheetCriteriaAction>(
@@ -19,20 +19,32 @@ export const SetTimesheetCriteriaReducer = _createReducer<unknown, SetTimesheetC
     }       
 ) 
 
-export const SetFetchedTimesheetsReducer = _createReducer<StateTimesheets & StateMissions & StateIsFetching<StateTimesheets>, SetFetchedTimesheetsAction>(
+export const SetFetchedTimesheetsReducer = _createReducer<StateTimesheets & StateMissions & StateFetchingStatus<StateTimesheets>, SetFetchedTimesheetsAction>(
     SetFetchedTimesheetsAction, (state, action) => {
         return {
             timesheets: _addOrUpdateRange(state.timesheets, action.timesheets, "id"),
-            isFetching: {...state.isFetching || {}, timesheets: false}
+            fetchingStatus: {...state.fetchingStatus || {}, timesheets: "success"}
         };
     }
 ) 
 
-export const SetCriteriaCacheRedcuer = _createReducer<StateSharedTimesheet, SetCriteriaCacheAction>(
+export const SetCriteriaCacheReducer = _createReducer<StateSharedTimesheet, SetCriteriaCacheAction>(
     SetCriteriaCacheAction, (state, action) => {
         return {
-            isFetching: {...state.isFetching, timesheets: true},
+            fetchingStatus: {...state.fetchingStatus, timesheets: "fetching"},
             timesheetCriteriaCache: [action.criteria, ...state.timesheetCriteriaCache || []]
         }
     }
+)
+
+export const RemoveCriteriaCacheReducer = _createReducer<StateSharedTimesheet, FetchingTimesheetsFailedAction>(
+    FetchingTimesheetsFailedAction, (state) =>  {
+        const [, ...rest] = state.timesheetCriteriaCache;
+        return { timesheetCriteriaCache: rest }
+    }
+    
+)
+
+export const SetTimesheetFetchingFailedReducer = _createReducer<StateSharedTimesheet, FetchingTimesheetsFailedAction>(
+    FetchingTimesheetsFailedAction, (state) => ({ fetchingStatus: {...state.fetchingStatus, timesheets: 'failed'}})
 )

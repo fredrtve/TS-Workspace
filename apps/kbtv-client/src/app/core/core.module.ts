@@ -4,7 +4,7 @@ import { AppModelStatePropTranslations } from '@shared-app/constants/model-state
 import { translations } from '@shared-app/constants/translations.const';
 import { _registerModelStateConfig } from 'model/core';
 import { MODEL_PROP_TRANSLATIONS, MODEL_STATE_PROP_TRANSLATIONS } from 'model/shared';
-import { MODEL_FETCHER_BASE_URL } from 'model/state-fetcher';
+import { MODEL_FETCHER_BASE_URL, MODEL_FETCHER_RETRY_STRATEGY } from 'model/state-fetcher';
 import { OptimisticHttpModule, OPTIMISTIC_BASE_API_URL } from 'optimistic-http';
 import { environment } from 'src/environments/environment';
 import { HttpAuthTokensInterceptor, StateAuthModule } from 'state-auth';
@@ -19,6 +19,7 @@ import { AppSyncStateConfig } from './configurations/app-sync-state.config';
 import { DefaultState } from './configurations/default-state.const';
 import { ModelConfigMap } from './configurations/model/app-model-configs.const';
 import { AppOptimisticStateProps } from './configurations/optimistic/app-optimistic-state.const';
+import { httpRetryStrategy } from './http-retry.strategy';
 import { HttpRetryInterceptor } from './interceptors/http-retry.interceptor';
 import { HttpErrorInterceptor } from './interceptors/http.error.interceptor';
 import { HttpIsOnlineInterceptor } from './interceptors/http.is-online.interceptor';
@@ -29,7 +30,7 @@ import { SyncHttpFetcherService } from './services/sync-http-fetcher.service';
 import { InitalizeHttpQueueEffect, InitalizeSyncEffect } from './state/initalizing.effects';
 import { NotifyOnUnauthorizedEffect } from './state/notify-on-unauthorized.effect';
 import { OpenDialogOnOptimisticError } from './state/open-dialog-on-optimistic-error.effect';
-import { SetSyncModelsFetchedReducer, SetSyncModelsFetchingReducer } from './state/sync-fetching.reducer';
+import { SetSyncModelsFailedStatusReducer, SetSyncModelsFetchingStatusReducer, SetSyncModelsSuccessStatusReducer } from './state/sync-fetching.reducer';
 import { SyncUserOnLoginEffect } from './state/sync-user-on-login.effect';
 import { WipeStateReducer } from './state/wipe-state.reducer';
 
@@ -40,7 +41,7 @@ _registerModelStateConfig(ModelConfigMap);
   imports: [
     StateManagementModule.forRoot({
       defaultState: DefaultState,
-      reducers: [WipeStateReducer, SetSyncModelsFetchedReducer, SetSyncModelsFetchingReducer],
+      reducers: [WipeStateReducer, SetSyncModelsFetchingStatusReducer, SetSyncModelsSuccessStatusReducer, SetSyncModelsFailedStatusReducer],
       effects: [InitalizeSyncEffect, InitalizeHttpQueueEffect, OpenDialogOnOptimisticError, 
         SyncUserOnLoginEffect, NotifyOnUnauthorizedEffect],
     }),
@@ -64,7 +65,7 @@ _registerModelStateConfig(ModelConfigMap);
     
     { provide: OPTIMISTIC_BASE_API_URL, useValue: environment.apiUrl},
     { provide: MODEL_FETCHER_BASE_URL, useValue: environment.apiUrl},
-    
+    { provide: MODEL_FETCHER_RETRY_STRATEGY, useValue: httpRetryStrategy({excludedStatusCodes: [401]}) },
     { provide: MODEL_PROP_TRANSLATIONS, useValue: translations },
     { provide: MODEL_STATE_PROP_TRANSLATIONS, useValue: AppModelStatePropTranslations },
 
