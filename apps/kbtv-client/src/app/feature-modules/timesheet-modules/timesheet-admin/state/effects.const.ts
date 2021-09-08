@@ -1,44 +1,41 @@
 import { Injectable } from '@angular/core';
 import { ApiUrl } from '@core/api-url.enum';
 import { ApiService } from '@core/services/api.service';
-import { FetchTimesheetsAction, SetTimesheetCriteriaAction } from '@shared-timesheet/state/actions.const';
-import { Observable } from 'rxjs';
+import { SharedTimesheetActions } from '@shared-timesheet/state/actions.const';
 import { map, mergeMap } from 'rxjs/operators';
-import { DispatchedAction, Effect, listenTo, Store } from 'state-management';
+import { DispatchedActions, Effect, listenTo, Store } from 'state-management';
 import { StoreState } from '../store-state';
-import { SetTimesheetCriteriaWithWeekCriteriaAction, UpdateLeaderSettingsAction, UpdateLeaderSettingsSuccessAction } from './actions.const';
+import { TimesheetAdminActions } from './actions.const';
 
 @Injectable()
-export class UpdateLeaderSettingsHttpEffect implements Effect<UpdateLeaderSettingsAction> {
+export class UpdateLeaderSettingsHttpEffect implements Effect{
 
     constructor(private apiService: ApiService){}
 
-    handle$(actions$: Observable<DispatchedAction<UpdateLeaderSettingsAction>>): Observable<UpdateLeaderSettingsSuccessAction> {
+    handle$(actions$: DispatchedActions) {
         return actions$.pipe(
-            listenTo([UpdateLeaderSettingsAction]),
+            listenTo([TimesheetAdminActions.updateLeaderSettings]),
             mergeMap(x => 
-                this.apiService.put(ApiUrl.LeaderSettings, x.action.settings).pipe(map(() => { 
-                    return <UpdateLeaderSettingsSuccessAction> { 
-                        type: UpdateLeaderSettingsSuccessAction, settings: x.action.settings 
-                    }
-                }))
-            ),
+                this.apiService.put(ApiUrl.LeaderSettings, x.action.settings).pipe(map(() => 
+                    TimesheetAdminActions.updateLeaderSettingsSuccess({ settings: x.action.settings })
+                ))
+            )
         )
     }
 
 }
 
 @Injectable()
-export class FetchTimesheetsEffect implements Effect<SetTimesheetCriteriaAction> {
+export class FetchTimesheetsEffect implements Effect {
 
     constructor(private store: Store<StoreState>){}
 
-    handle$(actions$: Observable<DispatchedAction<SetTimesheetCriteriaAction>>): Observable<FetchTimesheetsAction> {
+    handle$(actions$: DispatchedActions) {
         return actions$.pipe(
-            listenTo([SetTimesheetCriteriaWithWeekCriteriaAction]),
-            map(x => { return <FetchTimesheetsAction>{ type: FetchTimesheetsAction, 
+            listenTo([TimesheetAdminActions.weekCriteriaChanged]),
+            map(x => SharedTimesheetActions.fetchTimesheets({ 
                 timesheetCriteria: this.store.state.timesheetAdminTimesheetCriteria 
-            }}),
+            })),
         )
     }
 

@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from "@angular/common/http";
-import { Prop, UnknownState } from "global-types";
+import { Maybe, Prop, UnknownState } from "global-types";
 import { ModelConfig, StateModels } from "model/core";
 import { Observable } from "rxjs";
 
@@ -18,7 +18,7 @@ export type FetchingStatus = "success" | "failed" | "fetching";
 export type FetchingStatusMap<TState> = Record<Prop<TState>, FetchingStatus>;
 
 /** Represents a slice of state containing an map of fetching statuses for given models */
-export interface StateFetchingStatus<TState> { fetchingStatus: FetchingStatusMap<TState> }
+export interface StateFetchingStatus<TState> { fetchingStatus: Maybe<FetchingStatusMap<TState>> }
 
 /** Represents an higher order observable for deciding a retry strategy for http calls. Used together with retryWhen operator. */
 export type FetcherRetryStrategy = (obs: Observable<HttpErrorResponse>) => Observable<any>

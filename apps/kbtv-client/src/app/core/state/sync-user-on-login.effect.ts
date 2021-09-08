@@ -1,24 +1,24 @@
 import { Injectable } from '@angular/core';
-import { SyncStateAction } from 'state-sync';
-import { Observable, of } from 'rxjs';
+import { GlobalActions } from '@core/global-actions';
+import { of } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
-import { DispatchedAction, Effect, listenTo, StateAction, Store } from 'state-management';
-import { LoginSuccessAction } from 'state-auth';
-import { WipeStateAction } from '@core/global-actions';
+import { AuthActions } from 'state-auth';
+import { DispatchedActions, Effect, listenTo, StateAction, Store } from 'state-management';
+import { SyncActions } from 'state-sync';
 
 @Injectable()
-export class SyncUserOnLoginEffect implements Effect<LoginSuccessAction> {
+export class SyncUserOnLoginEffect implements Effect {
 
     constructor(private store: Store<unknown>){}
 
-    handle$(actions$: Observable<DispatchedAction<LoginSuccessAction>>): Observable<void | StateAction> {
+    handle$(actions$: DispatchedActions) {
         return actions$.pipe(
-            listenTo([LoginSuccessAction]),
+            listenTo([AuthActions.loginSuccess]),
             mergeMap(({action}) => {
-                const actions: StateAction[] = [<SyncStateAction>{ type: SyncStateAction }];
+                const actions: StateAction[] = [SyncActions.sync()];
 
                 if(action.previousUser?.userName !== action.response.user.userName) //Wipe before sync if new login
-                    actions.unshift(<WipeStateAction>{ type: WipeStateAction, defaultState: this.store.defaultState })
+                    actions.unshift(GlobalActions.wipeState({ defaultState: this.store.defaultState }));
 
                 return of(...actions)
             }),

@@ -8,7 +8,7 @@
       <div class="logo-container">
         <img src="assets/icons/icon-72x72.png" alt="Logo bilde" />
 
-        <span class="mat-body-strong logo-text">Bjørkelangen<br />Bygg og Eiendom</span>
+        <span class="mat-body-strong logo-text">{{ companyName }}</span>
       </div>
 
     </div>
@@ -25,7 +25,7 @@
         <div class="logo-container">
           <img src="assets/icons/icon-128x128.png" alt="Logo bilde" />
 
-          <span class="mat-title logo-text mt-2">Bjørkelangen<br />Bygg og Eiendom</span>
+          <span class="mat-title logo-text mt-2">{{ companyName }}</span>
         </div>
 
         <app-login-form [disabled]="vm.formDisabled" (submitted)="authenticate($event)"></app-login-form>

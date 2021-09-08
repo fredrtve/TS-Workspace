@@ -3,10 +3,10 @@ import { ColDef } from "ag-grid-community";
 import { _convertArrayToObject } from "array-helpers";
 import { KeyVal, UnknownState } from "global-types";
 import { ForeignRelation, UnknownModelState, _getModelConfig } from "model/core";
-import { ModelCommand, SaveModelAction } from "model/state-commands";
+import { MODEL_PROP_TRANSLATIONS } from "model/shared";
+import { ModelCommand, ModelCommands } from "model/state-commands";
 import { Store } from "state-management";
 import { MODEL_DATA_TABLES_CONFIG } from "./injection-tokens.const";
-import { MODEL_PROP_TRANSLATIONS } from "model/shared";
 import { ModelDataTable, ModelDataTablesConfig } from "./interfaces";
 
 @Injectable({providedIn: 'any'})
@@ -122,9 +122,9 @@ export class ModelColDefFactory {
         if(table.onUpdateActionConverter) 
             this.store.dispatch(table.onUpdateActionConverter(entity))
         else 
-            this.store.dispatch(<SaveModelAction<unknown, unknown>>{
-                type: SaveModelAction, entity, stateProp, saveAction: ModelCommand.Update
-            })
+            this.store.dispatch(ModelCommands.save<any,any>({
+                entity, stateProp, saveAction: ModelCommand.Update
+            }))
     }
     
 }

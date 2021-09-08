@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { ModelFormModule } from 'model/form';
-import { DeleteModelReducer, SaveModelEffect, SaveModelReducer } from 'model/state-commands';
+import { ModelStateCommandsModule } from 'model/state-commands';
 import { ModelStateFetcherModule } from 'model/state-fetcher';
 import { OptimisticHttpModule } from 'optimistic-http';
 import { StateManagementModule } from 'state-management';
@@ -9,7 +9,7 @@ import { FetchTimesheetProviders } from '../shared-timesheet/state/providers.con
 import { AdminTimesheetCardDialogWrapperComponent } from './components/admin-timesheet-card-dialog-wrapper.component';
 import { SwipeCardComponent } from './components/swipe-card/swipe-card.component';
 import { FetchTimesheetsEffect, UpdateLeaderSettingsHttpEffect } from './state/effects.const';
-import { SetSelectedWeekReducer, SetTimesheetCriteriaWithWeekCriteriaReducer, UpdateLeaderSettingsSuccessReducer, UpdateTimesheetStatusesReducer } from './state/reducers.const';
+import { TimesheetAdminReducers } from './state/reducers.const';
 import { TimesheetAdminActionRequestMap } from './timesheet-admin-action-request-map.const';
 import { TimesheetAdminListViewComponent } from './timesheet-admin-list/timesheet-admin-list-view/timesheet-admin-list-view.component';
 import { TimesheetAdminListComponent } from './timesheet-admin-list/timesheet-admin-list.component';
@@ -37,12 +37,10 @@ const OptimisticFeatureProps = ["timesheetAdminTimesheetCriteria","timesheetAdmi
     SharedTimesheetModule,
     TimesheetAdminRoutingModule,    
     StateManagementModule.forFeature({
-      reducers: [
-        SaveModelReducer, UpdateTimesheetStatusesReducer, SetTimesheetCriteriaWithWeekCriteriaReducer, 
-        SetSelectedWeekReducer, DeleteModelReducer, UpdateLeaderSettingsSuccessReducer
-      ], 
-      effects: [FetchTimesheetsEffect, SaveModelEffect, UpdateLeaderSettingsHttpEffect],
+      reducers: TimesheetAdminReducers, 
+      effects: [FetchTimesheetsEffect, UpdateLeaderSettingsHttpEffect],
     }), 
+    ModelStateCommandsModule,
     ModelStateFetcherModule, 
     ModelFormModule,
     OptimisticHttpModule.forFeature(TimesheetAdminActionRequestMap, OptimisticFeatureProps)

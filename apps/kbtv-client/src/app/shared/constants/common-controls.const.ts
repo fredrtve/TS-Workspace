@@ -31,7 +31,7 @@ export const GoogleAddressControl: Immutable<DynamicControl<string, null, Google
     questionComponent: GooglePlacesAutoCompleteQuestionComponent,
     question: {
         placeholder: "Adresse", 
-        hint: "F.eks. Furuberget 17, 1940 Bjørkelangen",
+        hint: "F.eks. Slottsplassen 1, 0010 Oslo",
         resetable: true
     },  
     validators: [Validators.maxLength(ValidationRules.AddressMaxLength)] 
@@ -42,10 +42,12 @@ export const NameControl: Immutable<DynamicControl<string, null, InputQuestion>>
     validators: [Validators.maxLength(ValidationRules.NameMaxLength)] 
 }
 export const FirstNameControl: Immutable<DynamicControl<string, null, InputQuestion>> = {
-    questionComponent: InputQuestionComponent, question: { placeholder: "Fornavn" }, 
+    questionComponent: InputQuestionComponent, question: { placeholder: "Fornavn" },
+    validators: [Validators.maxLength(ValidationRules.NameMaxLength)]
 }
 export const LastNameControl: Immutable<DynamicControl<string, null, InputQuestion>> = { 
-    questionComponent: InputQuestionComponent, question: { placeholder: "Etternavn" }
+    questionComponent: InputQuestionComponent, question: { placeholder: "Etternavn" },
+    validators: [Validators.maxLength(ValidationRules.NameMaxLength)]
 }
 export const MissionAutoCompleteControl: Immutable<DynamicControl<Mission, StateMissions, AutoCompleteQuestion<Mission, StateMissions>>> = {  
     questionComponent: AutoCompleteQuestionComponent,
@@ -95,8 +97,8 @@ export const UserNameControl: Immutable<DynamicControl<string, null, InputQuesti
     questionComponent: InputQuestionComponent,
     validators: [
         Validators.pattern('^[a-zA-Z0-9_.-]*$'),
-        Validators.minLength(4),
-        Validators.maxLength(ValidationRules.NameMaxLength)
+        Validators.minLength(ValidationRules.UserNameMinLength),
+        Validators.maxLength(ValidationRules.UserNameMaxLength)
     ] 
 }
 export const NewPasswordControl: Immutable<DynamicControl<string, null, InputQuestion>> = { 

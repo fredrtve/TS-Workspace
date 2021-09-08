@@ -1,16 +1,16 @@
-import { SaveModelFileAction } from '@core/global-actions';
+import { GlobalActions } from '@core/global-actions';
 import { ModelFile } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
-import { Converter, ModelFormResult } from 'model/form';
+import { Immutable } from 'global-types';
+import { ModelFormResult } from 'model/form';
 import { ModelCommand } from 'model/state-commands';
 
 export type ModelFileForm = {file: File};
 type FormResult = ModelFormResult<ModelState, ModelFile, ModelFileForm>
 
-export const _formToSaveModelFileConverter: Converter<FormResult, SaveModelFileAction<ModelFile>> = (input) => {
+export const _formToSaveModelFileConverter = (input: Immutable<FormResult>) => {
     let {file, ...entity} = input.formValue;
-    return {
-        type: SaveModelFileAction,
+    return GlobalActions.saveModelFile({
         stateProp: input.stateProp,    
         saveAction: input.saveAction,  
         file, 
@@ -18,5 +18,5 @@ export const _formToSaveModelFileConverter: Converter<FormResult, SaveModelFileA
             entity : 
             { ...entity, createdAt: new Date().getTime() }, 
      
-    }
+    })
 }

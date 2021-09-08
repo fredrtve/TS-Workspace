@@ -1,34 +1,21 @@
 import { WeekCriteria } from '@shared-timesheet/interfaces';
 import { WeekToTimesheetCriteriaAdapter } from '@shared-timesheet/timesheet-filter/week-to-timesheet-criteria.adapter';
-import { _getWeekYear, _getWeeksInYear } from 'date-time-helpers';
-import { Immutable } from 'global-types';
-import { StateAction, _createReducer } from 'state-management';
+import { _getWeeksInYear, _getWeekYear } from 'date-time-helpers';
+import { _createAction, _createReducers, _on, _payload } from 'state-management';
 import { ComponentStoreState } from '../store-state.interface';
 
-export const SetTimesheetCriteriaAction = "SET_TIMESHEET_CRITERIA_ACTION";
-export interface SetTimesheetCriteriaAction extends StateAction<typeof SetTimesheetCriteriaAction> {
-    weekCriteria: WeekCriteria 
+export const UserTimesheetWeekLocalActions = {
+    setTimesheetCriteria: _createAction("Set Timesheet Criteria", _payload<{ weekCriteria: Partial<WeekCriteria> }>()),
+    nextWeek: _createAction("User Timesheet Next Week", _payload<{ currYear: number, currWeekNr: number }>()),
+    previousWeek: _createAction("User Timesheet Prev Week"),
 }
 
-export const SetTimesheetCriteriaReducer = _createReducer(
-    SetTimesheetCriteriaAction,
-    (state: Immutable<ComponentStoreState>, action: Immutable<SetTimesheetCriteriaAction>) => {
-        return {
-            timesheetCriteria: new WeekToTimesheetCriteriaAdapter(action.weekCriteria),
-            weekCriteria: action.weekCriteria
-        }
-    }       
-) 
-
-export const NextWeekAction = "NEXT_WEEK_ACTION";
-export interface NextWeekAction extends StateAction<typeof NextWeekAction> {
-    currYear: number, 
-    currWeekNr: number
-}
-
-export const NextWeekReducer = _createReducer(
-    NextWeekAction,
-    (state: Immutable<ComponentStoreState>, action: Immutable<NextWeekAction>) => {
+export const UserTimesheetWeekLocalReducers = _createReducers<ComponentStoreState>(
+    _on(UserTimesheetWeekLocalActions.setTimesheetCriteria, (state, action) => ({
+        timesheetCriteria: new WeekToTimesheetCriteriaAdapter(action.weekCriteria),
+        weekCriteria: action.weekCriteria
+    })),
+    _on(UserTimesheetWeekLocalActions.nextWeek, (state, action) => {
         const {currYear, currWeekNr} = action; 
         let {year, weekNr} = {...state.weekCriteria}
 
@@ -47,15 +34,8 @@ export const NextWeekReducer = _createReducer(
             timesheetCriteria: new WeekToTimesheetCriteriaAdapter({year, weekNr}),
             weekCriteria: {year, weekNr}
         }
-    }       
-)  
-
-export const PreviousWeekAction = "PREVIOUS_WEEK_ACTION";
-export interface PreviousWeekAction extends StateAction<typeof PreviousWeekAction> { }
-
-export const PreviousWeekReducer = _createReducer(
-    PreviousWeekAction,
-    (state: Immutable<ComponentStoreState>) => {
+    }),
+    _on(UserTimesheetWeekLocalActions.previousWeek, (state) => {
         let {weekNr, year} = {...state.weekCriteria};
 
         const wy = _getWeekYear();
@@ -71,6 +51,6 @@ export const PreviousWeekReducer = _createReducer(
         return {
             timesheetCriteria: new WeekToTimesheetCriteriaAdapter({year, weekNr}),
             weekCriteria: {year, weekNr}
-        }
-    }       
-)  
+        } 
+    })
+)

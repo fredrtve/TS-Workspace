@@ -1,6 +1,5 @@
 import { DatePipe } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { SetTimesheetCriteriaReducer } from '@shared-timesheet/state/reducers.const';
 import { DynamicFormsModule } from 'dynamic-forms';
 import { ModelStateFetcherModule } from 'model/state-fetcher';
 import { OptimisticHttpModule } from 'optimistic-http';
@@ -10,7 +9,7 @@ import { SharedTimesheetModule } from '../shared-timesheet/shared-timesheet.modu
 import { FetchTimesheetProviders } from '../shared-timesheet/state/providers.const';
 import { DefaultState } from './state/default-state.const';
 import { FetchTimesheetsEffect } from './state/effects';
-import { SetGroupByReducer } from './state/reducers.const';
+import { TimesheetStatisticReducers } from './state/reducers.const';
 import { TimesheetStatisticRoutingModule } from './timesheet-statistic-routing.module';
 import { TimesheetStatisticTableComponent } from './timesheet-statistic/timesheet-statistic-table/timesheet-statistic-table.component';
 import { TimesheetStatisticComponent } from './timesheet-statistic/timesheet-statistic.component';
@@ -32,7 +31,7 @@ const OptimisticFeatureProps = ["timesheetStatisticTimesheetCriteria", "timeshee
     AppAgGridModule,
     DynamicFormsModule,
     StateManagementModule.forFeature({
-      reducers: [SetGroupByReducer, SetTimesheetCriteriaReducer], 
+      reducers: TimesheetStatisticReducers, 
       effects: [FetchTimesheetsEffect],
       defaultState: DefaultState
     }), 

@@ -1,10 +1,9 @@
 import { ApiUrl } from "@core/api-url.enum";
+import { GlobalActions } from "@core/global-actions";
 import { UserTimesheet } from "@core/models";
-import { StateUserTimesheets } from "@core/state/global-state.interfaces";
 import { TimesheetStatus } from "@shared-app/enums/timesheet-status.enum";
 import { cyTag } from "cypress/support/commands";
 import { _getFirstDayOfWeek, _getWeekYear } from "date-time-helpers";
-import { SaveModelAction } from "model/state-commands";
 
 describe('User Timesheet Week', () => {
 
@@ -90,9 +89,9 @@ describe('User Timesheet Week', () => {
             startTime: startOfWeek + 2*oneDay, 
             endTime: startOfWeek + 2*oneDay + 8*oneHour
         };
-        cy.storeDispatch<SaveModelAction<StateUserTimesheets, UserTimesheet>>({
-            type: SaveModelAction, saveAction: 0, stateProp: "userTimesheets", entity: newTimesheet
-        });
+        cy.storeDispatch(GlobalActions.saveModel<any>({
+            saveAction: 0, stateProp: "userTimesheets", entity: newTimesheet
+        }));
         timesheetBars().should('have.length', 3);
         assertTimesheetBar(newTimesheet);
     });

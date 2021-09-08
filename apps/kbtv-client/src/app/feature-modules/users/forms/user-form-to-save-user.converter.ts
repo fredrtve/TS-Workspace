@@ -1,12 +1,13 @@
 import { User } from '@core/models';
 import { Roles } from '@core/roles.enum';
 import { ModelState } from '@core/state/model-state.interface';
-import { Converter, ModelFormResult } from 'model/form';
+import { Immutable } from 'global-types';
+import { ModelFormResult } from 'model/form';
 import { ModelCommand } from 'model/state-commands';
-import { SaveUserAction } from '../state/actions.const';
+import { UserActions } from '../state/actions.const';
 import { SaveUserForm } from './save-user-model-form.const';
 
-export const _userFormToSaveUserConverter: Converter<ModelFormResult<ModelState, User, SaveUserForm>, SaveUserAction> = (input) => {
+export const _userFormToSaveUserConverter = (input: Immutable<ModelFormResult<ModelState, User, SaveUserForm>>) => {
 
     let {password, employer, ...entity} = input.formValue;
     let user: Partial<User> = entity;
@@ -15,10 +16,9 @@ export const _userFormToSaveUserConverter: Converter<ModelFormResult<ModelState,
     if(input.saveAction === ModelCommand.Create)
         user.createdAt = new Date().getTime();
 
-    return <SaveUserAction>{ 
-        type: SaveUserAction, 
-        stateProp:"users", 
+    return UserActions.saveUser({ 
         saveAction: input.saveAction,
-        entity, password,     
-    }
+        entity, 
+        password: password!,     
+    })
 }

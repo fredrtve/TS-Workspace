@@ -1,26 +1,36 @@
 import { Injectable } from '@angular/core';
+import { GlobalActions } from '@core/global-actions';
+import { map, mergeMap } from 'rxjs/operators';
+import { DispatchedActions, Effect, listenTo } from 'state-management';
 import { ModelBaseUrls } from '../../configurations/model/model-base-urls.const';
-import { Model } from '../../models';
 import { ApiService } from '../../services/api.service';
-import { Observable } from 'rxjs';
-import { mergeMap } from 'rxjs/operators';
-import { DispatchedAction, Effect, listenTo } from 'state-management';
 import { MailModelsHttpRequest } from './mail-models-http-request.interface';
-import { MailModelsAction } from './mail-models.action';
 
 @Injectable()
-export class MailModelsHttpEffect implements Effect<MailModelsAction<Model>>{
+export class MailModelsHttpEffect implements Effect{
 
     constructor(private apiService: ApiService) {}
     
-    handle$(actions$: Observable<DispatchedAction<MailModelsAction<Model>>>): Observable<void> {
+    handle$(actions$: DispatchedActions) {
         return actions$.pipe(
-            listenTo([MailModelsAction]),
+            listenTo([GlobalActions.mailModels]),
             mergeMap(({action}) => 
                 this.apiService.post<void>(
                     ModelBaseUrls[action.stateProp] + "/Mail", 
                     <MailModelsHttpRequest> {ids: action.ids, toEmail: action.toEmail}
                 )),
+        )
+    }
+}
+@Injectable()
+export class MailModels2HttpEffect implements Effect{
+
+    constructor(private apiService: ApiService) {}
+    
+    handle$(actions$: DispatchedActions) {
+        return actions$.pipe(
+            listenTo([GlobalActions.setSaveModel]),
+            map(({action}) => {action.saveAction}),
         )
     }
 }

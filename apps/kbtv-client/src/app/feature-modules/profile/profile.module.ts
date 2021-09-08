@@ -7,8 +7,8 @@ import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileActionItemComponent } from './profile/profile-action-item.component';
 import { ProfileComponent } from './profile/profile.component';
 import { SyncProfileComponent } from './profile/sync-profile.component';
-import { UpdatePasswordHttpEffect, ClearAndLogoutEffect } from './state/effects';
-import { UpdateCurrentUserReducer } from './state/reducers.const';
+import { ClearAndLogoutEffect, UpdatePasswordHttpEffect } from './state/effects';
+import { ProfileReducers } from './state/reducers.const';
 
 @NgModule({
   declarations: [
@@ -20,7 +20,7 @@ import { UpdateCurrentUserReducer } from './state/reducers.const';
     SharedModule,
     ProfileRoutingModule,
     StateManagementModule.forFeature({
-      reducers: [UpdateCurrentUserReducer], 
+      reducers: ProfileReducers, 
       effects: [UpdatePasswordHttpEffect, ClearAndLogoutEffect],
     }), 
     OptimisticHttpModule.forFeature(ProfileActionRequestMap),

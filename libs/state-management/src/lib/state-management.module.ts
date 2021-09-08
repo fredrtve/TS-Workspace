@@ -105,8 +105,10 @@ export class StateManagementModule {
         return factory;
     }
 
-    private static getAndMerge<T>(i:Injector, token: InjectionToken<T[]>, arr: Maybe<T[]>): T[] {
-        return [...i.get(token, [], InjectFlags.Self), ...(arr || [])]
+    private static getAndMerge<T>(i:Injector, token: InjectionToken<T[][]>, arr: Maybe<T[]>): T[][] {
+        const items = i.get(token, [], InjectFlags.Self).slice();
+        if(arr) items.push(arr);
+        return items
     }
     
 }

@@ -1,6 +1,6 @@
-import { Reducer, _createReducer } from 'state-management';
-import { SetPersistedStateAction } from './actions.const';
+import { _createReducers, _on } from 'state-management';
+import { DbActions } from './actions.const';
 
-export const SetPersistedStateReducer: Reducer<unknown, SetPersistedStateAction> = _createReducer(
-    SetPersistedStateAction, (state, action) => action.state,
+export const DbReducers = _createReducers(
+    _on(DbActions.setPersistedState, (state, action) => action.state)
 )

@@ -11,7 +11,6 @@ export * from './lib/optimistic-http.module';
 
 export * from './lib/constants/injection-tokens.const';
 
-export * from './lib/state/optimistic-http-error.action';
-export * from './lib/state/optimistic-http.action'
-export * from './lib/state/http-queue-shift.action'
-export * from './lib/state/http-error/http-error.action'
+export * from './lib/create-action-request-map.helper';
+
+export * from './lib/state/actions'

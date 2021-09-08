@@ -15,7 +15,7 @@ import { StateSyncConfig } from "state-sync";
 import { MissionCriteriaForm, MissionCriteriaFormSheet, MissionCriteriaFormState } from "./forms/mission-criteria-form.const";
 import { StateMissionCriteria } from "./interfaces";
 import { _missionCriteriaChipsFactory } from "./mission-criteria-chips-factory.helper";
-import { SetMissionCriteriaAction } from "./state/actions.const";
+import { SharedMissionActions } from "./state/actions.const";
 
 
 export interface FilteredMissionsResponse {
@@ -69,6 +69,6 @@ export class MissionFilterFacade {
       ); 
 
     addCriteria = (missionCriteria: Immutable<MissionCriteria>): void => 
-      this.store.dispatch(<SetMissionCriteriaAction>{ type: SetMissionCriteriaAction, missionCriteria });
+      this.store.dispatch(SharedMissionActions.setMissionCriteria({ missionCriteria }));
 
 }

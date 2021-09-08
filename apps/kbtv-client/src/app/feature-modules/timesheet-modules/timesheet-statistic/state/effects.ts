@@ -1,21 +1,20 @@
 import { Injectable } from '@angular/core';
-import { FetchTimesheetsAction, SetTimesheetCriteriaAction } from '@shared-timesheet/state/actions.const';
-import { Observable } from 'rxjs';
+import { SharedTimesheetActions } from '@shared-timesheet/state/actions.const';
 import { map } from 'rxjs/operators';
-import { DispatchedAction, Effect, listenTo, Store } from 'state-management';
+import { DispatchedActions, Effect, listenTo, Store } from 'state-management';
 import { StoreState } from './store-state';
 
 @Injectable()
-export class FetchTimesheetsEffect implements Effect<SetTimesheetCriteriaAction> {
+export class FetchTimesheetsEffect implements Effect {
 
     constructor(private store: Store<StoreState>){}
 
-    handle$(actions$: Observable<DispatchedAction<SetTimesheetCriteriaAction>>): Observable<FetchTimesheetsAction> {
+    handle$(actions$: DispatchedActions) {
         return actions$.pipe(
-            listenTo([SetTimesheetCriteriaAction]),
-            map(x => { return <FetchTimesheetsAction>{ type: FetchTimesheetsAction, 
+            listenTo([SharedTimesheetActions.setTimesheetCriteria]),
+            map(x => SharedTimesheetActions.fetchTimesheets({
                 timesheetCriteria: this.store.state.timesheetStatisticTimesheetCriteria 
-            }}),
+            })),
         )
     }
 

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { STORE_EFFECTS, STORE_REDUCERS } from 'state-management';
-import { DeleteModelReducer } from './state/delete-model.reducer';
-import { SaveModelReducer } from './state/save-model.reducer';
+import { ModelCommandReducers } from './state/reducers';
 import { SaveModelEffect } from './state/save-model.effect';
 
 /** Responsible for providing reducers and effects for deleting & saving models.  */
@@ -9,8 +8,7 @@ import { SaveModelEffect } from './state/save-model.effect';
     declarations: [],
     imports: [],
     providers: [
-        { provide: STORE_REDUCERS, useValue: DeleteModelReducer, multi: true},
-        { provide: STORE_REDUCERS, useValue: SaveModelReducer, multi: true },
+        { provide: STORE_REDUCERS, useValue: ModelCommandReducers, multi: true},
         { provide: STORE_EFFECTS, useClass: SaveModelEffect, multi: true }
     ],
 })

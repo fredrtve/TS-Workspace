@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Immutable } from 'global-types';
 import { Observable, Subject } from 'rxjs';
-import { DispatchedAction, StateAction } from './interfaces';
+import { ActionCreator, DispatchedAction, StateAction } from './interfaces';
 
 /** Responsible for providing an action observer of dispatched actions. 
  *  Primarily used by {@link EffectsSubscriber} to handle effects. */
 @Injectable()
 export class ActionDispatcher {
 
-    private actionsSubject = new Subject<DispatchedAction<StateAction>>();
-    actions$: Observable<DispatchedAction<StateAction>> = this.actionsSubject.asObservable();
+    private actionsSubject = new Subject<DispatchedAction<ActionCreator<any,any>>>();
+    actions$: Observable<DispatchedAction<ActionCreator<any,any>>> = this.actionsSubject.asObservable();
 
     dispatch(action: StateAction, stateSnapshot: Immutable<{}>){
         this.actionsSubject.next({action, stateSnapshot});

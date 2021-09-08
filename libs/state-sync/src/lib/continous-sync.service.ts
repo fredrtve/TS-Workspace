@@ -2,7 +2,7 @@ import { ApplicationRef, Injectable } from "@angular/core";
 import { concat, interval, Subscription } from "rxjs";
 import { first, tap } from 'rxjs/operators';
 import { Store } from 'state-management';
-import { SyncStateAction } from './state/actions';
+import { SyncActions } from "./state/actions";
 import { StoreState } from "./store-state.interface";
 
 /** Root service responsible for keeping system synchronized */
@@ -39,5 +39,5 @@ export class ContinousSyncService {
       if(!syncConfig || (timeSinceLastSync > syncConfig.refreshTime)) this.syncAll();             
     }
 
-    private syncAll = () : void => this.store.dispatch(<SyncStateAction>{ type: SyncStateAction })
+    private syncAll = () : void => this.store.dispatch(SyncActions.sync())
 }

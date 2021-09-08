@@ -8,12 +8,12 @@ import { ModelFormModule } from 'model/form';
 import { ModelStateCommandsModule } from 'model/state-commands';
 import { OptimisticHttpModule } from 'optimistic-http';
 import { StateManagementModule } from 'state-management';
-import { DeleteMissionHeaderImageReducer, UpdateLastVisitedReducer } from './state/reducers.const';
+import { MissionDetailsActionRequestMap } from './mission-details-action-request-map.const';
 import { MissionDetailsRoutingModule } from './mission-details-routing.module';
 import { EmployerListItemComponent } from './mission-details/mission-details-view/employer-list-item.component';
 import { MissionDetailsViewComponent } from './mission-details/mission-details-view/mission-details-view.component';
 import { MissionDetailsComponent } from './mission-details/mission-details.component';
-import { MissionDetailsActionRequestMap } from './mission-details-action-request-map.const';
+import { MissionDetailsReducers } from './state/reducers.const';
 
 @NgModule({
     declarations: [
@@ -25,7 +25,7 @@ import { MissionDetailsActionRequestMap } from './mission-details-action-request
         SharedMissionModule,
         MissionDetailsRoutingModule,    
         StateManagementModule.forFeature({
-          reducers: [SaveModelFileReducer, UpdateLastVisitedReducer, DeleteMissionHeaderImageReducer], 
+          reducers: [SaveModelFileReducer, ...MissionDetailsReducers], 
           effects: [CreateMissionImagesEffect, SaveModelFileEffect], 
           actionInterceptors: [SaveModelFileValidatorInterceptor],
         }), 

@@ -1,15 +1,14 @@
 import { Inject, Injectable } from '@angular/core';
 import { awaitOnline } from 'global-utils';
-import { Observable } from 'rxjs';
-import { exhaustMap, map, switchMap, tap } from 'rxjs/operators';
-import { DispatchedAction, Effect, listenTo, StateAction, Store } from 'state-management';
+import { exhaustMap, map, switchMap } from 'rxjs/operators';
+import { DispatchedActions, Effect, listenTo, Store } from 'state-management';
 import { SYNC_HTTP_FETCHER, SYNC_STATE_CONFIG } from '../injection-tokens.const';
 import { SyncHttpFetcher, SyncStateConfig } from '../interfaces';
 import { StoreState } from "../store-state.interface";
-import { SyncStateAction, SyncStateFailedAction, SyncStateSuccessAction, WipeSyncStateAction } from './actions';
+import { SyncActions } from './actions';
 
 @Injectable()
-export class SyncStateHttpEffect implements Effect<StateAction> {
+export class SyncStateHttpEffect implements Effect {
 
     private get syncConfig() { return this.store.state.syncConfig }
 
@@ -21,14 +20,14 @@ export class SyncStateHttpEffect implements Effect<StateAction> {
       private store: Store<StoreState>,
     ) {}
 
-    handle$(actions$: Observable<DispatchedAction<StateAction>>): Observable<SyncStateSuccessAction | SyncStateFailedAction> {
+    handle$(actions$: DispatchedActions) {
         return actions$.pipe(
-            listenTo([SyncStateAction, WipeSyncStateAction]),
+            listenTo([SyncActions.sync, SyncActions.wipeState]),
             switchMap(x => awaitOnline()),
             exhaustMap(x => this.httpFetcher.fetch$(this.syncConfig, this.syncTimestamp)),
-            map(response => <SyncStateSuccessAction>{ type: SyncStateSuccessAction, response, syncStateConfig: this.syncStateConfig })
+            map(response => SyncActions.syncSuccess({ response, syncStateConfig: this.syncStateConfig }))
         )
     }
 
-    onErrorAction = () => <SyncStateFailedAction>{ type: SyncStateFailedAction };
+    onErrorAction = () => SyncActions.syncFailed();
 }

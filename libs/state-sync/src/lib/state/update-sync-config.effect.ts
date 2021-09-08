@@ -1,21 +1,20 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { DispatchedAction, Effect, listenTo } from 'state-management';
-import { StateSyncConfig } from '../interfaces';
-import { ReloadSyncStateAction, UpdateSyncConfigAction } from './actions';
+import { DispatchedActions, Effect, listenTo } from 'state-management';
+import { StoreState } from '../store-state.interface';
+import { SyncActions } from './actions';
 
 @Injectable()
-export class UpdateSyncConfigEffect implements Effect<UpdateSyncConfigAction> {
+export class UpdateSyncConfigEffect implements Effect {
 
-    handle$(actions$: Observable<DispatchedAction<UpdateSyncConfigAction, StateSyncConfig>>): Observable<ReloadSyncStateAction> {
+    handle$(actions$: DispatchedActions<StoreState>) {
         return actions$.pipe(
-            listenTo([UpdateSyncConfigAction]),
+            listenTo([SyncActions.updateConfig]),
             filter(x => 
                 x.action.syncConfig.initialTimestamp !== 
                 x.stateSnapshot?.syncConfig.initialTimestamp
             ),
-            map(x => <ReloadSyncStateAction>{ type: ReloadSyncStateAction })
+            map(x => SyncActions.reloadState())
         )
     }
 

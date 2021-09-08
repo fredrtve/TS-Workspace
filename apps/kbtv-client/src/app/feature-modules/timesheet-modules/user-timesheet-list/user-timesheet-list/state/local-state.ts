@@ -3,23 +3,20 @@ import { _getRangeByDateRangePreset } from "@shared-app/helpers/get-range-by-dat
 import { TimesheetCriteria } from "@shared-timesheet/timesheet-filter/timesheet-criteria.interface";
 import { DateRange } from "date-time-helpers";
 import { DateInput } from "global-types";
-import { StateAction, _createReducer } from "state-management";
+import { _createAction, _createReducers, _on, _payload } from "state-management";
 import { UserTimesheetListState } from "./user-timesheet-list.state";
 
-export const SetUserTimesheetCriteriaAction = "SET_USER_TIMESHEET_CRITERIA_ACTION";
-export interface SetUserTimesheetCriteriaAction extends StateAction<typeof SetUserTimesheetCriteriaAction> {
-    timesheetCriteria: Partial<TimesheetCriteria>;
-    lowerBound: DateInput
+export const UserTimesheetListLocalActions = {
+    setTimesheetCriteria: _createAction("", _payload<{ timesheetCriteria: Partial<TimesheetCriteria>, lowerBound: DateInput }>())
 }
 
-export const SetUserTimesheetCriteriaReducer = _createReducer<UserTimesheetListState, SetUserTimesheetCriteriaAction>(
-    SetUserTimesheetCriteriaAction,
-    (state, action) => { 
+export const UserTimesheetListLocalReducers = _createReducers<UserTimesheetListState>(
+    _on(UserTimesheetListLocalActions.setTimesheetCriteria, (state, action) => {
         let {dateRangePreset, dateRange, ...rest} = {...action.timesheetCriteria}
 
         if(dateRangePreset && dateRangePreset !== DateRangePresets.Custom && dateRangePreset !== DateRangePresets.CustomMonth )
             dateRange = <DateRange> _getRangeByDateRangePreset(dateRangePreset, undefined, <DateInput> action.lowerBound);
 
         return { timesheetCriteria: <TimesheetCriteria> {dateRangePreset, dateRange, ...rest} }
-    }
+    })
 )

@@ -13,8 +13,8 @@ import { map } from 'rxjs/operators';
 import { ComponentStore, Store } from 'state-management';
 import { TimesheetSummary } from '../../shared-timesheet/interfaces';
 import { ComponentStoreState, StoreState } from '../store-state.interface';
-import { NextWeekAction, PreviousWeekAction, SetTimesheetCriteriaAction } from './component.reducers';
 import { modelCtx } from '@core/configurations/model/app-model-context';
+import { UserTimesheetWeekLocalActions } from './local-state';
 
 @Injectable()
 export class UserTimesheetWeekFacade {
@@ -47,15 +47,14 @@ export class UserTimesheetWeekFacade {
     ){ }
      
     previousWeek = (): void =>  
-        this.componentStore.dispatch(<PreviousWeekAction>{ type: PreviousWeekAction })
+        this.componentStore.dispatch(UserTimesheetWeekLocalActions.previousWeek())
     
     nextWeek = (): void =>       
-        this.componentStore.dispatch(<NextWeekAction>{ 
-            type: NextWeekAction, 
+        this.componentStore.dispatch(UserTimesheetWeekLocalActions.nextWeek({ 
             currYear: this.currWeekYear.year, 
             currWeekNr: this.currWeekYear.weekNr
-        })
+        }))
 
     updateCriteria = (weekCriteria: Partial<WeekCriteria>) => 
-        this.componentStore.dispatch(<SetTimesheetCriteriaAction>{ type: SetTimesheetCriteriaAction, weekCriteria })
+        this.componentStore.dispatch(UserTimesheetWeekLocalActions.setTimesheetCriteria({ weekCriteria }))
 }

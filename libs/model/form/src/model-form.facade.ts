@@ -1,11 +1,11 @@
 import { Inject, Injectable } from '@angular/core';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { ConfirmDialogService } from 'confirm-dialog';
-import { Immutable, KeyVal, UnknownState } from 'global-types';
+import { Immutable, KeyVal } from 'global-types';
 import { RelationInclude, StateModels, StatePropByModel, _getModelConfig, _getRelationIncludeStateProps } from 'model/core';
 import { ModelStatePropTranslations, MODEL_PROP_TRANSLATIONS, MODEL_STATE_PROP_TRANSLATIONS } from "model/shared";
-import { DeleteModelAction, ModelCommand } from 'model/state-commands';
-import { FetchModelsAction } from 'model/state-fetcher';
+import { ModelCommand, ModelCommands } from 'model/state-commands';
+import { ModelFetcherActions } from 'model/state-fetcher';
 import { Observable } from 'rxjs';
 import { StateAction, Store } from 'state-management';
 import { ModelFormConfig } from './interfaces';
@@ -22,10 +22,9 @@ export class ModelFormFacade<TState extends object, TModel extends StateModels<T
 
   loadModels(
     includes: Immutable<RelationInclude<TState, TModel>>): void{
-    this.store.dispatch(<FetchModelsAction<UnknownState>>{
-      type: FetchModelsAction, 
+    this.store.dispatch(ModelFetcherActions.fetch<any>({
       props: _getRelationIncludeStateProps(includes)
-    })
+    }))
   }
 
   getModelState$(includes: Immutable<RelationInclude<TState, TModel>>): Observable<Immutable<Partial<TState>>> {
@@ -59,10 +58,9 @@ export class ModelFormFacade<TState extends object, TModel extends StateModels<T
     entityId: unknown,
     ref: MatBottomSheetRef<unknown, unknown>) => {
       ref.dismiss(ModelCommand.Delete);
-      this.store.dispatch({ 
-        type: DeleteModelAction,  
+      this.store.dispatch(ModelCommands.delete<any, any>({ 
         stateProp: <any> formConfig.includes.prop, 
-        payload: { id: entityId } 
-      });
+        payload: { id: <string> entityId } 
+      }));
   };
 }

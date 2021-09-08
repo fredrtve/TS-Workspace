@@ -8,7 +8,7 @@ import { environment } from "src/environments/environment.e2e";
 
 registerLocaleData(norwayLocale, 'nb-NO');
 
-describe('Timesheet Statistic', () => {
+describe('Data Management', () => {
     
     const defaultEmployer : Employer = { id: '1', name: "bsu", phoneNumber: "3434", address: "edsada", email: "342@bsu.no" }   
     const defaultMissionType : MissionType = { id: '1', name: "testing" }   
@@ -18,7 +18,7 @@ describe('Timesheet Statistic', () => {
     };
     const defaultEmailPw : InboundEmailPassword = { id: '1', password: "testpw" }   
 
-    const defaultState : Partial<ModelState> = { 
+    const defaultState : Partial<ModelState>  = { 
         missions: [defaultMission], employers: [defaultEmployer], missionTypes: [defaultMissionType], inboundEmailPasswords: [defaultEmailPw]
     }
 

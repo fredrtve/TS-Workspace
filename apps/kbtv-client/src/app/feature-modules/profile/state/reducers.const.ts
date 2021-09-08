@@ -1,13 +1,11 @@
 import { User } from '@core/models';
 import { StateCurrentUser } from '@core/state/global-state.interfaces';
-import { Immutable } from 'global-types';
 import { CurrentUser } from 'state-auth';
-import { _createReducer } from 'state-management';
-import { UpdateCurrentUserAction } from './actions.const';
+import { _createReducers, _on } from 'state-management';
+import { ProfileActions } from './actions.const';
 
-export const UpdateCurrentUserReducer = _createReducer(
-    UpdateCurrentUserAction,
-    (state: Immutable<StateCurrentUser>, action: Immutable<UpdateCurrentUserAction>): Immutable<StateCurrentUser> => {
-        return {currentUser: <User & CurrentUser>(state.currentUser ? {...state.currentUser, ...action.user} : action.user) };
-    }
+export const ProfileReducers = _createReducers<StateCurrentUser>(
+    _on(ProfileActions.updateUser, (state, action) => ({
+        currentUser: <User & CurrentUser>(state.currentUser ? {...state.currentUser, ...action.user} : action.user) 
+    }))
 )

@@ -31,7 +31,7 @@ export class TimesheetAdminWeekListComponent extends WithUnsubscribe() {
 
   subTitle$ =  this.facade.weekCriteria$.pipe(
     tap(({year, user}) => !year || !user ? this.router.navigate(['/timeadministrering']) : null),
-    map(({year, user}) => `${year} - ${user.firstName} ${user.lastName}`)
+    map(({year, user}) => `${year} - ${user!.firstName} ${user!.lastName}`)
   );
 
   bottomActions: AppButton[];

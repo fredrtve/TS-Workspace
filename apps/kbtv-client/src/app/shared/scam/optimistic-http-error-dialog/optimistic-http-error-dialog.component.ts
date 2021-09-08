@@ -5,7 +5,7 @@ import { AppRequestDescriberMap } from '@shared-app/constants/app-request-descri
 import { FormattedHttpError, _httpErrorResponseFormatter } from '@shared-app/helpers/http-error-response-formatter.helper';
 import { SharedAppModule } from '@shared-app/shared-app.module';
 import { Immutable } from 'global-types';
-import { CompletedCommand, OptimisticHttpErrorAction, OptimisticHttpRequest } from 'optimistic-http';
+import { CompletedCommand, OptimisticHttpErrorPayload, OptimisticHttpRequest } from 'optimistic-http';
 import { Store } from 'state-management';
 import { FailedCommandListComponent } from './failed-command-list/failed-command-list.component';
 
@@ -24,7 +24,7 @@ export class OptimisticHttpErrorDialogComponent {
   state: Immutable<StateMissions>;
   
   constructor(
-    @Inject(MAT_DIALOG_DATA) data: OptimisticHttpErrorAction,
+    @Inject(MAT_DIALOG_DATA) data: OptimisticHttpErrorPayload,
     private store: Store<StateMissions>
   ) { 
         this.state = { missions: this.store.state.missions }

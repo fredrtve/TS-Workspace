@@ -1,31 +1,29 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { exhaustMap, map } from 'rxjs/operators';
-import { DispatchedAction, Effect, listenTo } from 'state-management';
-import { StateCurrentUser } from '../interfaces';
+import { DispatchedActions, Effect, listenTo } from 'state-management';
+import { LoginResponse, StateCurrentUser } from '../interfaces';
 import { AuthHttpFactoryService } from '../services/auth-http-factory.service';
-import { LoginAction, LoginSuccessAction } from './actions.const';
+import { AuthActions } from './actions.const';
 
 @Injectable()
-export class LoginHttpEffect implements Effect<LoginAction> {
+export class LoginHttpEffect implements Effect {
 
     constructor(private httpFactory: AuthHttpFactoryService){}
 
-    handle$(actions$: Observable<DispatchedAction<LoginAction, StateCurrentUser>>): Observable<LoginSuccessAction> {
+    handle$(actions$: DispatchedActions<StateCurrentUser>) {
         return actions$.pipe(
-            listenTo([LoginAction]),
-            exhaustMap(x => this.login$(x)),
+            listenTo([AuthActions.login]),
+            exhaustMap(({action, stateSnapshot}) => 
+                this.httpFactory.getObserver$<LoginResponse>("login", action.credentials).pipe(
+                    map(response => AuthActions.loginSuccess({
+                        response, 
+                        previousUser: stateSnapshot?.currentUser,
+                        returnUrl: action.returnUrl
+                    }))
+                ),
+            )
         )
+        
     }
 
-    private login$(dispatched: DispatchedAction<LoginAction, StateCurrentUser>): Observable<LoginSuccessAction> {
-        return this.httpFactory.getObserver$(LoginAction, dispatched.action.credentials).pipe(
-            map(response => <LoginSuccessAction>{
-                type: LoginSuccessAction,
-                response, 
-                previousUser: dispatched.stateSnapshot?.currentUser,
-                returnUrl: dispatched.action.returnUrl
-            })
-        )
-    }
 }

@@ -4,7 +4,7 @@ import { StateManagementModule } from 'state-management';
 import { WeekCriteria } from '../../shared-timesheet/interfaces';
 import { WeekToTimesheetCriteriaAdapter } from '../../shared-timesheet/timesheet-filter/week-to-timesheet-criteria.adapter';
 import { ComponentStoreState } from '../store-state.interface';
-import { NextWeekReducer, PreviousWeekReducer, SetTimesheetCriteriaReducer } from './component.reducers';
+import { UserTimesheetWeekLocalReducers } from './local-state';
 import { UserTimesheetWeekFacade } from './user-timesheet-week.facade';
 
 const DefaultWeekCriteria: Partial<WeekCriteria> = {..._getWeekYear()}
@@ -16,7 +16,7 @@ const DefaultComponentState: Partial<ComponentStoreState> = {
 
 export const UserTimesheetWeekProviders: Provider[] = [
     ...StateManagementModule.forComponent({ 
-        reducers: [SetTimesheetCriteriaReducer, NextWeekReducer, PreviousWeekReducer],
+        reducers: UserTimesheetWeekLocalReducers,
         defaultState: DefaultComponentState
     }),
     UserTimesheetWeekFacade,

@@ -1,7 +1,6 @@
 import { ApiUrl } from "@core/api-url.enum";
+import { GlobalActions } from "@core/global-actions";
 import { Mission, MissionNote } from "@core/models";
-import { ModelState } from "@core/state/model-state.interface";
-import { SaveModelAction } from "model/state-commands";
 import { cyTag } from '../../support/commands';
 
 describe('Mission Note List', () => {
@@ -32,9 +31,9 @@ describe('Mission Note List', () => {
     it('should add new note to start of list', () => {
         cy.intercept('POST', '**' + ApiUrl.MissionNote, { statusCode: 204, delay: 100 }).as('createMissionNote');
         const newNote = { content: 'newnote', missionId: mission.id };
-        cy.storeDispatch<SaveModelAction<ModelState, MissionNote>>({ 
-            type: SaveModelAction, stateProp: "missionNotes", saveAction: 0, entity: newNote
-        });
+        cy.storeDispatch(GlobalActions.saveModel<any>({ 
+            stateProp: "missionNotes", saveAction: 0, entity: newNote
+        }));
         cy.wait('@createMissionNote');
         getNote(1).find(cyTag('note-content')).invoke('text').should('eq', newNote.content);
     });

@@ -1,10 +1,6 @@
-import { StateAction } from "state-management";
+import { _createAction, _payload } from "state-management";
 
-export const UpdateLastVisitedAction = "UPDATE_LAST_VISITED_ACTION";
-export interface UpdateLastVisitedAction extends StateAction<typeof UpdateLastVisitedAction> {
-    id: string
-}
-export const DeleteMissionHeaderImageAction = "DELETE_MISSION_HEADER_IMAGE_ACTION";
-export interface DeleteMissionHeaderImageAction extends StateAction<typeof DeleteMissionHeaderImageAction> {
-    id: string
+export const MissionDetailsActions = {
+    updateLastVisited: _createAction("Update Mission Last Visited", _payload<{ id: string }>()),
+    deleteHeaderImage: _createAction("Delete Mission Header Image", _payload<{ id: string }>())
 }

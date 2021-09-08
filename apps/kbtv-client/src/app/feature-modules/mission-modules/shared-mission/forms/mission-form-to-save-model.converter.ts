@@ -2,14 +2,11 @@ import { Mission } from "@core/models";
 import { ModelState } from "@core/state/model-state.interface";
 import { _appFormToSaveModelConverter } from "@shared/app-form-to-save-model.converter";
 import { _find } from "array-helpers";
-import { Converter, ModelFormResult } from "model/form";
-import { SaveModelAction } from "model/state-commands";
+import { Immutable } from "global-types";
+import { ModelFormResult } from "model/form";
 import { CreateMissionForm } from "./save-mission-model-form.const";
 
-export const _missionFormToSaveModelConverter: Converter<
-    ModelFormResult<ModelState, Mission, CreateMissionForm>, 
-    SaveModelAction<ModelState, Mission>
-> = (input) => {      
+export const _missionFormToSaveModelConverter = (input: Immutable<ModelFormResult<ModelState, Mission, CreateMissionForm>>) => {      
     const {employerName, missionTypeName, ...rest} = input.formValue;
 
     let mission: Partial<Mission> = rest;
@@ -28,5 +25,5 @@ export const _missionFormToSaveModelConverter: Converter<
     else if(missionTypeName) mission.missionType = {name: missionTypeName}
     else mission.missionTypeId = undefined;
 
-    return _appFormToSaveModelConverter<ModelState, Mission>({...input, formValue: <Mission> mission})
+    return _appFormToSaveModelConverter({...input, formValue: <Mission> mission})
 }

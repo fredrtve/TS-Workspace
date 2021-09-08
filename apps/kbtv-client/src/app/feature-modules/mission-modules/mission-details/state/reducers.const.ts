@@ -1,16 +1,11 @@
 import { StateMissions } from '@core/state/global-state.interfaces';
 import { _update } from 'array-helpers';
-import { _createReducer } from 'state-management';
-import { DeleteMissionHeaderImageAction, UpdateLastVisitedAction } from './actions.const';
+import { _createReducers, _on } from 'state-management';
+import { MissionDetailsActions } from './actions.const';
 
-export const UpdateLastVisitedReducer = _createReducer<StateMissions, UpdateLastVisitedAction>(
-    UpdateLastVisitedAction,
-    (state, {id}) => !state.missions ? undefined :
-        { missions: _update(state.missions, { id, lastVisited: new Date().getTime() }, "id") }   
-)
-
-export const DeleteMissionHeaderImageReducer = _createReducer<StateMissions, DeleteMissionHeaderImageAction>(
-    DeleteMissionHeaderImageAction,
-    (state, {id}) => !state.missions ? undefined :
-        { missions: _update(state.missions, { id, fileName: undefined }, "id") }   
+export const MissionDetailsReducers = _createReducers<StateMissions>(
+    _on(MissionDetailsActions.updateLastVisited, (state, {id}) => !state.missions ? undefined :
+        { missions: _update(state.missions, { id, lastVisited: new Date().getTime() }, "id") }),
+    _on(MissionDetailsActions.deleteHeaderImage, (state, {id}) => !state.missions ? undefined :
+        { missions: _update(state.missions, { id, fileName: undefined }, "id") })
 )

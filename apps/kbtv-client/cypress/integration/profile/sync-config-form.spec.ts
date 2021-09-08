@@ -2,7 +2,6 @@ import { DatePipe, registerLocaleData } from '@angular/common';
 import norwayLocale from '@angular/common/locales/nb';
 import { Roles } from "@core/roles.enum";
 import { ModelState } from '@core/state/model-state.interface';
-import { _getDateByDateParams } from '@shared-timesheet/helpers/get-date-by-date-params.helper';
 import { StateSyncConfig } from "state-sync";
 
 registerLocaleData(norwayLocale, 'nb-NO');

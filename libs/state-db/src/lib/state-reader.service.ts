@@ -6,7 +6,7 @@ import { Store } from 'state-management';
 import { STATE_DB_CONFIG } from './injection-tokens.const';
 import { StateDbConfig, StorageType } from './interfaces';
 import { StateDbService } from './state-db.service';
-import { SetPersistedStateAction } from './state/actions.const';
+import { DbActions } from './state/actions.const';
 
 @Injectable({providedIn: "root"})
 export class StateReaderService {
@@ -25,9 +25,7 @@ export class StateReaderService {
     }
 
     private dispatchState<T>(state: T, storageType: StorageType): void{
-        this.store.dispatch<SetPersistedStateAction>({
-            type: SetPersistedStateAction, state: state, storageType
-        })
+        this.store.dispatch(DbActions.setPersistedState({state: state, storageType}))
     }
 
     private getLocalStorageState<T extends object>(): T {

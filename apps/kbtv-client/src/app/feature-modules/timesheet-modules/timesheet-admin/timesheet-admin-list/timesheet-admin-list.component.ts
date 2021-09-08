@@ -7,6 +7,7 @@ import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper
 import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { TimesheetForm } from '@shared-timesheet/forms/save-timesheet-model-forms.const';
+import { WeekCriteriaForm, WeekCriteriaFormState } from '@shared-timesheet/forms/week-criteria-controls.const';
 import { BottomIconButtons } from '@shared/constants/bottom-icon-buttons.const';
 import { FormService } from 'form-sheet';
 import { Immutable, Maybe } from 'global-types';
@@ -75,7 +76,7 @@ export class TimesheetAdminListComponent extends WithUnsubscribe() {
   trackById = _trackByModel("timesheets");
   
   private openWeekFilter = () => 
-    this.formService.open(TimesheetAdminListWeekCriteriaFormSheet, 
+    this.formService.open<WeekCriteriaForm, WeekCriteriaFormState>(TimesheetAdminListWeekCriteriaFormSheet, 
     { 
       initialValue: {...this.facade.weekCriteria, weekNr: <number>this.facade.selectedWeekNr},
       formState: this.facade.weekCriteriaFormState$

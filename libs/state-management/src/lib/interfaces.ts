@@ -8,24 +8,26 @@ export interface StateAction<TActionType extends string = string> {
 }
 
 /** Represents an action that has been dispatched by a {@link Store} */
-export interface DispatchedAction<TAction extends StateAction, TState = {}> { 
+export interface DispatchedAction<TActionCreator extends ActionCreator<any,any>, TState = {}> { 
     /** The action that was dispatched */
-    action: Immutable<TAction>, 
+    action: InferCreatorAction<TActionCreator>, 
     /** A snapshot of the state when the action was dispatched */
     stateSnapshot: Immutable<TState>
 };
 
+export type DispatchedActions<TState = {}> = Observable<DispatchedAction<ActionCreator<any,string>, TState>>
+
 /** Represents a class for handling side effects on dispatched action(s).
  *  Provided with token {@link STORE_EFFECTS}
  */
-export interface Effect<TAction extends StateAction> {
+export interface Effect {
     /**
      * A handler function that listens to the action observer.
      * 
      * @param actions$ - An action observer 
      * @returns A new action to be dispatched
      */
-    handle$(actions$: Observable<DispatchedAction<TAction>>): Observable<Immutable<StateAction> | void>
+    handle$(actions$: DispatchedActions): Observable<Immutable<StateAction> | void>
     
     /**
      * If set, this action is dispatched if any errors occur in the action observer
@@ -40,7 +42,7 @@ export interface Effect<TAction extends StateAction> {
  * @returns The modified state
  */
 export type ReducerFn<TState, TAction extends StateAction> = 
-    (state: Immutable<TState>, action: Immutable<TAction>) => Maybe<Immutable<Partial<TState>>>
+    (state: Immutable<TState>, action: TAction) => Maybe<Immutable<Partial<TState>>>
 
 /** Represents an object used to modify state on a specified action. 
  *  Provided with token {@link STORE_REDUCERS}
@@ -85,9 +87,20 @@ export interface StateChanges<TState> {
     action: StateAction;
 }
 
+export type ActionCreator<TPayload extends object | undefined, TType extends string> = 
+    TPayload extends object 
+        ? (payload: TPayload) => TPayload & StateAction<TType>
+        : () => StateAction<TType>;
+
+export type InferCreatorPayload<T> = T extends ActionCreator<(infer P), any> ? P : never;
+
+export type InferCreatorType<T> = T extends ActionCreator<any, (infer T)> ? T : never;
+
+export type InferCreatorAction<T> = T extends ActionCreator<(infer P), (infer T)> ? P & StateAction<T> : never;
+
 export interface StateManagementProviders {
     defaultState?: Object;
-    effects?: Type<Effect<StateAction>>[];
+    effects?: Type<Effect>[];
     reducers?: Reducer<Object, StateAction>[];
     metaReducers?: MetaReducer<Object, StateAction>[];
     actionInterceptors?: Type<ActionInterceptor>[]

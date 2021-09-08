@@ -5,9 +5,10 @@ import { Immutable, ImmutableArray, Maybe } from 'global-types';
 import { Store } from 'state-management'
 import { map } from "rxjs/operators";
 import { StoreState } from './store-state';
-import { FetchModelsAction } from 'model/state-fetcher';
 import { Roles } from "@core/roles.enum";
-import { UpdateUserPasswordAction } from "./state/actions.const";
+import { ModelFetcherActions } from "model/state-fetcher";
+import { ModelState } from "@core/state/model-state.interface";
+import { UserActions } from "./state/actions.const";
 
 @Injectable({providedIn: 'any'})
 export class UsersFacade {
@@ -19,11 +20,12 @@ export class UsersFacade {
 
   constructor(private store: Store<StoreState>) {}
 
-  updatePassword(userName: string, newPassword: string): void{
-    this.store.dispatch(<UpdateUserPasswordAction>{ type: UpdateUserPasswordAction, newPassword, userName })
-  }
+  updatePassword = (userName: string, newPassword: string) =>
+    this.store.dispatch(UserActions.updatePassword({ newPassword, userName }));
+  
 
-  fetchUsers():void{ this.store.dispatch({type: FetchModelsAction, props: ["users"]}) }
+  fetchUsers = () => 
+    this.store.dispatch(ModelFetcherActions.fetch<ModelState>({ props: ["users"]})) 
   
   private sortByRole = (users: Maybe<ImmutableArray<User>>): Immutable<User>[] => {
     let grouped = _groupBy(users, "role"); 

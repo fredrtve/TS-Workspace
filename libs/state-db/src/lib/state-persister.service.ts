@@ -5,7 +5,7 @@ import { StateChanges, Store } from 'state-management';
 import { STATE_DB_ACTION_FILTER, STATE_DB_CONFIG } from './injection-tokens.const';
 import { DbActionFilter, StateDbConfig } from './interfaces';
 import { StateDbService } from './state-db.service';
-import { SetPersistedStateAction } from './state/actions.const';
+import { DbActions } from './state/actions.const';
 
 @Injectable({providedIn: 'root'})
 export class StatePersisterService {
@@ -38,7 +38,7 @@ export class StatePersisterService {
     }
 
     private filterChanges = ({action}: Immutable<StateChanges<UnknownState>>): boolean => {
-        let exp = action.type !== SetPersistedStateAction;
+        let exp = action.type !== DbActions.setPersistedState(<any> {}).type;
         if(this.actionFilter) exp = exp && this.actionFilter(action);
         return exp
     }

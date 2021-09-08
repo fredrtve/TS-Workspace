@@ -1,5 +1,3 @@
-import { LoginAction, LogoutAction, RefreshTokenAction } from "./state/actions.const";
-
 /** Route data associated with authorized routes */
 export interface AuthRouteData { 
     /** The roles that are allowed access. */
@@ -20,12 +18,12 @@ export interface AuthCommandApi<TBody, TResponse> {
 
 /** Represents a map of all external auth commands accociated with a {@link AuthCommandApi}. 
  *  Provided with token {@link AUTH_COMMAND_API_MAP}
- *  @remarks By leaving the {@link RefreshTokenAction} entry empty, the feature will be disabled. 
+ *  @remarks By leaving refreshToken entry empty, the feature will be disabled. 
  */
 export interface AuthCommandApiMap {
-    [RefreshTokenAction]?: AuthCommandApi<Tokens, RefreshTokenResponse>,
-    [LoginAction]: AuthCommandApi<Credentials, LoginResponse>,
-    [LogoutAction]: AuthCommandApi<{refreshToken: string}, void>
+    refreshToken?: AuthCommandApi<Tokens, RefreshTokenResponse>,
+    login: AuthCommandApi<Credentials, LoginResponse>,
+    logout: AuthCommandApi<{refreshToken: string}, void>
 }
 
 /** Represents an object of default router redirects.  

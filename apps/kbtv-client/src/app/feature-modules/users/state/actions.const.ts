@@ -1,22 +1,18 @@
 import { User } from "@core/models";
 import { ModelState } from "@core/state/model-state.interface";
-import { StateAction } from "state-management";
-import { SaveModelAction, SetSaveModelStateAction } from 'model/state-commands';
+import { SaveModelPayload, SetSaveModelStatePayload } from "model/state-commands";
+import { _createAction, _payload } from "state-management";
 
-export const UpdateUserPasswordAction = "UPDATE_USER_PASSWORD_ACTION";
-export interface UpdateUserPasswordAction extends StateAction<typeof UpdateUserPasswordAction> {
-    newPassword: string, 
-    userName: string
+export const UserActions = {
+    updatePassword: _createAction("Update Password", _payload<{ newPassword: string, userName: string }>()),   
+    saveUser: _createAction("Save User", _payload<SaveUserPayload>()),   
+    setSaveUser: _createAction("Set Save User", _payload<SetSaveUserPayload>()),
 }
 
-export const SaveUserAction = "SAVE_USER_ACTION";
-export interface SaveUserAction extends Omit<SaveModelAction<ModelState, User>, "type">{
+export interface SaveUserPayload extends Omit<SaveModelPayload<ModelState, User>, "stateProp">{
     password: string,
-    type: typeof SaveUserAction
 }
 
-export const SetSaveUserStateAction = "SET_SAVE_USER_ACTION";
-export interface SetSaveUserStateAction extends Omit<SetSaveModelStateAction<ModelState, User>, "type">{
+export interface SetSaveUserPayload extends Omit<SetSaveModelStatePayload<ModelState, User>, "stateProp"> {
     password: string,
-    type: typeof SetSaveUserStateAction
 }

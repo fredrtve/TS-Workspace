@@ -1,7 +1,6 @@
 import { GroupByPeriod } from "@shared-app/enums/group-by-period.enum";
-import { StateAction } from "state-management";
+import { _createAction, _payload } from "state-management";
 
-export const SetGroupByAction = "SET_GROUP_BY_ACTION";
-export interface SetGroupByAction extends StateAction<typeof SetGroupByAction> {
-    groupBy: GroupByPeriod
+export const TimesheetStatisticActions = {
+    setGroupBy: _createAction("Set Group By", _payload<{ groupBy: GroupByPeriod }>())
 }

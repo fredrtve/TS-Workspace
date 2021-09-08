@@ -2,7 +2,7 @@ import { Inject, Injectable, Optional, Self } from '@angular/core';
 import { Immutable, ImmutableArray } from 'global-types';
 import { ActionDispatcher } from '../action-dispatcher';
 import { STORE_EFFECTS } from '../constants/injection-tokens.const';
-import { Effect, StateAction } from '../interfaces';
+import { Effect } from '../interfaces';
 import { Store } from '../store';
 import { EffectsSubscriberBase } from './effects.subscriber.base';
 
@@ -16,14 +16,14 @@ export class EffectsSubscriber extends EffectsSubscriberBase {
     constructor(
         store: Store<unknown>,
         dispatcher: ActionDispatcher,
-        @Self() @Optional() @Inject(STORE_EFFECTS) effects: ImmutableArray<Effect<StateAction>>
+        @Self() @Optional() @Inject(STORE_EFFECTS) effects: ImmutableArray<Effect>
     ){   
         super(store, dispatcher, effects);
         if(effects)
             EffectsSubscriber.handledEffects = new Set(effects.map(x => x.constructor));
     }
 
-    handleEffects(effects: ImmutableArray<Effect<StateAction>>){
+    handleEffects(effects: ImmutableArray<Effect>){
         for(const effect of effects){ 
             if(!EffectsSubscriber.handledEffects.has(effect.constructor)) {
                 super.handleEffect(effect);

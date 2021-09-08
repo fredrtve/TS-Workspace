@@ -18,10 +18,10 @@ export class StoreFeatureProvidersService {
         store: Store<Object>,
         effectsSubscriber: EffectsSubscriber,
         defaultState: Maybe<Object>,
-        effects: Maybe<ImmutableArray<Effect<StateAction>>>,
-        reducers: Maybe<ImmutableArray<Reducer<unknown, StateAction>>>,
-        metaReducers: Maybe<ImmutableArray<MetaReducer<unknown, StateAction>>>,
-        interceptors: Maybe<ImmutableArray<ActionInterceptor>>,
+        effects: Maybe<ImmutableArray<Effect>>,
+        reducers: Maybe<ImmutableArray<Reducer<unknown, StateAction>[]>>,
+        metaReducers: Maybe<ImmutableArray<MetaReducer<unknown, StateAction>[]>>,
+        interceptors: Maybe<ImmutableArray<ActionInterceptor>[]>,
     ){
         if(defaultState) store.addDefaultState(defaultState)
         if(reducers) storeProvidersService.addReducers(reducers);

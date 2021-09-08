@@ -1,9 +1,9 @@
 import { ApiUrl } from "@core/api-url.enum";
+import { GlobalActions } from "@core/global-actions";
 import { Mission } from "@core/models";
 import { StateMissionCriteria } from "@shared-mission/interfaces";
 import { MissionCriteria } from "@shared/interfaces";
 import { _formatDateRange, _formatShortDate, _getFirstDayOfMonth, _getLastDayOfMonth } from "date-time-helpers";
-import { SaveModelAction } from "model/state-commands";
 
 describe('MissionList', () => {
 
@@ -34,9 +34,9 @@ describe('MissionList', () => {
 
         const entity = { id: 'testingmission', address: 'testingmission', finished: false, createdAt: new Date().getTime() };
 
-        cy.storeDispatch({ 
-            type: SaveModelAction, stateProp: "missions", saveAction: 0, entity: { id: 'testingmission', address: 'testingmission', finished: false, createdAt: new Date().getTime() }
-        });
+        cy.storeDispatch(GlobalActions.saveModel<any>({ 
+            stateProp: "missions", saveAction: 0, entity: { id: 'testingmission', address: 'testingmission', finished: false, createdAt: new Date().getTime() }
+        }));
 
         cy.wait('@createMission');          
         listItems().eq(0).should('contain', entity.address);    

@@ -1,8 +1,7 @@
 import { ModelState } from '@core/state/model-state.interface';
-import { _createReducer } from 'state-management';
-import { SetSaveUserStateAction } from './actions.const';
+import { _createReducers, _on } from 'state-management';
+import { UserActions } from './actions.const';
 
-export const SetSaveUserStateReducer = _createReducer<ModelState, SetSaveUserStateAction>(  
-    SetSaveUserStateAction,
-    (s, action) => action.saveModelResult.modifiedState 
+export const UserReducers = _createReducers<ModelState>(
+    _on(UserActions.setSaveUser, (state, action) => action.saveModelResult.modifiedState)
 )

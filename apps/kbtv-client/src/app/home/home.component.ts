@@ -12,7 +12,7 @@ import { combineLatest, forkJoin, Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { StateCurrentUser } from 'state-auth';
 import { Store } from 'state-management';
-import { StateSyncTimestamp, SyncStateAction } from 'state-sync';
+import { StateSyncTimestamp, SyncActions } from 'state-sync';
 import { MainNavService } from '../layout/main-nav.service';
 import { HomeNavigations } from './home-navigations.const';
 
@@ -64,6 +64,6 @@ export class HomeComponent {
 
   toggleDrawer = () => this.mainNavService.toggleDrawer();
 
-  refresh = () => this.store.dispatch(<SyncStateAction>{ type: SyncStateAction });
+  refresh = () => this.store.dispatch(SyncActions.sync());
 
 }

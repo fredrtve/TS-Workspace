@@ -1,13 +1,23 @@
-import { _addOrUpdateRange, _removeRangeById } from 'array-helpers';
-import { Immutable, ImmutableArray, UnknownState } from 'global-types';
-import { Reducer, _createReducer } from 'state-management';
-import { SyncStatePropConfig } from '../interfaces';
+import { _addOrUpdateRange, _removeRangeById } from "array-helpers";
+import { Immutable, ImmutableArray, UnknownState } from "global-types";
+import { _createReducers, _on } from "state-management";
+import { SyncStatePropConfig } from "../interfaces";
 import { StoreState } from "../store-state.interface";
-import { SyncStateSuccessAction } from './actions';
+import { SyncActions } from "./actions";
 
-export const SetSyncResponseReducer: Reducer<Immutable<StoreState>,SyncStateSuccessAction> = _createReducer(
-    SyncStateSuccessAction,
-    (state: Immutable<StoreState>, action: Immutable<SyncStateSuccessAction>) => {
+export const SyncReducers = _createReducers<StoreState>(
+    _on(SyncActions.updateConfig, (state, action) => ({syncConfig: {...state.syncConfig, ...action.syncConfig} })),
+    _on(SyncActions.wipeState, (state, action) => {
+        const deleteState: UnknownState = {syncTimestamp: null};
+
+        for(const prop in action.syncStateConfig){
+            const propCfg = action.syncStateConfig[prop];
+            if(propCfg.wipeable !== false) deleteState[prop] = undefined;     
+        }
+
+        return deleteState;
+    }),
+    _on(SyncActions.syncSuccess, (state, action) => {
         const newState: UnknownState = {syncTimestamp: action.response.timestamp};
         
         for(const prop in action.response.arrays){
@@ -33,5 +43,5 @@ export const SetSyncResponseReducer: Reducer<Immutable<StoreState>,SyncStateSucc
         }
 
         return newState;
-    } 
+    })
 )

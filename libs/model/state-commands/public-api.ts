@@ -8,8 +8,7 @@
 
 export * from './src/model-state-commands.module';
 export * from './src/interfaces';
-export * from './src/actions';
 export * from './src/model-command.enum';
-export * from './src/state/delete-model.reducer';
-export * from './src/state/save-model.reducer';
+export * from './src/state/actions';
+export * from './src/state/reducers';
 export * from './src/state/save-model.effect';

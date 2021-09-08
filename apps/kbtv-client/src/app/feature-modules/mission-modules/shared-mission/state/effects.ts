@@ -1,5 +1,4 @@
 import { Injectable } from "@angular/core";
-import { SaveModelFileAction } from "@core/global-actions";
 import { AppNotificationService } from "@core/services/app-notification.service";
 import { AppNotifications } from "@shared-app/constants/app-notifications.const";
 import { ValidationRules } from "@shared-app/constants/validation-rules.const";
@@ -7,21 +6,21 @@ import { _validateFileExtension } from "@shared-app/helpers/validate-file-extens
 import { ModelFileForm, _formToSaveModelFileConverter } from "@shared/constants/form-to-save-model-file.converter";
 import { Immutable } from "global-types";
 import { ModelCommand } from 'model/state-commands';
-import { Observable, of } from "rxjs";
+import { of } from "rxjs";
 import { mergeMap } from "rxjs/operators";
-import { DispatchedAction, Effect, listenTo } from "state-management";
-import { CreateMissionImagesAction } from "./actions.const";
+import { DispatchedActions, Effect, listenTo, StateAction } from "state-management";
+import { SharedMissionActions } from "./actions.const";
 
 @Injectable()
-export class CreateMissionImagesEffect implements Effect<CreateMissionImagesAction> {
+export class CreateMissionImagesEffect implements Effect {
 
     constructor(private notificationService: AppNotificationService){}
 
-    handle$(actions$: Observable<DispatchedAction<CreateMissionImagesAction, {}>>) {
+    handle$(actions$: DispatchedActions) {
         return actions$.pipe(
-            listenTo([CreateMissionImagesAction]),
+            listenTo([SharedMissionActions.createMissionImages]),
             mergeMap(x => { 
-                const actions: Immutable<SaveModelFileAction>[] = [];
+                const actions: Immutable<StateAction>[] = [];
    
                 for(const key in x.action.files){
                     const file = x.action.files[key];

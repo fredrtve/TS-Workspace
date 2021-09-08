@@ -1,20 +1,19 @@
 import { Injectable } from '@angular/core';
 import { ApiUrl } from '@core/api-url.enum';
 import { ApiService } from '@core/services/api.service';
-import { Observable } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import { StateDbService } from 'state-db';
-import { DispatchedAction, Effect, listenTo } from 'state-management';
-import { ClearAndLogoutAction, UpdatePasswordAction } from './actions.const';
+import { DispatchedActions, Effect, listenTo } from 'state-management';
+import { ProfileActions } from './actions.const';
 
 @Injectable()
-export class UpdatePasswordHttpEffect implements Effect<UpdatePasswordAction> {
+export class UpdatePasswordHttpEffect implements Effect {
 
     constructor(private apiService: ApiService){}
 
-    handle$(actions$: Observable<DispatchedAction<UpdatePasswordAction>>): Observable<void> {
+    handle$(actions$: DispatchedActions) {
         return actions$.pipe(
-            listenTo([UpdatePasswordAction]),
+            listenTo([ProfileActions.updatePassword]),
             mergeMap(({action}) => 
                 this.apiService.put<void>(`${ApiUrl.Auth}/changePassword`, action)),
         )
@@ -23,13 +22,13 @@ export class UpdatePasswordHttpEffect implements Effect<UpdatePasswordAction> {
 }
 
 @Injectable()
-export class ClearAndLogoutEffect implements Effect<ClearAndLogoutAction> {
+export class ClearAndLogoutEffect implements Effect {
 
     constructor(private stateDbService: StateDbService){}
 
-    handle$(actions$: Observable<DispatchedAction<ClearAndLogoutAction>>): Observable<void> {
+    handle$(actions$: DispatchedActions) {
         return actions$.pipe(
-            listenTo([ClearAndLogoutAction]),
+            listenTo([ProfileActions.clearAndLogout]),
             map(x => {         
                 this.stateDbService.clear$().subscribe(x => {
                     window.localStorage.clear();

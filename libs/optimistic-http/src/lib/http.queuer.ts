@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { filter, map, switchMap, tap } from 'rxjs/operators';
 import { Store } from 'state-management';
 import { StateRequestQueue } from './interfaces';
-import { DispatchNextHttpAction } from './state/dispatch-http/dispatch-http.action';
+import { OptimisticActions } from './state/actions';
 
 /** Class responsible for queuing and dispatching http requests ({@link OptimisticHttpRequest}) 
  * Requires initalization by consumer. */
@@ -36,7 +36,7 @@ export class HttpQueuer {
   }
 
   private dispatchNextRequest(): void{
-    this.store.dispatch(<DispatchNextHttpAction>{ type: DispatchNextHttpAction })
+    this.store.dispatch(OptimisticActions.dispatchNext());
   }
 
 }

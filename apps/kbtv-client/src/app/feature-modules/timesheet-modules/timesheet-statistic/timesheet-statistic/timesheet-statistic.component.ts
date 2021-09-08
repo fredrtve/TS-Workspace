@@ -89,7 +89,7 @@ export class TimesheetStatisticComponent {
     return _timesheetCriteriaChipsFactory(criteria, (x) => this.facade.updateCriteria(x))
   }
 
-  private getNoRowsText(status: FetchingStatus): string {
+  private getNoRowsText(status: Maybe<FetchingStatus>): string {
     if(!navigator.onLine) return "Mangler internett-tilkobling";
     switch(status){
       case 'failed': return 'Det oppsto en feil ved innhenting av timer';

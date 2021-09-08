@@ -6,7 +6,6 @@ import { TimesheetStatus } from "@shared-app/enums/timesheet-status.enum";
 import { _getDateByDateParams } from "@shared-timesheet/helpers/get-date-by-date-params.helper";
 import { WeekCriteria } from "@shared-timesheet/interfaces";
 import { cyTag } from "cypress/support/commands";
-import { _getWeekYear } from "date-time-helpers";
 import norwayLocale from '@angular/common/locales/nb';
 import { DatePipe, registerLocaleData } from '@angular/common';
 

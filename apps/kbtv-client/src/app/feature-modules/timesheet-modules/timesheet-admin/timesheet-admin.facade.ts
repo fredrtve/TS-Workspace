@@ -14,7 +14,7 @@ import { filterRecords } from '@shared/operators/filter-records.operator';
 import { _find } from 'array-helpers';
 import { Immutable, ImmutableArray, Maybe } from 'global-types';
 import { ModelFormService } from 'model/form';
-import { FetchModelsAction } from 'model/state-fetcher';
+import { ModelFetcherActions } from 'model/state-fetcher';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Store } from 'state-management';
@@ -22,7 +22,7 @@ import { TimesheetSummary } from '../shared-timesheet/interfaces';
 import { WeekCriteria } from '../shared-timesheet/interfaces/week-criteria.interface';
 import { TimesheetCriteria } from '../shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { TimesheetFilter } from '../shared-timesheet/timesheet-filter/timesheet-filter.model';
-import { SetSelectedWeekAction, SetTimesheetCriteriaWithWeekCriteriaAction, UpdateLeaderSettingsAction, UpdateTimesheetStatusesAction } from './state/actions.const';
+import { TimesheetAdminActions } from './state/actions.const';
 import { StoreState } from './store-state';
 
 @Injectable({providedIn: 'any'})
@@ -68,7 +68,7 @@ export class TimesheetAdminFacade {
     constructor(
         private store: Store<StoreState>, 
         private modelFormService: ModelFormService<ModelState>){
-        this.store.dispatch({type: FetchModelsAction, props: ["users"]})
+        this.store.dispatch(ModelFetcherActions.fetch<ModelState>({props: ["users"]}))
     }
     
     openTimesheetForm = (entityId?: Maybe<string>, initialValue?: Immutable<Partial<TimesheetForm>>): void => {
@@ -79,20 +79,18 @@ export class TimesheetAdminFacade {
     };
 
     updateCriteria = (weekCriteria: Immutable<Partial<WeekCriteria>>): void =>       
-        this.store.dispatch(<SetTimesheetCriteriaWithWeekCriteriaAction>{ 
-            type: SetTimesheetCriteriaWithWeekCriteriaAction, weekCriteria 
-        })
+        this.store.dispatch(TimesheetAdminActions.weekCriteriaChanged({ weekCriteria }))
 
     updateWeekNr = (weekNr: Maybe<number | string>): void =>  
-        this.store.dispatch(<SetSelectedWeekAction>{ type: SetSelectedWeekAction, weekNr })
+        this.store.dispatch(TimesheetAdminActions.selectedWeekChanged({ weekNr }));
     
     updateStatuses(ids: string[], status: TimesheetStatus): void{
         if(ids.length == 0) return;
-        this.store.dispatch(<UpdateTimesheetStatusesAction>{ type: UpdateTimesheetStatusesAction, ids, status });      
+        this.store.dispatch(TimesheetAdminActions.updateTimesheetStatuses({ ids, status }));      
     }
 
     updateLeaderSettings(settings: LeaderSettings): void {
         if(settings == null) return;
-        this.store.dispatch(<UpdateLeaderSettingsAction>{ type: UpdateLeaderSettingsAction, settings })
+        this.store.dispatch(TimesheetAdminActions.updateLeaderSettings({ settings }))
     }
 }

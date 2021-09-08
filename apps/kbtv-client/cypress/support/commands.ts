@@ -1,7 +1,7 @@
 import { NgZone } from "@angular/core";
 import 'cypress-file-upload';
 import { LoginResponse } from "state-auth";
-import { SetPersistedStateAction } from "state-db";
+import { DbActions } from "state-db";
 import { Store } from "state-management";
 import { StateSyncConfig } from "state-sync";
 
@@ -21,7 +21,7 @@ Cypress.Commands.add('login', (role: 'Leder' | 'Mellomleder' | 'Ansatt', redirec
       localStorage.setItem('syncConfig', JSON.stringify(initialState.syncConfig)); 
       cy.visit( redirectUrl );
       cy.wait(100);
-      cy.storeDispatch<SetPersistedStateAction>({ type: SetPersistedStateAction, state: initState, storageType: "localStorage"}) 
+      cy.storeDispatch(DbActions.setPersistedState({state: initState, storageType: "localStorage"})) 
   })
 });
 

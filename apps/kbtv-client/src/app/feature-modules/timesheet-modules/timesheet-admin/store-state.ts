@@ -9,6 +9,6 @@ export interface StoreState extends
     StateTimesheets,
     StateLeaderSettings {
         timesheetAdminTimesheetCriteria: TimesheetCriteria,
-        timesheetAdminWeekCriteria: Omit<WeekCriteria, "weekNr" | "weekDay">
+        timesheetAdminWeekCriteria: Omit<Partial<WeekCriteria>, "weekNr" | "weekDay">
         timesheetAdminSelectedWeekNr: Maybe<number>;
     }

@@ -1,18 +1,16 @@
 import { ApiUrl } from "@core/api-url.enum";
+import { GlobalActions } from "@core/global-actions";
 import { Employer, Mission, MissionType, UserTimesheet } from "@core/models";
 import { ModelState } from "@core/state/model-state.interface";
 import { StatePropByModel } from "model/core/model-core";
-import { SaveModelAction } from "model/state-commands";
 
 describe('Optimistic Http Error', () => {
 
-    const createEntity = <T>(prop: StatePropByModel<ModelState, T>, entity: T) => cy.storeDispatch<SaveModelAction<any,any>>({
-        type: SaveModelAction, saveAction: 0, stateProp: <any> prop, entity
-    });
+    const createEntity = <T>(prop: StatePropByModel<ModelState, T>, entity: T) => 
+        cy.storeDispatch(GlobalActions.saveModel<any>({ saveAction: 0, stateProp: <any> prop, entity }));
 
-    const updateEntity = <T>(prop: StatePropByModel<ModelState, T>, entity: T) => cy.storeDispatch<SaveModelAction<any,any>>({
-        type: SaveModelAction, saveAction: 1, stateProp: <any> prop, entity
-    });
+    const updateEntity = <T>(prop: StatePropByModel<ModelState, T>, entity: T) => 
+        cy.storeDispatch(GlobalActions.saveModel<any>({ saveAction: 1, stateProp: <any> prop, entity }));
 
     beforeEach(() => {
         cy.intercept('POST', '**' + ApiUrl.Mission, { statusCode: 401 });

@@ -1,49 +1,38 @@
 import { Injectable } from '@angular/core';
 import { Immutable, UnknownState } from 'global-types';
-import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { DispatchedAction, Effect, StateAction } from 'state-management';
+import { ActionCreator, DispatchedAction, DispatchedActions, Effect, StateAction } from 'state-management';
 import { ActionRequestConverterFn, OptimisticHttpRequest } from '../interfaces';
 import { OptimisticProvidersService } from '../optimistic-providers.service';
-import { HttpQueuePushAction } from './http-queue-push/http-queue-push.action';
-import { OptimisticHttpAction } from './optimistic-http.action';
+import { OptimisticActions, _optimisticHttpRequest } from './actions';
 
 @Injectable()
-export class OptimisticRequestQueuerEffect implements Effect<StateAction> {
+export class OptimisticRequestQueuerEffect implements Effect {
 
     constructor(private optimisticProvidersService: OptimisticProvidersService) { }
 
-    handle$(actions$: Observable<DispatchedAction<StateAction>>): Observable<Immutable<HttpQueuePushAction> | void> {
+    handle$(actions$: DispatchedActions) {
         return actions$.pipe(map(x => this.createQueuePushAction(x)))
     }
 
-    private createQueuePushAction(dispatched: DispatchedAction<StateAction>): Immutable<HttpQueuePushAction> | void {
-        if(dispatched.action.type === OptimisticHttpAction) 
-            return this.onOptimisticHttpAction(<DispatchedAction<OptimisticHttpAction>> dispatched)
-
-        const converter = this.optimisticProvidersService.actionMap[dispatched.action.type];
-        if(converter !== undefined) return this.onRequestMapAction(dispatched, converter)
-    }
-    
-    private onOptimisticHttpAction(dispatched: DispatchedAction<OptimisticHttpAction>): Immutable<HttpQueuePushAction> {
-        return {
-            type: HttpQueuePushAction,
-            command: {
+    private createQueuePushAction(dispatched: DispatchedAction<ActionCreator<any,any>>): StateAction | void {
+        if(dispatched.action.type === _optimisticHttpRequest(<any>{}).type) 
+            return OptimisticActions.queuePush({command: {
                 request: dispatched.action.request, 
                 stateSnapshot: this.getOptimisticState(dispatched.action.stateSnapshot),
-            }    
-        }
+            }})
+
+        const converter = this.optimisticProvidersService.actionMap[dispatched.action.type];
+        if(converter !== undefined) return this.onRequestMapAction(dispatched, converter);
     }
 
-    private onRequestMapAction(dispatched: DispatchedAction<StateAction>, fn: ActionRequestConverterFn<StateAction>): HttpQueuePushAction | void {
+    private onRequestMapAction(dispatched: DispatchedAction<any>, fn: ActionRequestConverterFn<StateAction>) {
         const request = fn(dispatched.action);
         if(!request) return;
-        return { type: HttpQueuePushAction,
-            command: {
+        return OptimisticActions.queuePush({command: {
                 request: <OptimisticHttpRequest> { ...request },
                 stateSnapshot: this.getOptimisticState(dispatched.stateSnapshot),
-            }
-        }
+            }})
     }
     
     private getOptimisticState(state: Immutable<UnknownState>): UnknownState {  

@@ -15,6 +15,7 @@ import { AuthReturnUrlQueryParam, AuthService, Credentials } from 'state-auth';
 })
 export class LoginComponent {
 
+  companyName = environment.companyName;
   isDemo: boolean = environment.demo;
 
   get returnUrl(): string{

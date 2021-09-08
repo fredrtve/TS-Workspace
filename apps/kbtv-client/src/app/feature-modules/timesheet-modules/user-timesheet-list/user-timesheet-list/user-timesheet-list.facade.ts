@@ -12,7 +12,7 @@ import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ComponentStore, Store } from 'state-management';
 import { StateSyncConfig } from 'state-sync';
-import { SetUserTimesheetCriteriaAction } from './state/set-user-timesheet-criteria.reducer';
+import { UserTimesheetListLocalActions } from './state/local-state';
 import { UserTimesheetListState } from './state/user-timesheet-list.state';
 import { UserTimesheetListCriteriaQueryParam } from './user-timesheet-list-route-params.const';
 
@@ -47,10 +47,10 @@ export class UserTimesheetListFacade {
       }
       
       updateCriteria = (timesheetCriteria: Immutable<Partial<TimesheetCriteria>>) => 
-          this.componentStore.dispatch<SetUserTimesheetCriteriaAction>({ 
-            type: SetUserTimesheetCriteriaAction, timesheetCriteria, 
+          this.componentStore.dispatch(UserTimesheetListLocalActions.setTimesheetCriteria({ 
+            timesheetCriteria, 
             lowerBound: this.store.state.syncConfig.initialTimestamp
-          });
+          }));
 
       private setInitialCriteria(){
         let rawCriteria = this.route.snapshot.params[UserTimesheetListCriteriaQueryParam];

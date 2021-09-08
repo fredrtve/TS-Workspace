@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, Inject, NgModule } from '@angular/core';
 import { GoogleMapsModule, MapGeocoder } from '@angular/google-maps';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
+import { GlobalActions } from '@core/global-actions';
 import { Mission } from '@core/models';
 import { IPosition } from '@core/models/sub-interfaces/iposition.interface';
 import { GoogleMapsLoader } from '@core/services/google-maps.loader';
@@ -9,7 +10,7 @@ import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-n
 import { SharedModule } from '@shared/shared.module';
 import { _find } from 'array-helpers';
 import { Immutable, Maybe } from 'global-types';
-import { ModelCommand, SaveModelAction } from 'model/state-commands';
+import { ModelCommand } from 'model/state-commands';
 import { combineLatest, Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { Store } from 'state-management';
@@ -67,12 +68,11 @@ export class MissionPositionPickerSheetWrapperComponent {
     ) { }
 
     updateSelectedPosition(position: IPosition): void {
-        this.store.dispatch<SaveModelAction<StateMissions, Mission>>({ 
-            type: SaveModelAction, 
+        this.store.dispatch(GlobalActions.saveModel({ 
             stateProp: "missions", 
             saveAction: ModelCommand.Update,
             entity: { id: this.data.missionId, position }
-        });
+        }));
     }
 
 }

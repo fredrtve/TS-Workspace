@@ -6,7 +6,7 @@ import { map, skip } from 'rxjs/operators';
 import { select, Store } from 'state-management';
 import { AUTH_COMMAND_API_MAP } from '../injection-tokens.const';
 import { AuthCommandApiMap, Credentials, CurrentUser, StoreState } from '../interfaces';
-import { LoginAction, LogoutAction, RefreshTokenAction } from '../state/actions.const';
+import { AuthActions } from '../state/actions.const';
 
 /** The class responsible for exposing authorization state & commands */
 @Injectable({providedIn: 'root'})
@@ -36,7 +36,7 @@ export class AuthService {
   }
 
   get isAuthorized(): boolean {
-    return this.getAccessToken() != null && (this.commandApiMap.REFRESH_TOKEN_ACTION != null || !this.hasAccessTokenExpired);
+    return this.getAccessToken() != null && (this.commandApiMap.refreshToken != null || !this.hasAccessTokenExpired);
   }
 
   constructor (
@@ -54,21 +54,18 @@ export class AuthService {
    * @param returnUrl - A router url used to navigate the user if login succeeds. 
    */
   login = (credentials: Credentials, returnUrl?: string): void => 
-    this.store.dispatch(<LoginAction>{ type: LoginAction, credentials, returnUrl })
+    this.store.dispatch(AuthActions.login({ credentials, returnUrl }));
   
   /** Removes the authorization state and redirects the user to login page. */
   logout = (returnUrl?: string): void =>
-    this.store.dispatch(<LogoutAction>{ type: LogoutAction, refreshToken: this.getRefreshToken(), returnUrl })
+    this.store.dispatch(AuthActions.logout({ refreshToken: this.getRefreshToken()!, returnUrl }))
   
   /** Attempts to request a new access token from the external api */
   refreshToken = (): void => {
     if(this.isRefreshingToken || !navigator.onLine) return;
-    this.store.dispatch(<RefreshTokenAction>{ type: RefreshTokenAction,
-      tokens: {
-        accessToken: this.getAccessToken(), 
-        refreshToken: this.getRefreshToken()
-      }
-    })
+    this.store.dispatch(AuthActions.refreshToken({
+      tokens: { accessToken: this.getAccessToken()!, refreshToken: this.getRefreshToken()! }
+    }))
   }
   
   private getRefreshToken = (): Maybe<string> => 

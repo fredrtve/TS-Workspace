@@ -4,16 +4,12 @@ import { StateAction, STORE_EFFECTS, STORE_REDUCERS } from 'state-management';
 import { ACTION_REQUEST_MAP, OPTIMISTIC_STATE_PROPS } from './constants/injection-tokens.const';
 import { ActionRequestMap } from './interfaces';
 import { OptimisticFeatureProvidersService } from './optimistic-feature-providers.service';
-import { DispatchHttpEffect } from './state/dispatch-http/dispatch-http.effect';
-import { DispatchHttpReducer } from './state/dispatch-http/dispatch-http.reducer';
-import { HttpErrorEffect } from './state/http-error/http-error.effect';
-import { HttpErrorReducer } from './state/http-error/http-error.reducer';
+import { DispatchHttpEffect } from './state/dispatch-http.effect';;
+import { HttpErrorEffect } from './state/http-error.effect';
 import { HttpQueueNextEffect } from './state/http-queue-next.effect';
-import { HttpQueuePushEffect } from './state/http-queue-push/http-queue-push.effect';
-import { HttpQueuePushReducer } from './state/http-queue-push/http-queue-push.reducer';
-import { HttpQueueShiftReducer } from './state/http-queue-shift.reducer';
+import { HttpQueuePushEffect } from './state/http-queue-push.effect';
 import { OptimisticRequestQueuerEffect } from './state/optimistic-request-queuer.effect';
-import { AppendRequestLogReducer } from './state/request-log/append-request-log.reducer';
+import { OptimisticReducers } from './state/reducers';
 
 /** Responsible for providing core injectables. 
  *  Use forRoot & forFeature functions to configure providers. */
@@ -30,11 +26,7 @@ export class OptimisticHttpModule {
       { provide: STORE_EFFECTS, useClass: HttpErrorEffect, multi: true },
       { provide: STORE_EFFECTS, useClass: HttpQueueNextEffect, multi: true },
       
-      { provide: STORE_REDUCERS, useValue: AppendRequestLogReducer, multi: true },
-      { provide: STORE_REDUCERS, useValue: DispatchHttpReducer, multi: true },
-      { provide: STORE_REDUCERS, useValue: HttpQueuePushReducer, multi: true },
-      { provide: STORE_REDUCERS, useValue: HttpErrorReducer, multi: true },
-      { provide: STORE_REDUCERS, useValue: HttpQueueShiftReducer, multi: true },
+      { provide: STORE_REDUCERS, useValue: OptimisticReducers, multi: true },
     ];
 
     if(optimisticStateProps)

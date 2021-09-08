@@ -30,9 +30,8 @@ import { SyncHttpFetcherService } from './services/sync-http-fetcher.service';
 import { InitalizeHttpQueueEffect, InitalizeSyncEffect } from './state/initalizing.effects';
 import { NotifyOnUnauthorizedEffect } from './state/notify-on-unauthorized.effect';
 import { OpenDialogOnOptimisticError } from './state/open-dialog-on-optimistic-error.effect';
-import { SetSyncModelsFailedStatusReducer, SetSyncModelsFetchingStatusReducer, SetSyncModelsSuccessStatusReducer } from './state/sync-fetching.reducer';
+import { CoreReducers } from './state/reducers';
 import { SyncUserOnLoginEffect } from './state/sync-user-on-login.effect';
-import { WipeStateReducer } from './state/wipe-state.reducer';
 
 _registerModelStateConfig(ModelConfigMap);
 
@@ -41,7 +40,7 @@ _registerModelStateConfig(ModelConfigMap);
   imports: [
     StateManagementModule.forRoot({
       defaultState: DefaultState,
-      reducers: [WipeStateReducer, SetSyncModelsFetchingStatusReducer, SetSyncModelsSuccessStatusReducer, SetSyncModelsFailedStatusReducer],
+      reducers: CoreReducers,
       effects: [InitalizeSyncEffect, InitalizeHttpQueueEffect, OpenDialogOnOptimisticError, 
         SyncUserOnLoginEffect, NotifyOnUnauthorizedEffect],
     }),

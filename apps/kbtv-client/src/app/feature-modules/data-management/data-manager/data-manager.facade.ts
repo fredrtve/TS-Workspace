@@ -1,16 +1,15 @@
 import { Injectable } from "@angular/core";
-import { Model } from "@core/models";
+import { GlobalActions } from "@core/global-actions";
 import { AppConfirmDialogService } from "@core/services/app-confirm-dialog.service";
 import { ModelState } from '@core/state/model-state.interface';
 import { AppModelStatePropTranslations } from "@shared-app/constants/model-state-prop-translations.const";
 import { _confirmDeleteDialogFactory } from "@shared-app/helpers/confirm-delete-dialog.factory";
 import { Prop } from "global-types";
 import { ModelFormService } from 'model/form';
-import { DeleteModelAction } from 'model/state-commands';
 import { ComponentStore, Store } from 'state-management';
 import { ComponentState } from '../interfaces/component-state.interface';
 import { PropertyFormMap } from "./property-form.map";
-import { UpdateSelectedPropertyAction } from './state/update-selected-property.reducer';
+import { DataManagerLocalActions } from "./state/local-state";
 
 @Injectable()
 export class DataManagerFacade  {
@@ -32,7 +31,7 @@ export class DataManagerFacade  {
     ) { }
 
     updateSelectedProperty = (prop: Prop<ModelState>) => 
-        this.componentStore.dispatch(<UpdateSelectedPropertyAction>{ type: UpdateSelectedPropertyAction, selectedProperty: prop })
+        this.componentStore.dispatch(DataManagerLocalActions.updateSelectedProperty({ selectedProperty: prop }))
     
     createItem = (): void => {
         this.selectedProperty ? 
@@ -50,10 +49,9 @@ export class DataManagerFacade  {
     }
 
     private _deleteItems(ids: string[]): void{
-        this.store.dispatch<DeleteModelAction<ModelState, Model>>({ 
-            type: DeleteModelAction, 
+        this.store.dispatch(GlobalActions.deleteModel({ 
             stateProp: this.selectedProperty, 
             payload: {ids} 
-        });
+        }));
     }
 }

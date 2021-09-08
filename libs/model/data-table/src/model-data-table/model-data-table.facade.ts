@@ -2,7 +2,7 @@ import { Inject, Injectable } from "@angular/core";
 import { ColDef } from "ag-grid-community";
 import { ImmutableArray, Maybe, UnknownState } from "global-types";
 import { UnknownModelState, _getModelConfig } from "model/core";
-import { FetchModelsAction, StateFetchingStatus } from "model/state-fetcher";
+import { ModelFetcherActions, StateFetchingStatus } from "model/state-fetcher";
 import { BehaviorSubject, combineLatest, Observable, of } from "rxjs";
 import { distinctUntilChanged, map, switchMap } from "rxjs/operators";
 import { Store } from 'state-management';
@@ -43,7 +43,7 @@ export class ModelDataTableFacade  {
     ) { }
 
     updateSelectedProperty = (prop: string): void => {
-        this.store.dispatch(<FetchModelsAction<UnknownModelState>>{ type: FetchModelsAction, props: [prop] });
+        this.store.dispatch(ModelFetcherActions.fetch<any>({ props: [prop] }));
         this.modelPropertySubject.next(prop); 
     }
 
@@ -52,7 +52,7 @@ export class ModelDataTableFacade  {
             if(!prop) return 'Ingen data model valgt';
             if(!navigator.onLine) return "Mangler internett-tilkobling";
             const translatedProp = this.translations[prop.toLowerCase()]?.plural.toLowerCase() || 'data';
-            switch(fetchingStatus[prop]){
+            switch((fetchingStatus || {})[prop]){
                 case 'failed': return `Det oppsto en feil ved innhenting av ${translatedProp}`;
                 case 'fetching': return `Laster inn ${translatedProp}...`;
                 default: return `Finner ingen ${translatedProp}`;

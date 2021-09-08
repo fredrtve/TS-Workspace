@@ -1,20 +1,18 @@
-import { GenericActionRequestMap } from "@core/configurations/optimistic/generic-action-request-map.const";
-import { CreateUserRequest, SaveModelRequest, UpdateModelRequest } from "@core/configurations/model/model-requests.interface";
-import { Model, User } from "@core/models";
-import { ModelState } from "@core/state/model-state.interface";
-import { DeleteModelAction, ModelCommand, SetSaveModelStateAction } from "model/state-commands";
-import { ActionRequestMap } from "optimistic-http";
-import { CurrentUser } from "state-auth";
-import { SetSaveUserStateAction } from "./state/actions.const";
-import { _idGenerator } from "@shared-app/helpers/id/id-generator.helper";
 import { CommandIdHeader } from "@core/configurations/command-id-header.const";
+import { CreateUserRequest, SaveModelRequest, UpdateModelRequest } from "@core/configurations/model/model-requests.interface";
+import { _deleteModelRequest, _setSaveModelRequest } from "@core/configurations/optimistic/global-action-requests";
+import { User } from "@core/models";
+import { _idGenerator } from "@shared-app/helpers/id/id-generator.helper";
+import { ModelCommand } from "model/state-commands";
+import { _createActionRequestMap, _entry } from "optimistic-http";
+import { CurrentUser } from "state-auth";
+import { UserActions } from "./state/actions.const";
 
-export const UserActionRequestMap : ActionRequestMap<SetSaveUserStateAction | DeleteModelAction<ModelState, Model>> = {
-    [SetSaveUserStateAction] : (action): CreateUserRequest | UpdateModelRequest<User & CurrentUser> => {
-        const genericSave = GenericActionRequestMap[SetSaveModelStateAction];
-
+export const UserActionRequestMap = _createActionRequestMap(
+    _deleteModelRequest,
+    _entry(UserActions.setSaveUser, (action): CreateUserRequest | UpdateModelRequest<User & CurrentUser> => {
         const request = <CreateUserRequest | UpdateModelRequest<User & CurrentUser>> 
-            genericSave({...action, type: SetSaveModelStateAction});
+            (<any> _setSaveModelRequest).converter({...action, stateProp: "users"});
 
         if(action.saveAction === ModelCommand.Create){
             let {employer, createdAt, ...rest} = action.saveModelResult.fullModel
@@ -26,6 +24,5 @@ export const UserActionRequestMap : ActionRequestMap<SetSaveUserStateAction | De
         request.headers = { [CommandIdHeader]: _idGenerator(4) }
         
         return request;
-    },
-    [DeleteModelAction]: GenericActionRequestMap[DeleteModelAction]
-}
+    }),
+)

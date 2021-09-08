@@ -17,6 +17,7 @@ export * from './lib/operators/listen-to.operator'
 export * from './lib/operators/select.operator'
 export * from './lib/operators/select-prop.operator'
 
-export * from './lib/helpers/create-reducer.helper'
+export * from './lib/helpers/create-reducers.helper'
+export * from './lib/helpers/create-action.helper'
 
 export * from './lib/constants/injection-tokens.const'

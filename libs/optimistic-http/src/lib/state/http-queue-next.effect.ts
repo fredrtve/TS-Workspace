@@ -1,18 +1,17 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { DispatchedAction, Effect, listenTo } from 'state-management';
+import { DispatchedActions, Effect, listenTo } from 'state-management';
 import { HttpQueuer } from '../http.queuer';
-import { HttpQueueShiftAction } from './http-queue-shift.action';
+import { OptimisticActions } from './actions';
 
 @Injectable()
-export class HttpQueueNextEffect implements Effect<HttpQueueShiftAction> {
+export class HttpQueueNextEffect implements Effect {
 
     constructor(private httpQueuer: HttpQueuer) {}
 
-    handle$(actions$: Observable<DispatchedAction<HttpQueueShiftAction>>): Observable<void> {
+    handle$(actions$: DispatchedActions) {
         return actions$.pipe(
-            listenTo([HttpQueueShiftAction]),
+            listenTo([OptimisticActions.queueShift]),
             map(x => this.httpQueuer.next())
         )
     }

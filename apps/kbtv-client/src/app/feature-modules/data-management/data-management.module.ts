@@ -2,15 +2,15 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { GenericActionRequestMap } from '@core/configurations/optimistic/generic-action-request-map.const';
+import { _deleteModelRequest, _setSaveModelRequest } from '@core/configurations/optimistic/global-action-requests';
 import { CssLoaderService } from '@core/services/css-loader.service';
 import { LazyStyles } from '@shared-app/enums/lazy-styles.enum';
 import { SharedModule } from '@shared/shared.module';
 import { ModelDataTableModule, MODEL_DATA_TABLES_CONFIG } from 'model/data-table';
 import { ModelFormModule } from 'model/form';
-import { DeleteModelAction, ModelStateCommandsModule, SetSaveModelStateAction } from 'model/state-commands';
+import { ModelStateCommandsModule } from 'model/state-commands';
 import { ModelStateFetcherModule } from 'model/state-fetcher';
-import { OptimisticHttpModule } from 'optimistic-http';
+import { OptimisticHttpModule, _createActionRequestMap } from 'optimistic-http';
 import { StateManagementModule } from 'state-management';
 import { DataManagementRoutingModule } from './data-management-routing.module';
 import { DataManagerComponent } from './data-manager/data-manager.component';
@@ -36,10 +36,10 @@ import { ModelDataTables } from './model-data-tables.const';
     ModelFormModule,
     ModelDataTableModule,
 
-    OptimisticHttpModule.forFeature({
-      [SetSaveModelStateAction]: GenericActionRequestMap[SetSaveModelStateAction],  
-      [DeleteModelAction]: GenericActionRequestMap[DeleteModelAction]
-    }), 
+    OptimisticHttpModule.forFeature(_createActionRequestMap(
+      _deleteModelRequest,
+      _setSaveModelRequest
+    )), 
     
   ],
   providers: [

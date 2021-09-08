@@ -49,11 +49,11 @@ export class HttpAuthTokensInterceptor implements HttpInterceptor {
     }
 
     private isLoginRequest = (req: HttpRequest<unknown>) => 
-        req.url.indexOf(this.commandApiMap.LOGIN_ACTION.apiUrl) !== -1;
+        req.url.indexOf(this.commandApiMap.login.apiUrl) !== -1;
 
     private isRefreshRequest = (req: HttpRequest<unknown>): boolean => 
-        req.url.indexOf(this.commandApiMap.REFRESH_TOKEN_ACTION?.apiUrl || "") !== -1;
+        req.url.indexOf(this.commandApiMap.refreshToken?.apiUrl || "") !== -1;
 
     private isLogoutRequest = (req: HttpRequest<unknown>): boolean => 
-        req.url.indexOf(this.commandApiMap.LOGOUT_ACTION.apiUrl) !== -1;
+        req.url.indexOf(this.commandApiMap.logout.apiUrl) !== -1;
 }

@@ -3,7 +3,7 @@ import { Immutable, ImmutableArray } from 'global-types';
 import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
 import { catchError, first, takeUntil, tap } from 'rxjs/operators';
 import { ActionDispatcher } from '../action-dispatcher';
-import { Effect, StateAction } from '../interfaces';
+import { Effect } from '../interfaces';
 import { StoreBase } from '../store-base';
 
 /** Responsible for injecting effects (see {@link Effect}) for a given component
@@ -20,7 +20,7 @@ export abstract class EffectsSubscriberBase {
     constructor(
         private store: StoreBase<unknown>,
         private dispatcher: ActionDispatcher,
-        effects: ImmutableArray<Effect<StateAction>>
+        effects: ImmutableArray<Effect>
     ){   
         if(effects)  {
             for(const effect of effects) this.handleEffect(effect)
@@ -29,7 +29,7 @@ export abstract class EffectsSubscriberBase {
         this.effectsInitSubject.next(true);
     }
 
-    protected handleEffect(effect: Immutable<Effect<StateAction>>): void {
+    protected handleEffect(effect: Immutable<Effect>): void {
         effect.handle$(this.dispatcher.actions$).pipe(   
             tap(x => (x && x.type) ? this.store.dispatch(x) : null),   
             catchError(x => this.onEffectError$(x, effect)),
@@ -37,7 +37,7 @@ export abstract class EffectsSubscriberBase {
         ).subscribe();
     }
 
-    private onEffectError$(err: unknown, effect: Immutable<Effect<StateAction>>): Observable<unknown> {
+    private onEffectError$(err: unknown, effect: Immutable<Effect>): Observable<unknown> {
         if(effect.onErrorAction) {
             const action = effect.onErrorAction(err)
             if(action) this.store.dispatch(action)

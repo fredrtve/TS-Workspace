@@ -4,7 +4,7 @@ import { AuthService } from './auth.service';
 import { AUTH_DEFAULT_REDIRECTS } from '../injection-tokens.const';
 import { DefaultRedirects, StoreState } from '../interfaces';
 import { Store } from 'state-management';
-import { UnauthorizedAction } from '../state/actions.const';
+import { AuthActions } from '../state/actions.const';
 
 /** Used to guard for unauthorized users. Provides both canActivate & canActivateChild
  * @remarks Use route data (see {@link AuthRouteData}) to set allowed roles for the guarded routes. 
@@ -37,7 +37,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     if(allowedRoles){
       const currentUser = this.authService.getCurrentUser();
       if(currentUser && allowedRoles.indexOf(currentUser?.role) === -1){
-        this.store.dispatch({type: UnauthorizedAction})
+        this.store.dispatch(AuthActions.unauthorized())
         this.router.navigate([this.defaultRedirects.home]);
         return false;    
       }

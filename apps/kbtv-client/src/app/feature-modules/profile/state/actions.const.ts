@@ -1,18 +1,9 @@
 import { User } from "@core/models";
 import { CurrentUser } from "state-auth";
-import { StateAction } from "state-management";
+import { _createAction, _payload } from "state-management";
 
-export const ClearAndLogoutAction = "CLEAR_AND_LOGOUT_ACTION";
-export interface ClearAndLogoutAction extends StateAction<typeof ClearAndLogoutAction> {}
-
-export const UpdateCurrentUserAction = "UPDATE_CURRENT_USER_ACTION";
-export interface UpdateCurrentUserAction extends StateAction<typeof UpdateCurrentUserAction>{
-    user: Partial<User & CurrentUser>,
-    type: typeof UpdateCurrentUserAction
-}
-
-export const UpdatePasswordAction = "UPDATE_PASSWORD_ACTION";
-export interface UpdatePasswordAction extends StateAction<typeof UpdatePasswordAction> {
-    oldPassword: string, 
-    newPassword: string
+export const ProfileActions = {
+    clearAndLogout: _createAction("Clear And Logout"),
+    updateUser: _createAction("Update Current User", _payload<{ user: Partial<User & CurrentUser> }>()),
+    updatePassword: _createAction("Update Password", _payload<{ oldPassword: string, newPassword: string }>())
 }

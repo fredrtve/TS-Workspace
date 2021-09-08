@@ -4,18 +4,18 @@ import { GroupByPeriod } from '@shared-app/enums/group-by-period.enum';
 import { _setFullNameOnUserForeigns } from '@shared-app/helpers/add-full-name-to-user-foreign.helper';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { _getSummariesByType } from '@shared-timesheet/helpers/get-summaries-by-type.helper';
-import { SetTimesheetCriteriaAction } from '@shared-timesheet/state/actions.const';
+import { SharedTimesheetActions } from '@shared-timesheet/state/actions.const';
 import { AgGridConfig } from '@shared/components/abstracts/ag-grid-config.interface';
 import { filterRecords } from '@shared/operators/filter-records.operator';
-import { Immutable, ImmutableArray } from 'global-types';
-import { FetchingStatus, FetchModelsAction } from 'model/state-fetcher';
+import { Immutable, ImmutableArray, Maybe } from 'global-types';
+import { FetchingStatus, ModelFetcherActions } from 'model/state-fetcher';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Store } from 'state-management';
 import { TimesheetSummary } from '../shared-timesheet/interfaces';
 import { TimesheetCriteria } from '../shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { TimesheetFilter } from '../shared-timesheet/timesheet-filter/timesheet-filter.model';
-import { SetGroupByAction } from './state/actions.const';
+import { TimesheetStatisticActions } from './state/actions.const';
 import { StoreState } from './state/store-state';
 
 type ValidRecord = Timesheet | TimesheetSummary;
@@ -47,19 +47,20 @@ export class TimesheetStatisticFacade extends WithUnsubscribe() {
         map(x =>  { return { data: _setFullNameOnUserForeigns<ValidRecord>(x[0], x[1]) }}
     ));
 
-    fetchingStatus$: Observable<FetchingStatus> = 
-        this.store.selectProperty$("fetchingStatus").pipe(map(x => x.timesheets))
+    fetchingStatus$: Observable<Maybe<FetchingStatus>> = 
+        this.store.selectProperty$("fetchingStatus").pipe(map(x => x?.timesheets))
 
     constructor(private store: Store<StoreState>){
         super();
-        this.store.dispatch({type: FetchModelsAction, props: ["users"]})
+        this.store.dispatch(ModelFetcherActions.fetch<StoreState>({props: ["users"]}));
     }
 
     updateCriteria = (timesheetCriteria: Immutable<TimesheetCriteria>): void =>       
-        this.store.dispatch(<SetTimesheetCriteriaAction<StoreState>>{ type: SetTimesheetCriteriaAction, 
-            timesheetCriteria, criteriaProp: "timesheetStatisticTimesheetCriteria" })
+        this.store.dispatch(SharedTimesheetActions.setTimesheetCriteria({ 
+            timesheetCriteria, criteriaProp: "timesheetStatisticTimesheetCriteria" 
+        }))
 
     updateGroupBy = (groupBy: GroupByPeriod): void =>       
-        this.store.dispatch(<SetGroupByAction>{ type: SetGroupByAction, groupBy })
+        this.store.dispatch(TimesheetStatisticActions.setGroupBy({ groupBy }));
 
 }
