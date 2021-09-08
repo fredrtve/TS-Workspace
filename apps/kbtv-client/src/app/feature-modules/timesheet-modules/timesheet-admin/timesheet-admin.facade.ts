@@ -68,7 +68,7 @@ export class TimesheetAdminFacade {
     constructor(
         private store: Store<StoreState>, 
         private modelFormService: ModelFormService<ModelState>){
-        this.store.dispatch(ModelFetcherActions.fetch<ModelState>({props: ["users"]}))
+        this.store.dispatch(TimesheetAdminActions.fetchTimesheets<ModelState>({props: ["users"]}))
     }
     
     openTimesheetForm = (entityId?: Maybe<string>, initialValue?: Immutable<Partial<TimesheetForm>>): void => {

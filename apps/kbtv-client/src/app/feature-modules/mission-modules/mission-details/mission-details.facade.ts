@@ -1,11 +1,9 @@
 import { Injectable } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { modelCtx } from "@core/configurations/model/app-model-context";
-import { GlobalActions } from "@core/global-actions";
 import { Mission } from "@core/models";
 import { StateMissionDocuments, StateMissionImages, StateMissionNotes } from "@core/state/global-state.interfaces";
 import { SelectedMissionIdParam } from "@shared-mission/params";
-import { SharedMissionActions } from "@shared-mission/state/actions.const";
 import { ModelFileForm, _formToSaveModelFileConverter } from '@shared/constants/form-to-save-model-file.converter';
 import { _filter } from "array-helpers";
 import { Immutable, Maybe } from 'global-types';
@@ -56,7 +54,7 @@ export class MissionDetailsFacade {
     }
 
     addImages = (files: FileList): void =>
-        this.store.dispatch(SharedMissionActions.createMissionImages({
+        this.store.dispatch(MissionDetailsActions.createMissionImages({
             missionId: this.missionId, files: {...files}
         }));
 
@@ -82,9 +80,9 @@ export class MissionDetailsFacade {
     }
 
     deleteChildren = (stateProp: keyof Children, payload: {ids?: string[], id?: string}): void => 
-        this.store.dispatch(GlobalActions.deleteModel({ stateProp, payload }));
+        this.store.dispatch(MissionDetailsActions.deleteModel({ stateProp, payload }));
 
     mailChildren = (stateProp: keyof Mailable, toEmail: string, ids: string[]): void => 
-        this.store.dispatch(GlobalActions.mailModels({ stateProp, ids, toEmail }));
+        this.store.dispatch(MissionDetailsActions.mailModels({ stateProp, ids, toEmail }));
 
 }

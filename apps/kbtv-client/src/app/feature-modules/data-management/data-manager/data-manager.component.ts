@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { StateManagementModule } from 'state-management';
 import { DataManagerFacade } from './data-manager.facade';
-import { DataManagerLocalReducers } from './state/local-state';
+import { DataManagerLocalReducers } from './state/reducers';
 
 type ViewModel = {bottomActions: AppButton[], selectedProperty: string}
 

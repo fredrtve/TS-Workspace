@@ -1,5 +1,4 @@
 import { Injectable } from "@angular/core";
-import { GlobalActions } from "@core/global-actions";
 import { AppConfirmDialogService } from "@core/services/app-confirm-dialog.service";
 import { ModelState } from '@core/state/model-state.interface';
 import { AppModelStatePropTranslations } from "@shared-app/constants/model-state-prop-translations.const";
@@ -9,7 +8,7 @@ import { ModelFormService } from 'model/form';
 import { ComponentStore, Store } from 'state-management';
 import { ComponentState } from '../interfaces/component-state.interface';
 import { PropertyFormMap } from "./property-form.map";
-import { DataManagerLocalActions } from "./state/local-state";
+import { DataManagerActions, DataManagerLocalActions } from "./state/actions";
 
 @Injectable()
 export class DataManagerFacade  {
@@ -49,7 +48,7 @@ export class DataManagerFacade  {
     }
 
     private _deleteItems(ids: string[]): void{
-        this.store.dispatch(GlobalActions.deleteModel({ 
+        this.store.dispatch(DataManagerActions.deleteModel({ 
             stateProp: this.selectedProperty, 
             payload: {ids} 
         }));

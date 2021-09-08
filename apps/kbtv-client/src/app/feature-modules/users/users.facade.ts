@@ -1,14 +1,13 @@
 import { Injectable } from "@angular/core";
-import { _groupBy } from 'array-helpers';
 import { User } from "@core/models";
-import { Immutable, ImmutableArray, Maybe } from 'global-types';
-import { Store } from 'state-management'
-import { map } from "rxjs/operators";
-import { StoreState } from './store-state';
 import { Roles } from "@core/roles.enum";
-import { ModelFetcherActions } from "model/state-fetcher";
 import { ModelState } from "@core/state/model-state.interface";
+import { _groupBy } from 'array-helpers';
+import { Immutable, ImmutableArray, Maybe } from 'global-types';
+import { map } from "rxjs/operators";
+import { Store } from 'state-management';
 import { UserActions } from "./state/actions.const";
+import { StoreState } from './store-state';
 
 @Injectable({providedIn: 'any'})
 export class UsersFacade {
@@ -25,7 +24,7 @@ export class UsersFacade {
   
 
   fetchUsers = () => 
-    this.store.dispatch(ModelFetcherActions.fetch<ModelState>({ props: ["users"]})) 
+    this.store.dispatch(UserActions.fetch<ModelState>({ props: ["users"]})) 
   
   private sortByRole = (users: Maybe<ImmutableArray<User>>): Immutable<User>[] => {
     let grouped = _groupBy(users, "role"); 

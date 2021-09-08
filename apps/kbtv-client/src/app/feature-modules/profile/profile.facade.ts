@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Immutable } from "global-types";
 import { AuthService } from "state-auth";
 import { Store } from 'state-management';
-import { SyncActions, SyncConfig } from 'state-sync';
+import { SyncConfig } from 'state-sync';
 import { ProfileForm } from "./forms/profile-form.const";
 import { ProfileActions } from "./state/actions.const";
 import { StoreState } from './store-state';
@@ -30,11 +30,11 @@ export class ProfileFacade {
     this.store.dispatch(ProfileActions.updatePassword({ oldPassword, newPassword }));
   
   updateSyncConfig = (syncConfig: Immutable<SyncConfig>) => 
-    this.store.dispatch(SyncActions.updateConfig({ syncConfig }));
+    this.store.dispatch(ProfileActions.updateSyncConfig({ syncConfig }));
   
-  syncAll = () => this.store.dispatch(SyncActions.sync());
+  syncAll = () => this.store.dispatch(ProfileActions.sync());
 
-  reloadData = () => this.store.dispatch(SyncActions.reloadState());
+  reloadData = () => this.store.dispatch(ProfileActions.reloadSyncState());
 
   logout = () => this.authService.logout(); 
 

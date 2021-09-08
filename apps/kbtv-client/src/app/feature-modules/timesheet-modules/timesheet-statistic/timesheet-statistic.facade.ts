@@ -52,14 +52,14 @@ export class TimesheetStatisticFacade extends WithUnsubscribe() {
 
     constructor(private store: Store<StoreState>){
         super();
-        this.store.dispatch(ModelFetcherActions.fetch<StoreState>({props: ["users"]}));
+        this.store.dispatch(TimesheetStatisticActions.fetchTimesheets<StoreState>({props: ["users"]}));
     }
 
     updateCriteria = (timesheetCriteria: Immutable<TimesheetCriteria>): void =>       
-        this.store.dispatch(SharedTimesheetActions.setTimesheetCriteria({ 
+        this.store.dispatch(TimesheetStatisticActions.setTimesheetCriteria({ 
             timesheetCriteria, criteriaProp: "timesheetStatisticTimesheetCriteria" 
         }))
-
+        
     updateGroupBy = (groupBy: GroupByPeriod): void =>       
         this.store.dispatch(TimesheetStatisticActions.setGroupBy({ groupBy }));
 
