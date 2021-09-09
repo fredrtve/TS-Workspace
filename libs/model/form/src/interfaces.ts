@@ -32,7 +32,7 @@ export interface ModelFormConfig<
     TFormState extends object | null = null>
 {    
     /** The form being used */
-    dynamicForm: DynamicForm<TForm, TFormState>;
+    dynamicForm: DynamicForm<TForm, TFormState extends null ? TState : TState & TFormState>;
     /** Configure what relational state that will be mapped to entity and included in form state. */
     includes: RelationInclude<TState, TModel>
     /** A custom converter used to convert form to a state action on submit. 

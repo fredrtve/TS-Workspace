@@ -36,8 +36,8 @@ export class ModelFormService<TState extends object> {
   ): BottomSheetRef {
 
     var ref: MatBottomSheetRef<FormSheetWrapperComponent, SaveAction> = 
-      this.formService.open(
-        this.getFormSheetViewConfig(config, initialValue || {}, options || {}),
+      this.formService.open(   
+        <any>this.getFormSheetViewConfig<TModel, TForm, TInputState>(config, initialValue || {}, options || {}),
         { formState: options?.formState, initialValue },
         options?.submitCallback
       )

@@ -27,7 +27,7 @@ export function _saveModel<TState, TModel extends StateModels<TState>>(
        
     const newState: ExtractedModelState<any> = {};
     
-    const relOutput = _fixModel(modelCfg, <UnknownState> rootModel, modelId, newState, preGenIds);
+    const relOutput = _fixModel(<any> modelCfg, <UnknownState> rootModel, modelId, newState, preGenIds);
 
     newState[<string> rootStateProp] = modelId ? 
         {withExistingId: [relOutput.flatModel], withGeneratedId: []} :

@@ -87,10 +87,11 @@ export interface StateChanges<TState> {
     action: StateAction;
 }
 
+/** Represents a function that creates a {@link StateAction} */
 export type ActionCreator<TPayload extends object | undefined, TType extends string> = 
     TPayload extends object 
-        ? (payload: TPayload) => TPayload & StateAction<TType>
-        : () => StateAction<TType>;
+        ? (payload: Immutable<TPayload>) => Immutable<TPayload & StateAction<TType>>
+        : () => Immutable<StateAction<TType>>;
 
 export type InferCreatorPayload<T> = T extends ActionCreator<(infer P), any> ? P : never;
 

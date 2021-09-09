@@ -12,6 +12,10 @@ export type UnionOmit<TUnion extends string | number | symbol, TOmit extends str
     [P in TUnion as P extends TOmit ? never : P]: any 
 };
 
+interface Cool { test: string, not: Not, arris: Not[] }
+interface Not { noe: number, arriss: string[] }
+
+type www = (Immutable<Immutable<Cool>> | undefined) extends (Immutable<Cool> | undefined)  ? true : false;
 /** A value that can't be mutated */
 export type Immutable<T> =
     T extends (infer R)[] ? ImmutableArray<R> :
@@ -21,9 +25,9 @@ export type Immutable<T> =
 
 export interface ImmutableArray<T> extends ReadonlyArray<Immutable<T>> {}
 
-export type ImmutableObject<T> = {
-    readonly [P in keyof T]: Immutable<T[P]>;
-};
+export type ImmutableObject<T> = 
+    T extends ImmutableArray<any> ? T : 
+    { readonly [P in keyof T]: Immutable<T[P]> };
 
 export type UnknownState = {[key: string]: unknown}
 

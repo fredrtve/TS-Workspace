@@ -6,7 +6,7 @@ import { CreateEmployerModelForm } from '../forms/create-employer-model-form.con
 import { CreateInboundEmailPasswordModelForm } from '../forms/create-inbound-email-password-model-form.const';
 import { CreateMissionTypeModelForm } from '../forms/create-mission-type-model-form.const';
 
-export const PropertyFormMap: {[key: string]: Immutable<ModelFormConfig<ModelState, object, object, object | null>> } = {
+export const PropertyFormMap: {[key: string]: Immutable<ModelFormConfig<ModelState, any, object, object | null>> } = {
     "employers": CreateEmployerModelForm,
     "missionTypes": CreateMissionTypeModelForm,
     "inboundEmailPasswords": CreateInboundEmailPasswordModelForm,

@@ -1,4 +1,4 @@
-import { ActionCreator, InferCreatorAction, InferCreatorPayload, Reducer, ReducerFn, StateAction } from '../interfaces'
+import { ActionCreator, InferCreatorAction, Reducer, ReducerFn, StateAction } from '../interfaces'
 
 /** Helper function that creates an array of reducers
  *  @param {...*} reducer - A reducer {@link Reducer}
@@ -13,6 +13,6 @@ import { ActionCreator, InferCreatorAction, InferCreatorPayload, Reducer, Reduce
  *  @returns A reducer with the specified parameters. */
 export const _on = <TState, TActionCreator extends ActionCreator<any,any>>(
     action: TActionCreator, 
-    reducerFn: ReducerFn<TState, InferCreatorPayload<TActionCreator>>): Reducer<TState, InferCreatorAction<TActionCreator>> => { 
+    reducerFn: ReducerFn<TState, InferCreatorAction<TActionCreator>>): Reducer<TState, InferCreatorAction<TActionCreator>> => { 
     return {type: action({}).type, reducerFn} 
 }

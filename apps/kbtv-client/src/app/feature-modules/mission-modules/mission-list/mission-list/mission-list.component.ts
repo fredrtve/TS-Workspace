@@ -5,7 +5,7 @@ import { ModelState } from "@core/state/model-state.interface";
 import { AppButton } from "@shared-app/interfaces/app-button.interface";
 import { WithUnsubscribe } from "@shared-app/mixins/with-unsubscribe.mixin";
 import { SearchBarConfig } from "@shared-mission/components/search-bar/search-bar-config.interface";
-import { CreateMissionModelForm } from "@shared-mission/forms/save-mission-model-form.const";
+import { CreateMissionForm, CreateMissionModelForm } from "@shared-mission/forms/save-mission-model-form.const";
 import { FilteredMissionsResponse, MissionFilterFacade } from "@shared-mission/mission-filter.facade";
 import { BottomBarIconButton } from "@shared/components/bottom-action-bar/bottom-bar-icon-button.interface";
 import { MainTopNavConfig } from "@shared/components/main-top-nav-bar/main-top-nav.config";
