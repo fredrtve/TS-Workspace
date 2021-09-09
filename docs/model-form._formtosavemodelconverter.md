@@ -2,21 +2,20 @@
 
 [Home](./index.md) &gt; [model-form](./model-form.md) &gt; [\_formToSaveModelConverter](./model-form._formtosavemodelconverter.md)
 
-## \_formToSaveModelConverter() function
+## \_formToSaveModelConverter variable
 
 <b>Signature:</b>
 
 ```typescript
-export declare function _formToSaveModelConverter<TState extends object, TModel extends StateModels<TState>>(input: Immutable<ModelFormResult<TState, TModel>>): Immutable<SaveModelAction<TState, TModel>>;
+_formToSaveModelConverter: <TState extends object, TModel extends import("model/core").ValueOf<{ [key in keyof TState]: import("model/core").ModelByStateProp<TState, key>; }>>(input: {
+    readonly formValue: Immutable<TModel>;
+    readonly options?: Immutable<Partial<TState>> | null | undefined;
+    readonly stateProp: Immutable<import("model/core").StatePropByModel<TState, TModel>>;
+    readonly saveAction: import("model/state-commands").SaveAction;
+}) => {
+    type: string;
+    saveAction: import("model/state-commands").SaveAction;
+    entity: Immutable<TModel>;
+    stateProp: Immutable<import("model/core").StatePropByModel<TState, TModel>>;
+}
 ```
-
-## Parameters
-
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  input | Immutable&lt;[ModelFormResult](./model-form.modelformresult.md)<!-- -->&lt;TState, TModel&gt;&gt; |  |
-
-<b>Returns:</b>
-
-Immutable&lt;SaveModelAction&lt;TState, TModel&gt;&gt;
-

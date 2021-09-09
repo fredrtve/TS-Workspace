@@ -17,12 +17,6 @@ The library renders the form in a bottom sheet. And provides it with relational 
 |  [ModelFormModule](./model-form.modelformmodule.md) |  |
 |  [ModelFormService](./model-form.modelformservice.md) | Responsible for showing a form sheet with the specified model form |
 
-## Functions
-
-|  Function | Description |
-|  --- | --- |
-|  [\_formToSaveModelConverter(input)](./model-form._formtosavemodelconverter.md) |  |
-
 ## Interfaces
 
 |  Interface | Description |
@@ -30,6 +24,12 @@ The library renders the form in a bottom sheet. And provides it with relational 
 |  [ModelFormConfig](./model-form.modelformconfig.md) | Represents a configuration object for a model form |
 |  [ModelFormResult](./model-form.modelformresult.md) | The input value passed to converters by the model form when form is submitted. |
 |  [ModelFormServiceOptions](./model-form.modelformserviceoptions.md) | Represents a configuration object for the model form service. |
+
+## Variables
+
+|  Variable | Description |
+|  --- | --- |
+|  [\_formToSaveModelConverter](./model-form._formtosavemodelconverter.md) |  |
 
 ## Type Aliases
 

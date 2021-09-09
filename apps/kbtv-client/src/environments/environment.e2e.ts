@@ -3,6 +3,7 @@ export const environment = {
     testing: true,
     demo: false,
     apiUrl: 'https://localhost:44379/api',
+    companyName: "Your Renovation Company",
     baseUrl: '',
     googleMapsKey: 'AIzaSyBUWZmwjGN92B3PoNS6x6qpOmc3xrP55d8', 
     inboundEmailDomain: 'rapporter.bjbygg.no',

@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type ImmutableObject<T> = {
+export declare type ImmutableObject<T> = T extends ImmutableArray<any> ? T : {
     readonly [P in keyof T]: Immutable<T[P]>;
 };
 ```
-<b>References:</b> [Immutable](./global-types.immutable.md)
+<b>References:</b> [ImmutableArray](./global-types.immutablearray.md)<!-- -->, [Immutable](./global-types.immutable.md)
 

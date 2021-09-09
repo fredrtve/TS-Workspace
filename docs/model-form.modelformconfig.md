@@ -16,8 +16,8 @@ export interface ModelFormConfig<TState extends object, TModel extends StateMode
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [actionConverter?](./model-form.modelformconfig.actionconverter.md) | [Converter](./model-form.converter.md)<!-- -->&lt;[ModelFormResult](./model-form.modelformresult.md)<!-- -->&lt;TState, TModel, TForm&gt;, StateAction&gt; | <i>(Optional)</i> A custom converter used to convert form to a state action on submit. Defaults to [\_formToSaveModelConverter()](./model-form._formtosavemodelconverter.md) with form value as entity. |
-|  [dynamicForm](./model-form.modelformconfig.dynamicform.md) | DynamicForm&lt;TForm, TFormState&gt; | The form being used |
+|  [actionConverter?](./model-form.modelformconfig.actionconverter.md) | [Converter](./model-form.converter.md)<!-- -->&lt;[ModelFormResult](./model-form.modelformresult.md)<!-- -->&lt;TState, TModel, TForm&gt;, StateAction&gt; | <i>(Optional)</i> A custom converter used to convert form to a state action on submit. Defaults to [\_formToSaveModelConverter](./model-form._formtosavemodelconverter.md) with form value as entity. |
+|  [dynamicForm](./model-form.modelformconfig.dynamicform.md) | DynamicForm&lt;TForm, TFormState extends null ? TState : TState &amp; TFormState&gt; | The form being used |
 |  [includes](./model-form.modelformconfig.includes.md) | RelationInclude&lt;TState, TModel&gt; | Configure what relational state that will be mapped to entity and included in form state. |
 |  [modelConverter?](./model-form.modelformconfig.modelconverter.md) | Maybe&lt;[Converter](./model-form.converter.md)<!-- -->&lt;TModel, Partial&lt;TForm&gt;&gt;&gt; | <i>(Optional)</i> A custom converter used to convert the model data to form. Only required on edit. If null, form value is treated as model |
 

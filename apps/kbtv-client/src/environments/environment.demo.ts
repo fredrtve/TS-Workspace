@@ -3,6 +3,7 @@ export const environment = {
     testing: false,
     demo: true,
     apiUrl: 'https://bjbyggdemoapi.azurewebsites.net/api',
+    companyName: "Your Renovation Company",
     baseUrl: '/demo',
     googleMapsKey: 'AIzaSyBUWZmwjGN92B3PoNS6x6qpOmc3xrP55d8', 
     inboundEmailDomain: 'rapporter.bjbygg.no',

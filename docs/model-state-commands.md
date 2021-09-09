@@ -27,20 +27,17 @@ The library depends on the 'state-management' library to dispatch relevant actio
 
 |  Interface | Description |
 |  --- | --- |
-|  [DeleteModelAction](./model-state-commands.deletemodelaction.md) |  |
-|  [ModelStateAction](./model-state-commands.modelstateaction.md) |  |
-|  [SaveModelAction](./model-state-commands.savemodelaction.md) |  |
-|  [SetSaveModelStateAction](./model-state-commands.setsavemodelstateaction.md) |  |
+|  [DeleteModelPayload](./model-state-commands.deletemodelpayload.md) |  |
+|  [ModelCommandPayload](./model-state-commands.modelcommandpayload.md) |  |
+|  [SaveModelPayload](./model-state-commands.savemodelpayload.md) |  |
+|  [SetSaveModelStatePayload](./model-state-commands.setsavemodelstatepayload.md) |  |
 
 ## Variables
 
 |  Variable | Description |
 |  --- | --- |
-|  [DeleteModelAction](./model-state-commands.deletemodelaction.md) |  |
-|  [DeleteModelReducer](./model-state-commands.deletemodelreducer.md) |  |
-|  [SaveModelAction](./model-state-commands.savemodelaction.md) |  |
-|  [SaveModelReducer](./model-state-commands.savemodelreducer.md) |  |
-|  [SetSaveModelStateAction](./model-state-commands.setsavemodelstateaction.md) |  |
+|  [ModelCommandReducers](./model-state-commands.modelcommandreducers.md) |  |
+|  [ModelCommands](./model-state-commands.modelcommands.md) |  |
 
 ## Type Aliases
 

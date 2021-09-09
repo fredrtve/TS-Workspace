@@ -4,7 +4,7 @@
 
 ## ModelFormConfig.actionConverter property
 
-A custom converter used to convert form to a state action on submit. Defaults to [\_formToSaveModelConverter()](./model-form._formtosavemodelconverter.md) with form value as entity.
+A custom converter used to convert form to a state action on submit. Defaults to [\_formToSaveModelConverter](./model-form._formtosavemodelconverter.md) with form value as entity.
 
 <b>Signature:</b>
 

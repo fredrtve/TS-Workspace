@@ -16,7 +16,7 @@ export declare class ActionDispatcher
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [actions$](./state-management.actiondispatcher.actions_.md) |  | Observable&lt;[DispatchedAction](./state-management.dispatchedaction.md)<!-- -->&lt;[StateAction](./state-management.stateaction.md)<!-- -->&gt;&gt; |  |
+|  [actions$](./state-management.actiondispatcher.actions_.md) |  | Observable&lt;[DispatchedAction](./state-management.dispatchedaction.md)<!-- -->&lt;[ActionCreator](./state-management.actioncreator.md)<!-- -->&lt;any, any&gt;&gt;&gt; |  |
 |  [ɵfac](./state-management.actiondispatcher._fac.md) | <code>static</code> | i0.ɵɵFactoryDeclaration&lt;[ActionDispatcher](./state-management.actiondispatcher.md)<!-- -->, never&gt; |  |
 |  [ɵprov](./state-management.actiondispatcher._prov.md) | <code>static</code> | i0.ɵɵInjectableDeclaration&lt;[ActionDispatcher](./state-management.actiondispatcher.md)<!-- -->&gt; |  |
 

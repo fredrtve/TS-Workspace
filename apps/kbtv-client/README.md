@@ -6,11 +6,10 @@ A mobile first angular app for managing missions and timesheets for a small reno
 
 Angular has been chosen as framework primarily for learning purposes. 
 
-The application has no tests, and should therefore be used with caution. This is a big todo. 
-
 [Open live demo](https://kbtv.z16.web.core.windows.net/demo)
 
 ## Motivation
+
 Primary motivation for this project is assisting a small renovation company in managing missions and related images, documents and timesheets. In addition there has been a focus on learning new technologies and software principles.
 
 ## Features
@@ -20,8 +19,8 @@ Primary motivation for this project is assisting a small renovation company in m
 4. Timesheet pages for employees to view and manage timesheets.
 5. Timesheet admin pages for approving or editing timesheets for employees.
 6. Timesheets statistics page with aggregated timesheets and export capabilities.
-7. Data management page to create or edit various data types.
-8. User managment page to create or edit users. 
+7. Data management page to create, edit or delete various data types.
+8. User managment page to create, edit or delete users. 
 9. Profile page for various settings, updating profile or password, and logging out. 
 10. Offline support for most use cases.
 11. Responsive design that works on both mobile and desktop

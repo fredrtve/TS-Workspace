@@ -9,13 +9,13 @@ Represents an action that has been dispatched by a [Store](./state-management.st
 <b>Signature:</b>
 
 ```typescript
-export interface DispatchedAction<TAction extends StateAction, TState = {}> 
+export interface DispatchedAction<TActionCreator extends ActionCreator<any, any>, TState = {}> 
 ```
 
 ## Properties
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [action](./state-management.dispatchedaction.action.md) | Immutable&lt;TAction&gt; | The action that was dispatched |
+|  [action](./state-management.dispatchedaction.action.md) | [InferCreatorAction](./state-management.infercreatoraction.md)<!-- -->&lt;TActionCreator&gt; | The action that was dispatched |
 |  [stateSnapshot](./state-management.dispatchedaction.statesnapshot.md) | Immutable&lt;TState&gt; | A snapshot of the state when the action was dispatched |
 

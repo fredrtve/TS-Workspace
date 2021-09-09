@@ -9,7 +9,7 @@ Represents a class for handling side effects on dispatched action(s). Provided w
 <b>Signature:</b>
 
 ```typescript
-export interface Effect<TAction extends StateAction> 
+export interface Effect 
 ```
 
 ## Properties

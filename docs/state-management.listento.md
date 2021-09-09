@@ -9,5 +9,7 @@ An rxjs operator used to filter the types of actions provided from an action obs
 <b>Signature:</b>
 
 ```typescript
-listenTo: <TAction extends StateAction<string>, TState>(types: string[]) => (source: Observable<DispatchedAction<TAction, TState>>) => Observable<DispatchedAction<TAction, TState>>
+listenTo: <TState, TActionCreator extends (() => {
+    readonly type: string;
+}) | ((payload: any) => any)>(actions: TActionCreator[]) => (source: Observable<DispatchedAction<TActionCreator, TState>>) => Observable<DispatchedAction<TActionCreator, TState>>
 ```

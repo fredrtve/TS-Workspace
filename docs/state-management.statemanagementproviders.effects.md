@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-effects?: Type<Effect<StateAction>>[];
+effects?: Type<Effect>[];
 ```

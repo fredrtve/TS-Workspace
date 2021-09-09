@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-handleEffects(effects: ImmutableArray<Effect<StateAction>>): void;
+handleEffects(effects: ImmutableArray<Effect>): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  effects | ImmutableArray&lt;[Effect](./state-management.effect.md)<!-- -->&lt;[StateAction](./state-management.stateaction.md)<!-- -->&gt;&gt; |  |
+|  effects | ImmutableArray&lt;[Effect](./state-management.effect.md)<!-- -->&gt; |  |
 
 <b>Returns:</b>
 

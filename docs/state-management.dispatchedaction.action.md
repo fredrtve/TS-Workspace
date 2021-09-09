@@ -9,5 +9,5 @@ The action that was dispatched
 <b>Signature:</b>
 
 ```typescript
-action: Immutable<TAction>;
+action: InferCreatorAction<TActionCreator>;
 ```

@@ -22,14 +22,13 @@ The implementation uses both indexedDB and localStorage.
 
 |  Interface | Description |
 |  --- | --- |
-|  [SetPersistedStateAction](./state-db.setpersistedstateaction.md) |  |
 |  [StatePropConfig](./state-db.statepropconfig.md) | Represents a object with configurations for a state property that should be persisted by the db. |
 
 ## Variables
 
 |  Variable | Description |
 |  --- | --- |
-|  [SetPersistedStateAction](./state-db.setpersistedstateaction.md) | Action responsible for setting state from storage. |
+|  [DbActions](./state-db.dbactions.md) |  |
 |  [STATE\_DB\_ACTION\_FILTER](./state-db.state_db_action_filter.md) |  |
 |  [STATE\_DB\_CONFIG](./state-db.state_db_config.md) |  |
 

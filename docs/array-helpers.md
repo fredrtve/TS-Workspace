@@ -16,7 +16,6 @@ A library of helper functions related to arrays &amp; object arrays
 |  [\_removeById(originals, deletedId, idProp)](./array-helpers._removebyid.md) | Remove an object from an array of objects |
 |  [\_removeRangeById(originals, deletedIds, idProp)](./array-helpers._removerangebyid.md) | Remove a range of objects from an array of objects |
 |  [\_removeRangeByProp(originals, value, prop)](./array-helpers._removerangebyprop.md) | Remove a range of objects from an array of objects based on a common property value |
-|  [\_replace(array, obj, id, idProp)](./array-helpers._replace.md) | Replace an object in an array objects with a new value |
 |  [\_update(array, updatedObj, idProp)](./array-helpers._update.md) | Update a object in an object array |
 
 ## Variables

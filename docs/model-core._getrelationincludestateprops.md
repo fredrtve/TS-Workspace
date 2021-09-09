@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-export declare function _getRelationIncludeStateProps<TState, TModel extends StateModels<TState>>(include: Immutable<RelationInclude<TState, TModel>>): Prop<TState>[];
+export declare function _getRelationIncludeStateProps<TState, TModel extends StateModels<TState>>({ prop, includes }: Immutable<RelationInclude<TState, TModel>>): Prop<TState>[];
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  include | Immutable&lt;[RelationInclude](./model-core.relationinclude.md)<!-- -->&lt;TState, TModel&gt;&gt; |  |
+|  { prop, includes } | Immutable&lt;[RelationInclude](./model-core.relationinclude.md)<!-- -->&lt;TState, TModel&gt;&gt; |  |
 
 <b>Returns:</b>
 

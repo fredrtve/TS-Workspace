@@ -18,30 +18,21 @@ A library for synchronizing state with an external api.
 |  Interface | Description |
 |  --- | --- |
 |  [CustomSyncProviders](./state-sync.customsyncproviders.md) |  |
-|  [ReloadSyncStateAction](./state-sync.reloadsyncstateaction.md) |  |
 |  [StateSyncConfig](./state-sync.statesyncconfig.md) |  |
 |  [StateSyncTimestamp](./state-sync.statesynctimestamp.md) |  |
 |  [SyncArrayResponse](./state-sync.syncarrayresponse.md) | Response data for a state array |
 |  [SyncConfig](./state-sync.syncconfig.md) | User configuration for synchronization |
 |  [SyncHttpFetcher](./state-sync.synchttpfetcher.md) | Responsible for fetching data from external API. Provided by consumer application with token [SYNC\_HTTP\_FETCHER](./state-sync.sync_http_fetcher.md)<!-- -->. |
 |  [SyncResponse](./state-sync.syncresponse.md) | Response from a synchronization request |
-|  [SyncStateAction](./state-sync.syncstateaction.md) |  |
 |  [SyncStatePropConfig](./state-sync.syncstatepropconfig.md) | Configuration for synchronized state property |
-|  [SyncStateSuccessAction](./state-sync.syncstatesuccessaction.md) |  |
-|  [UpdateSyncConfigAction](./state-sync.updatesyncconfigaction.md) |  |
-|  [WipeSyncStateAction](./state-sync.wipesyncstateaction.md) |  |
 
 ## Variables
 
 |  Variable | Description |
 |  --- | --- |
-|  [ReloadSyncStateAction](./state-sync.reloadsyncstateaction.md) |  |
 |  [SYNC\_HTTP\_FETCHER](./state-sync.sync_http_fetcher.md) |  |
 |  [SYNC\_STATE\_CONFIG](./state-sync.sync_state_config.md) |  |
-|  [SyncStateAction](./state-sync.syncstateaction.md) |  |
-|  [SyncStateSuccessAction](./state-sync.syncstatesuccessaction.md) |  |
-|  [UpdateSyncConfigAction](./state-sync.updatesyncconfigaction.md) |  |
-|  [WipeSyncStateAction](./state-sync.wipesyncstateaction.md) |  |
+|  [SyncActions](./state-sync.syncactions.md) |  |
 
 ## Type Aliases
 

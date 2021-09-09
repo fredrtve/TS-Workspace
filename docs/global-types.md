@@ -27,6 +27,8 @@ A library of generic typescript types
 |  [NotNull](./global-types.notnull.md) |  |
 |  [PickByValueType](./global-types.pickbyvaluetype.md) | Creates a lookup type with properties of T with values that extends U |
 |  [Prop](./global-types.prop.md) |  |
+|  [ShallowCopy](./global-types.shallowcopy.md) | A value with immutable object properties |
+|  [UnionOmit](./global-types.unionomit.md) |  |
 |  [UnionTupleType](./global-types.uniontupletype.md) |  |
 |  [UnknownState](./global-types.unknownstate.md) |  |
 |  [ValueOf](./global-types.valueof.md) |  |

@@ -17,6 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "outputPath": "dist/kbtv-client-prod",
             "index": "apps/kbtv-client/src/index.html",
             "main": "apps/kbtv-client/src/main.ts",
             "polyfills": "apps/kbtv-client/src/polyfills.ts",

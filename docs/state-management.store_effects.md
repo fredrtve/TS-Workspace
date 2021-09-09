@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-STORE_EFFECTS: InjectionToken<Effect<StateAction<string>>[]>
+STORE_EFFECTS: InjectionToken<Effect[]>
 ```

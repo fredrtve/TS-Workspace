@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-STORE_REDUCERS: InjectionToken<Reducer<unknown, StateAction<string>>[]>
+STORE_REDUCERS: InjectionToken<Reducer<unknown, StateAction<string>>[][]>
 ```

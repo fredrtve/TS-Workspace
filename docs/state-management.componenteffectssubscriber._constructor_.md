@@ -9,7 +9,7 @@ Constructs a new instance of the `ComponentEffectsSubscriber` class
 <b>Signature:</b>
 
 ```typescript
-constructor(store: ComponentStore<unknown>, dispatcher: ActionDispatcher, effects: ImmutableArray<Effect<StateAction>>);
+constructor(store: ComponentStore<unknown>, dispatcher: ActionDispatcher, effects: ImmutableArray<Effect>);
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ constructor(store: ComponentStore<unknown>, dispatcher: ActionDispatcher, effect
 |  --- | --- | --- |
 |  store | [ComponentStore](./state-management.componentstore.md)<!-- -->&lt;unknown&gt; |  |
 |  dispatcher | [ActionDispatcher](./state-management.actiondispatcher.md) |  |
-|  effects | ImmutableArray&lt;[Effect](./state-management.effect.md)<!-- -->&lt;[StateAction](./state-management.stateaction.md)<!-- -->&gt;&gt; |  |
+|  effects | ImmutableArray&lt;[Effect](./state-management.effect.md)<!-- -->&gt; |  |
 

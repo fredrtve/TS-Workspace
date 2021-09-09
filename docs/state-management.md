@@ -38,7 +38,10 @@ The implementation is similar to the redux design pattern.
 
 |  Variable | Description |
 |  --- | --- |
-|  [\_createReducer](./state-management._createreducer.md) | Helper function that creates a reducer |
+|  [\_createAction](./state-management._createaction.md) | Represents a function that creates an [ActionCreator](./state-management.actioncreator.md) |
+|  [\_createReducers](./state-management._createreducers.md) | Helper function that creates an array of reducers |
+|  [\_on](./state-management._on.md) | Helper function that creates a reducer |
+|  [\_payload](./state-management._payload.md) |  |
 |  [listenTo](./state-management.listento.md) | An rxjs operator used to filter the types of actions provided from an action observer. |
 |  [select](./state-management.select.md) | An rxjs operator used to select a specified slice from state and only emit when its value changes. |
 |  [selectProp](./state-management.selectprop.md) | An rxjs operator used to select a specified property from state and only emit when its value changes. |
@@ -53,6 +56,11 @@ The implementation is similar to the redux design pattern.
 
 |  Type Alias | Description |
 |  --- | --- |
+|  [ActionCreator](./state-management.actioncreator.md) | Represents a function that creates a [StateAction](./state-management.stateaction.md) |
+|  [DispatchedActions](./state-management.dispatchedactions.md) |  |
+|  [InferCreatorAction](./state-management.infercreatoraction.md) |  |
+|  [InferCreatorPayload](./state-management.infercreatorpayload.md) |  |
+|  [InferCreatorType](./state-management.infercreatortype.md) |  |
 |  [MetaReducer](./state-management.metareducer.md) | Represents a function for intercepting reducers before they are processed. Provided with token [STORE\_META\_REDUCERS](./state-management.store_meta_reducers.md) |
 |  [ReducerFn](./state-management.reducerfn.md) | Represents a pure function that modifies state |
 |  [StateSlice](./state-management.stateslice.md) |  |

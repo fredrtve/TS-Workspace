@@ -7,16 +7,25 @@
 <b>Signature:</b>
 
 ```typescript
-handle$(actions$: Observable<DispatchedAction<SaveModelAction<any, any>, {}>>): Observable<void | ImmutableObject<StateAction<string>>>;
+handle$(actions$: DispatchedActions): import("rxjs").Observable<{
+        type: string;
+        saveAction: import("model/state-commands").SaveAction;
+        saveModelResult: {
+            readonly modifiedState: {};
+            readonly fullModel: unknown;
+            readonly flatModels: {};
+        };
+        stateProp: never;
+    }>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  actions$ | Observable&lt;DispatchedAction&lt;[SaveModelAction](./model-state-commands.savemodelaction.md)<!-- -->&lt;any, any&gt;, {}&gt;&gt; |  |
+|  actions$ | DispatchedActions |  |
 
 <b>Returns:</b>
 
-Observable&lt;void \| ImmutableObject&lt;StateAction&lt;string&gt;&gt;&gt;
+import("rxjs").Observable&lt;{ type: string; saveAction: import("model/state-commands").[SaveAction](./model-state-commands.saveaction.md)<!-- -->; saveModelResult: { readonly modifiedState: {}; readonly fullModel: unknown; readonly flatModels: {}; }; stateProp: never; }&gt;
 

@@ -32,17 +32,16 @@ The implementation uses access tokens for authorization. If specified, refresh t
 |  [Credentials](./state-auth.credentials.md) | Describes an object containing data used to authorize a user |
 |  [CurrentUser](./state-auth.currentuser.md) | Describes the user that is currently active. |
 |  [DefaultRedirects](./state-auth.defaultredirects.md) | Represents an object of default router redirects. Provided with token [AUTH\_DEFAULT\_REDIRECTS](./state-auth.auth_default_redirects.md) |
-|  [LoginAction](./state-auth.loginaction.md) | Represents the action used to login a user |
+|  [LoginActionPayload](./state-auth.loginactionpayload.md) | Represents the action payload used to login a user |
 |  [LoginResponse](./state-auth.loginresponse.md) | Describes the expected result from a login command |
-|  [LoginSuccessAction](./state-auth.loginsuccessaction.md) | Represents the action dispatched when a successful login attempt has been made |
-|  [LogoutAction](./state-auth.logoutaction.md) | Represents an action used to logout the current user |
-|  [RefreshTokenAction](./state-auth.refreshtokenaction.md) |  |
+|  [LoginSuccessActionPayload](./state-auth.loginsuccessactionpayload.md) | Represents the action payload when a successful login attempt has been made |
+|  [LogoutActionPayload](./state-auth.logoutactionpayload.md) | Represents an action payload used to logout the current user |
+|  [RefreshTokenActionPayload](./state-auth.refreshtokenactionpayload.md) |  |
 |  [RefreshTokenResponse](./state-auth.refreshtokenresponse.md) | Describes the expected result from a refresh token command |
-|  [RefreshTokenSuccessAction](./state-auth.refreshtokensuccessaction.md) |  |
+|  [RefreshTokenSuccessActionPayload](./state-auth.refreshtokensuccessactionpayload.md) |  |
 |  [StateCurrentUser](./state-auth.statecurrentuser.md) | Represents a state slice containing the current user logged in |
 |  [StoreState](./state-auth.storestate.md) |  |
 |  [Tokens](./state-auth.tokens.md) | Describes an object |
-|  [WipeTokensAction](./state-auth.wipetokensaction.md) | Represents the action responsible for removing tokens from state |
 
 ## Variables
 
@@ -50,12 +49,6 @@ The implementation uses access tokens for authorization. If specified, refresh t
 |  --- | --- |
 |  [AUTH\_COMMAND\_API\_MAP](./state-auth.auth_command_api_map.md) |  |
 |  [AUTH\_DEFAULT\_REDIRECTS](./state-auth.auth_default_redirects.md) |  |
+|  [AuthActions](./state-auth.authactions.md) |  |
 |  [AuthReturnUrlQueryParam](./state-auth.authreturnurlqueryparam.md) | Query param used in [NoAuthGuard](./state-auth.noauthguard.md) to redirect to custom url |
-|  [LoginAction](./state-auth.loginaction.md) |  |
-|  [LoginSuccessAction](./state-auth.loginsuccessaction.md) |  |
-|  [LogoutAction](./state-auth.logoutaction.md) |  |
-|  [RefreshTokenAction](./state-auth.refreshtokenaction.md) |  |
-|  [RefreshTokenSuccessAction](./state-auth.refreshtokensuccessaction.md) |  |
-|  [UnauthorizedAction](./state-auth.unauthorizedaction.md) |  |
-|  [WipeTokensAction](./state-auth.wipetokensaction.md) |  |
 

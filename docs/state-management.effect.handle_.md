@@ -9,14 +9,14 @@ A handler function that listens to the action observer.
 <b>Signature:</b>
 
 ```typescript
-handle$(actions$: Observable<DispatchedAction<TAction>>): Observable<Immutable<StateAction> | void>;
+handle$(actions$: DispatchedActions): Observable<Immutable<StateAction> | void>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  actions$ | Observable&lt;[DispatchedAction](./state-management.dispatchedaction.md)<!-- -->&lt;TAction&gt;&gt; | An action observer |
+|  actions$ | [DispatchedActions](./state-management.dispatchedactions.md) | An action observer |
 
 <b>Returns:</b>
 

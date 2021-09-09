@@ -16,14 +16,22 @@ A library for fetching external model state to store in global state.
 
 |  Interface | Description |
 |  --- | --- |
-|  [FetchModelsAction](./model-state-fetcher.fetchmodelsaction.md) |  |
 |  [ModelFetcherConfig](./model-state-fetcher.modelfetcherconfig.md) | Represents an extended model configuration for a given model for fetchable models |
-|  [StateIsFetching](./model-state-fetcher.stateisfetching.md) | Represents a slice of state containing an map of fetching statuses for given models |
+|  [StateFetchingStatus](./model-state-fetcher.statefetchingstatus.md) | Represents a slice of state containing an map of fetching statuses for given models |
 
 ## Variables
 
 |  Variable | Description |
 |  --- | --- |
-|  [FetchModelsAction](./model-state-fetcher.fetchmodelsaction.md) |  |
 |  [MODEL\_FETCHER\_BASE\_URL](./model-state-fetcher.model_fetcher_base_url.md) | Used to inject a base url appended to all fetch requests |
+|  [MODEL\_FETCHER\_RETRY\_STRATEGY](./model-state-fetcher.model_fetcher_retry_strategy.md) | Used to inject a custom retry strategy for http calls |
+|  [ModelFetcherActions](./model-state-fetcher.modelfetcheractions.md) |  |
+
+## Type Aliases
+
+|  Type Alias | Description |
+|  --- | --- |
+|  [FetcherRetryStrategy](./model-state-fetcher.fetcherretrystrategy.md) | Represents an higher order observable for deciding a retry strategy for http calls. Used together with retryWhen operator. |
+|  [FetchingStatus](./model-state-fetcher.fetchingstatus.md) | Represents the different statuses for a model fetching |
+|  [FetchingStatusMap](./model-state-fetcher.fetchingstatusmap.md) | Represents a map of fetching statuses for props in TState |
 

@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-actions$: Observable<DispatchedAction<StateAction>>;
+actions$: Observable<DispatchedAction<ActionCreator<any, any>>>;
 ```

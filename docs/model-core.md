@@ -6,14 +6,19 @@
 
 A library consisting of core logic required for configuring, querying and saving models.
 
+## Classes
+
+|  Class | Description |
+|  --- | --- |
+|  [ModelContext](./model-core.modelcontext.md) |  |
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
 |  [\_deleteModel(state, stateProp, cfg)](./model-core._deletemodel.md) | Responsible for deleting model with given id(s) and children with cascadeDelete set to true. |
 |  [\_getModelConfig(prop)](./model-core._getmodelconfig.md) | Get model config for given state property |
-|  [\_getModelDisplayValue(prop, value)](./model-core._getmodeldisplayvalue.md) | Get display value for model |
-|  [\_getRelationIncludeStateProps(include)](./model-core._getrelationincludestateprops.md) |  |
+|  [\_getRelationIncludeStateProps({ prop, includes })](./model-core._getrelationincludestateprops.md) |  |
 |  [\_registerModelStateConfig(configMap)](./model-core._registermodelstateconfig.md) | Set model configurations. Should be called once on initalization. |
 |  [\_saveModel(state, rootStateProp, rootModel, preGenIds)](./model-core._savemodel.md) | Add or update a model and any foreign relationships set on the provided model value according to [ModelConfig](./model-core.modelconfig.md) |
 
@@ -28,22 +33,17 @@ A library consisting of core logic required for configuring, querying and saving
 |  [SaveModelResult](./model-core.savemodelresult.md) | Represents the results from saving a model with [\_saveModel()](./model-core._savemodel.md) |
 |  [StateRelation](./model-core.staterelation.md) | Represents a relation to a property of TState |
 
-## Variables
-
-|  Variable | Description |
-|  --- | --- |
-|  [\_getModel](./model-core._getmodel.md) | Get model with specified relationships set on model according to model property config [ModelConfig](./model-core.modelconfig.md) |
-|  [\_getModels](./model-core._getmodels.md) | Get all or given range of models with specified relationships set on model according to model property config [ModelConfig](./model-core.modelconfig.md) |
-
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
 |  [ExtractedModelState](./model-core.extractedmodelstate.md) | Represents the extracted models from saving a model. Ordered by state prop. |
 |  [IdGenerator](./model-core.idgenerator.md) | A custom id generator used to create ids of type TType. |
+|  [ModelByStateProp](./model-core.modelbystateprop.md) |  |
 |  [ModelChildByChildProp](./model-core.modelchildbychildprop.md) |  |
 |  [ModelChildrenMap](./model-core.modelchildrenmap.md) |  |
 |  [ModelConfigMap](./model-core.modelconfigmap.md) |  |
+|  [ModelForeignByForeignProp](./model-core.modelforeignbyforeignprop.md) |  |
 |  [ModelForeignsMap](./model-core.modelforeignsmap.md) |  |
 |  [StateModels](./model-core.statemodels.md) |  |
 |  [StatePropByModel](./model-core.statepropbymodel.md) |  |
@@ -56,6 +56,7 @@ A library consisting of core logic required for configuring, querying and saving
 |  [ValidModelForeignProperties](./model-core.validmodelforeignproperties.md) |  |
 |  [ValidModelForeigns](./model-core.validmodelforeigns.md) |  |
 |  [ValidModelIdKey](./model-core.validmodelidkey.md) |  |
+|  [ValidRelationProps](./model-core.validrelationprops.md) |  |
 |  [ValidStateModel](./model-core.validstatemodel.md) |  |
 |  [ValidStateModelArray](./model-core.validstatemodelarray.md) |  |
 |  [ValueOf](./model-core.valueof.md) |  |

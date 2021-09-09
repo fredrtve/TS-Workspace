@@ -16,7 +16,6 @@ export interface RelationInclude<TState, TModel extends StateModels<TState>>
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [children?](./model-core.relationinclude.children.md) | [ValidModelChildProperties](./model-core.validmodelchildproperties.md)<!-- -->&lt;TState, TModel&gt;\[\] \| 'all' | <i>(Optional)</i> Child properties that should be included. Set to 'all' to get all relationships |
-|  [foreigns?](./model-core.relationinclude.foreigns.md) | [ValidModelForeignProperties](./model-core.validmodelforeignproperties.md)<!-- -->&lt;TState, TModel&gt;\[\] \| 'all' | <i>(Optional)</i> Foreign properties that should be included. Set to 'all' to get all relationships |
+|  [includes?](./model-core.relationinclude.includes.md) | [ValidRelationProps](./model-core.validrelationprops.md)<!-- -->&lt;TState, TModel&gt;\[\] | <i>(Optional)</i> Foreign properties that should be included. Set to 'all' to get all relationships |
 |  [prop](./model-core.relationinclude.prop.md) | [StatePropByModel](./model-core.statepropbymodel.md)<!-- -->&lt;TState, TModel&gt; | The model property |
 

@@ -8,8 +8,8 @@
 
 ```typescript
 export declare type StateModels<TState> = ValueOf<{
-    [key in keyof TState]: TState[key] extends ValidStateModelArray<(infer M)> ? M : never;
+    [key in keyof TState]: ModelByStateProp<TState, key>;
 }>;
 ```
-<b>References:</b> [ValueOf](./model-core.valueof.md)<!-- -->, [ValidStateModelArray](./model-core.validstatemodelarray.md)
+<b>References:</b> [ValueOf](./model-core.valueof.md)<!-- -->, [ModelByStateProp](./model-core.modelbystateprop.md)
 

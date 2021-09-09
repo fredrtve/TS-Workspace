@@ -9,7 +9,7 @@ Represents a pure function that modifies state
 <b>Signature:</b>
 
 ```typescript
-export declare type ReducerFn<TState, TAction extends StateAction> = (state: Immutable<TState>, action: Immutable<TAction>) => Maybe<Immutable<Partial<TState>>>;
+export declare type ReducerFn<TState, TAction extends StateAction> = (state: Immutable<TState>, action: TAction) => Maybe<Immutable<Partial<TState>>>;
 ```
 <b>References:</b> [StateAction](./state-management.stateaction.md)
 

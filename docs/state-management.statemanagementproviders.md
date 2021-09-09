@@ -16,7 +16,7 @@ export interface StateManagementProviders
 |  --- | --- | --- |
 |  [actionInterceptors?](./state-management.statemanagementproviders.actioninterceptors.md) | Type&lt;[ActionInterceptor](./state-management.actioninterceptor.md)<!-- -->&gt;\[\] | <i>(Optional)</i> |
 |  [defaultState?](./state-management.statemanagementproviders.defaultstate.md) | Object | <i>(Optional)</i> |
-|  [effects?](./state-management.statemanagementproviders.effects.md) | Type&lt;[Effect](./state-management.effect.md)<!-- -->&lt;[StateAction](./state-management.stateaction.md)<!-- -->&gt;&gt;\[\] | <i>(Optional)</i> |
+|  [effects?](./state-management.statemanagementproviders.effects.md) | Type&lt;[Effect](./state-management.effect.md)<!-- -->&gt;\[\] | <i>(Optional)</i> |
 |  [metaReducers?](./state-management.statemanagementproviders.metareducers.md) | [MetaReducer](./state-management.metareducer.md)<!-- -->&lt;Object, [StateAction](./state-management.stateaction.md)<!-- -->&gt;\[\] | <i>(Optional)</i> |
 |  [reducers?](./state-management.statemanagementproviders.reducers.md) | [Reducer](./state-management.reducer.md)<!-- -->&lt;Object, [StateAction](./state-management.stateaction.md)<!-- -->&gt;\[\] | <i>(Optional)</i> |
 

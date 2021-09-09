@@ -13,3 +13,9 @@ A collection of generic utility functions
 |  [\_tryWithLogging(func)](./global-utils._trywithlogging.md) | An higher order function that writes errors from an function to the console. |
 |  [\_weakMemoizer(fn)](./global-utils._weakmemoizer.md) | An higher order function that memoizes the results of the input function. Object arguments are stored as weak references. |
 
+## Variables
+
+|  Variable | Description |
+|  --- | --- |
+|  [awaitOnline](./global-utils.awaitonline.md) |  |
+

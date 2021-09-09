@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-STORE_ACTION_INTERCEPTORS: InjectionToken<ActionInterceptor[]>
+STORE_ACTION_INTERCEPTORS: InjectionToken<ActionInterceptor[][]>
 ```

@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-export declare class SaveModelEffect implements Effect<SaveModelAction<any, any>> 
+export declare class SaveModelEffect implements Effect 
 ```
-<b>Implements:</b> Effect&lt;[SaveModelAction](./model-state-commands.savemodelaction.md)<!-- -->&lt;any, any&gt;&gt;
+<b>Implements:</b> Effect
 
 ## Methods
 

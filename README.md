@@ -39,9 +39,9 @@ Optionally run `ng build <library>` to build a specified library.
 
 ## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Run `ng run {projectName}:test` to execute the unit tests for given porject via [Karma](https://karma-runner.github.io).
 
-However the majority lack tests at this moment except 'model/core' & 'array-helpers'.
+However the majority lack tests at this moment except 'model' & 'array-helpers'.
 
 ## Running e2e tests
 

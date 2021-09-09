@@ -9,5 +9,5 @@ The form being used
 <b>Signature:</b>
 
 ```typescript
-dynamicForm: DynamicForm<TForm, TFormState>;
+dynamicForm: DynamicForm<TForm, TFormState extends null ? TState : TState & TFormState>;
 ```

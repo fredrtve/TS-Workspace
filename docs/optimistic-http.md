@@ -22,11 +22,10 @@ The library ensures that http requests are executed sequentially and http errors
 |  Interface | Description |
 |  --- | --- |
 |  [CompletedCommand](./optimistic-http.completedcommand.md) | Represents a completed command with a status indicating if the command succeeded. |
-|  [HttpErrorAction](./optimistic-http.httperroraction.md) | Represents the action dispatched when there are http errors returned from optimistic requests. Triggers the  action. |
-|  [HttpQueueShiftAction](./optimistic-http.httpqueueshiftaction.md) | Represents an action used to remove the first request in queue |
-|  [OptimisticHttpAction](./optimistic-http.optimistichttpaction.md) | Represents an action used to make an optimistic http request. |
-|  [OptimisticHttpErrorAction](./optimistic-http.optimistichttperroraction.md) | Represents an optimistic error containing both the triggering http error command &amp; any canceled commands |
+|  [HttpErrorPayload](./optimistic-http.httperrorpayload.md) | Represents the action dispatched when there are http errors returned from optimistic requests. Triggers the  action. |
+|  [OptimisticHttpErrorPayload](./optimistic-http.optimistichttperrorpayload.md) | Represents an optimistic error containing both the triggering http error command &amp; any canceled commands |
 |  [OptimisticHttpRequest](./optimistic-http.optimistichttprequest.md) | Describes an object used to make optimistic http requests. |
+|  [OptimisticHttpRequestPayload](./optimistic-http.optimistichttprequestpayload.md) | Represents an action payload used to make an optimistic http request. |
 |  [QueuedCommand](./optimistic-http.queuedcommand.md) |  |
 |  [StateRequestLog](./optimistic-http.staterequestlog.md) | Represents a slice of state containing the request log of previus requests and their statuses |
 |  [StateRequestQueue](./optimistic-http.staterequestqueue.md) | Represents a slice of state containing the request queue |
@@ -35,13 +34,13 @@ The library ensures that http requests are executed sequentially and http errors
 
 |  Variable | Description |
 |  --- | --- |
+|  [\_createActionRequestMap](./optimistic-http._createactionrequestmap.md) | Helper function that creates a map for action request converters |
+|  [\_entry](./optimistic-http._entry.md) | Helper function that creates a entry for an action request map with [\_createActionRequestMap](./optimistic-http._createactionrequestmap.md) |
+|  [\_optimisticHttpRequest](./optimistic-http._optimistichttprequest.md) |  |
 |  [ACTION\_REQUEST\_MAP](./optimistic-http.action_request_map.md) |  |
-|  [HttpErrorAction](./optimistic-http.httperroraction.md) |  |
-|  [HttpQueueShiftAction](./optimistic-http.httpqueueshiftaction.md) |  |
 |  [OPTIMISTIC\_BASE\_API\_URL](./optimistic-http.optimistic_base_api_url.md) |  |
 |  [OPTIMISTIC\_STATE\_PROPS](./optimistic-http.optimistic_state_props.md) |  |
-|  [OptimisticHttpAction](./optimistic-http.optimistichttpaction.md) |  |
-|  [OptimisticHttpErrorAction](./optimistic-http.optimistichttperroraction.md) |  |
+|  [OptimisticActions](./optimistic-http.optimisticactions.md) |  |
 
 ## Type Aliases
 

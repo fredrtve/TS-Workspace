@@ -14,13 +14,13 @@ export interface AuthCommandApiMap
 
 ## Remarks
 
-By leaving the  entry empty, the feature will be disabled.
+By leaving refreshToken entry empty, the feature will be disabled.
 
 ## Properties
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [LOGIN\_ACTION](./state-auth.authcommandapimap.login_action.md) | [AuthCommandApi](./state-auth.authcommandapi.md)<!-- -->&lt;[Credentials](./state-auth.credentials.md)<!-- -->, [LoginResponse](./state-auth.loginresponse.md)<!-- -->&gt; |  |
-|  [LOGOUT\_ACTION](./state-auth.authcommandapimap.logout_action.md) | [AuthCommandApi](./state-auth.authcommandapi.md)<!-- -->&lt;{ refreshToken: string; }, void&gt; |  |
-|  [REFRESH\_TOKEN\_ACTION?](./state-auth.authcommandapimap.refresh_token_action.md) | [AuthCommandApi](./state-auth.authcommandapi.md)<!-- -->&lt;[Tokens](./state-auth.tokens.md)<!-- -->, [RefreshTokenResponse](./state-auth.refreshtokenresponse.md)<!-- -->&gt; | <i>(Optional)</i> |
+|  [login](./state-auth.authcommandapimap.login.md) | [AuthCommandApi](./state-auth.authcommandapi.md)<!-- -->&lt;[Credentials](./state-auth.credentials.md)<!-- -->, [LoginResponse](./state-auth.loginresponse.md)<!-- -->&gt; |  |
+|  [logout](./state-auth.authcommandapimap.logout.md) | [AuthCommandApi](./state-auth.authcommandapi.md)<!-- -->&lt;{ refreshToken: string; }, void&gt; |  |
+|  [refreshToken?](./state-auth.authcommandapimap.refreshtoken.md) | [AuthCommandApi](./state-auth.authcommandapi.md)<!-- -->&lt;[Tokens](./state-auth.tokens.md)<!-- -->, [RefreshTokenResponse](./state-auth.refreshtokenresponse.md)<!-- -->&gt; | <i>(Optional)</i> |
 
