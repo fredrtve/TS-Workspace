@@ -3,10 +3,11 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { _deleteModelRequest, _setSaveModelRequest } from '@core/configurations/optimistic/global-action-requests';
+import { ValidationErrorMessages } from '@core/configurations/validation-error-messages.const';
 import { CssLoaderService } from '@core/services/css-loader.service';
 import { LazyStyles } from '@shared-app/enums/lazy-styles.enum';
 import { SharedModule } from '@shared/shared.module';
-import { ModelDataTableModule, MODEL_DATA_TABLES_CONFIG } from 'model/data-table';
+import { ModelDataTableModule, MODEL_DATA_TABLES_CONFIG, MODEL_DATA_TABLE_VALIDATION_ERROR_MESSAGES } from 'model/data-table';
 import { ModelFormModule } from 'model/form';
 import { ModelStateCommandsModule } from 'model/state-commands';
 import { ModelStateFetcherModule } from 'model/state-fetcher';
@@ -44,6 +45,7 @@ import { ModelDataTables } from './model-data-tables.const';
   ],
   providers: [
     {provide: MODEL_DATA_TABLES_CONFIG, useValue: ModelDataTables},
+    {provide: MODEL_DATA_TABLE_VALIDATION_ERROR_MESSAGES, useValue: ValidationErrorMessages }
   ]
 })
 export class DataManagementModule { 

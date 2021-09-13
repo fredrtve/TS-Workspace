@@ -1,5 +1,5 @@
 import { Inject, Injectable } from "@angular/core";
-import { ColDef } from "ag-grid-community";
+import { ColDef, ValueGetterParams, ValueSetterParams } from "ag-grid-community";
 import { _convertArrayToObject } from "array-helpers";
 import { KeyVal, UnknownState } from "global-types";
 import { ForeignRelation, UnknownModelState, _getModelConfig } from "model/core";
@@ -7,11 +7,13 @@ import { MODEL_PROP_TRANSLATIONS } from "model/shared";
 import { ModelCommand, ModelCommands } from "model/state-commands";
 import { Store } from "state-management";
 import { MODEL_DATA_TABLES_CONFIG } from "./injection-tokens.const";
-import { ModelDataTable, ModelDataTablesConfig } from "./interfaces";
+import { DataTableValidationErrors, ModelDataTable, ModelDataTablesConfig, PropertyValidatorFn } from "./interfaces";
 
 @Injectable({providedIn: 'any'})
 export class ModelColDefFactory {
 
+    private validationErrors : DataTableValidationErrors = {}
+    
     private checkBox = {colId: 'checkbox', checkboxSelection: true, width: 42, pinned: 'left', lockPosition: true};
 
     constructor(
@@ -54,11 +56,22 @@ export class ModelColDefFactory {
         let def: ColDef = {
             ...baseColDef,
             field: modelProp,
+            tooltipComponent: 'validationTooltip',
+            tooltipValueGetter: params => {
+                return this.validationErrors[params.node!.id!]?.[params.colDef.field!] ? 'show' : ''
+            },
+            tooltipComponentParams: { validationErrors: () => this.validationErrors },
             headerName: this.translations[modelProp?.toLowerCase()] || modelProp,
-            valueSetter: (params) => {      
-                const updatedModel =  {...params.data, [modelProp]: params.newValue};
-                this.dispatchUpdateAction(updatedModel, stateProp, table)
-                return true
+            cellClassRules: { [this.tableConfigs.validationErrorClass]: (params: ValueGetterParams) => {
+                return this.validationErrors[params.node!.id!]?.[params.colDef.field!] != null
+            }},
+            valueSetter: (params) => {  
+                if(!propDef.validators || this.validateCell(params, propDef.validators)){
+                    const updatedModel =  {...params.data, [modelProp]: params.newValue};
+                    this.dispatchUpdateAction(updatedModel, stateProp, table);
+                    return true
+                }
+                return false;   
             }
         };
         
@@ -125,6 +138,27 @@ export class ModelColDefFactory {
             this.store.dispatch(ModelCommands.save<any,any>({
                 entity, stateProp, saveAction: ModelCommand.Update
             }))
+    }
+
+    private validateCell({node, colDef, newValue, api}: ValueSetterParams, validators: PropertyValidatorFn<any>[]): boolean {
+        const nodeId = node?.id || "";
+        const field = colDef.field || "null";
+
+        if(!this.validationErrors[nodeId]) 
+            this.validationErrors[nodeId] = {};
+
+   
+        for(const validator of validators){
+            const res = validator({value: newValue});
+            if(res) {
+                this.validationErrors[nodeId]![field] = res
+                api?.refreshCells({ rowNodes: [node!] })   
+                return false;
+            }
+        }
+
+        this.validationErrors[nodeId]![field] = null;
+        return true;
     }
     
 }

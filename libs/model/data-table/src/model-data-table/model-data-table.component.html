@@ -3,8 +3,10 @@
     rowSelection="multiple"
     suppressRowClickSelection="true"
     suppressColumnVirtualisation="false"
+    [frameworkComponents]="frameworkComponents"
     immutableData="true"
     [overlayNoRowsTemplate]="vm.noRowsText"
+    tooltipShowDelay=0
     (modelUpdated)="autoSizeGrid()"
     [rowData]="vm.rowData"
     [columnDefs]="vm.colDefs"  

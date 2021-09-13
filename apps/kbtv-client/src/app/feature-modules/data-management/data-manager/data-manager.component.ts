@@ -5,7 +5,7 @@ import { BottomIconButtons } from '@shared/constants/bottom-icon-buttons.const';
 import { Prop } from 'global-types';
 import { ModelDataTableComponent } from 'model/data-table';
 import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { StateManagementModule } from 'state-management';
 import { DataManagerFacade } from './data-manager.facade';
 import { DataManagerLocalReducers } from './state/reducers';
@@ -25,7 +25,6 @@ export class DataManagerComponent {
   @ViewChild('dataTable') dataTable: ModelDataTableComponent;
 
   vm$: Observable<ViewModel> = this.facade.selectedProperty$.pipe(
-    tap(console.log),
     map(x => { return <ViewModel>{
       bottomActions: x ? this.selectedItemsActions : null,
       selectedProperty: x

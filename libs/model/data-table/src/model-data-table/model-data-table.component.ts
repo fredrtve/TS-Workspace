@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, Input, ViewChild } from '@angular/c
 import { AgGridAngular } from 'ag-grid-angular';
 import { UnknownState } from 'global-types';
 import { Observable } from 'rxjs';
+import { ValidationTooltipComponent } from '../validation-tooltip.component';
 import { ModelDataTableFacade, ViewModel } from './model-data-table.facade';
 
 /** Responsible for wrapping an AgGridAngular component. 
@@ -14,13 +15,14 @@ import { ModelDataTableFacade, ViewModel } from './model-data-table.facade';
 })
 export class ModelDataTableComponent {
     @ViewChild(AgGridAngular) agGrid: AgGridAngular;
-
     @Input() agGridTheme: string;
 
     @Input('modelProperty') 
     set modelProperty(value: string) { 
       this.facade.updateSelectedProperty(value); 
     }
+
+    frameworkComponents = { validationTooltip: ValidationTooltipComponent };
 
     vm$: Observable<ViewModel> = this.facade.vm$;
 

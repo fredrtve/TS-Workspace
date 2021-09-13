@@ -46,6 +46,9 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow-x:hidden;}
   color: mat.get-color-from-palette($app-warn, default-contrast);
 }
 
+.warn-light{
+  background-color: mat.get-color-from-palette($app-warn-light)
+}
 .color-warn{
   color: mat.get-color-from-palette($app-warn);
 }

@@ -4,6 +4,8 @@ $app-primary: mat.define-palette(mat.$grey-palette, 50);
 $app-accent:  mat.define-palette(mat.$cyan-palette, 900);
 $app-warn:    mat.define-palette(mat.$red-palette, A700);
 
+$app-warn-light: mat.define-palette(mat.$red-palette, 200);
+
 $app-warning: mat.define-palette(mat.$yellow-palette, A400);
 $app-success: mat.define-palette(mat.$green-palette, A400);
 
