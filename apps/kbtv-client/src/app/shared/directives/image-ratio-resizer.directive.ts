@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input } from '@angular/core';
+import { Directive, ElementRef, Input, Renderer2 } from '@angular/core';
 
 @Directive({selector: '[appImageRatioResizer]'})
 export class ImageRatioResizerDirective {
@@ -13,7 +13,10 @@ export class ImageRatioResizerDirective {
     if(this._hasViewInit === true) this.setHeight(); 
   }
 
-  constructor(private elementRef: ElementRef) { }
+  constructor(
+    private elementRef: ElementRef,
+    private renderer: Renderer2
+  ) { }
 
   ngAfterViewInit(): void {
     this.setHeight(); 
@@ -25,10 +28,8 @@ export class ImageRatioResizerDirective {
 
     if(!this._imageRatio || el.offsetWidth === 0) return;
     
-    el.style.display = "inline-block";
-  
-    el.style.minHeight = `calc(${el.offsetWidth}px / ${this._imageRatio})`;
- 
+    this.renderer.setStyle(el, "display", "inline-block");
+    this.renderer.setStyle(el, "minHeight", `calc(${el.offsetWidth}px / ${this._imageRatio})`);
   }
 
 }

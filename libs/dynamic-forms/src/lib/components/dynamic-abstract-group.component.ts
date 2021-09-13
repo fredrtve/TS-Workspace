@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, ComponentFactoryResolver, ComponentRef, Directive, Type } from '@angular/core';
+import { ChangeDetectorRef, ComponentFactoryResolver, ComponentRef, Directive, Renderer2, Type } from '@angular/core';
 import { FormGroup, ValidatorFn } from '@angular/forms';
 import { Immutable, Prop, UnknownState, ValueOf } from 'global-types';
 import { Subject } from 'rxjs';
@@ -32,7 +32,8 @@ export abstract class DynamicAbstractGroupComponent<
         private componentFactoryResolver: ComponentFactoryResolver,  
         protected cdRef: ChangeDetectorRef,      
         private defaultControlGroupComponent: Type<DynamicAbstractGroupComponent>,
-        private dynamicFormFactory: DynamicFormFactory
+        private dynamicFormFactory: DynamicFormFactory,
+        private renderer: Renderer2
     ) { }
 
     ngOnDestroy(){
@@ -78,12 +79,12 @@ export abstract class DynamicAbstractGroupComponent<
         componentRef.instance.control = control;
         componentRef.instance.question = <any> controlCfg.question || {};  
         componentRef.instance.required = controlCfg.required;  
-        componentRef.location.nativeElement.style.marginTop = "3vh";
 
-        componentRef.location.nativeElement.setAttribute('data-cy', 'form-' + controlName);
-
+        const el = componentRef.location.nativeElement;
+        this.renderer.setStyle(el, "marginTop", "3vh");
+        this.renderer.setAttribute(el, "data-cy", 'form-' + controlName);
         if(controlCfg.panelClass)
-            componentRef.location.nativeElement.classList.add(controlCfg.panelClass)   
+            this.renderer.addClass(el, controlCfg.panelClass)
 
         return componentRef;
     }
@@ -98,10 +99,13 @@ export abstract class DynamicAbstractGroupComponent<
         componentRef.instance.config = groupCfg;
         componentRef.instance.formGroup = formGroup;
         componentRef.instance.formOptions = this.formOptions;
-        componentRef.location.nativeElement.classList.add('form-' + controlName);
+
+        const el = componentRef.location.nativeElement;
         
-        if(groupCfg.panelClass) 
-            componentRef.location.nativeElement.classList.add(groupCfg.panelClass)
+        this.renderer.addClass(el, 'form-' + controlName);
+
+        if(groupCfg.panelClass)
+            this.renderer.addClass(el, groupCfg.panelClass)
 
         componentRef.instance.initalize(); 
 
@@ -119,13 +123,14 @@ export abstract class DynamicAbstractGroupComponent<
     private initHideObserver(hideOnValueChanges: (val: any) => boolean, htmlElement: HTMLElement): void{   
         const currentDisplayVal = htmlElement.style.display;
 
-        if(hideOnValueChanges(this.formGroup.value)) htmlElement.style.display = "none";
+        if(hideOnValueChanges(this.formGroup.value)) 
+            this.renderer.setStyle(htmlElement, "display", "none");
         
         this.formGroup.valueChanges.pipe(
             map(hideOnValueChanges), 
             takeUntil(this.unsubscribe)
         ).subscribe(x => {
-            htmlElement.style.display = (x ? "none" : currentDisplayVal);
+            this.renderer.setStyle(htmlElement, "display", x ? "none" : currentDisplayVal);
             this.cdRef.detectChanges();
         })
     }

@@ -1,13 +1,17 @@
+import { Renderer2 } from "@angular/core";
+
 export abstract class BaseLoadingOverlayDirective{
 
-    constructor() {}
+    constructor(private renderer: Renderer2) {}
   
     protected addOverlay(el: HTMLElement){
-      el.classList.add("loading-overlay", "spinner");
+      this.renderer.addClass(el, "loading-overlay");
+      this.renderer.addClass(el, "spinner");
     }
   
     protected removeOverlay(el: HTMLElement){
-      el.classList.remove("loading-overlay", "spinner");
+      this.renderer.removeClass(el, "loading-overlay");
+      this.renderer.removeClass(el, "spinner");
     }
   
   }

@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input } from '@angular/core';
+import { Directive, ElementRef, Input, Renderer2 } from '@angular/core';
 import { BaseLoadingOverlayDirective } from './base-loading-overlay.directive';
 
 @Directive({
@@ -6,7 +6,10 @@ import { BaseLoadingOverlayDirective } from './base-loading-overlay.directive';
 })
 export class LoadingOverlayDirective extends BaseLoadingOverlayDirective{
 
-  constructor(private elementRef: ElementRef) { super() }
+  constructor(
+    private elementRef: ElementRef,
+    renderer: Renderer2
+  ) { super(renderer) }
 
   @Input()
   set appLoadingOverlay(loading: boolean) { 

@@ -1,4 +1,4 @@
-import { ElementRef, Injectable } from "@angular/core";
+import { ElementRef, Injectable, Renderer2 } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { DeviceInfoService } from "@core/services/device-info.service";
 import { WithUnsubscribe } from "@shared-app/mixins/with-unsubscribe.mixin";
@@ -17,6 +17,7 @@ export class MainSkeletonPresenter extends WithUnsubscribe() {
         private deviceInfoService: DeviceInfoService,
         private route: ActivatedRoute,
         private elRef: ElementRef,
+        private renderer: Renderer2
     ){ super(); }
 
     init(): void {
@@ -35,17 +36,18 @@ export class MainSkeletonPresenter extends WithUnsubscribe() {
 
         const parent: HTMLElement = this.elRef.nativeElement.parentElement;
 
-        parent.classList.remove("main-skeleton-card", "main-skeleton-overlay");
-
+        this.renderer.removeClass(parent, "main-skeleton-card");
+        this.renderer.removeClass(parent, "main-skeleton-overlay");
+        
         if(this.data.componentClass)
-            parent.classList.add(this.data.componentClass);
+            this.renderer.addClass(parent, this.data.componentClass)
 
         if(isS || this.data.viewType === 'overlay') 
-            return parent.classList.add("main-skeleton-overlay"); 
+            return this.renderer.addClass(parent, "main-skeleton-overlay"); 
         
         if(this.data.viewType === 'card') 
-            parent.classList.add("main-skeleton-card"); 
-         
-        parent.style.width = this.data.viewSize || "100%";
+            this.renderer.addClass(parent, "main-skeleton-card"); 
+            
+        this.renderer.setStyle(parent, "width", this.data.viewSize || "100%");
     }
 }

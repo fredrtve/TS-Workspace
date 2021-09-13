@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ComponentFactoryResolver, Inject, ViewContainerRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ComponentFactoryResolver, Inject, Renderer2, ViewContainerRef } from '@angular/core';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { UnknownState } from 'global-types';
 import { Subscription } from 'rxjs';
@@ -23,6 +23,7 @@ export class FormSheetWrapperComponent  {
         private componentFactoryResolver: ComponentFactoryResolver,
         private viewContainerRef: ViewContainerRef,
         private _bottomSheetRef: MatBottomSheetRef<FormSheetWrapperComponent, unknown>, 
+        private renderer: Renderer2,
         @Inject(MAT_BOTTOM_SHEET_DATA) private config: FormSheetWrapperConfig<object, object, UnknownState, unknown>) { }
     
     ngOnInit() {
@@ -64,15 +65,16 @@ export class FormSheetWrapperComponent  {
     }
 
     private loadLoader(): void{
-        var d = document.createElement('div');
-        d.innerHTML = "Laster inn skjema...";
-        d.classList.add('loading');
-        this.getParentElement()?.appendChild(d)
+        var div = this.renderer.createElement("div");
+        this.renderer.setProperty(div, "innerHTML", "Laster inn skjema...");
+        this.renderer.addClass(div, "loading");
+        this.renderer.appendChild(this.getParentElement(), div)
     }
 
     private removeLoader(): void {
         const el = this.getParentElement()?.getElementsByClassName('loading')[0];
-        if(el) this.getParentElement()?.removeChild(el);
+        if(el) this.renderer.removeChild(this.getParentElement(), el);
+       
     }
 
     private getParentElement = (): HTMLElement | null => 

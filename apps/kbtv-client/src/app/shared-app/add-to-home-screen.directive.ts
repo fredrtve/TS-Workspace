@@ -1,4 +1,4 @@
-import { Directive, HostListener, ElementRef } from '@angular/core';
+import { Directive, HostListener, ElementRef, Renderer2 } from '@angular/core';
 import { BeforeInstallPromptEvent } from './interfaces/before-install-prompt-event.interface';
 
 @Directive({selector: '[appAddToHomeScreen]'})
@@ -6,9 +6,14 @@ export class AddToHomeScreenDirective {
   
   deferredPrompt: BeforeInstallPromptEvent | undefined;
   showButton = false;
+  private element: HTMLElement;
 
-  constructor(private elementRef: ElementRef) { 
-    this.elementRef.nativeElement.style.display = 'none';
+  constructor(
+    private elementRef: ElementRef,
+    private renderer: Renderer2
+  ) { 
+    this.element = this.elementRef.nativeElement;
+    this.renderer.setStyle(this.element, "display", "none")
   }
 
   @HostListener('window:beforeinstallprompt', ['$event'])
@@ -17,13 +22,12 @@ export class AddToHomeScreenDirective {
     e.preventDefault();
     // Stash the event so it can be triggered later.
     this.deferredPrompt = e;
-    this.elementRef.nativeElement.style.display = 'inline-block';
+    this.renderer.setStyle(this.element, "display", "inline-block")
   }
 
   @HostListener('click') onClick(): void {
     // hide our user interface that shows our A2HS button
-    this.elementRef.nativeElement.style.display = 'none';
-
+    this.renderer.setStyle(this.element, "display", "none")
     if(!this.deferredPrompt) return;
     
     // Show the prompt

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, Renderer2, ViewChild } from '@angular/core';
 import { UnknownState } from 'global-types';
 import { DynamicFormFactory } from '../dynamic-form.factory';
 import { DynamicHostDirective } from '../dynamic-host.directive';
@@ -30,7 +30,12 @@ import { DynamicAbstractGroupComponent } from './dynamic-abstract-group.componen
 export class DynamicControlGroupComponent extends DynamicAbstractGroupComponent<DynamicControlGroup<UnknownState, UnknownState>> {
     @ViewChild(DynamicHostDirective, {static: true}) dynamicHost: DynamicHostDirective;
 
-    constructor(componentFactoryResolver: ComponentFactoryResolver, cdRef: ChangeDetectorRef, formFactory: DynamicFormFactory) {
-        super(componentFactoryResolver, cdRef, DynamicControlGroupComponent, formFactory)
+    constructor(
+      componentFactoryResolver: ComponentFactoryResolver, 
+      cdRef: ChangeDetectorRef, 
+      formFactory: DynamicFormFactory, 
+      renderer: Renderer2
+    ) {
+        super(componentFactoryResolver, cdRef, DynamicControlGroupComponent, formFactory, renderer)
     }
 }
