@@ -16,7 +16,6 @@ import { BottomIconButtons } from '@shared/constants/bottom-icon-buttons.const';
 import { MissionPositionPickerSheetService } from '@shared/scam/mission-position-picker/mission-position-picker-sheet.service';
 import { Immutable, Maybe } from 'global-types';
 import { ModelFormService } from 'model/form';
-import { ModelCommand } from 'model/state-commands';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { UserTimesheetListCriteriaQueryParam } from 'src/app/feature-modules/timesheet-modules/user-timesheet-list/user-timesheet-list/user-timesheet-list-route-params.const';
@@ -92,7 +91,7 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
 
   private openMissionForm = (id: string | undefined) => 
     this.modelFormService.open(EditMissionModelForm, {id})
-      .afterDismissed().subscribe(x => x === ModelCommand.Delete ? this.location.back() : null)
+      .afterDismissed().subscribe(x => x === "deleted" ? this.location.back() : null)
 
   private goToTimesheets = (mission: Maybe<Immutable<Mission>>) => 
     this.router.navigate(['timer', {

@@ -30,7 +30,7 @@ export class ModelFormService<TState extends object> {
     config: Immutable<ModelFormConfig<TState, TModel, TForm, TInputState>>,
     initialValue?: Immutable<Maybe<DeepPartial<TForm>>>,
     options?: Immutable<ModelFormServiceOptions<TState, TForm>>,
-  ): MatBottomSheetRef<FormSheetWrapperComponent, Immutable<TForm>> {
+  ): MatBottomSheetRef<FormSheetWrapperComponent, Immutable<TForm> | 'deleted'> {
     return this.formService.open(   
       <any>this.getFormSheetViewConfig<TModel, TForm, TInputState>(config, initialValue || {}, options || {}),
       { formState: options?.formState, initialValue },

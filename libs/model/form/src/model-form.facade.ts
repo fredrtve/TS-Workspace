@@ -4,7 +4,7 @@ import { ConfirmDialogService } from 'confirm-dialog';
 import { Immutable, KeyVal } from 'global-types';
 import { RelationInclude, StateModels, StatePropByModel, _getModelConfig, _getRelationIncludeStateProps } from 'model/core';
 import { ModelStatePropTranslations, MODEL_PROP_TRANSLATIONS, MODEL_STATE_PROP_TRANSLATIONS } from "model/shared";
-import { ModelCommand, ModelCommands } from 'model/state-commands';
+import { ModelCommands } from 'model/state-commands';
 import { ModelFetcherActions } from 'model/state-fetcher';
 import { Observable } from 'rxjs';
 import { StateAction, Store } from 'state-management';
@@ -57,7 +57,7 @@ export class ModelFormFacade<TState extends object, TModel extends StateModels<T
     formConfig: Immutable<ModelFormConfig<TState, TModel, any>>, 
     entityId: unknown,
     ref: MatBottomSheetRef<unknown, unknown>) => {
-      ref.dismiss(ModelCommand.Delete);
+      ref.dismiss('deleted');
       this.store.dispatch(ModelCommands.delete<any, any>({ 
         stateProp: <any> formConfig.includes.prop, 
         payload: { id: <string> entityId } 
