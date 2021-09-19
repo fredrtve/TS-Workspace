@@ -3,7 +3,6 @@ import { CreateUserRequest, SaveModelRequest, UpdateModelRequest } from "@core/c
 import { _deleteModelRequest, _setSaveModelRequest } from "@core/configurations/optimistic/global-action-requests";
 import { User } from "@core/models";
 import { _idGenerator } from "@shared-app/helpers/id/id-generator.helper";
-import { ModelCommand } from "model/state-commands";
 import { _createActionRequestMap, _entry } from "optimistic-http";
 import { CurrentUser } from "state-auth";
 import { UserActions } from "./state/actions.const";
@@ -14,7 +13,7 @@ export const UserActionRequestMap = _createActionRequestMap(
         const request = <CreateUserRequest | UpdateModelRequest<User & CurrentUser>> 
             (<any> _setSaveModelRequest).converter({...action, stateProp: "users"});
 
-        if(action.saveAction === ModelCommand.Create){
+        if(action.isNew){
             let {employer, createdAt, ...rest} = action.saveModelResult.fullModel
             request.body = {...rest, password: action.password};
             request.type = CreateUserRequest;

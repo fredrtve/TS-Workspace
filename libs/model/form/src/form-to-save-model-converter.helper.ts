@@ -6,7 +6,6 @@ import { ModelFormResult } from "./interfaces";
 export const _formToSaveModelConverter = <TState extends object, TModel extends StateModels<TState>>(
     input: Immutable<ModelFormResult<TState, TModel>>
 ) => ModelCommands.save<TState, TModel>({
-        saveAction: input.saveAction,
         entity: input.formValue,
         stateProp: input.stateProp
     })

@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 import { DynamicForm, FormComponent } from 'dynamic-forms';
 import { Immutable, Maybe } from 'global-types';
 import { StateModels, _getModelConfig, ModelContext, RelationInclude } from 'model/core';
-import { ModelCommand, SaveAction } from 'model/state-commands';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { first, map } from 'rxjs/operators';
 import { DeepPartial } from 'ts-essentials';
@@ -28,8 +27,8 @@ export class ModelFormComponent<
   TForm extends object, 
   TFormState extends object | null
 >
-  implements FormComponent<ModelFormConfig<TState, TModel, TForm, TFormState>, TForm, TFormState, SaveAction>{
-    @Output() formSubmitted = new EventEmitter<Maybe<SaveAction>>()
+  implements FormComponent<ModelFormConfig<TState, TModel, TForm, TFormState>, TForm, TFormState>{
+    @Output() formSubmitted = new EventEmitter<Maybe<Immutable<TForm>>>()
 
     @Input() config: Immutable<ModelFormConfig<TState, TModel, TForm, TFormState>>;
 
@@ -75,8 +74,7 @@ export class ModelFormComponent<
     }
 
     onSubmit(result: Immutable<TForm>): void{   
-      const saveAction = this.isCreateForm ? ModelCommand.Create : ModelCommand.Update;
-      this.formSubmitted.emit(saveAction);
+      this.formSubmitted.emit(result);
 
       setTimeout(() => {
         const converter = this.config!.actionConverter || _formToSaveModelConverter
@@ -85,8 +83,7 @@ export class ModelFormComponent<
           this.facade.save(converter({
             formValue: result, 
             options: <any> state,
-            stateProp: <never> this.config!.includes.prop, 
-            saveAction, 
+            stateProp: <never> this.config!.includes.prop
           }))
         ) 
       }) 

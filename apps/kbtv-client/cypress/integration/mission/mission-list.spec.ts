@@ -35,7 +35,7 @@ describe('MissionList', () => {
         const entity = { id: 'testingmission', address: 'testingmission', finished: false, createdAt: new Date().getTime() };
 
         cy.storeDispatch(GlobalActions.saveModel<any>({ 
-            stateProp: "missions", saveAction: 0, entity: { id: 'testingmission', address: 'testingmission', finished: false, createdAt: new Date().getTime() }
+            stateProp: "missions", entity: { id: 'testingmission', address: 'testingmission', finished: false, createdAt: new Date().getTime() }
         }));
 
         cy.wait('@createMission');          

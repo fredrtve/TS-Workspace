@@ -1,7 +1,6 @@
 import { DynamicForm } from 'dynamic-forms';
 import { Immutable, Maybe } from 'global-types';
 import { RelationInclude, StateModels, StatePropByModel } from 'model/core';
-import { SaveAction } from 'model/state-commands';
 import { Observable } from 'rxjs';
 import { StateAction } from 'state-management';
 
@@ -19,9 +18,7 @@ export interface ModelFormResult<
     /** Any options used in the form */
     options?: Maybe<Partial<TState>>,
     /** The state property corresponding with the model */
-    stateProp: StatePropByModel<TState, TModel>,
-    /** The type of action being handled */
-    saveAction: SaveAction,
+    stateProp: StatePropByModel<TState, TModel>
 }
 
 /** Represents a configuration object for a model form */
@@ -43,7 +40,7 @@ export interface ModelFormConfig<
 }
 
 /** Represents a configuration object for the model form service. */
-export interface ModelFormServiceOptions<TInputState = object> {
+export interface ModelFormServiceOptions<TInputState = object, TForm extends object = object> {
     /** Additional form state that should be merged with model state */ 
     formState?: Immutable<TInputState> | Observable<Immutable<TInputState>>,
     /** If set to false, the delete option will not be displayed. */
@@ -56,5 +53,5 @@ export interface ModelFormServiceOptions<TInputState = object> {
      *  Default is true */
     useRouting?: boolean
     /** A callback that gets executed when form is submitted. */
-    submitCallback?: (val: SaveAction) => void
+    submitCallback?: (val: Immutable<TForm>) => void
   }

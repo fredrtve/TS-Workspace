@@ -90,7 +90,7 @@ describe('User Timesheet Week', () => {
             endTime: startOfWeek + 2*oneDay + 8*oneHour
         };
         cy.storeDispatch(GlobalActions.saveModel<any>({
-            saveAction: 0, stateProp: "userTimesheets", entity: newTimesheet
+            stateProp: "userTimesheets", entity: newTimesheet
         }));
         timesheetBars().should('have.length', 3);
         assertTimesheetBar(newTimesheet);

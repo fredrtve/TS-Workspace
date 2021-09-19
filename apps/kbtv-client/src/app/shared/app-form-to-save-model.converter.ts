@@ -1,18 +1,17 @@
 import { GlobalActions } from "@core/global-actions";
 import { Model } from "@core/models";
 import { ModelState } from "@core/state/model-state.interface";
-import { Immutable } from "global-types";
-import { StateModels } from "model/core";
+import { Immutable, UnknownState } from "global-types";
+import { StateModels, _getModelConfig } from "model/core";
 import { ModelFormResult } from "model/form";
-import { ModelCommand } from "model/state-commands";
 
 export function _appFormToSaveModelConverter<TModel extends StateModels<ModelState> & Model>(
     input: Immutable<ModelFormResult<ModelState, TModel>>
 ) {
+    const idProp = _getModelConfig<ModelState, TModel>(input.stateProp).idProp;
     return GlobalActions.saveModel({
-        saveAction: input.saveAction,
         stateProp: input.stateProp,
-        entity: input.saveAction !== ModelCommand.Create ? 
+        entity: (<UnknownState> input.formValue)[idProp] != null ? 
             input.formValue : 
             {...input.formValue, createdAt: new Date().getTime() }    
     })

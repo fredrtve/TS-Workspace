@@ -5,7 +5,6 @@ import { ValidationRules } from "@shared-app/constants/validation-rules.const";
 import { _validateFileExtension } from "@shared-app/helpers/validate-file-extension.helper";
 import { ModelFileForm, _formToSaveModelFileConverter } from "@shared/constants/form-to-save-model-file.converter";
 import { Immutable } from "global-types";
-import { ModelCommand } from 'model/state-commands';
 import { of } from "rxjs";
 import { mergeMap } from "rxjs/operators";
 import { DispatchedActions, Effect, listenTo, StateAction } from "state-management";
@@ -32,8 +31,7 @@ export class CreateMissionImagesEffect implements Effect {
 
                     actions.push(_formToSaveModelFileConverter({
                         stateProp: "missionImages", 
-                        formValue: <ModelFileForm> { missionId: x.action.missionId, file}, 
-                        saveAction: ModelCommand.Create
+                        formValue: <ModelFileForm> { missionId: x.action.missionId, file}
                     }))
                 }
 

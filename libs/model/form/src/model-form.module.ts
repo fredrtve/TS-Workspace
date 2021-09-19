@@ -13,6 +13,7 @@ import { ModelFormComponent } from './model-form.component';
         FormSheetModule,
         ConfirmDialogModule,
     ],
+    exports: [ ModelFormComponent ],
     providers: [],
 })
 export class ModelFormModule { }

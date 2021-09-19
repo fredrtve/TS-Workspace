@@ -8,7 +8,6 @@ import { ModelFileForm, _formToSaveModelFileConverter } from '@shared/constants/
 import { _filter } from "array-helpers";
 import { Immutable, Maybe } from 'global-types';
 import { StateModels } from "model/core";
-import { ModelCommand } from 'model/state-commands';
 import { Observable, of } from "rxjs";
 import { map } from "rxjs/operators";
 import { Store } from 'state-management';
@@ -48,8 +47,7 @@ export class MissionDetailsFacade {
     updateHeaderImage(file: File): void {
         this.store.dispatch(_formToSaveModelFileConverter({
             formValue: <ModelFileForm> {id: this.missionId, file},
-            stateProp: "missions",
-            saveAction: ModelCommand.Update
+            stateProp: "missions"
         }));
     }
 

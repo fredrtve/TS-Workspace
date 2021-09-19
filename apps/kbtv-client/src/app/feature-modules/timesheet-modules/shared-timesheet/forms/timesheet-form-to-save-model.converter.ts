@@ -6,7 +6,6 @@ import { TimesheetForm, UserTimesheetForm } from '@shared-timesheet/forms/save-t
 import { _getTotalHours, _mergeDateAndTime } from 'date-time-helpers';
 import { Immutable } from 'global-types';
 import { ModelFormResult } from 'model/form';
-import { ModelCommand } from 'model/state-commands';
 
 type FormState = StateUserTimesheets & StateTimesheets & StateMissions;
 
@@ -26,14 +25,12 @@ export const _userTimesheetFormToSaveModelConverter = (input: Immutable<ModelFor
         endTime:  dateTime!.endTime ? _mergeDateAndTime(dateTime!.date, dateTime!.endTime).getTime() : undefined,
     }; 
     
-    if(input.saveAction === ModelCommand.Create)
-        entity.createdAt = new Date().getTime();
+    if(!id) entity.createdAt = new Date().getTime();
 
     entity.totalHours = _getTotalHours(entity.startTime || 0, entity.endTime || 0)
 
     return GlobalActions.saveModel<Model>({ 
         entity, 
-        stateProp: input.stateProp,
-        saveAction: input.saveAction
+        stateProp: input.stateProp
     })
 }

@@ -1,6 +1,5 @@
 import { _idGenerator } from "@shared-app/helpers/id/id-generator.helper";
 import { UnknownState } from "global-types";
-import { ModelCommand } from "model/state-commands";
 import { _entry } from "optimistic-http";
 import { ApiUrl } from "../../api-url.enum";
 import { GlobalActions } from "../../global-actions";
@@ -12,7 +11,7 @@ import { DeleteModelRangeRequest, DeleteModelRequest, SaveModelFileRequest, Save
 
 export const _setSaveModelRequest = _entry(GlobalActions.setSaveModel, (a) => { 
     const {createdAt, ...body} = a.saveModelResult.fullModel;
-    return a.saveAction === ModelCommand.Create ? 
+    return a.isNew ? 
         { 
             method: "POST", stateProp: a.stateProp, body,
             apiUrl: ModelBaseUrls[a.stateProp],
@@ -28,18 +27,16 @@ export const _setSaveModelRequest = _entry(GlobalActions.setSaveModel, (a) => {
 });
  
 export const _setSaveModelFileRequest = _entry(GlobalActions.setSaveModelFile, (a) => {
-    const isCreate = a.saveAction === ModelCommand.Create;
-
     const {fileName, createdAt, ...entity} = a.saveModelResult.fullModel;
     
     const apiUrl = a.stateProp === "missions" ? 
         `${ApiUrl.Mission}/${entity.id}/UpdateHeaderImage` :
-        ModelBaseUrls[a.stateProp] + (isCreate ? '' : `/${(<UnknownState> entity)[ModelIdProps[a.stateProp]]}`);
+        ModelBaseUrls[a.stateProp] + (a.isNew  ? '' : `/${(<UnknownState> entity)[ModelIdProps[a.stateProp]]}`);
 
     const headers =  { [CommandIdHeader]: _idGenerator(4) };
 
     return {
-        method: isCreate ? "POST" : "PUT", 
+        method: a.isNew ? "POST" : "PUT", 
         contentType: "formData",
         body: { ...entity, file: a.file },
         stateProp: a.stateProp, 

@@ -10,7 +10,6 @@ import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-n
 import { SharedModule } from '@shared/shared.module';
 import { _find } from 'array-helpers';
 import { Immutable, Maybe } from 'global-types';
-import { ModelCommand } from 'model/state-commands';
 import { combineLatest, Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { Store } from 'state-management';
@@ -70,7 +69,6 @@ export class MissionPositionPickerSheetWrapperComponent {
     updateSelectedPosition(position: IPosition): void {
         this.store.dispatch(GlobalActions.saveModel({ 
             stateProp: "missions", 
-            saveAction: ModelCommand.Update,
             entity: { id: this.data.missionId, position }
         }));
     }

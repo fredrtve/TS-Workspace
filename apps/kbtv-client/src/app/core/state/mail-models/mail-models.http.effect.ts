@@ -22,15 +22,3 @@ export class MailModelsHttpEffect implements Effect{
         )
     }
 }
-@Injectable()
-export class MailModels2HttpEffect implements Effect{
-
-    constructor(private apiService: ApiService) {}
-    
-    handle$(actions$: DispatchedActions) {
-        return actions$.pipe(
-            listenTo([GlobalActions.setSaveModel]),
-            map(({action}) => {action.saveAction}),
-        )
-    }
-}

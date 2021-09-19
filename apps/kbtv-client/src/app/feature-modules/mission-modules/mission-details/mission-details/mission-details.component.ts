@@ -16,7 +16,7 @@ import { BottomIconButtons } from '@shared/constants/bottom-icon-buttons.const';
 import { MissionPositionPickerSheetService } from '@shared/scam/mission-position-picker/mission-position-picker-sheet.service';
 import { Immutable, Maybe } from 'global-types';
 import { ModelFormService } from 'model/form';
-import { ModelCommand } from 'model/state-commands/public-api';
+import { ModelCommand } from 'model/state-commands';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { UserTimesheetListCriteriaQueryParam } from 'src/app/feature-modules/timesheet-modules/user-timesheet-list/user-timesheet-list/user-timesheet-list-route-params.const';

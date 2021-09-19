@@ -17,7 +17,7 @@ export class SaveUserEffect implements Effect {
         return actions$.pipe(
             listenTo([UserActions.saveUser]),
             map(x => UserActions.setSaveUser({ 
-                saveAction: x.action.saveAction,
+                isNew: x.action.password != null,
                 password: x.action.password,
                 saveModelResult: _saveModel<ModelState, User>(x.stateSnapshot, "users", x.action.entity),
             }))

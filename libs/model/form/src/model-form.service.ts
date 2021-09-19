@@ -3,13 +3,10 @@ import { MatBottomSheetRef } from "@angular/material/bottom-sheet";
 import { FormService, FormSheetViewConfig, FormSheetWrapperComponent } from 'form-sheet';
 import { Immutable, Maybe } from "global-types";
 import { StateModels, _getModelConfig } from "model/core";
-import { ModelCommand, SaveAction } from "model/state-commands";
 import { DeepPartial } from "ts-essentials";
 import { ModelFormConfig, ModelFormServiceOptions } from "./interfaces";
 import { ModelFormComponent } from './model-form.component';
 import { ModelFormFacade } from "./model-form.facade";
-
-type BottomSheetRef = MatBottomSheetRef<FormSheetWrapperComponent, ModelCommand>;
 
 /** Responsible for showing a form sheet with the specified model form */
 @Injectable({providedIn: "any"})
@@ -32,17 +29,13 @@ export class ModelFormService<TState extends object> {
   >(
     config: Immutable<ModelFormConfig<TState, TModel, TForm, TInputState>>,
     initialValue?: Immutable<Maybe<DeepPartial<TForm>>>,
-    options?: Immutable<ModelFormServiceOptions<TState>>,
-  ): BottomSheetRef {
-
-    var ref: MatBottomSheetRef<FormSheetWrapperComponent, SaveAction> = 
-      this.formService.open(   
-        <any>this.getFormSheetViewConfig<TModel, TForm, TInputState>(config, initialValue || {}, options || {}),
-        { formState: options?.formState, initialValue },
-        options?.submitCallback
-      )
-
-    return ref;
+    options?: Immutable<ModelFormServiceOptions<TState, TForm>>,
+  ): MatBottomSheetRef<FormSheetWrapperComponent, Immutable<TForm>> {
+    return this.formService.open(   
+      <any>this.getFormSheetViewConfig<TModel, TForm, TInputState>(config, initialValue || {}, options || {}),
+      { formState: options?.formState, initialValue },
+      options?.submitCallback
+    );
   }
 
   private getFormSheetViewConfig<
@@ -52,8 +45,8 @@ export class ModelFormService<TState extends object> {
   >(
     config: Immutable<ModelFormConfig<TState, TModel, TForm, TInputState>>,
     initialValue: any,
-    options: Immutable<ModelFormServiceOptions<TState>>,
-  ): Immutable<FormSheetViewConfig<TForm, TInputState, ModelFormConfig<TState, TModel, TForm, TInputState>, SaveAction>> {
+    options: Immutable<ModelFormServiceOptions<TState, TForm>>,
+  ): Immutable<FormSheetViewConfig<TForm, TInputState, ModelFormConfig<TState, TModel, TForm, TInputState>>> {
     const entityId = initialValue[_getModelConfig(config.includes.prop).idProp];
     return {
       formConfig: config,
@@ -67,8 +60,7 @@ export class ModelFormService<TState extends object> {
         buttons: (options?.deleteDisabled || !(entityId)) ? 
             undefined : 
             [{ icon: 'delete_forever', color: "warn", 
-               callback: (ref: BottomSheetRef) => 
-                this.facade.confirmDelete(<any> config, entityId, ref) 
+               callback: (ref) => this.facade.confirmDelete(<any> config, entityId, ref) 
             }]    
       },
     }

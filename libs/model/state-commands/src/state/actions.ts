@@ -1,7 +1,6 @@
 
 import { Immutable } from "global-types";
 import { SaveModelResult, StateModels, StatePropByModel } from "model/core";
-import { SaveAction } from "../interfaces";
 
 export const ModelCommands = {
     delete: <TState, TModel extends StateModels<TState>>(payload: Immutable<DeleteModelPayload<TState, TModel>>) => 
@@ -19,13 +18,14 @@ export interface DeleteModelPayload<TState, TModel extends StateModels<TState>>
 
 export interface SaveModelPayload<TState, TModel extends StateModels<TState>> 
     extends ModelCommandPayload<TState, TModel>{
-    saveAction: SaveAction
+    /** Only neccesary if manually creating id for new entity */
+    isNew?: boolean
     entity: TModel,
 }
 
 export interface SetSaveModelStatePayload<TState, TModel extends StateModels<TState>> 
     extends ModelCommandPayload<TState, TModel>{
-    saveAction: SaveAction  
+    isNew: boolean  
     saveModelResult: SaveModelResult<TState, TModel>
 }
 

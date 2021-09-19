@@ -16,11 +16,13 @@ export class SaveModelFileEffect implements Effect {
                 const preGenIds: Record<string, boolean> = {}
 
                 let entity = <ModelFile> {...action.entity};
+                let isNew = false;
 
                 if(!action.entity[modelCfg.idProp]){
                     const newId = modelCfg.idGenerator!();
                     entity[modelCfg.idProp] = <undefined> newId;
                     preGenIds[<string> newId] = true;
+                    isNew = true;
                 }
 
                 entity.fileName = URL.createObjectURL(action.file);
@@ -33,9 +35,8 @@ export class SaveModelFileEffect implements Effect {
                 );
 
                 return GlobalActions.setSaveModelFile({
-                    saveModelResult, 
+                    saveModelResult, isNew,
                     stateProp: action.stateProp,
-                    saveAction: action.saveAction,
                     file: action.file
                 })
             })

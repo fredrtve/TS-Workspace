@@ -48,7 +48,7 @@ describe('Mission Document List', () => {
         cy.intercept('POST', '**' + ApiUrl.MissionDocument, { statusCode: 204, delay: 100 }).as('createMissionDoc');
         const newDoc = { name: 'newdocument', missionId: mission.id };
         cy.storeDispatch(GlobalActions.saveModelFile<any>({ 
-            stateProp: "missionDocuments", saveAction: 0, entity: newDoc, file: new File([], "test.txt")
+            stateProp: "missionDocuments", entity: newDoc, file: new File([], "test.txt")
         }));
         cy.wait('@createMissionDoc');
         getDocument(1).should('contain', newDoc.name);

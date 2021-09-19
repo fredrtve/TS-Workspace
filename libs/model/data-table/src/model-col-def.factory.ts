@@ -4,7 +4,7 @@ import { _convertArrayToObject } from "array-helpers";
 import { KeyVal, UnknownState } from "global-types";
 import { ForeignRelation, UnknownModelState, _getModelConfig } from "model/core";
 import { MODEL_PROP_TRANSLATIONS } from "model/shared";
-import { ModelCommand, ModelCommands } from "model/state-commands";
+import { ModelCommands } from "model/state-commands";
 import { Store } from "state-management";
 import { MODEL_DATA_TABLES_CONFIG } from "./injection-tokens.const";
 import { DataTableValidationErrors, ModelDataTable, ModelDataTablesConfig, PropertyValidatorFn } from "./interfaces";
@@ -135,9 +135,7 @@ export class ModelColDefFactory {
         if(table.onUpdateActionConverter) 
             this.store.dispatch(table.onUpdateActionConverter(entity))
         else 
-            this.store.dispatch(ModelCommands.save<any,any>({
-                entity, stateProp, saveAction: ModelCommand.Update
-            }))
+            this.store.dispatch(ModelCommands.save<any,any>({entity, stateProp}))
     }
 
     private validateCell({node, colDef, newValue, api}: ValueSetterParams, validators: PropertyValidatorFn<any>[]): boolean {

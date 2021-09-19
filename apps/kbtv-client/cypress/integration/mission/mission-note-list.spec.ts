@@ -32,7 +32,7 @@ describe('Mission Note List', () => {
         cy.intercept('POST', '**' + ApiUrl.MissionNote, { statusCode: 204, delay: 100 }).as('createMissionNote');
         const newNote = { content: 'newnote', missionId: mission.id };
         cy.storeDispatch(GlobalActions.saveModel<any>({ 
-            stateProp: "missionNotes", saveAction: 0, entity: newNote
+            stateProp: "missionNotes", entity: newNote
         }));
         cy.wait('@createMissionNote');
         getNote(1).find(cyTag('note-content')).invoke('text').should('eq', newNote.content);
