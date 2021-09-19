@@ -181,7 +181,7 @@ export interface QuestionComponent<
 }
 
 /** Represents a form component. Implemented by {@link DynamicForm} */
-export interface FormComponent<TConfig, TForm, TFormState, TResult> {
+export interface FormComponent<TConfig, TForm, TFormState, TResult = Immutable<TForm>> {
     /** The form configuration object */
     config: Immutable<Maybe<TConfig>>;
     /** The initial value of the form */

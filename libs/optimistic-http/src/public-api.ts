@@ -1,7 +1,7 @@
 /**
  * A library for sending optimistic http requests.  
  * @remarks 
- * The library ensures that http requests are executed sequentially and http errors handled correctly.
+ * The library ensures that http requests are executed sequentially and http errors are handled.
  * @packageDocumentation
  */
 

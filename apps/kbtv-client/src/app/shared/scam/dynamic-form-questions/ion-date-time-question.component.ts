@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA, Inject, NgModule } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA, Inject, NgModule, Optional } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { SharedModule } from '@shared/shared.module';
@@ -69,11 +69,11 @@ export class IonDateQuestionComponent extends BaseQuestionComponent<IonDateQuest
   vm$: Observable<{value: string, defaultValue: string | null }>;
 
   constructor(
-    @Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap, 
+    formStore: DynamicFormStore,
     private cdRef: ChangeDetectorRef,
-    formStore: DynamicFormStore<object>
+    @Inject(VALIDATION_ERROR_MESSAGES) @Optional() validationErrorMessages?: ValidationErrorMap
   ) { 
-    super(validationErrorMessages,formStore);
+      super(formStore, validationErrorMessages) 
   }
 
   ngOnInit(): void {

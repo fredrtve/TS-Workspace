@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, EventEmitter, Inject, Input, Output, Renderer2, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, EventEmitter, Inject, Input, Optional, Output, Renderer2, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Immutable, Maybe } from 'global-types';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -57,8 +57,8 @@ export class DynamicFormComponent<TForm extends object, TFormState extends objec
         cdRef: ChangeDetectorRef,
         formFactory: DynamicFormFactory,
         renderer: Renderer2,
-        @Inject(VALIDATION_ERROR_MESSAGES) private validationErrorMessages: ValidationErrorMap,
         private formStore: DynamicFormStore<TFormState>,
+        @Inject(VALIDATION_ERROR_MESSAGES) @Optional() private validationErrorMessages?: ValidationErrorMap,
     ) { 
         super(componentFactoryResolver, cdRef, DynamicControlGroupComponent, formFactory, renderer);     
     }

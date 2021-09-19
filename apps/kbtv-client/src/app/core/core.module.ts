@@ -8,7 +8,7 @@ import { MODEL_FETCHER_BASE_URL, MODEL_FETCHER_RETRY_STRATEGY } from 'model/stat
 import { OptimisticHttpModule, OPTIMISTIC_BASE_API_URL } from 'optimistic-http';
 import { environment } from 'src/environments/environment';
 import { HttpAuthTokensInterceptor, StateAuthModule } from 'state-auth';
-import { StateDbModule, STATE_DB_CONFIG } from 'state-db';
+import { StateDbModule } from 'state-db';
 import { StateManagementModule, STORE_SETTINGS } from 'state-management';
 import { StateSyncModule } from 'state-sync';
 import { AppAuthCommandApiMap } from './configurations/app-auth-command-api-map.const';
@@ -49,8 +49,8 @@ _registerModelStateConfig(ModelConfigMap);
       config: AppSyncStateConfig
     }),
     StateAuthModule.forRoot(AppAuthCommandApiMap, AppAuthRedirects),
-    StateDbModule,  
-    OptimisticHttpModule.forRoot(null, AppOptimisticStateProps)
+    StateDbModule.forRoot(AppStateDbConfig),  
+    OptimisticHttpModule.forRoot(null, AppOptimisticStateProps, environment.apiUrl)
   ],
   providers: [   
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
@@ -62,13 +62,10 @@ _registerModelStateConfig(ModelConfigMap);
 
     { provide: STORE_SETTINGS, useValue: AppStoreSettings},
     
-    { provide: OPTIMISTIC_BASE_API_URL, useValue: environment.apiUrl},
     { provide: MODEL_FETCHER_BASE_URL, useValue: environment.apiUrl},
     { provide: MODEL_FETCHER_RETRY_STRATEGY, useValue: httpRetryStrategy({excludedStatusCodes: [401]}) },
     { provide: MODEL_PROP_TRANSLATIONS, useValue: translations },
     { provide: MODEL_STATE_PROP_TRANSLATIONS, useValue: AppModelStatePropTranslations },
-
-    { provide: STATE_DB_CONFIG, useValue: AppStateDbConfig},  
   ]
 })
 export class CoreModule { 

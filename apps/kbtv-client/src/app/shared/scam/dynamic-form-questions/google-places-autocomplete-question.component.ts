@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, NgModule } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, NgModule, Optional } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { GoogleMapsLoader } from '@core/services/google-maps.loader';
@@ -53,13 +53,13 @@ export class GooglePlacesAutoCompleteQuestionComponent extends BaseQuestionCompo
     addressFormatter = (address: Address) => address.formatted_address
 
     constructor(
-        @Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap, 
+        formStore: DynamicFormStore,
         private googleMapsLoader: GoogleMapsLoader,
-        formStore: DynamicFormStore
+        @Inject(VALIDATION_ERROR_MESSAGES) @Optional() validationErrorMessages?: ValidationErrorMap
     ) { 
-        super(validationErrorMessages,formStore);   
+        super(formStore, validationErrorMessages) 
     }
-
+      
     onAddressChange(address: Address){
         this.control?.setValue(this.addressFormatter(address))
     }

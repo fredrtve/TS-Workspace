@@ -13,7 +13,7 @@ import { RefreshTokenHttpEffect } from './state/refresh-token.http.effect';
  *  Use forRoot function to inject core providers*/
 @NgModule({
     declarations: [IfRoleDirective],
-    imports: [ApplicationModule],
+    imports: [],
     exports: [IfRoleDirective],
 })
 export class StateAuthModule {

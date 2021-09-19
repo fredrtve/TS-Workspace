@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, NgModule } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, NgModule, Optional } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { LazySelectOption, _shouldEagerOptions } from '@shared-app/helpers/should-eager-options.helper';
@@ -65,9 +65,10 @@ export class SelectQuestionComponent<TEntity>
   }
 
   constructor(
-    @Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap,
-    formStore: DynamicFormStore<UnknownState>) { 
-    super(validationErrorMessages,formStore) 
+    formStore: DynamicFormStore,
+    @Inject(VALIDATION_ERROR_MESSAGES) @Optional() validationErrorMessages?: ValidationErrorMap
+  ) { 
+      super(formStore, validationErrorMessages) 
   }
 
   ngOnInit(): void { 

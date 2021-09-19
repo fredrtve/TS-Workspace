@@ -51,7 +51,7 @@ export interface OptimisticHttpRequest<TContentType extends SupportedContentType
     [P in TActions as P['type']]: ActionRequestConverterFn<P>;
 };
 
-export type ActionRequestConverterFn<TAction> = (a: TAction) => OptimisticHttpRequest<SupportedContentTypes>
+export type ActionRequestConverterFn<TAction> = (a: TAction) => Maybe<OptimisticHttpRequest<SupportedContentTypes>> 
 
 /** Represents a type that can be serialized. No functions are allowed. */
 export type AsJson<T> = 

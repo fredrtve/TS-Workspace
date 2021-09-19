@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, NgModule } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, NgModule, Optional } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { SharedModule } from '@shared/shared.module';
 import { BaseQuestionComponent, DynamicFormStore, Question, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
@@ -32,10 +32,10 @@ export interface FileQuestion extends Question { multiple?: boolean; }
 export class FileQuestionComponent extends BaseQuestionComponent<null, FileQuestion> {
 
   constructor(
-    @Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap,
     formStore: DynamicFormStore,
+    @Inject(VALIDATION_ERROR_MESSAGES) @Optional() validationErrorMessages?: ValidationErrorMap
   ) { 
-    super(validationErrorMessages,formStore) 
+    super(formStore, validationErrorMessages) 
   }
 
   onFileChange(e: Event): void {  

@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Inject, Injectable } from "@angular/core";
+import { Inject, Injectable, Optional } from "@angular/core";
 import { Immutable, Maybe, UnknownState } from 'global-types';
 import { Observable } from 'rxjs';
 import { OPTIMISTIC_BASE_API_URL } from './constants/injection-tokens.const';
@@ -10,16 +10,16 @@ export class HttpFactoryService {
   
     constructor(
       private httpClient: HttpClient,
-      @Inject(OPTIMISTIC_BASE_API_URL) private baseUrl: string
+      @Inject(OPTIMISTIC_BASE_API_URL) @Optional() private baseUrl?: string
     ) {}
 
     getObserver$(request: Immutable<OptimisticHttpRequest>): Observable<{isDuplicate?: boolean} | undefined> {
       const {method, headers, body, contentType, apiUrl} = request;
       const options: {headers: HttpHeaders} = { headers: new HttpHeaders(<OptimisticHttpHeaders> headers) }
       switch (method) {
-        case "POST": return this.httpClient.post(this.baseUrl + apiUrl, this.createHttpBody(body, contentType), options);
-        case "PUT": return this.httpClient.put(this.baseUrl + apiUrl, this.createHttpBody(body, contentType), options);
-        case "DELETE": return this.httpClient.delete(this.baseUrl + apiUrl, options);
+        case "POST": return this.httpClient.post((this.baseUrl || '') + apiUrl, this.createHttpBody(body, contentType), options);
+        case "PUT": return this.httpClient.put((this.baseUrl || '') + apiUrl, this.createHttpBody(body, contentType), options);
+        case "DELETE": return this.httpClient.delete((this.baseUrl || '') + apiUrl, options);
       }
     }
 

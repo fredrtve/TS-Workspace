@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, NgModule } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, NgModule, Optional } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { _shouldEagerOptions } from '@shared-app/helpers/should-eager-options.helper';
@@ -24,10 +24,11 @@ export class AutoCompleteQuestionComponent<T>
     }
 
     constructor(
-        @Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap,
-        formStore: DynamicFormStore<object>) { 
-            super(validationErrorMessages,formStore); 
-        }
+        formStore: DynamicFormStore,
+        @Inject(VALIDATION_ERROR_MESSAGES) @Optional() validationErrorMessages?: ValidationErrorMap
+    ) { 
+        super(formStore, validationErrorMessages) 
+    }
 
     ngOnInit(): void {
         this.criteria$ = this.control?.valueChanges || of(null);

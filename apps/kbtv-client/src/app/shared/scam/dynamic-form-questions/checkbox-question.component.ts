@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, NgModule } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, NgModule, Optional } from '@angular/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { SharedModule } from '@shared/shared.module';
@@ -32,10 +32,10 @@ export interface CheckboxQuestion extends Question {
 export class CheckboxQuestionComponent extends BaseQuestionComponent<null, CheckboxQuestion> {
 
   constructor(
-    @Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap,
-    formStore: DynamicFormStore
+    formStore: DynamicFormStore,
+    @Inject(VALIDATION_ERROR_MESSAGES) @Optional() validationErrorMessages?: ValidationErrorMap
   ) { 
-    super(validationErrorMessages,formStore) 
+    super(formStore, validationErrorMessages) 
   }
 
 }

@@ -32,8 +32,8 @@ export abstract class BaseQuestionComponent<TBindings extends object | null, TQu
   }
 
   constructor(
-    private validationErrorMessages: ValidationErrorMap,
-    private formStore: DynamicFormStore<object | null>
+    private formStore: DynamicFormStore<object | null>,
+    private validationErrorMessages?: ValidationErrorMap
   ) {}
 
   /** Responsible for getting the validation error message based on errors on the control */

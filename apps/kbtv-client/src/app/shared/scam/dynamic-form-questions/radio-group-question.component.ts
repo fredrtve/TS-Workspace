@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, NgModule } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, NgModule, Optional } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatRadioModule } from '@angular/material/radio';
 import { SharedModule } from '@shared/shared.module';
@@ -42,9 +42,10 @@ export interface RadioGroupQuestion<T, TFormState extends object | null> extends
 export class RadioGroupQuestionComponent<T> extends BaseQuestionComponent<RadioGroupQuestionBindings<T>, RadioGroupQuestion<T, object | null>> {
 
   constructor(
-    @Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap,
-    formStore: DynamicFormStore<object>) { 
-    super(validationErrorMessages, formStore) 
+    formStore: DynamicFormStore,
+    @Inject(VALIDATION_ERROR_MESSAGES) @Optional() validationErrorMessages?: ValidationErrorMap
+  ) { 
+      super(formStore, validationErrorMessages) 
   }
 
 }

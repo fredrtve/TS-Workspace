@@ -25,12 +25,12 @@
       *ngIf="showReset; else cancelButton"
       [disabled]="resetDisabled"
       color="warn"
-      (tap)="reset.emit()">
+      (click)="reset.emit()">
       Nullstill
     </button>
 
     <ng-template #cancelButton>
-      <button mat-button data-cy="cancel-form" color="warn" class="left-button" (tap)="canceled.emit()">
+      <button mat-button data-cy="cancel-form" color="warn" class="left-button" (click)="canceled.emit()">
         Avbryt
       </button>
     </ng-template>
@@ -39,7 +39,7 @@
       mat-raised-button
       color="accent"
       [disabled]="(!vm.isOnline && onlineRequired) || submitDisabled"
-      (tap)="onSubmit(vm.isOnline)">
+      (click)="onSubmit(vm.isOnline)">
       {{ (!vm.isOnline && onlineRequired) ? 'Krever nett' : submitText }}
     </button>
     
