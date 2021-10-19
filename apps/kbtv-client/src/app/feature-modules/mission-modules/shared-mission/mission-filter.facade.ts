@@ -59,14 +59,19 @@ export class MissionFilterFacade {
     ) {}
 
     openFilterForm = () => 
-      this.formService.open<MissionCriteriaForm, MissionCriteriaFormState>(
-        MissionCriteriaFormSheet, 
-        { 
-          initialValue: this.store.state.missionCriteria, 
-          formState: this.store.select$(["missionTypes", "employers", "missions", "syncConfig"]) 
-        },
-        (val) => this.addCriteria(val)
-      ); 
+      {
+        return this.formService.open<MissionCriteriaForm, MissionCriteriaFormState>(
+          MissionCriteriaFormSheet,
+          {
+            initialValue: <any>this.store.state.missionCriteria,
+            formState: this.store.select$(["missionTypes", "employers", "missions", "syncConfig"])
+          },
+          (val) => this.addCriteria({
+            ...val,
+            searchString: (typeof val.searchString === "string") ? val.searchString : val.searchString?.address
+          })
+        );
+      }; 
 
     addCriteria = (missionCriteria: Immutable<MissionCriteria>): void => 
       this.store.dispatch(SharedMissionActions.setMissionCriteria({ missionCriteria }));

@@ -2,6 +2,7 @@
 
 #ignored projects
 /apps/test-proj
+/apps/shroom-detective
 /temp
 
 # compiled output

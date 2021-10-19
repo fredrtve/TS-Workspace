@@ -1,78 +1,84 @@
 import { Mission, MissionType } from '@core/models';
 import { StateEmployers, StateMissions, StateMissionTypes } from '@core/state/global-state.interfaces';
 import { _compareProp } from '@shared-app/helpers/compare-with-prop.helper';
-import { DateRangeControlGroup, DateRangeControlGroupState, EmployerSelectControl } from '@shared/constants/common-controls.const';
-import { SyncModelDateRangeFormStateSetters } from '@shared/constants/common-form-state-setters.const';
+import { DateRangeControlGroup, EmployerSelectControl } from '@shared/constants/common-controls.const';
+import { SyncModelDateRangeOptions } from '@shared/constants/common-form-state-setters.const';
 import { MissionCriteria } from '@shared/interfaces';
-import { AutoCompleteQuestionComponent } from '@shared/scam/dynamic-form-questions/auto-complete-question/auto-complete-question.component';
-import { AutoCompleteQuestion } from '@shared/scam/dynamic-form-questions/auto-complete-question/auto-complete-question.interface';
-import { RadioGroupQuestion, RadioGroupQuestionComponent } from '@shared/scam/dynamic-form-questions/radio-group-question.component';
-import { SelectQuestion, SelectQuestionComponent } from '@shared/scam/dynamic-form-questions/select-question.component';
-import { DynamicControl, DynamicForm, _formStateBinding } from 'dynamic-forms';
+import { SelectControlComponent, RadioGroupControlComponent, AutoCompleteControlComponent } from 'mat-dynamic-form-controls';
+import { DateRange } from 'date-time-helpers';
+import { DynamicFormBuilder } from 'dynamic-forms';
 import { FormSheetViewConfig } from 'form-sheet';
-import { Immutable, NotNull } from 'global-types';
+import { Immutable } from 'global-types';
 import { StateSyncConfig } from 'state-sync';
 
 export type MissionCriteriaFormState = StateMissions & StateEmployers & 
-    StateMissionTypes & StateSyncConfig & DateRangeControlGroupState
+    StateMissionTypes & StateSyncConfig;
 
-export interface MissionCriteriaForm extends NotNull<MissionCriteria> {}
+export interface MissionCriteriaForm extends Required<Omit<MissionCriteria, "searchString" | "dateRange">> { 
+    searchString: Mission |  string;
+    dateRange: DateRange<string>
+};
 
-type FormState = MissionCriteriaFormState;
+const builder = new DynamicFormBuilder<MissionCriteriaForm, MissionCriteriaFormState>();
 
-const SearchStringControl: Immutable<DynamicControl<string, FormState, AutoCompleteQuestion<Mission, FormState>>> = { 
-    questionComponent:  AutoCompleteQuestionComponent,
-    question: {
-        valueFormatter: (val) => val.address,
-        valueProp: "address",
-        lazyOptions: "all",
-        placeholder: "Søk med adresse",
-        resetable: true,
-        activeFilter: { 
+const SearchStringControl = builder.control<AutoCompleteControlComponent<Mission>>({
+    controlComponent:  AutoCompleteControlComponent, 
+    viewOptions: {
+        options$: [],
+        displayWith$: (val) => typeof val === "string" ? val : val?.address || "",
+        lazyOptions$: "all",
+        placeholder$: "Søk med adresse",
+        resetable$: true,
+        activeFilter$: { 
             criteriaFormatter: (s) => s?.toLowerCase(), 
             filter: (e, s) => e.address!.toLowerCase().indexOf(s) !== -1, 
             maxChecks: 50 
         },
-        stateBindings: {
-            options: _formStateBinding<FormState, Mission[]>()(["missions"], (s) => s.missions || [])
-        }
     }, 
-}
-const MissionTypeControl: Immutable<DynamicControl<MissionType, FormState, SelectQuestion<MissionType, FormState>>> = { 
-    questionComponent:  SelectQuestionComponent,
-    question: {
-        valueFormatter: (val) => val.name,
-        compareWith: _compareProp<MissionType>("id"),
-        lazyOptions: "all",
-        placeholder: "Velg oppdragstype",
-        stateBindings: {
-            options: _formStateBinding<FormState, MissionType[]>()(["missionTypes"], (s) => s.missionTypes || [])
-        }
-    }, 
-}
-const FinishedControl: Immutable<DynamicControl<boolean, FormState, RadioGroupQuestion<boolean, null>>> = { 
-    questionComponent:  RadioGroupQuestionComponent,
-    question: {   
-        label: "Velg status",
-        valueFormatter: (finished) => finished ? "Ferdig" : "Aktiv",
-        stateBindings: { options: [false, true] }
-    }, 
-}
+});
 
-export const MissionCriteriaForm: Immutable<DynamicForm<MissionCriteriaForm, FormState>> = {
-    submitText: "Bruk", 
-    resettable: true, resetState: {finished: false},
+const MissionTypeControl = builder.control<SelectControlComponent<MissionType>>({
+    controlComponent:  SelectControlComponent,
+    viewOptions: {
+        options$: [],
+        valueFormatter$: (val) => val.name,
+        compareWith$: _compareProp<MissionType>("id"),
+        lazyOptions$: "all",
+        placeholder$: "Velg oppdragstype"
+    }, 
+});
+
+const FinishedControl = builder.control<RadioGroupControlComponent<boolean>>({
+    controlComponent:  RadioGroupControlComponent,
+    viewOptions: {   
+        label$: "Velg status",
+        valueFormatter$: (finished) => finished ? "Ferdig" : "Aktiv",
+        options$: [false, true]
+    }, 
+});
+
+const MissionCriteriaForm = builder.form({  
     controls: {
         searchString: SearchStringControl,
         employer: EmployerSelectControl,
         missionType: MissionTypeControl,
-        dateRange: {...DateRangeControlGroup, panelClass: "mission-date-range-question-group"},
+        dateRange: DateRangeControlGroup,
         finished: FinishedControl,
     },
-    formStateSetters: SyncModelDateRangeFormStateSetters
-}
+    overrides: { 
+        employer: { viewOptions: { options$: builder.bindState("employers"), } },
+        missionType: { viewOptions: { options$: builder.bindState("missionTypes") } },
+        searchString: { viewOptions: { options$: builder.bindState("missions") } },
+        dateRange: { overrides: SyncModelDateRangeOptions },
+    }
+});
 
-export const MissionCriteriaFormSheet: Immutable<FormSheetViewConfig<MissionCriteriaForm, FormState>> = {
+export const MissionCriteriaFormSheet: Immutable<FormSheetViewConfig<MissionCriteriaForm, MissionCriteriaFormState>> = {
     formConfig: MissionCriteriaForm, 
-    navConfig: {title: "Velg filtre"},
+    navConfig: { title: "Velg filtre" },
+    actionConfig: { 
+        submitText: "Bruk",
+        resettable: true, 
+        resetState: {finished: false},
+    }
 }

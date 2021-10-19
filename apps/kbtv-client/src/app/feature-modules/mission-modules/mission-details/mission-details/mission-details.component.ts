@@ -11,12 +11,12 @@ import { DateRangePresets } from '@shared-app/enums/date-range-presets.enum';
 import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { ImageViewerDialogService } from '@shared-mission/components/image-viewer/image-viewer-dialog.service';
-import { EditMissionModelForm } from '@shared-mission/forms/save-mission-model-form.const';
+import { MissionModelForm } from '@shared-mission/forms/save-mission-model-form.const';
 import { BottomIconButtons } from '@shared/constants/bottom-icon-buttons.const';
 import { MissionPositionPickerSheetService } from '@shared/scam/mission-position-picker/mission-position-picker-sheet.service';
 import { Immutable, Maybe } from 'global-types';
 import { ModelFormService } from 'model/form';
-import { Observable } from 'rxjs';
+import { interval, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { UserTimesheetListCriteriaQueryParam } from 'src/app/feature-modules/timesheet-modules/user-timesheet-list/user-timesheet-list/user-timesheet-list-route-params.const';
 import { MissionDetailsFacade } from '../mission-details.facade';
@@ -71,7 +71,7 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
   ) { super() }
 
   updateHeaderImage = (files: FileList): void => 
-    files?.length ? this.facade.updateHeaderImage(files[0]) : undefined;
+    files?.length ? this.facade.updateHeaderImage(files) : undefined;
 
   addMissionImages = (files: FileList): void => 
     files?.length ? this.facade.addImages(files) : undefined;
@@ -90,7 +90,7 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
   private openImageInput = (ref: ElementRef<HTMLElement>): void => ref?.nativeElement?.click();
 
   private openMissionForm = (id: string | undefined) => 
-    this.modelFormService.open(EditMissionModelForm, {id})
+    this.modelFormService.open(MissionModelForm, {id})
       .afterDismissed().subscribe(x => x === "deleted" ? this.location.back() : null)
 
   private goToTimesheets = (mission: Maybe<Immutable<Mission>>) => 

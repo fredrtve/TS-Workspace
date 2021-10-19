@@ -12,10 +12,6 @@ export type UnionOmit<TUnion extends string | number | symbol, TOmit extends str
     [P in TUnion as P extends TOmit ? never : P]: any 
 };
 
-interface Cool { test: string, not: Not, arris: Not[] }
-interface Not { noe: number, arriss: string[] }
-
-type www = (Immutable<Immutable<Cool>> | undefined) extends (Immutable<Cool> | undefined)  ? true : false;
 /** A value that can't be mutated */
 export type Immutable<T> =
     T extends (infer R)[] ? ImmutableArray<R> :
@@ -63,3 +59,36 @@ export type DeepPropType<TObject, TPath extends string, TElse> =
 
 /** Constructs an object with deep propeties TPath with value types from TObject  */
 export type DeepPropsObject<TObject, Path extends string> = { [P in Path]: DeepPropType<TObject, P, never> }
+
+/** Constructs an nested object according to TPath with TValue as value for last subpath.*/
+export type ConstructSliceFromPath<TPath extends string, TObject> = 
+    TPath extends `${infer LeftSide}.${infer RightSide}` 
+    ? LeftSide extends keyof TObject 
+    ? {[P in LeftSide]: ConstructSliceFromPath<RightSide, TObject[LeftSide]>}
+    : never
+    : TPath extends keyof TObject ? {[P in TPath]: TObject[TPath]} : never;
+
+export type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>
+
+export type PartialByObj<T, K> = PartialBy<T, InnerJoinKeys<T, K>>
+
+export type RequiredKeys<T extends object> = keyof {
+    [P in keyof T as undefined extends T[P] ? never : P]: any
+};
+
+export type HasRequiredKeys<T> = T extends object ? RequiredKeys<T> extends never ? false : true : true;
+
+export type InnerJoinKeys<A,B> = keyof { [P in keyof A as P extends keyof B ? P : never]: A[P] }
+
+export type MakeKeysOptionalIfOptionalObject<T> = 
+    { [P in keyof T as HasRequiredKeys<T[P]> extends true ? P : never]: T[P]; } &
+    { [P in keyof T as HasRequiredKeys<T[P]> extends false ? P : never]?: T[P]; } 
+
+export type MakeKeysOptionalIfOptionalObjectDeep<T> = MakeKeysOptionalIfOptionalObject<
+    { [P in keyof T]: IsPlainObject<T[P]> extends false ? T[P] : MakeKeysOptionalIfOptionalObjectDeep<T[P]> }
+>
+
+export type IsPlainObject<T> = T extends any[] ? false : 
+    T extends Function ? false : 
+    T extends false ? false : 
+    T extends object ? true : false;

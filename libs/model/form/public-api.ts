@@ -6,8 +6,7 @@
  * @packageDocumentation
  */
 
-export * from './src/model-form.module';
 export * from './src/model-form.service';
-export * from './src/model-form.component';
+export * from './src/model-form.module';
 export * from './src/interfaces';
 export * from './src/form-to-save-model-converter.helper';

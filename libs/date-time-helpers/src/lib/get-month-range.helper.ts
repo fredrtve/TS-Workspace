@@ -8,10 +8,13 @@ import { DateInput, Immutable } from 'global-types';
  * @param date - A date with the desired month
  * @param getISO - Set to true if you want the output as ISO strings
  */
-export function _getMonthRange(date: Immutable<DateInput> = new Date(), getISO?: boolean): Immutable<DateRange> {
+export function _getMonthRange<TAsIso extends boolean = false>(
+    date: Immutable<DateInput> = new Date(), 
+    getISO?: TAsIso
+): Immutable<TAsIso extends true ? DateRange<string> : DateRange> {
     const start = _getFirstDayOfMonth(date);   
     const end = _getLastDayOfMonth(date);
-    return {
+    return <Immutable<TAsIso extends true ? DateRange<string> : DateRange>> {
       start: getISO ? start.toISOString() : start, 
       end: getISO ? end.toISOString() : end
     };

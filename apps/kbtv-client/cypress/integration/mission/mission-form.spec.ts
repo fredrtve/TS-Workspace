@@ -55,11 +55,11 @@ describe('Mission Form', () => {
         const autoCompleteItems = () => cy.get(".mat-autocomplete-panel").children();
 
         //Check autocompletes are visible and can be selected
-        cy.getCy('form-employerName').click();
+        cy.getCy('form-employerInput').click();
         cy.wait(500);
         autoCompleteItems().should('have.length', 1).first().click();
 
-        cy.getCy('form-missionTypeName').click();
+        cy.getCy('form-missionTypeInput').click();
         cy.wait(500);
         autoCompleteItems().should('have.length', 1).first().click();
 
@@ -82,11 +82,11 @@ describe('Mission Form', () => {
         cy.mainFabClick();
         cy.wait(200);
 
-        const data = {address: 'createMissionTest2', missionTypeName: 'newMissionType', employerName: 'newEmployer'};
+        const data = {address: 'createMissionTest2', missionTypeInput: 'newMissionType', employerInput: 'newEmployer'};
         cy.getCy('form-address','input').type(data.address);   
 
-        cy.getCy('form-missionTypeName','input').type(data.missionTypeName);
-        cy.getCy('form-employerName','input').type(data.employerName);
+        cy.getCy('form-missionTypeInput','input').type(data.missionTypeInput);
+        cy.getCy('form-employerInput','input').type(data.employerInput);
 
         cy.getCy('submit-form').click();
         cy.wait('@createMission');
@@ -96,10 +96,10 @@ describe('Mission Form', () => {
             const types = state.missionTypes!.filter(x => x.id === mission!.missionTypeId);
 
             expect(employers).to.have.lengthOf(1);
-            expect(employers[0].name).to.equal(data.employerName);
+            expect(employers[0].name).to.equal(data.employerInput);
 
             expect(types).to.have.lengthOf(1);
-            expect(types[0].name).to.equal(data.missionTypeName);
+            expect(types[0].name).to.equal(data.missionTypeInput);
         })
 
     })
@@ -115,15 +115,15 @@ describe('Mission Form', () => {
         cy.getCy('form-address','input').invoke('val').should('equal', mission.address);      
         cy.getCy('form-phoneNumber','input').invoke('val').should('equal', mission.phoneNumber);   
         cy.getCy('form-description','textarea').invoke('val').should('equal', mission.description);        
-        cy.getCy('form-employerName','input').invoke('val').should('equal', employer.name);
-        cy.getCy('form-missionTypeName','input').invoke('val').should('equal', missionType.name);
+        cy.getCy('form-employerInput','input').invoke('val').should('equal', employer.name);
+        cy.getCy('form-missionTypeInput','input').invoke('val').should('equal', missionType.name);
         cy.getCy('form-finished','input').should('not.be.checked');
 
         //Update values
         cy.getCy('form-address','input').clear().type(updatedValues.address);
         cy.getCy('form-phoneNumber','input').clear().type(updatedValues.phoneNumber);
-        cy.getCy('form-employerName','input').clear();
-        cy.getCy('form-missionTypeName','input').clear();
+        cy.getCy('form-employerInput','input').clear();
+        cy.getCy('form-missionTypeInput','input').clear();
 
         cy.getCy('submit-form').click();
         cy.wait('@updateMission');

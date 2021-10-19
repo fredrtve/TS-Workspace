@@ -45,7 +45,7 @@ export class UserTimesheetCriteriaFormService {
                 initialValue: initialValue ? _timesheetCriteriaToForm(initialValue) : null, 
                 formState: this.store.select$(["missions", "syncConfig"]) 
             },
-            (val) => onSubmit(_criteriaFormToTimesheetCriteria(val))
+            (val) => onSubmit(_criteriaFormToTimesheetCriteria(<Immutable<UserTimesheetCriteriaForm>> val))
         )
     }
 }

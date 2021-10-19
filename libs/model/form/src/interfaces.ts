@@ -1,8 +1,10 @@
 import { DynamicForm } from 'dynamic-forms';
+import { FormActionsOptions } from 'form-sheet';
 import { Immutable, Maybe } from 'global-types';
 import { RelationInclude, StateModels, StatePropByModel } from 'model/core';
 import { Observable } from 'rxjs';
 import { StateAction } from 'state-management';
+import { DeepPartial } from 'ts-essentials';
 
 /** Represents a function that converts a form value to a state action */
 export type Converter<TInput, TOutput> = (input: Immutable<TInput>) => Immutable<TOutput>;
@@ -26,23 +28,25 @@ export interface ModelFormConfig<
     TState extends object, 
     TModel extends StateModels<TState>,
     TForm extends object = TModel extends object ? TModel : object, 
-    TFormState extends object | null = null>
+    TInputState extends object = {}>
 {    
     /** The form being used */
-    dynamicForm: DynamicForm<TForm, TFormState extends null ? TState : TState & TFormState>;
+    dynamicForm: DynamicForm<TForm, TState & TInputState>;
     /** Configure what relational state that will be mapped to entity and included in form state. */
     includes: RelationInclude<TState, TModel>
+    /** Configure actions on the form */
+    actionOptions?: Partial<FormActionsOptions<TForm>>
     /** A custom converter used to convert form to a state action on submit. 
      *  Defaults to {@link _formToSaveModelConverter} with form value as entity.  */
     actionConverter?: Converter<ModelFormResult<TState, TModel, TForm>, StateAction>
     /** A custom converter used to convert the model data to form. Only required on edit. If null, form value is treated as model */
-    modelConverter?: Maybe<Converter<TModel, Partial<TForm>>>
+    modelConverter?: Maybe<Converter<DeepPartial<TModel>, Partial<TForm>>>
 }
 
 /** Represents a configuration object for the model form service. */
-export interface ModelFormServiceOptions<TInputState = object, TForm extends object = object> {
+export interface ModelFormServiceOptions<TInputState extends object = never, TForm extends object = object> {
     /** Additional form state that should be merged with model state */ 
-    formState?: Immutable<TInputState> | Observable<Immutable<TInputState>>,
+    inputState?: Immutable<TInputState> | Observable<Immutable<TInputState>>,
     /** If set to false, the delete option will not be displayed. */
     deleteDisabled?: boolean, 
     /** A custom title for the form sheet. */

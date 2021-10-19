@@ -1,7 +1,7 @@
 /** Represents the range between two specified dates */
-export interface DateRange {
-    start: Date | string | number;
-    end: Date | string | number;
+export interface DateRange<T extends Date | string | number = Date | string | number> {
+    start: T;
+    end: T;
 }
 
 /** Represents a week and year */

@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { _getISO } from 'date-time-helpers';
 
 @Component({
   selector: 'app-timesheet-day-label',
@@ -8,8 +9,12 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 export class TimesheetDayLabelComponent {
 
   @Input() date: Date;
-  @Output() labelClicked = new EventEmitter();
+  @Output() labelClicked = new EventEmitter<string>();
 
   constructor() {}
+
+  onLabelClick(){
+    this.labelClicked.emit(_getISO(this.date))
+  }
 
 }

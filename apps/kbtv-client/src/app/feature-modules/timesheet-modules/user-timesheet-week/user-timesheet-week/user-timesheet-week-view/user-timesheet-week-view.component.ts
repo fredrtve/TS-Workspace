@@ -14,7 +14,7 @@ export class UserTimesheetWeekViewComponent {
   @Input() vm: ViewModel;
   
   @Output() timesheetClicked = new EventEmitter<Timesheet>();
-  @Output() labelClicked = new EventEmitter<Date>();
+  @Output() labelClicked = new EventEmitter<string>();
 
   constructor() {}
     

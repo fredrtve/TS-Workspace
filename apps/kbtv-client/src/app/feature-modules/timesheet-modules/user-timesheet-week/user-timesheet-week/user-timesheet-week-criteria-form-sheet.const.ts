@@ -4,7 +4,14 @@ import { Immutable } from "global-types";
 
 export const UserTimesheetWeekCriteriaFormSheet: Immutable<FormSheetViewConfig<WeekCriteriaForm, WeekCriteriaFormState>> =
 { 
-    formConfig: { ...WeekCriteriaForm, options: { noRenderDisabledControls: true }, disabledControls: {user: true} },
+    formConfig: { 
+        ...WeekCriteriaForm, 
+        controls: {
+            ...WeekCriteriaForm.controls, 
+            user: { controlComponent: null, required$: true, viewOptions: {} } 
+        } 
+    },
     navConfig: {title: "Velg filtre"}, 
+    actionConfig: { submitText: "Bruk" },
     fullScreen: false 
 }

@@ -12,7 +12,7 @@ import { FormSheetNavConfig } from '../interfaces';
 export class FormSheetNavBarComponent {
 
   @Input() config: Maybe<FormSheetNavConfig>;
-  @Output() closed = new EventEmitter<unknown>()
+  @Output() close = new EventEmitter<unknown>()
 
   constructor(private _bottomSheetRef: MatBottomSheetRef<FormSheetWrapperComponent, unknown>) {}
 

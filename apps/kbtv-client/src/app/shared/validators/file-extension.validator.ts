@@ -5,8 +5,12 @@ import { _validateFileExtension } from '@shared-app/helpers/validate-file-extens
 export function fileExtensionValidator(allowedExtensions: string[]): ValidatorFn{ 
     return (control: AbstractControl): UnknownState | null => {
         if(control.value == null) return null;
-        const invalid = !_validateFileExtension(control.value, allowedExtensions);
-        return invalid ? {'fileextension': {value: control.value}} : null;
+        let valid;
+        for(let i = 0; i < control.value.length; i++){
+            valid = _validateFileExtension(control.value[i], allowedExtensions);
+            if(valid === false) break;
+        }
+        return valid ? null : {'fileextension': {value: control.value}};
     };
 }
 

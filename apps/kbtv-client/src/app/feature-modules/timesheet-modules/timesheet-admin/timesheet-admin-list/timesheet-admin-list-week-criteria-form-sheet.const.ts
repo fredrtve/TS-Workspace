@@ -4,6 +4,7 @@ import { Immutable } from "global-types";
 
 export const TimesheetAdminListWeekCriteriaFormSheet: Immutable<FormSheetViewConfig<WeekCriteriaForm, WeekCriteriaFormState>> =
     {
-      formConfig: {...WeekCriteriaForm, options: { onlineRequired: true } }, 
+      formConfig: WeekCriteriaForm, 
       navConfig: {title: "Velg filtre"},
+      actionConfig: { submitText: "Bruk", onlineRequired: true }
     }

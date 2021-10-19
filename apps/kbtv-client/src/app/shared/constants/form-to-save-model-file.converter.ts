@@ -5,15 +5,15 @@ import { Immutable, UnknownState } from 'global-types';
 import { _getModelConfig } from 'model/core';
 import { ModelFormResult } from 'model/form';
 
-export type ModelFileForm = {file: File};
+export type ModelFileForm = {fileList: {[index: number]: File}};
 type FormResult = ModelFormResult<ModelState, ModelFile, ModelFileForm>
 
 export const _formToSaveModelFileConverter = (input: Immutable<FormResult>) => {
-    let {file, ...entity} = input.formValue;
+    let {fileList, ...entity} = input.formValue;
     const idProp = _getModelConfig<ModelState, ModelFile>(input.stateProp).idProp;
     return GlobalActions.saveModelFile({
         stateProp: input.stateProp,    
-        file, 
+        file: fileList[0], 
         entity: (<UnknownState> input.formValue)[idProp] != null ? 
             entity : 
             { ...entity, createdAt: new Date().getTime() }, 

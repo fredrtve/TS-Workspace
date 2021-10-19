@@ -1,13 +1,13 @@
 import { InboundEmailPassword } from "@core/models";
 import { StateEmployers, StateInboundEmailPassword, StateMissions, StateMissionTypes } from "@core/state/global-state.interfaces";
-import { EditMissionModelForm } from "@shared-mission/forms/save-mission-model-form.const";
+import { MissionModelForm } from "@shared-mission/forms/save-mission-model-form.const";
 import { ModelDataTablesConfig } from 'model/data-table';
 import { environment } from "src/environments/environment";
-import { CreateEmployerModelForm } from "./forms/create-employer-model-form.const";
-import { CreateMissionTypeModelForm } from "./forms/create-mission-type-model-form.const";
+import { EmployerModelForm } from "./forms/employer-model-form.const";
+import { MissionTypeModelForm } from "./forms/mission-type-model-form.const";
 
-const mission = EditMissionModelForm.dynamicForm.controls;
-const employer = CreateEmployerModelForm.dynamicForm.controls;
+const mission = MissionModelForm.dynamicForm.controls;
+const employer = EmployerModelForm.dynamicForm.controls;
 
 type ModelDataTableState = StateMissions & StateEmployers & StateMissionTypes & StateInboundEmailPassword
 export const ModelDataTables: ModelDataTablesConfig<ModelDataTableState> = {
@@ -16,22 +16,22 @@ export const ModelDataTables: ModelDataTablesConfig<ModelDataTableState> = {
     tables: {
         missions: {selectable: true, propertyColDefs: {
             id: {editable: false}, 
-            address: { validators: mission.address?.validators }, 
+            address: { validators: mission.address?.validators$ }, 
             finished: {boolean: true}, 
-            phoneNumber: { validators: mission.phoneNumber?.validators }, 
+            phoneNumber: { validators: mission.phoneNumber?.validators$ }, 
             missionTypeId: {}, 
             employerId: {}
         }},
         employers: {selectable: true, propertyColDefs: {
             id: {editable: false}, 
-            name: { validators: employer.name.validators }, 
-            phoneNumber: { validators: employer.phoneNumber!.validators }, 
-            address: { validators: employer.address!.validators }, 
-            email: { validators: employer.email!.validators }
+            name: { validators: employer.name.validators$ }, 
+            phoneNumber: { validators: employer.phoneNumber!.validators$ }, 
+            address: { validators: employer.address!.validators$ }, 
+            email: { validators: employer.email!.validators$ }
         }},
         missionTypes: {selectable: true, propertyColDefs: {
             id: {editable: false}, 
-            name: { validators: CreateMissionTypeModelForm.dynamicForm.controls.name.validators }
+            name: { validators: MissionTypeModelForm.dynamicForm.controls.name.validators$ }
         }},
         inboundEmailPasswords: {selectable: true, propertyColDefs: {
             id: {editable: false}, 

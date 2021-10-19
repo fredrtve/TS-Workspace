@@ -28,10 +28,10 @@ export class CreateMissionImagesEffect implements Effect {
                         this.notificationService.notify(AppNotifications.invalidFileFormat())
                         continue;
                     }
-
+                    
                     actions.push(_formToSaveModelFileConverter({
                         stateProp: "missionImages", 
-                        formValue: <ModelFileForm> { missionId: x.action.missionId, file}
+                        formValue: <ModelFileForm> { missionId: x.action.missionId, fileList: [file] }
                     }))
                 }
 

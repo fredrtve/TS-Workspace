@@ -1,11 +1,12 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { AppDynamicFormOptions } from '@core/configurations/app-dynamic-form-options.const';
 import { ValidationErrorMessages } from '@core/configurations/validation-error-messages.const';
 import { CdkSelectableModule } from 'cdk-selectable';
 import { ConfirmDialogModule } from 'confirm-dialog';
-import { VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
+import { DYNAMIC_FORM_DEFAULT_OPTIONS } from 'dynamic-forms';
 import { FormSheetModule } from 'form-sheet';
 import 'hammerjs';
+import { DynamicFormGroupOptions, VALIDATION_ERROR_MESSAGES } from 'mat-dynamic-form-controls';
 import { SharedAppModule } from '../shared-app/shared-app.module';
 import { AngularMaterialModule } from './angular-material.module';
 import { BottomSheetMenuComponent } from './bottom-sheet-menu/bottom-sheet-menu.component';
@@ -17,7 +18,6 @@ import { MainSkeletonComponent } from './components/main-skeleton/main-skeleton.
 import { ScrollNavElevationTogglerDirective } from './components/main-skeleton/scroll-nav-elevation-toggler.directive';
 import { MainTopNavBarComponent } from './components/main-top-nav-bar/main-top-nav-bar.component';
 import { LoadingOverlayDirective } from './directives';
-import { ActiveStringFilterDirective } from './directives/active-filter.directive';
 import { HideDirective } from './directives/hide.directive';
 import { ImageRatioResizerDirective } from './directives/image-ratio-resizer.directive';
 import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, MergeObjPipe, ObjectToArrayPipe, SortByDatePipe, TransformButtonPipe } from './pipes';
@@ -48,7 +48,6 @@ import { TransformButtonsPipe } from './pipes/transform-buttons.pipe';
     FuncPipe,
     MergeObjPipe,
     ScrollNavElevationTogglerDirective,   
-    ActiveStringFilterDirective,
     LoadingOverlayDirective,  
     ImageRatioResizerDirective, 
     TransformButtonsPipe, 
@@ -56,16 +55,13 @@ import { TransformButtonsPipe } from './pipes/transform-buttons.pipe';
     HideDirective
   ],
   imports: [
-    ReactiveFormsModule,
     AngularMaterialModule,
     SharedAppModule,    
     CdkSelectableModule, 
     ConfirmDialogModule,
     FormSheetModule, 
-    
   ],
   exports: [
-    ReactiveFormsModule,
     AngularMaterialModule,
     SharedAppModule, 
     CdkSelectableModule,
@@ -88,14 +84,18 @@ import { TransformButtonsPipe } from './pipes/transform-buttons.pipe';
     ConvertToGooglePositionPipe,
 
     ScrollNavElevationTogglerDirective,
-    ActiveStringFilterDirective,
     LoadingOverlayDirective,  
     ImageRatioResizerDirective,
     HideDirective  
   ],
   providers:[
     { provide: VALIDATION_ERROR_MESSAGES, useValue: ValidationErrorMessages},
+    { provide: DYNAMIC_FORM_DEFAULT_OPTIONS, useValue: AppDynamicFormOptions } 
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class SharedModule {}
+
+declare module "dynamic-forms" {
+  interface DefaultControlGroupComponentOptions extends DynamicFormGroupOptions { }
+}

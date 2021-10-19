@@ -44,9 +44,9 @@ export class MissionDetailsFacade {
         )
     }
 
-    updateHeaderImage(file: File): void {
+    updateHeaderImage(fileList: FileList): void {
         this.store.dispatch(_formToSaveModelFileConverter({
-            formValue: <ModelFileForm> {id: this.missionId, file},
+            formValue: <ModelFileForm> {id: this.missionId, fileList},
             stateProp: "missions"
         }));
     }

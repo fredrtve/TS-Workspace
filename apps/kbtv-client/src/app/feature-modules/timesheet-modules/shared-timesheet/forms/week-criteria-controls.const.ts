@@ -1,34 +1,38 @@
 import { StateUsers } from '@core/state/global-state.interfaces';
 import { WeekCriteria } from '@shared-timesheet/interfaces';
-import { isWeekInRange } from '@shared/validators/is-week-in-range.validator';
-import { Immutable } from 'global-types';
-import { DynamicForm } from 'dynamic-forms';
 import { UserSelectControl } from '@shared/constants/common-controls.const';
-import { InputQuestionComponent, InputQuestion } from '@shared/scam/dynamic-form-questions/input-question.component';
-import { IonDateQuestionComponent, IonDateQuestion } from '@shared/scam/dynamic-form-questions/ion-date-time-question.component';
+import { InputControlComponent } from 'mat-dynamic-form-controls';
+import { IonDateControlComponent } from '@shared/scam/dynamic-form-controls/ion-date-time-control.component';
+import { isWeekInRange } from '@shared/validators/is-week-in-range.validator';
+import { DynamicFormBuilder } from 'dynamic-forms';
 
 export type WeekCriteriaFormState = StateUsers;
-export interface WeekCriteriaForm extends Pick<WeekCriteria, "user" | "year" | "weekNr"> {}
+export interface WeekCriteriaForm extends Pick<WeekCriteria, "user" | "year"> { weekNr: string }
 
-type FormState = WeekCriteriaFormState;
+const builder = new DynamicFormBuilder<WeekCriteriaForm, WeekCriteriaFormState>();
 
-export const WeekCriteriaForm: Immutable<DynamicForm<WeekCriteriaForm, FormState>> = {
-    submitText: "Bruk", 
-    hideOnValueChangeMap: { weekNr: (s) => s.weekNr == null },
-    validators: [isWeekInRange("weekNr", "year")],
+export const WeekCriteriaForm = builder.form({
+    validators$: [isWeekInRange("weekNr", "year")],
     controls: {
-        user: {...UserSelectControl, required: true},
-        year: { required: true,
-            questionComponent: IonDateQuestionComponent,     
-            question: <IonDateQuestion<WeekCriteria>>{ 
-                placeholder: "Velg år", 
-                ionFormat: "YYYY", 
+        user: {...UserSelectControl, required$: true},
+        year: builder.control<IonDateControlComponent<number>>({ required$: true,
+            controlComponent: IonDateControlComponent,     
+            viewOptions: { 
+                placeholder$: "Velg år", 
+                ionFormat$: "YYYY", 
                 valueSetter: (val) => new Date(val).getFullYear() 
             },
-        },
-        weekNr: { required: true,
-            questionComponent: InputQuestionComponent,
-            question: <InputQuestion>{ placeholder: "Velg uke", type: "tel" }, 
-        },
+        }),
+        weekNr: builder.control({ required$: true,
+            controlComponent: InputControlComponent,
+            viewOptions: { 
+                placeholder$: "Velg uke", 
+                type$: "tel",
+            }, 
+        }),
     },
-}
+    overrides: {
+        user: { viewOptions: { options$: builder.bindState('users') } },
+        weekNr: { controlClass$: builder.bindForm("weekNr", (nr) => nr == null ? "display-none" : "")  }
+    }
+});

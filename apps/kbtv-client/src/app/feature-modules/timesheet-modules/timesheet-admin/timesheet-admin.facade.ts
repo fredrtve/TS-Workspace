@@ -6,7 +6,7 @@ import { ModelState } from '@core/state/model-state.interface';
 import { GroupByPeriod } from '@shared-app/enums/group-by-period.enum';
 import { TimesheetStatus } from '@shared-app/enums/timesheet-status.enum';
 import { _setFullNameOnUserForeigns } from '@shared-app/helpers/add-full-name-to-user-foreign.helper';
-import { CreateTimesheetModelForm, EditTimesheetModelForm, TimesheetForm } from '@shared-timesheet/forms/save-timesheet-model-forms.const';
+import { TimesheetForm, TimesheetModelForm } from '@shared-timesheet/forms/save-timesheet-model-forms.const';
 import { WeekCriteriaFormState } from '@shared-timesheet/forms/week-criteria-controls.const';
 import { _getSummariesByType } from '@shared-timesheet/helpers/get-summaries-by-type.helper';
 import { _noEmployersFilter } from '@shared-timesheet/no-employers-filter.helper';
@@ -14,7 +14,6 @@ import { filterRecords } from '@shared/operators/filter-records.operator';
 import { _find } from 'array-helpers';
 import { Immutable, ImmutableArray, Maybe } from 'global-types';
 import { ModelFormService } from 'model/form';
-import { ModelFetcherActions } from 'model/state-fetcher';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Store } from 'state-management';
@@ -71,14 +70,11 @@ export class TimesheetAdminFacade {
         this.store.dispatch(TimesheetAdminActions.fetchTimesheets<ModelState>({props: ["users"]}))
     }
     
-    openTimesheetForm = (entityId?: Maybe<string>, initialValue?: Immutable<Partial<TimesheetForm>>): void => {
-        this.modelFormService.open(
-            entityId ? EditTimesheetModelForm : CreateTimesheetModelForm,
-            initialValue || {id: <string> entityId}
-        )
+    openTimesheetForm = (initialValue?: Immutable<Partial<TimesheetForm>>): void => {
+        this.modelFormService.open(TimesheetModelForm, initialValue)
     };
 
-    updateCriteria = (weekCriteria: Immutable<Partial<WeekCriteria>>): void =>       
+    updateCriteria = (weekCriteria: Immutable<Partial<Omit<WeekCriteria, "weekNr" | "weekDay">>>): void =>       
         this.store.dispatch(TimesheetAdminActions.weekCriteriaChanged({ weekCriteria }))
 
     updateWeekNr = (weekNr: Maybe<number | string>): void =>  

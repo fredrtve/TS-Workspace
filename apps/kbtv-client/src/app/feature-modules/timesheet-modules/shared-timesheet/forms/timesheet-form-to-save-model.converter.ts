@@ -1,5 +1,5 @@
 import { GlobalActions } from '@core/global-actions';
-import { Model, Timesheet, UserTimesheet } from '@core/models';
+import { Mission, Model, Timesheet, UserTimesheet } from '@core/models';
 import { StateMissions, StateTimesheets, StateUserTimesheets } from '@core/state/global-state.interfaces';
 import { TimesheetStatus } from '@shared-app/enums/timesheet-status.enum';
 import { TimesheetForm, UserTimesheetForm } from '@shared-timesheet/forms/save-timesheet-model-forms.const';
@@ -16,10 +16,10 @@ export const _timesheetFormToSaveModelConverter = (input: Immutable<ModelFormRes
 }
 
 export const _userTimesheetFormToSaveModelConverter = (input: Immutable<ModelFormResult<FormState, UserTimesheet, UserTimesheetForm>>) => {      
-    const {id, mission, comment, dateTime} = input.formValue;
-
+    const {id, missionInput, comment, dateTime} = input.formValue;
+   
     var entity: Timesheet = {
-        id, comment, missionId: mission?.id,    
+        id, comment, missionId: (<Mission> missionInput)?.id,    
         status: TimesheetStatus.Open,     
         startTime: dateTime!.startTime ? _mergeDateAndTime(dateTime!.date, dateTime!.startTime).getTime() : undefined,
         endTime:  dateTime!.endTime ? _mergeDateAndTime(dateTime!.date, dateTime!.endTime).getTime() : undefined,

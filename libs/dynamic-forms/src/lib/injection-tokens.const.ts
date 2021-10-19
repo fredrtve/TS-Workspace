@@ -1,5 +1,5 @@
-import { InjectionToken } from '@angular/core'
-import { ValidationErrorMap } from './interfaces';
+import { InjectionToken } from '@angular/core';
+import { DynamicFormDefaultOptions } from './interfaces';
 
-/** A token for providing global validation error messages for all forms */
-export const VALIDATION_ERROR_MESSAGES = new InjectionToken<ValidationErrorMap>('ValidationErrorMessages');
+/** A token for providing default configuration options for dynamic forms */
+export const DYNAMIC_FORM_DEFAULT_OPTIONS = new InjectionToken<DynamicFormDefaultOptions>("DynamicFormDefaultOptions");

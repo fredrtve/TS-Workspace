@@ -678,14 +678,14 @@
             }
           }
         },
-        // "test": {
-        //   "builder": "@angular-devkit/build-angular:karma",
-        //   "options": {
-        //     "main": "libs/dynamic-forms/src/test.ts",
-        //     "tsConfig": "libs/dynamic-forms/tsconfig.spec.json",
-        //     "karmaConfig": "libs/dynamic-forms/karma.conf.js"
-        //   }
-        // },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/dynamic-forms/src/test.ts",
+            "tsConfig": "libs/dynamic-forms/tsconfig.spec.json",
+            "karmaConfig": "libs/dynamic-forms/karma.conf.js"
+          }
+        },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
@@ -927,6 +927,154 @@
             "main": "libs/global-utils/src/test.ts",
             "tsConfig": "libs/global-utils/tsconfig.spec.json",
             "karmaConfig": "libs/global-utils/karma.conf.js"
+          }
+        }
+      }
+    },
+    "shroom-detective": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        },
+        "@schematics/angular:application": {
+          "strict": true
+        }
+      },
+      "root": "apps/shroom-detective",
+      "sourceRoot": "apps/shroom-detective/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/shroom-detective",
+            "index": "apps/shroom-detective/src/index.html",
+            "main": "apps/shroom-detective/src/main.ts",
+            "polyfills": "apps/shroom-detective/src/polyfills.ts",
+            "tsConfig": "apps/shroom-detective/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "apps/shroom-detective/src/favicon.ico",
+              "apps/shroom-detective/src/assets",
+              "apps/shroom-detective/src/manifest.webmanifest"
+            ],
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/purple-green.css",
+              "apps/shroom-detective/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "apps/shroom-detective/src/environments/environment.ts",
+                  "with": "apps/shroom-detective/src/environments/environment.prod.ts"
+                }
+              ], 
+              "outputPath": "dist/shroom-detective",
+              "sourceMap": false,
+              "optimization": true,
+              "outputHashing": "all",
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "serviceWorker": true,
+              "ngswConfigPath": "apps/shroom-detective/ngsw-config.json"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "shroom-detective:build:production"
+            },
+            "development": {
+              "browserTarget": "shroom-detective:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "shroom-detective:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "apps/shroom-detective/src/test.ts",
+            "polyfills": "apps/shroom-detective/src/polyfills.ts",
+            "tsConfig": "apps/shroom-detective/tsconfig.spec.json",
+            "karmaConfig": "apps/shroom-detective/karma.conf.js",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "apps/shroom-detective/src/favicon.ico",
+              "apps/shroom-detective/src/assets",
+              "apps/shroom-detective/src/manifest.webmanifest"
+            ],
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/purple-green.css",
+              "apps/shroom-detective/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        }
+      }
+    },
+    "mat-dynamic-form-controls": {
+      "projectType": "library",
+      "root": "libs/mat-dynamic-form-controls",
+      "sourceRoot": "libs/mat-dynamic-form-controls/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "libs/mat-dynamic-form-controls/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/mat-dynamic-form-controls/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libs/mat-dynamic-form-controls/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/mat-dynamic-form-controls/src/test.ts",
+            "tsConfig": "libs/mat-dynamic-form-controls/tsconfig.spec.json",
+            "karmaConfig": "libs/mat-dynamic-form-controls/karma.conf.js"
           }
         }
       }

@@ -1,0 +1,53 @@
+<ng-container *ngIf="vm$ | async; let vm">
+    <ng-container *ngIf="!vm.activeFilter$ else activeFilterView" 
+        [ngTemplateOutlet]="autocomplete"
+        [ngTemplateOutletContext]="{options: vm.options$, viewOptions: vm}">
+    </ng-container>
+
+    <ng-template #activeFilterView>
+        <ng-template   
+            *appActiveStringFilter="let filtered$; config: vm.activeFilter$; options: vm.options$; criteria: vm.criteria$"
+            [ngTemplateOutlet]="autocomplete" 
+            [ngTemplateOutletContext]="{options:filtered$ | async, viewOptions: vm}">
+        </ng-template>
+    </ng-template>
+    
+</ng-container>
+
+<ng-template #autocomplete let-options="options" let-viewOptions="viewOptions">
+
+    <mat-form-field [color]="viewOptions.color$ || 'accent'" class="w-100">
+        <mat-label *ngIf="viewOptions.label$">{{ viewOptions.label }}</mat-label>
+        
+        <input matInput [placeholder]="viewOptions.placeholder$" [formControl]="control" [required]="viewOptions.required$"
+            [matAutocomplete]="auto1">
+
+        <mat-autocomplete #auto1="matAutocomplete" [displayWith]="viewOptions.displayWith$" (opened)="options ? null : showOptions()">
+            
+            <ng-container *ngIf="options; else loading">
+                <mat-option *ngFor="let option of options" 
+                    [value]="option">
+                    {{ (viewOptions.displayWith$ | func : option) || option }}
+                </mat-option>
+            </ng-container>
+            <ng-template #loading>
+                <mat-option>
+                    Laster inn...
+                </mat-option>
+            </ng-template>
+            
+        </mat-autocomplete>
+
+        <mat-hint *ngIf="viewOptions.hint$">{{ viewOptions.hint }}</mat-hint>
+
+        <button mat-icon-button matSuffix *ngIf="viewOptions.resetable$ && control && !control.disabled && control.value" aria-label="Clear" 
+            (tap)="control.setValue(''); control.markAsDirty()">
+            <mat-icon>close</mat-icon>
+        </button>
+
+        <mat-error *ngIf="control && control.dirty && control.invalid">
+            {{ getValidationErrorMessage() }}
+        </mat-error>
+    </mat-form-field>
+
+</ng-template>

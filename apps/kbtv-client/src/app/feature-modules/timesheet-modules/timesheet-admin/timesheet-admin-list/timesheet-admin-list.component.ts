@@ -43,7 +43,7 @@ export class TimesheetAdminListComponent extends WithUnsubscribe() {
 
   actionFab: AppButton = { 
     icon: "add", aria: 'Legg til', 
-    callback: () => this.openTimesheetForm(undefined, {user: this.facade.weekCriteria.user}) 
+    callback: () => this.openTimesheetForm({user: this.facade.weekCriteria.user}) 
   }
 
   constructor(
@@ -66,8 +66,8 @@ export class TimesheetAdminListComponent extends WithUnsubscribe() {
       timesheet.status === TimesheetStatus.Confirmed ? TimesheetStatus.Open : TimesheetStatus.Confirmed
     );
 
-  openTimesheetForm = (entityId?: Maybe<string>, initialValue?: Immutable<Partial<TimesheetForm>>): void => 
-    this.facade.openTimesheetForm(entityId, initialValue);
+  openTimesheetForm = (initialValue?: Immutable<Partial<TimesheetForm>>): void => 
+    this.facade.openTimesheetForm(initialValue);
   
   openTimesheetCard = (timesheet: Immutable<Timesheet>) =>
     this.dialogService.dialog$.subscribe(x => x.open(AdminTimesheetCardDialogWrapperComponent, {
@@ -78,7 +78,7 @@ export class TimesheetAdminListComponent extends WithUnsubscribe() {
   private openWeekFilter = () => 
     this.formService.open<WeekCriteriaForm, WeekCriteriaFormState>(TimesheetAdminListWeekCriteriaFormSheet, 
     { 
-      initialValue: {...this.facade.weekCriteria, weekNr: <number>this.facade.selectedWeekNr},
+      initialValue: {...this.facade.weekCriteria, weekNr: this.facade.selectedWeekNr?.toString() },
       formState: this.facade.weekCriteriaFormState$
     },
     (val) => {

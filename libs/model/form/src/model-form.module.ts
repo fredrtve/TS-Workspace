@@ -1,20 +1,7 @@
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
-import { ConfirmDialogModule } from 'confirm-dialog';
-import { DynamicFormsModule } from 'dynamic-forms';
-import { FormSheetModule } from 'form-sheet';
-import { ModelFormComponent } from './model-form.component';
+import { NgModule } from "@angular/core";
+import { FormSheetModule } from "form-sheet";
 
 @NgModule({
-    declarations: [ ModelFormComponent ],
-    imports: [
-        CommonModule,
-        DynamicFormsModule,
-        FormSheetModule,
-        ConfirmDialogModule,
-    ],
-    exports: [ ModelFormComponent ],
-    providers: [],
+    imports: [FormSheetModule]
 })
-export class ModelFormModule { }
-  
+export class ModelFormModule {}

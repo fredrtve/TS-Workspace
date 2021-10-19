@@ -6,7 +6,6 @@ import { SaveModelFileEffect } from '@core/state/save-model-file/save-model-file
 import { SaveModelFileReducer } from '@core/state/save-model-file/save-model-file.reducer';
 import { SaveModelFileValidatorInterceptor } from '@core/state/save-model-file/save-model-file.validator';
 import { SharedMissionModule } from '@shared-mission/shared-mission.module';
-import { ModelFormModule } from 'model/form';
 import { ModelStateCommandsModule } from 'model/state-commands';
 import { OptimisticHttpModule, _createActionRequestMap } from 'optimistic-http';
 import { AppRoute } from 'src/app/app-routing.module';
@@ -32,7 +31,6 @@ const Routes: AppRoute[] = [{ path: '', component: MissionDocumentListComponent 
       actionInterceptors: [SaveModelFileValidatorInterceptor]
     }),
     ModelStateCommandsModule,
-    ModelFormModule,
     OptimisticHttpModule.forFeature(_createActionRequestMap(
       _setSaveModelFileRequest,  
       _deleteModelRequest,

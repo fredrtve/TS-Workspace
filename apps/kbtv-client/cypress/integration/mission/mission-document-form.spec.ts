@@ -31,11 +31,11 @@ describe('Mission Document Form', () => {
         isNotSubmittable();
 
         //Check validation rules for file
-        cy.getCy('form-file','input').attachFile('sample-image-1.jpg');   
-        cy.submitForm().getCy('form-file','mat-error').should('exist');
+        cy.getCy('form-fileList','input').attachFile('sample-image-1.jpg');   
+        cy.submitForm().getCy('form-fileList','mat-error').should('exist');
         isNotSubmittable();
 
-        cy.getCy('form-file','input').attachFile(newDoc.fileName!);   
+        cy.getCy('form-fileList','input').attachFile(newDoc.fileName!);   
         isSubmittable();
 
         //Submit and check that new doc exists in state

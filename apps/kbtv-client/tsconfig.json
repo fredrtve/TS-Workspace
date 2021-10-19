@@ -72,6 +72,10 @@
         "../../dist/global-utils/global-utils",
         "../../dist/global-utils"
       ],
+      "mat-dynamic-form-controls": [
+        "../../dist/mat-dynamic-form-controls/mat-dynamic-form-controls",
+        "../../dist/mat-dynamic-form-controls"
+      ],
     },
   },
   "files": [

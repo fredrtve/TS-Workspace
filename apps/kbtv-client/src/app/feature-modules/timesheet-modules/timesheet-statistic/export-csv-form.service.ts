@@ -22,10 +22,11 @@ export class ExportCsvFormService {
           selections[def.colId] = true;
         }
 
-        this.formService.open<MultiCheckboxForm<Record<string, boolean>>, null>(
+        this.formService.open<MultiCheckboxForm<Record<string, boolean>>>(
           {
-            formConfig: _createMultiCheckboxForm(keyOptions, {submitText: "Eksporter", options: {allowPristine: true}}),
+            formConfig: _createMultiCheckboxForm(keyOptions),
             navConfig: {title: "Eksporter til CSV format"},
+            actionConfig: { submitText: "Eksporter", allowPristine: true }
           },
           { initialValue: { selections } },
           (val) => this.onSubmit(val, grid)

@@ -1,74 +1,54 @@
-import { Type } from '@angular/core';
+import { EventEmitter } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
-import { DynamicForm, FormComponent } from 'dynamic-forms';
-import { Immutable, Maybe } from 'global-types';
+import { DynamicForm } from 'dynamic-forms';
+import { Immutable, Maybe, NotNull } from 'global-types';
 import { Observable } from 'rxjs';
 import { DeepPartial } from 'ts-essentials';
 import { FormSheetWrapperComponent } from './form-sheet-wrapper.component';
 
 /** Represents the configuration for {@link FormSheetWrapperComponent} */
-export interface FormSheetWrapperConfig<TFormConfig, TForm extends object, TInputState extends object| null, TResult>{
-    /** The form config passed to the provided form component */
-    formConfig?: Maybe<TFormConfig>;
-    /** Form state required by the form */
-    formState$?: Observable<Maybe<Immutable<TInputState>>>;
-    /** the initial value of the form */
-    initialValue?: Immutable<Partial<TForm>>;
-    /** Configuration for the top navigation bar on bottom sheet */
-    navConfig?: Maybe<FormSheetNavConfig>;
-    /** Function that executes when form is submitted. */
-    submitCallback?: Maybe<(val: TResult) => void>;
-    /** The form component that should be rendered. */
-    formComponent: Type<FormComponent<TFormConfig, TForm, TInputState, TResult>>;
-}
-
-/** Represents configuration for opening a form with {@link FormService} */
-export interface FormServiceConfig<
+export interface FormSheetWrapperConfig<
     TForm extends object, 
-    TFormState extends object| null = null, 
-    TFormConfig = DynamicForm<TForm, TFormState>,
-    TResult = Immutable<TForm>
->{
-    /** The form config passed to the provided form component */
-    formConfig: TFormConfig, 
-    /** Configuration for the top navigation bar on bottom sheet */
-    navConfig: FormSheetNavConfig,
-    /** Form state required by the form */
-    formState?: Immutable<Partial<TFormState>> | Observable<Immutable<Partial<TFormState>>>,
+    TInputState extends object = never,
+> extends FormSheetConfigurations<TForm, TInputState>, FormSheetState<TForm, TInputState>{
     /** Function that executes when form is submitted. */
-    submitCallback?: (val: TResult) => void
-    /** Set to true to enable full screen forms on mobile. Defaults to true */
-    fullScreen?: boolean;
-    /** The form component that should be rendered. */
-    customFormComponent?: Type<FormComponent<TFormConfig, TForm, TFormState, TResult>>;
+    submitCallback?: Maybe<(val: Immutable<NotNull<TForm>>) => void>;
 }
 
-/** Represents configuration for opening a form with {@link FormService} */
-export interface FormSheetState<TForm extends object, TFormState extends object| null = null>{
-    /** the initial value of the form */
-    initialValue?: Maybe<DeepPartial<TForm>>;
-    /** Form state required by the form */
-    formState?: Partial<TFormState> | Observable<Immutable<Partial<TFormState>>>
-}
 
 /** Represents configuration for opening a form with {@link FormService} */
 export interface FormSheetViewConfig<
     TForm extends object, 
-    TFormState extends object| null = null, 
-    TFormConfig = DynamicForm<TForm, TFormState>,
-    TResult = Immutable<TForm>
->{
-    /** The form config passed to the provided form component */
-    formConfig: TFormConfig, 
-    /** Configuration for the top navigation bar on bottom sheet */
-    navConfig: FormSheetNavConfig,
+    TInputState extends object = never
+> extends FormSheetConfigurations<TForm, TInputState> {
     /** Set to true to enable full screen forms on mobile. Defaults to true */
     fullScreen?: boolean;
     /** Enable to append a query param to the route when opened, making the form a part of the browser history. 
      *  Default is true */
-    useRouting?: boolean
-    /** The form component that should be rendered. */
-    customFormComponent?: Type<FormComponent<TFormConfig, TForm, TFormState, TResult>>;
+    useRouting?: boolean;
+}
+
+export interface FormSheetConfigurations<
+    TForm extends object, 
+    TInputState extends object = never
+>{
+    /** The form config passed to the provided form component */
+    formConfig: DynamicForm<TForm, TInputState>; 
+    /** Configuration for the top navigation bar on bottom sheet */
+    navConfig: FormSheetNavConfig;
+    /** Configuration for the form submit bar */
+    actionConfig: FormActionsOptions<TForm>;
+    /** A custom class applied to form element */
+    formClass?: string
+}
+
+/** Represents configuration for opening a form with {@link FormService} */
+export interface FormSheetState<TForm extends object, TFormState extends object = never>{
+    /** the initial value of the form */
+    initialValue?: Maybe<Immutable<DeepPartial<TForm>>>;
+    /** Form state required by the form */
+    formState?: TFormState | Observable<Immutable<TFormState>>
 }
 
 /**  Represents a configuration object for the top navigation bar on the form sheet */
@@ -88,4 +68,29 @@ export interface FormSheetNavButton{
     color?: "primary" | "accent" | "warn"; 
     /** A description of the button's function */
     aria?: string;
+}
+/** Represents different options for customizing behaviour of the form actions */
+export interface FormActionsOptions<TForm> {
+    /** The text of the submit button */
+    submitText?: string;
+    /** Set to true if the form should have a reset option */
+    resettable?: boolean;
+    /** The form value that will be set on reset */
+    resetState?: Partial<TForm>;
+    /** Should the form require the user to be online before submitting? */
+    onlineRequired?: boolean;
+    /** Can the form submit in pristine state? */
+    allowPristine?: boolean;    
+    /** Set to true to get the raw form value on submit. 
+     * This includes the values of disabled controls. */
+    getRawValue?: boolean; 
+}
+
+export interface FormActionsComponent<TOptions> {
+    options: TOptions;
+    formGroup: FormGroup;
+    
+    formReset: EventEmitter<any>;
+    formCancel: EventEmitter<any>;
+    formSubmit: EventEmitter<any>;
 }

@@ -1,0 +1,46 @@
+<style>
+  .actions-container{
+    margin: 12px 0px 16px;
+    flex-direction: row;
+    box-sizing: border-box;
+    display: flex;
+    align-content: flex-start;
+    justify-content: flex-end;
+    align-items: flex-start;
+  }
+  .left-button{
+    flex: 1 1 100%;
+    box-sizing: border-box;
+    max-width: 35%;
+  }
+  .right-button{
+    flex: 1 1 100%;
+    box-sizing: border-box;
+    max-width: 40%;
+  }
+</style>
+<div class="actions-container">
+
+    <button mat-button class="left-button" data-cy="reset-form" type="reset"
+      *ngIf="showReset; else cancelButton"
+      [disabled]="resetDisabled"
+      color="warn"
+      (click)="reset.emit()">
+      Nullstill
+    </button>
+
+    <ng-template #cancelButton>
+      <button mat-button data-cy="cancel-form" color="warn" class="left-button" (click)="canceled.emit()">
+        Avbryt
+      </button>
+    </ng-template>
+
+    <button *ngIf="vm$ | async; let vm" class="right-button" data-cy="submit-form" type="submit"
+      mat-raised-button
+      color="accent"
+      [disabled]="(!vm.isOnline && onlineRequired) || submitDisabled"
+      (click)="onSubmit(vm.isOnline)">
+      {{ (!vm.isOnline && onlineRequired) ? 'Krever nett' : submitText }}
+    </button>
+    
+</div>

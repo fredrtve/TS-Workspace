@@ -60,6 +60,10 @@
         "dist/google-places-autocomplete/google-places-autocomplete",
         "dist/google-places-autocomplete"
       ],
+      "mat-dynamic-form-controls": [
+        "dist/mat-dynamic-form-controls/mat-dynamic-form-controls",
+        "dist/mat-dynamic-form-controls"
+      ],
       "state-sync": [
         "dist/state-sync/state-sync",
         "dist/state-sync"

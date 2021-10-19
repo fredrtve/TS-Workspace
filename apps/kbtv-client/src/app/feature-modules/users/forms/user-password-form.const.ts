@@ -1,23 +1,27 @@
-import { UserNameControl, NewPasswordControl, ConfirmPasswordControl } from "@shared/constants/common-controls.const";
+import { ConfirmPasswordControl, NewPasswordControl, UserNameControl } from "@shared/constants/common-controls.const";
 import { isSamePasswordsValidator } from "@shared/validators/is-same-passwords.validator";
-import { DynamicForm } from "dynamic-forms";
+import { DynamicFormBuilder } from "dynamic-forms";
 import { FormSheetViewConfig } from "form-sheet";
 import { Immutable } from "global-types";
 
 export interface UserPasswordForm { userName: string, newPassword: string, confirmPassword: string }
 
-export const UserPasswordForm: Immutable<DynamicForm<UserPasswordForm, null>> = {
-    submitText: "Oppdater", options: {  onlineRequired: true, getRawValue: true,  },
-    disabledControls: { userName: true }, 
+const builder = new DynamicFormBuilder<UserPasswordForm>();
+
+export const UserPasswordForm = builder.form({
     controls: {
         userName: UserNameControl,
         newPassword: NewPasswordControl,
         confirmPassword: ConfirmPasswordControl,
     },
-    validators: [isSamePasswordsValidator<UserPasswordForm>("newPassword", "confirmPassword")],
-}
+    validators$: [isSamePasswordsValidator<UserPasswordForm>("newPassword", "confirmPassword")],
+    overrides: {
+        userName: { disabled$: true }
+    }
+});
 
 export const UserPasswordFormSheet: Immutable<FormSheetViewConfig<UserPasswordForm>> = {
     formConfig: UserPasswordForm, 
     navConfig: {title: "Oppdater passord"},  
+    actionConfig: { submitText: "Oppdater", onlineRequired: true, getRawValue: true, }
 }

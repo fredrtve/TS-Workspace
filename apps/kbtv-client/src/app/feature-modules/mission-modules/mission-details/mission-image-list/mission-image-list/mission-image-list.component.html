@@ -12,7 +12,7 @@
        
                 <img appImageErrorPlaceholder alt="oppdragsbilde" data-cy="mission-image-item"
                     [appImageRatioResizer]="img.fileName | appImageUrlRatio" 
-                    [src]="img.fileName + 'huehue' | appFileUrl : FileFolder.MissionImageThumbnail" 
+                    [src]="img.fileName | appFileUrl : FileFolder.MissionImageThumbnail" 
                     (tap)="openImageViewer(img, images)" /> 
      
         </app-selectable-card>  

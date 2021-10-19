@@ -5,7 +5,7 @@ import { translations } from '@shared-app/constants/translations.const';
 import { _registerModelStateConfig } from 'model/core';
 import { MODEL_PROP_TRANSLATIONS, MODEL_STATE_PROP_TRANSLATIONS } from 'model/shared';
 import { MODEL_FETCHER_BASE_URL, MODEL_FETCHER_RETRY_STRATEGY } from 'model/state-fetcher';
-import { OptimisticHttpModule, OPTIMISTIC_BASE_API_URL } from 'optimistic-http';
+import { OptimisticHttpModule } from 'optimistic-http';
 import { environment } from 'src/environments/environment';
 import { HttpAuthTokensInterceptor, StateAuthModule } from 'state-auth';
 import { StateDbModule } from 'state-db';
@@ -65,7 +65,7 @@ _registerModelStateConfig(ModelConfigMap);
     { provide: MODEL_FETCHER_BASE_URL, useValue: environment.apiUrl},
     { provide: MODEL_FETCHER_RETRY_STRATEGY, useValue: httpRetryStrategy({excludedStatusCodes: [401]}) },
     { provide: MODEL_PROP_TRANSLATIONS, useValue: translations },
-    { provide: MODEL_STATE_PROP_TRANSLATIONS, useValue: AppModelStatePropTranslations },
+    { provide: MODEL_STATE_PROP_TRANSLATIONS, useValue: AppModelStatePropTranslations }
   ]
 })
 export class CoreModule { 

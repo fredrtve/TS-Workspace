@@ -9,8 +9,8 @@ import { FormService } from 'form-sheet';
 import { Maybe } from 'global-types';
 import { ModelFormService } from 'model/form';
 import { Observable } from 'rxjs';
-import { CreateUserModelForm, EditUserModelForm } from '../forms/save-user-model-form.const';
-import { UserPasswordFormSheet } from '../forms/user-password-form.const';
+import { UserModelForm } from '../forms/save-user-model-form.const';
+import { UserPasswordForm, UserPasswordFormSheet } from '../forms/user-password-form.const';
 import { UsersFacade } from '../users.facade';
 
 @Component({
@@ -61,14 +61,11 @@ export class UserListComponent {
   }
 
   private openUserForm = (userName?: string): void => {
-    this.modelFormService.open(
-      userName ? EditUserModelForm : CreateUserModelForm,
-      {userName}
-    );
+    this.modelFormService.open(UserModelForm, {userName});
   }
   
   private openNewPasswordForm = (userName?: string): void => {
-    this.formService.open(
+    this.formService.open<UserPasswordForm>(
       UserPasswordFormSheet, 
       { initialValue: { userName } },
       (val) => this.facade.updatePassword(val.userName, val.newPassword)

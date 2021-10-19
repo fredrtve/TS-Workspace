@@ -40,9 +40,9 @@ describe("User Timesheet Form", () => {
 
         isNotSubmittable();
         
-        cy.getCy('form-mission','input').type(mission.address!); 
-        cy.submitForm().getCy('form-mission','mat-error').should('exist'); //Check for error until item clicked
-        cy.getCy('form-mission','input').click().wait(1000);
+        cy.getCy('form-missionInput','input').type(mission.address!); 
+        cy.submitForm().getCy('form-missionInput','mat-error').should('exist'); //Check for error until item clicked
+        cy.getCy('form-missionInput','input').click().wait(1000);
         cy.get('mat-option').first().click();
 
         isNotSubmittable();
@@ -105,7 +105,7 @@ describe("User Timesheet Form", () => {
         cy.wait(200);   
         
         //Check that existing values are filled in
-        cy.getCy('form-mission','input').invoke('val').should('equal', mission.address);      
+        cy.getCy('form-missionInput','input').invoke('val').should('equal', mission.address);      
         cy.getCy('form-date','input').invoke('val').should('equal', datePipe.transform(timesheet.startTime, "MMM d, y"));   
         cy.getCy('form-startTime','input').invoke('val').should('equal', datePipe.transform(timesheet.startTime, "HH:mm"));   
         cy.getCy('form-endTime','input').invoke('val').should('equal', datePipe.transform(timesheet.endTime, "HH:mm"));  
@@ -118,7 +118,7 @@ describe("User Timesheet Form", () => {
         };
 
         //Update values
-        cy.getCy('form-mission','input').clear().type(updated.mission.address!); 
+        cy.getCy('form-missionInput','input').clear().type(updated.mission.address!); 
         cy.wait(500).get('mat-option').first().click();
 
         cy.getCy('form-date').wait(1000).click().wait(1000);//Ensure ion picker shows up
@@ -181,7 +181,7 @@ describe("User Timesheet Form", () => {
         cy.mainFabClick();
         cy.wait(200);
 
-        cy.getCy('form-mission','input').click();
+        cy.getCy('form-missionInput','input').click();
         cy.wait(200);
         for(let i = 0; i < 50; i++){
             cy.get(`.mat-autocomplete-visible > #mat-option-${i + 1}`)

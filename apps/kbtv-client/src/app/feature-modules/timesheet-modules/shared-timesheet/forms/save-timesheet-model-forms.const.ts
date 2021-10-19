@@ -4,23 +4,23 @@ import { StateMissions, StateTimesheets, StateUsers, StateUserTimesheets } from 
 import { ValidationRules } from '@shared-app/constants/validation-rules.const';
 import { _timesheetFormToSaveModelConverter, _userTimesheetFormToSaveModelConverter } from '@shared-timesheet/forms/timesheet-form-to-save-model.converter';
 import { MissionAutoCompleteControl, UserSelectControl } from '@shared/constants/common-controls.const';
-import { IonDateQuestion, IonDateQuestionComponent } from '@shared/scam/dynamic-form-questions/ion-date-time-question.component';
-import { TextAreaQuestion, TextAreaQuestionComponent } from '@shared/scam/dynamic-form-questions/text-area-question.component';
+import { IonDateControlComponent } from '@shared/scam/dynamic-form-controls/ion-date-time-control.component';
+import { TextAreaControlComponent } from 'mat-dynamic-form-controls';
 import { _getISO } from 'date-time-helpers';
-import { DynamicControl, DynamicControlGroup, _formStateBinding, _formStateSetter } from 'dynamic-forms';
+import { DynamicFormBuilder, _createControl, _createControlGroup } from 'dynamic-forms';
 import { Immutable, Maybe } from 'global-types';
 import { Converter, ModelFormConfig } from 'model/form';
 
 type FormState = TimesheetFormState;
 interface TimesheetDateTime { startTime: string; endTime: string; date: string; }
 
-export type TimesheetFormState = StateMissions & StateUsers & { 
-    defaultStartTime: string, defaultEndTime: string, startTimeMax: string, endTimeMin: string 
-};
+const userBuilder = new DynamicFormBuilder<UserTimesheetForm, StateUserTimesheets & StateMissions>();
+
+export type TimesheetFormState = StateMissions & StateUsers;
 
 export interface UserTimesheetForm {
-    mission: Maybe<Mission>;  
-    dateTime: Partial<TimesheetDateTime>
+    missionInput: Maybe<Mission | string>;  
+    dateTime: TimesheetDateTime
     comment: string;
     id?: string
 }
@@ -36,122 +36,106 @@ const _minMaxTime = (hours: number = 0, minutes: number = 0): string =>
 
 const _modelToForm: Converter<Timesheet, Partial<TimesheetForm>> = 
     ({id, mission, startTime, endTime, comment, user}) => {
-        return {id, mission, comment, user, dateTime: {
+        return {id, missionInput: mission, comment, user, dateTime: {
             startTime: startTime ? _getISO(startTime) : "", 
             endTime: endTime ? _getISO(endTime) : "",
             date: startTime ? _getISO(startTime) : ""
     }}};
     
-const DateTimeControlGroup: Immutable<DynamicControlGroup<TimesheetDateTime, FormState>> = { 
-    panelClass: "timesheet-date-time-question-group",
+const grpBuilder = new DynamicFormBuilder<TimesheetDateTime>()  
+
+const DateTimeControlGroup = _createControlGroup<TimesheetDateTime>()({ 
+    controlClass$: "timesheet-date-time-control-group",
+    viewOptions: {},
     controls: {
-        date: { required: true, questionComponent: IonDateQuestionComponent, 
-            question: <IonDateQuestion<{dateTime?: TimesheetDateTime}>>{
-                placeholder: "Dato", 
-                width: "42%",
-                ionFormat:"YYYY-MMMM-DD",
-                datePipeFormat: "MMM d, y",
+        date: _createControl<IonDateControlComponent>({ 
+            controlComponent: IonDateControlComponent, required$: true,
+            viewOptions: {
+                placeholder$: "Dato", 
+                ionFormat$:"YYYY-MMMM-DD",
+                datePipeFormat$: "MMM d, y",
             }, 
-        },
-        startTime: { required: true,
-            questionComponent: IonDateQuestionComponent,
-            question: <IonDateQuestion<FormState>>{
-                placeholder: "Starttid", 
-                width: "20%",
-                ionFormat:"HH:mm",
-                datePipeFormat: "HH:mm",
-                minuteValues: [0,15,30,45],
-                stateBindings: {
-                    max: _formStateBinding<FormState, string>()(["startTimeMax"], (f) => f.startTimeMax),
-                    defaultValue: _formStateBinding<FormState, string>()(["defaultStartTime"], (f) => f.defaultStartTime)
-                }
-            },  
-        },
-        endTime: { required: true,          
-            questionComponent: IonDateQuestionComponent, 
-            question: <IonDateQuestion<FormState>>{
-                placeholder: "Sluttid", 
-                width: "20%",
-                ionFormat:"HH:mm",
-                datePipeFormat: "HH:mm",
-                minuteValues: [0,15,30,45],    
-                stateBindings: {
-                    min: _formStateBinding<FormState, string>()(["endTimeMin"], (f) => f.endTimeMin),
-                    defaultValue: _formStateBinding<FormState, string>()(["defaultEndTime"], (f) => f.defaultEndTime)
-                }     
+        }),
+        startTime: _createControl<IonDateControlComponent>({
+            controlComponent: IonDateControlComponent, required$: true,
+            viewOptions: {
+                placeholder$: "Starttid", 
+                ionFormat$:"HH:mm",
+                datePipeFormat$: "HH:mm",
+                minuteValues$: [0,15,30,45],
+                defaultValue$: _timeValueDefault(7)
+            },
+        }),
+        endTime: _createControl<IonDateControlComponent>({         
+            controlComponent: IonDateControlComponent, required$: true,
+            viewOptions: {
+                placeholder$: "Sluttid", 
+                ionFormat$:"HH:mm",
+                datePipeFormat$: "HH:mm",
+                minuteValues$: [0,15,30,45], 
+                defaultValue$: _timeValueDefault(12)  
             }, 
+        }),
+    },
+    overrides: {
+        endTime: { 
+            viewOptions: { min$: grpBuilder.bindForm("startTime", (startTime) => { 
+                    const date = startTime ? new Date(new Date(startTime).getTime() + 60e4) : null;
+                    return date ? _minMaxTime(date.getHours(), date.getMinutes()) : _minMaxTime(0, 15); 
+            })}
         },
+        startTime: { 
+            viewOptions: { max$: grpBuilder.bindForm("endTime", endTime => { 
+                const date = endTime ? new Date(new Date(endTime).getTime() - 60e4) : null;
+                return  date ? _minMaxTime(date.getHours(), date.getMinutes()) : _minMaxTime(23, 30);
+            })}
+        }
     }
+});
+
+const CommentControl = _createControl({ 
+    controlComponent: TextAreaControlComponent, required$: true,
+    viewOptions: { placeholder$: "Kommentar", rows$: 3 },
+    validators$: [Validators.maxLength(ValidationRules.TimesheetCommentMaxLength)], 
+});
+
+const CommonControls = { 
+    missionInput: MissionAutoCompleteControl, 
+    dateTime: DateTimeControlGroup, 
+    comment: CommentControl,
+    id: { required$: false, controlComponent: null, viewOptions: {} },
 }
 
-const CommentControl: Immutable<DynamicControl<string, null, TextAreaQuestion>> = { 
-    required: true, questionComponent: TextAreaQuestionComponent,
-    question: { placeholder: "Kommentar", rows: 3 },
-    validators: [Validators.maxLength(ValidationRules.TimesheetCommentMaxLength)], 
-}
+const CommonOptions = {
+    missionInput: { required$: true, viewOptions: { options$: userBuilder.bindState("missions") } },
+};
 
-const CommonControls = { mission: {...MissionAutoCompleteControl, required: true}, dateTime: DateTimeControlGroup, comment: CommentControl }
-
-const CommonStateSetters = [
-    _formStateSetter<UserTimesheetForm, FormState>()(["dateTime.startTime"], [], f => { 
-        const date = f["dateTime.startTime"] ? new Date(new Date(f["dateTime.startTime"]).getTime() + 60e4) : null;
-        return { endTimeMin: date ? _minMaxTime(date.getHours(), date.getMinutes()) : _minMaxTime(0, 15) } 
-    }),
-    _formStateSetter<UserTimesheetForm, FormState>()(["dateTime.endTime"], [], f => { 
-        const date = f["dateTime.endTime"] ? new Date(new Date(f["dateTime.endTime"]).getTime() - 60e4) : null;
-        return { startTimeMax:  date ? _minMaxTime(date.getHours(), date.getMinutes()) : _minMaxTime(23, 30) } 
-    }),
-    { defaultStartTime:  _timeValueDefault(7), defaultEndTime: _timeValueDefault(12) }
-]
-
-export const CreateUserTimesheetModelForm: Immutable<ModelFormConfig<StateUserTimesheets & StateMissions, UserTimesheet, UserTimesheetForm, FormState>> = {
-    includes: {prop: "userTimesheets", includes: ["mission"]}, 
-    actionConverter: _userTimesheetFormToSaveModelConverter,
-    dynamicForm: {
-        submitText: "Legg til", options: { getRawValue: true },   
-        controls: CommonControls,
-        formStateSetters: CommonStateSetters
-    }
-}
-
-export const EditUserTimesheetModelForm: Immutable<ModelFormConfig<StateUserTimesheets & StateMissions, UserTimesheet, UserTimesheetForm, FormState>> = {
+export const UserTimesheetModelForm: Immutable<ModelFormConfig<StateUserTimesheets & StateMissions, UserTimesheet, UserTimesheetForm, FormState>> = {
     includes: {prop: "userTimesheets", includes: ["mission"]},
     actionConverter: _userTimesheetFormToSaveModelConverter,
     modelConverter: _modelToForm,
-    dynamicForm: {
-        submitText: "Oppdater", options: { getRawValue: true }, 
-        controls: {
-            ...CommonControls,
-            id: { required: true, questionComponent: null },
-        },
-        formStateSetters: CommonStateSetters
-    }
+    actionOptions: { getRawValue: true },
+    dynamicForm: userBuilder.form({
+        controls: CommonControls,
+        overrides: CommonOptions
+    })
 }
 
-export const EditTimesheetModelForm: Immutable<ModelFormConfig<StateTimesheets & StateMissions & StateUsers, Timesheet, TimesheetForm, FormState>> = {
+const builder = new DynamicFormBuilder<TimesheetForm, StateTimesheets & StateMissions & StateUsers>();
+
+export const TimesheetModelForm: Immutable<ModelFormConfig<StateTimesheets & StateMissions & StateUsers, Timesheet, TimesheetForm, FormState>> = {
     includes: {prop: "timesheets", includes: ["mission", "user"]},
     actionConverter: _timesheetFormToSaveModelConverter,
     modelConverter: _modelToForm,
-    dynamicForm: {
-        submitText: "Oppdater", options: { getRawValue: true }, 
+    actionOptions: { getRawValue: true },
+    dynamicForm: builder.form({
         controls: {
-            user: UserSelectControl,
             ...CommonControls,
-            id: { required: true, questionComponent: null },
-        },
-        formStateSetters: CommonStateSetters
-    }
-}
-
-export const CreateTimesheetModelForm: Immutable<ModelFormConfig<StateTimesheets & StateMissions & StateUsers, Timesheet, TimesheetForm, FormState>> = {
-    includes: {prop: "timesheets", includes: ["mission", "user"]}, 
-    actionConverter: _timesheetFormToSaveModelConverter,
-    dynamicForm: {
-        submitText: "Legg til", options: { getRawValue: true },   
-        controls: {
             user: UserSelectControl,
-            ...CommonControls
         },
-        formStateSetters: CommonStateSetters
-    }
+        overrides: { 
+            ...CommonOptions,
+            user: { viewOptions: { options$: builder.bindState("users") } }
+        }
+    })
 }

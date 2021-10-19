@@ -4,25 +4,27 @@ import { _appFormToSaveModelConverter } from "@shared/app-form-to-save-model.con
 import { _find } from "array-helpers";
 import { Immutable } from "global-types";
 import { ModelFormResult } from "model/form";
-import { CreateMissionForm } from "./save-mission-model-form.const";
+import { MissionForm } from "./save-mission-model-form.const";
 
-export const _missionFormToSaveModelConverter = (input: Immutable<ModelFormResult<ModelState, Mission, CreateMissionForm>>) => {      
-    const {employerName, missionTypeName, ...rest} = input.formValue;
+export const _missionFormToSaveModelConverter = (input: Immutable<ModelFormResult<ModelState, Mission, MissionForm>>) => {      
+    const {employerInput, missionTypeInput, ...rest} = input.formValue;
 
     let mission: Partial<Mission> = rest;
 
-    const existingEmployer = (!employerName || !input.options?.employers) ?  null :
-            _find(input.options.employers, employerName, "name");
+    const existingEmployer = (employerInput && typeof employerInput === "object") 
+        ? employerInput 
+        : _find(input.options?.employers, employerInput, "name");
 
     if(existingEmployer) mission.employerId = existingEmployer.id;
-    else if(employerName) mission.employer = {name: employerName};
+    else if(employerInput) mission.employer = {name: <string> employerInput};
     else mission.employerId = undefined;
     
-    const existingType = (!missionTypeName || !input.options?.missionTypes) ?  null :
-            _find(input.options.missionTypes, missionTypeName, "name");
+    const existingType = (missionTypeInput && typeof missionTypeInput === "object") 
+        ? missionTypeInput 
+        : _find(input.options?.missionTypes, missionTypeInput, "name");
 
     if(existingType) mission.missionTypeId = existingType.id;
-    else if(missionTypeName) mission.missionType = {name: missionTypeName}
+    else if(missionTypeInput) mission.missionType = {name: <string> missionTypeInput}
     else mission.missionTypeId = undefined;
 
     return _appFormToSaveModelConverter({...input, formValue: <Mission> mission})

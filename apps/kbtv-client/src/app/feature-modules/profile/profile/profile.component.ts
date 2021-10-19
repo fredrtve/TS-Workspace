@@ -4,7 +4,7 @@ import { AppConfirmDialogService } from '@core/services/app-confirm-dialog.servi
 import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { FormService } from 'form-sheet';
 import { CurrentUserPasswordForm, CurrentUserPasswordFormSheet } from '../forms/current-user-password-form.const';
-import { ProfileFormSheet } from '../forms/profile-form.const';
+import { ProfileForm, ProfileFormSheet } from '../forms/profile-form.const';
 import { ProfileFacade } from '../profile.facade';
 import { ProfileAction } from './profile-action.interface';
 
@@ -40,7 +40,7 @@ export class ProfileComponent {
   }
 
   private updateProfile = (): void => {
-    this.formService.open(
+    this.formService.open<ProfileForm>(
       ProfileFormSheet, 
       { initialValue: this.facade.currentUser },
       (val) => this.facade.updateCurrentUser(val)

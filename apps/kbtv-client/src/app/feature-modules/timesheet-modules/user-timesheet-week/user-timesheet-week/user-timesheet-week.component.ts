@@ -1,11 +1,13 @@
 import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { Timesheet } from "@core/models";
 import { AppDialogService } from "@core/services/app-dialog.service";
 import { DeviceInfoService } from '@core/services/device-info.service';
 import { ModelState } from "@core/state/model-state.interface";
 import { AppButton } from "@shared-app/interfaces/app-button.interface";
 import { UserTimesheetCardDialogWrapperComponent } from "@shared-timesheet/components/user-timesheet-card-dialog-wrapper.component";
-import { CreateUserTimesheetModelForm, EditUserTimesheetModelForm, TimesheetForm } from '@shared-timesheet/forms/save-timesheet-model-forms.const';
+import { UserTimesheetModelForm } from '@shared-timesheet/forms/save-timesheet-model-forms.const';
+import { WeekCriteriaForm } from "@shared-timesheet/forms/week-criteria-controls.const";
 import { WeekCriteria } from '@shared-timesheet/interfaces';
 import { BottomIconButtons } from "@shared/constants/bottom-icon-buttons.const";
 import { _getDateOfWeek, _getWeekRange } from 'date-time-helpers';
@@ -61,10 +63,10 @@ export class UserTimesheetWeekComponent {
 
   previousWeek = (): void => this.facade.previousWeek()
 
-  openTimesheetForm = (entityId?: Maybe<string>, initialValue?: Partial<TimesheetForm>): void => {
+  openTimesheetForm = (initialValue?: Partial<Timesheet>): void => {
     this.modelFormService.open(
-      entityId ? EditUserTimesheetModelForm : CreateUserTimesheetModelForm,
-      initialValue || {id: <string> entityId},
+      UserTimesheetModelForm,
+      initialValue,
     )
   };
 
@@ -82,10 +84,10 @@ export class UserTimesheetWeekComponent {
   };
 
   private openWeekFilter = (): void => { 
-    this.formService.open(
+    this.formService.open<WeekCriteriaForm>(
       UserTimesheetWeekCriteriaFormSheet,
-      { initialValue: this.facade.weekCriteria },
-      (val) => this.facade.updateCriteria(val) 
+      { initialValue: {...this.facade.weekCriteria, weekNr: this.facade.weekCriteria.weekDay?.toString() } },
+      (val) => this.facade.updateCriteria({...val, weekNr: parseInt(val.weekNr) }) 
     );
   }
 

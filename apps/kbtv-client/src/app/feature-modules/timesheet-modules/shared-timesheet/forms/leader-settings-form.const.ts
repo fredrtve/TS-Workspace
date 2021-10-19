@@ -1,21 +1,24 @@
 import { LeaderSettings } from '@core/models/leader-settings.interface';
-import { CheckboxQuestion, CheckboxQuestionComponent } from '@shared/scam/dynamic-form-questions/checkbox-question.component';
-import { DynamicControl, DynamicForm } from 'dynamic-forms';
+import { CheckboxControlComponent } from 'mat-dynamic-form-controls';
+import { DynamicFormBuilder } from 'dynamic-forms';
 import { FormSheetViewConfig } from 'form-sheet';
 import { Immutable } from 'global-types';
 
-export const LeaderSettingsForm: Immutable<DynamicForm<LeaderSettings, null>> = {
-    submitText: "Lagre", options: { onlineRequired: true },
+const builder = new DynamicFormBuilder<LeaderSettings>();
+
+const LeaderSettingsForm = builder.form({
     controls: {
-        confirmTimesheetsMonthly: <Immutable<DynamicControl<boolean, null, CheckboxQuestion>>>{ 
-            questionComponent: CheckboxQuestionComponent, 
-            question: { text: "Lås timer automatisk hver måned" }
-        },
+        confirmTimesheetsMonthly: builder.control({ 
+            controlComponent: CheckboxControlComponent, 
+            viewOptions: { text$: "Lås timer automatisk hver måned" }
+        }),
     },
-}
+    overrides: {}
+})
 
 export const LeaderSettingsFormSheet: Immutable<FormSheetViewConfig<LeaderSettings>> = {
     formConfig: LeaderSettingsForm,
     navConfig: { title: "Innstillinger" },
+    actionConfig: { submitText: "Lagre", onlineRequired: true },
     fullScreen: false
 }

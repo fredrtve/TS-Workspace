@@ -1,0 +1,1 @@
+export const FormCanceledByUserEvent = "FORM_CANCELED_BY_USER_EVENT";

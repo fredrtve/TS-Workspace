@@ -9,7 +9,7 @@ import { _appFileUrl } from '@shared-app/helpers/app-file-url.helper';
 import { _confirmDeleteDialogFactory } from '@shared-app/helpers/confirm-delete-dialog.factory';
 import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { CreateMissionDocumentModelForm } from '@shared-mission/forms/create-mission-document-model-form.const';
-import { EmailForm } from '@shared-mission/forms/email-form.const';
+import { EmailForm, _emailFormFactory } from '@shared-mission/forms/email-form.const';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { CdkSelectableContainerDirective } from 'cdk-selectable';
 import { FormService } from 'form-sheet';
@@ -79,11 +79,8 @@ export class MissionDocumentListComponent {
   
   private openMailDocumentSheet = () => {
     const email = this.facade.getEmployerEmail()
-    this.formService.open<EmailForm, null>(
-      {
-        formConfig: {...EmailForm, options: { allowPristine: email != null } }, 
-        navConfig: {title: "Send dokumenter"},
-      }, 
+    this.formService.open<EmailForm>(
+      _emailFormFactory("Send dokumenter", email),
       { initialValue: { email } },
       (val) => { 
         this.facade.mailChildren("missionDocuments", val.email, this.selectableContainer.getSelectedIds());

@@ -14,3 +14,4 @@ function getDateByDateParams(year?: number, weekNr?: number, weekDay?: number): 
 
     return date;
 }
+

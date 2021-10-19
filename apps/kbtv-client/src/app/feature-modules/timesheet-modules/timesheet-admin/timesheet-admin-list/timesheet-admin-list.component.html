@@ -9,7 +9,7 @@
         <app-timesheet-admin-list-view *ngIf="timesheets.length else loading"
             [timesheets]="timesheets | sortByDate : 'startTime'"
             (statusToggled)="toggleTimesheetStatus($event)"
-            (timesheetClicked)="$event?.status === 2 ? openTimesheetCard($event) : openTimesheetForm($event?.id)">
+            (timesheetClicked)="$event?.status === 2 ? openTimesheetCard($event) : openTimesheetForm({id: $event?.id})">
         </app-timesheet-admin-list-view>
     </ng-container>
     

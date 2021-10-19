@@ -12,7 +12,7 @@ describe('MissionList', () => {
     const bottomActions = () => cy.getCy('bottom-bar-action');
     const topActions = () => cy.getCy('top-nav-action');
     const missionType = { id: '1', name: 'typeName'}
-    const employer = { id: '1', name: 'employerName'};
+    const employer = { id: '1', name: 'employerInput'};
     const missions : Mission[] = [
         { id: '1', address: 'addr1', missionTypeId: missionType.id, finished: false, createdAt: new Date().getTime() },
         { id: '2', address: 'addr2', employerId: employer.id, finished: false, createdAt: new Date().getTime() - 1000 },    
@@ -35,7 +35,7 @@ describe('MissionList', () => {
         const entity = { id: 'testingmission', address: 'testingmission', finished: false, createdAt: new Date().getTime() };
 
         cy.storeDispatch(GlobalActions.saveModel<any>({ 
-            stateProp: "missions", entity: { id: 'testingmission', address: 'testingmission', finished: false, createdAt: new Date().getTime() }
+            stateProp: "missions", isNew: true, entity: { id: 'testingmission', address: 'testingmission', finished: false, createdAt: new Date().getTime() }
         }));
 
         cy.wait('@createMission');          

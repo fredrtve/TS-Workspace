@@ -18,8 +18,8 @@
   <app-user-timesheet-week-view [vm]="vm$ | async"
     (swiperight)="previousWeek()" 
     (swipeleft)="nextWeek()"
-    (timesheetClicked)="$event?.status === 2 ? openTimesheetCard($event?.id) : openTimesheetForm($event?.id)"
-    (labelClicked)="openTimesheetForm(null, { dateTime: { date: $event } } )">
+    (timesheetClicked)="$event?.status === 2 ? openTimesheetCard($event?.id) : openTimesheetForm({id: $event?.id})"
+    (labelClicked)="openTimesheetForm({ startTime: $event  })">
   </app-user-timesheet-week-view>
 
   <app-bottom-action-bar bottombar class="week-view-bottom-bar" [actions]="bottomActions">

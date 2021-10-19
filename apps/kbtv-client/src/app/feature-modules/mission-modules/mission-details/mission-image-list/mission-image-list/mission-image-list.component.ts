@@ -9,7 +9,7 @@ import { _confirmDeleteDialogFactory } from "@shared-app/helpers/confirm-delete-
 import { _trackByModel } from "@shared-app/helpers/trackby/track-by-model.helper";
 import { AppButton } from "@shared-app/interfaces/app-button.interface";
 import { ImageViewerDialogService } from "@shared-mission/components/image-viewer/image-viewer-dialog.service";
-import { EmailForm } from '@shared-mission/forms/email-form.const';
+import { EmailForm, _emailFormFactory } from '@shared-mission/forms/email-form.const';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { CdkSelectableContainerDirective } from "cdk-selectable";
 import { FormService } from "form-sheet";
@@ -105,15 +105,14 @@ export class MissionImageListComponent{
   
   private openMailImageSheet = (ids: string[]) => {    
     const email = this.facade.getEmployerEmail()
-    this.formService.open<EmailForm, null>({
-      formConfig: {...EmailForm, options: { allowPristine: email != null } }, 
-      navConfig: {title: "Send bilder"},
-    }, 
-    { initialValue: { email } },
-    (val) => { 
-      this.facade.mailChildren("missionImages", val.email, ids);
-      this.selectableContainer.resetSelections();
-    })
+    this.formService.open<EmailForm>(
+      _emailFormFactory("Send bilder", email), 
+      { initialValue: { email } },
+      (val) => { 
+        this.facade.mailChildren("missionImages", val.email, ids);
+        this.selectableContainer.resetSelections();
+      }
+    )
   }
 
   private downloadImages = (imgs: ImmutableArray<MissionImage>) => 

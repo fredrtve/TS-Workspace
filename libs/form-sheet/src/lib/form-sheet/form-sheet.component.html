@@ -1,0 +1,31 @@
+<style>
+    lib-dynamic-form { 
+        flex-direction: column;
+        box-sizing: border-box;
+        display: flex;
+        margin-bottom: 3vh;
+    }
+</style>
+
+<form [ngClass]="formClass">
+
+    <lib-dynamic-form
+        [inputState]="inputState" 
+        [initialValue]="initialValue" 
+        [config]="formConfig" 
+        [formGroup]="formGroup">
+    </lib-dynamic-form>
+    
+    <lib-form-actions
+        [submitDisabled]="(!actionConfig.allowPristine && formGroup.pristine) || !formGroup.valid" 
+        [submitText]="actionConfig.submitText || 'Lagre'" 
+        [showReset]="actionConfig.resettable"    
+        [resetDisabled]="resetDisabled$ | async"
+        [onlineRequired]="actionConfig.onlineRequired"
+        (reset)="onReset()"
+        (submitted)="onSubmit()" 
+        (canceled)="onCancel()">
+    </lib-form-actions>
+
+</form>
+

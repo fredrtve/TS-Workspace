@@ -43,7 +43,7 @@ export interface ModelPropertyColDef<TModel, TProp extends keyof TModel>  {
 export type ErrorDisplayFn = (err: unknown) => string;
 
 /** Represents a map of validation errors with accociated {@link ErrorDisplayFn} 
- *  Provided with the token {@link VALIDATION_ERROR_MESSAGES} */
+ *  Provided with the token {@link MODEL_DATA_TABLE_VALIDATION_ERROR_MESSAGES} */
 export interface DataTableValidationErrorMap { [key: string]: ErrorDisplayFn }
 
 export type DataTableValidationErrors = {[key: string]: {[key: string]: {[key: string]: any} | null } | null };

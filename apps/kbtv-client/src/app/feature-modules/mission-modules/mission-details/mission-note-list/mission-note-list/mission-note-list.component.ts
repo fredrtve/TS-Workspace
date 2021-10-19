@@ -3,7 +3,7 @@ import { RolePermissions } from '@core/configurations/role-permissions.const';
 import { ModelState } from '@core/state/model-state.interface';
 import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
 import { AppButton } from '@shared-app/interfaces/app-button.interface';
-import { CreateMissionNoteModelForm, EditMissionNoteModelForm } from '@shared-mission/forms/save-mission-note-model-form.const';
+import { MissionNoteModelForm } from '@shared-mission/forms/save-mission-note-model-form.const';
 import { ModelFormService } from 'model/form';
 import { MissionDetailsFacade } from '../../mission-details.facade';
 
@@ -30,11 +30,11 @@ export class MissionNoteListComponent {
   }
  
   openEditNoteForm = (id: string) => 
-    this.modelFormService.open(EditMissionNoteModelForm, {id});
+    this.modelFormService.open(MissionNoteModelForm, {id});
 
   trackByNote = _trackByModel("missionNotes")
   
   private openCreateNoteForm = () => 
-    this.modelFormService.open(CreateMissionNoteModelForm, {missionId: <string> this.facade.missionId});
+    this.modelFormService.open(MissionNoteModelForm, {missionId: <string> this.facade.missionId});
 
 }

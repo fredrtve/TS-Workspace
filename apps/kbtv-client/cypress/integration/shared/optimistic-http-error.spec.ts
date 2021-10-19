@@ -7,7 +7,7 @@ import { StatePropByModel } from "model/core/model-core";
 describe('Optimistic Http Error', () => {
 
     const createEntity = <T>(prop: StatePropByModel<ModelState, T>, entity: T) => 
-        cy.storeDispatch(GlobalActions.saveModel<any>({ stateProp: <any> prop, entity }));
+        cy.storeDispatch(GlobalActions.saveModel<any>({ stateProp: <any> prop, entity, isNew: true}));
 
     const updateEntity = <T>(prop: StatePropByModel<ModelState, T>, entity: T) => 
         cy.storeDispatch(GlobalActions.saveModel<any>({ stateProp: <any> prop, entity }));
