@@ -1,0 +1,25 @@
+<style>
+    .form-array-header {
+        display: flex;
+        align-items: center;
+    }
+    .form-array-header > button { margin-left: auto; }
+</style>
+
+
+<div *ngIf="options$ | async; let options" class="form-array-header">
+    <mat-label *ngIf="options.label$">{{ options.label$ }}</mat-label>
+    <button mat-icon-button (click)="addControl()" type="button" color="accent">
+        <mat-icon>add</mat-icon>
+    </button>
+</div>
+<ng-container *ngFor="let entry of formArray.controls; index as i">
+    <mat-divider></mat-divider>
+    <lib-dynamic-control-array-entry 
+        [control]="entry"
+        [config]="config.controlTemplate"
+        [index]="i"
+        (entryRemoved)="removeEntry(i)"
+    >
+    </lib-dynamic-control-array-entry>
+</ng-container>  

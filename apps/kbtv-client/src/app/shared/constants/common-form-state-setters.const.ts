@@ -7,7 +7,7 @@ const builder = new DynamicFormBuilder<{dateRange: DateRange<string>}, StateSync
 export const SyncModelDateRangeOptions = {
     start: { 
         viewOptions: {
-            min$: builder.bindState("syncConfig", (cfg) => cfg.initialTimestamp ? _getISO(cfg.initialTimestamp) : undefined ),
+            min$: builder.bindState("syncConfig", (cfg) => cfg?.initialTimestamp ? _getISO(cfg.initialTimestamp) : undefined ),
             max$: builder.bindForm("dateRange.end")
         }
     },

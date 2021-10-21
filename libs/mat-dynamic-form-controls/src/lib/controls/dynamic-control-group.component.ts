@@ -17,6 +17,7 @@ export interface DynamicFormGroupOptions { label$?: string }
     display: flex;
     align-content: center;
     justify-content: space-between;
+    flex-wrap: wrap;
   }
   </style>
   <ng-container>  

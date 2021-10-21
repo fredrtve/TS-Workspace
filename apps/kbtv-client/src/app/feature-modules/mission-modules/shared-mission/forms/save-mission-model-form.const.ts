@@ -62,11 +62,6 @@ const _missionToMissionFormConverter: Converter<Mission, MissionForm> = ({missio
 }
 const builder = new DynamicFormBuilder<MissionForm, ModelState>();
 
-const funnyBinder = builder.bindForm("description", (a) => (a != null && a.length != 0) ? true : false);
-// const validatorBinder = builder.bindForm("description", (a) => (a != null && a.length != 0) ? [Validators.maxLength(5)] : []);
-// const widthBinder = builder.bindForm("description", (a) => (a != null && a.length != 0) ? "100%" : "50%");
-// const panelBinder = builder.bindForm("description", (a) => (a != null && a.length != 0) ? "m-5" : "m-1");
-
 export const MissionModelForm: Immutable<ModelFormConfig<ModelState, Mission, MissionForm>> = {
     includes: {prop: "missions", includes: ["employer", "missionType"]},
     actionConverter: _missionFormToSaveModelConverter,

@@ -14,30 +14,19 @@ import { map, startWith, switchMap } from "rxjs/operators";
       basePath?: string): Observable<DeepPropsObject<TForm, TFormSlice>> {
     const controlListeners: Observable<unknown>[] = [];
     for(const path of paths){
-        const props = path.split('.');
+        const fullPath = basePath ? basePath + '.' + path : path;
         controlListeners.push(of(null).pipe(switchMap(x => {
-            const control = deepSelectControl(form, props);
-            if(control === null) throw new Error(`No control found for path ${path} on form ${form}`);
+            const control = form.get(fullPath);
+            if(control === null) throw new Error(`No control found for path ${fullPath} on form ${form}`);
             return control.valueChanges.pipe(startWith(control.value))
         })))
     }
     return combineLatest(controlListeners).pipe(map(x => {
         const mappedValues: UnknownState = {};
         for(let i = 0; i < paths.length; i++){
-            const path = <string> paths[i];
-            mappedValues[basePath ? path.substring(basePath.length + 1, path.length) : path] = x[i]   
+            mappedValues[paths[i]] = x[i]   
         }
         return <DeepPropsObject<TForm, TFormSlice>> mappedValues;
     }))
-  }
-  
-function deepSelectControl(
-    form: AbstractControl, 
-    props: Immutable<string[]>, 
-    max: number = props.length - 1, 
-    index: number = 0 ): AbstractControl | null {
-    const t = form.get(props[index])
-    if(t === null) return null;  
-    if(index === max) return t;
-    return deepSelectControl(t, props, max, ++index)
 }
+  

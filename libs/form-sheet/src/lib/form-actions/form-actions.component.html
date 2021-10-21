@@ -30,12 +30,12 @@
     </button>
 
     <ng-template #cancelButton>
-      <button mat-button data-cy="cancel-form" color="warn" class="left-button" (click)="canceled.emit()">
+      <button mat-button type="button" data-cy="cancel-form" color="warn" class="left-button" (click)="canceled.emit()">
         Avbryt
       </button>
     </ng-template>
 
-    <button *ngIf="vm$ | async; let vm" class="right-button" data-cy="submit-form" type="submit"
+    <button *ngIf="vm$ | async; let vm" class="right-button" data-cy="submit-form" type="button"
       mat-raised-button
       color="accent"
       [disabled]="(!vm.isOnline && onlineRequired) || submitDisabled"

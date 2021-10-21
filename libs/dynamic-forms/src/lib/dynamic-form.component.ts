@@ -2,13 +2,13 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, ViewChild
 import { FormGroup } from "@angular/forms";
 import { Immutable, Maybe } from "global-types";
 import { DeepPartial } from "ts-essentials";
-import { DynamicHostDirective } from "../dynamic-host.directive";
-import { _mergeOverridesWithControls } from "../helpers/merge-group-options.helper";
-import { DynamicForm } from "../interfaces";
-import { ControlComponentRenderer } from "../services/control-component.renderer";
-import { ControlFactory } from "../services/control.factory";
-import { DynamicFormStore } from "../services/dynamic-form.store";
-import { FormStateResolver } from "../services/form-state.resolver";
+import { DynamicHostDirective } from "./dynamic-host.directive";
+import { _mergeOverridesWithControls } from "./helpers/merge-group-options.helper";
+import { DynamicForm } from "./interfaces";
+import { ControlComponentRenderer } from "./services/control-component.renderer";
+import { ControlFactory } from "./services/control.factory";
+import { DynamicFormStore } from "./services/dynamic-form.store";
+import { FormStateResolver } from "./services/form-state.resolver";
 
 @Component({    
     selector: 'lib-dynamic-form',

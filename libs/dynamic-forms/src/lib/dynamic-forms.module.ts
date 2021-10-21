@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { DynamicFormComponent } from './components/dynamic-form.component';
+import { DynamicFormComponent } from './dynamic-form.component';
 import { DynamicHostDirective } from './dynamic-host.directive';
 
 /** Responsible for declaring components and exporting the {@link DynamicFormComponent} */
@@ -21,5 +21,6 @@ import { DynamicHostDirective } from './dynamic-host.directive';
   providers: [],
 })
 export class DynamicFormsModule { 
-  constructor(){}
+  constructor(){
+  }
 }

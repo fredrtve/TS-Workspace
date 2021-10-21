@@ -2,7 +2,7 @@
 import { InputControlComponent } from "../../test-controls";
 import { DynamicFormBuilder } from "../dynamic-form.builder";
 import { GenericFormStateSelector } from "../interfaces";
-import { _isFormStateSelector } from "../type.helpers";
+import { _isFormStateSelector } from "./type.helpers";
 import { _mergeOverridesWithControls } from "./merge-group-options.helper";
 
 interface TestForm { phone1: string, address1: string, group1: TestFormGroup}
@@ -50,7 +50,7 @@ const testForm = builder.form({
         group1: {
             overrides:{
                 group2: {
-                    viewOptions: { },
+                    viewOptions: { test: "isFinal" },
                     overrides:{
                          phone3: { viewOptions: { width$: phone3WidthFinalBinding }}
                     }

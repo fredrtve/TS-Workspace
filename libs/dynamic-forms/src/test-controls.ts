@@ -1,8 +1,10 @@
 import { Directive } from '@angular/core';
+import { FormArray, FormGroup } from '@angular/forms';
 import { Immutable, Maybe } from 'global-types';
 import { Observable } from 'rxjs';
-import { AllowFormStateSelectors, ControlComponent, FormStateSelector, GenericAbstractControl } from './lib/interfaces';
+import { AllowFormStateSelectors, ControlArrayComponent, ControlComponent, ControlGroupComponent, DynamicControlArray, DynamicControlGroup, FormStateSelector, GenericAbstractControl } from './lib/interfaces';
 import { FormStateResolver } from './lib/services/form-state.resolver';
+import { DynamicFormBuilder, DynamicHostDirective } from './public-api';
 
 /** A base component class for implementing a control component. 
  *  Responsible for declaring the neccesary inputs & exposing state bindings. */
@@ -76,4 +78,67 @@ export class InputControlComponent extends BaseControlComponent<string, InputQue
       this.vm$ = this.resolveSlice$<ViewModel>({...this.viewOptionSelectors });
     }
   
-  }
+}
+
+export interface TestControlGroupOptions { someOption$: string } ;
+@Directive()
+export class TestControlGroupComponent implements ControlGroupComponent<TestControlGroupOptions> {
+  dynamicHost: DynamicHostDirective;
+
+  formGroup: FormGroup;
+
+  config: DynamicControlGroup<any, any, ControlGroupComponent<TestControlGroupOptions>>;
+
+  constructor() {}
+}
+export interface TestControlArrayOptions { someOption$: string } ;
+@Directive()
+export class TestControlArrayComponent implements ControlArrayComponent<TestControlArrayOptions> {
+  dynamicHost: DynamicHostDirective;
+
+  formArray: FormArray;
+
+  config: DynamicControlArray<any, ControlArrayComponent<TestControlArrayOptions>>;
+
+  constructor() {}
+}
+
+  const builder = new DynamicFormBuilder<{ arr: { nest1: string, nest2: string}[], fun: string}>();
+  const iBuilder = new DynamicFormBuilder<{ nest1: string, nest2: string}>();
+
+  const stringControl = builder.control({
+    controlComponent: InputControlComponent,
+    viewOptions: { width$: "" }
+  });
+
+  const group = builder.group<{ nest1: string, nest2: string}>()({
+    controls: {
+      nest1: stringControl,
+      nest2: stringControl
+    },
+    viewOptions: { },
+    overrides: {
+      nest1: { disabled$: iBuilder.bindForm("nest1", (arr) => true) }
+    }
+  });
+
+  const arr = builder.array({
+    arrayComponent: TestControlArrayComponent,
+    controlTemplate: group,
+    viewOptions: { someOption$: " " },
+    templateOverrides: {
+      disabled$: iBuilder.bindForm("nest1", (arr) => true)
+    }
+  })
+
+  const form = builder.form({
+    controls: {
+      fun: stringControl,
+      arr: arr
+    },
+    overrides: {
+      arr:{
+        viewOptions: { someOption$: builder.bindForm("fun") }
+      }
+    }
+  })

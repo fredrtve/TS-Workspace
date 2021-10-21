@@ -4,7 +4,7 @@ import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { DeepRequired } from "ts-essentials";
 import { DynamicForm, FormStateObserverSelector, FormStateSelector, FormStateSelectorFn, ValidControlObject, ValidFormSlice } from "./interfaces";
-import { _createControl, _createControlGroup } from "./type.helpers";
+import { _createControl, _createControlArray, _createControlGroup } from "./helpers/type.helpers";
 
 type PickOr<T, P extends keyof T, Else> = T extends never ? Else : P extends never ? Else : Pick<T, P>;
 
@@ -107,6 +107,9 @@ export class DynamicFormBuilder<TForm extends object, TInputState extends object
      *  @returns A function that creates type safe {@link DynamicControlGroup} for the specified TGroup
       */
     group = _createControlGroup;
+
+    /** Constructs a type safe {@link DynamicControlArray}.  */
+    array = _createControlArray;
 
     /** Constructs a type safe {@link DynamicControl}.  */
     control = _createControl;

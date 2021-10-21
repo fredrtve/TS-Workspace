@@ -1,5 +1,5 @@
 import { UnknownState } from "global-types";
-import { ControlComponent, ControlGroupComponent, DynamicControl, DynamicControlGroup, FormStateObserverSelector, FormStateSelector, GetControlReturnValue, ValidControlObject } from "./interfaces";
+import { ControlArrayComponent, ControlComponent, ControlGroupComponent, DynamicControl, DynamicControlArray, DynamicControlGroup, FormStateObserverSelector, FormStateSelector, GetControlReturnValue, ValidControl, ValidControlObject } from "../interfaces";
 
 /** Constructs a type safe {@link DynamicControl}.  */
 export function _createControl<TControlComponent extends ControlComponent<any,any>>(
@@ -18,23 +18,40 @@ export function _createControlGroup<TForm extends object>():
     return (group) => (group)
 }
 
+/** Constructs a type safe {@link DynamicControlArray}.  */
+export function _createControlArray<TTemplate extends ValidControl<any>, TArrayComponent extends ControlArrayComponent<any> | null = null>(
+    control: DynamicControlArray<TTemplate, TArrayComponent>
+): DynamicControlArray<TTemplate, TArrayComponent> {
+    return control;
+}
+
 /** Check if the given object is a valid control group {@link DynamicControlGroup}.
  *  @param control - The control object that should be checked.
  *  @return Returns true if the object is a valid control group, else false.
   */
 export function _isControlGroup(control: any): control is DynamicControlGroup<UnknownState, ValidControlObject<any>, any> {
-    return control !== undefined && (
+    return control != null && (
         (control as DynamicControlGroup<UnknownState, ValidControlObject<any>>).overrides !== undefined || 
         (control as DynamicControlGroup<UnknownState, ValidControlObject<any>>).controls !== undefined
     );
 }
 
+/** Check if the given object is a valid control group {@link DynamicControlGroup}.
+ *  @param control - The control object that should be checked.
+ *  @return Returns true if the object is a valid control group, else false.
+  */
+ export function _isControlArray(control: any): control is DynamicControlArray<ValidControl<any>, any> {
+    return control != null  && (
+        (control as DynamicControlArray<ValidControl<any>, any>).templateOverrides !== undefined || 
+        (control as DynamicControlArray<ValidControl<any>, any>).controlTemplate !== undefined
+    );
+}
 /** Check if the given object is a valid form state setter {@link FormStateSetter}.
  *  @param setter - The object that should be checked.
  *  @return Returns true if the object is a valid form state setter, else false.
   */
 export function _isFormStateSelector(setter: unknown): setter is FormStateSelector<object, any, any, string, any> {
-    return setter !== undefined 
+    return setter != null 
         && (setter as FormStateSelector<object, any, any, string, any>).setter !== undefined
         && (setter as FormStateSelector<object, any, any, string, any>).stateSlice !== undefined 
         && (setter as FormStateSelector<object, any, any, string, any>).formSlice !== undefined; 
@@ -45,7 +62,7 @@ export function _isFormStateSelector(setter: unknown): setter is FormStateSelect
  *  @return Returns true if the object is a valid form state setter, else false.
   */
  export function _isFormStateObserverSelector(setter: unknown): setter is FormStateObserverSelector<any, any, any> {
-    return setter !== undefined  
+    return setter != null 
         && (setter as FormStateObserverSelector<any, any, any>).setter !== undefined
         && (setter as FormStateObserverSelector<any, any, any>).stateSlice !== undefined 
 }

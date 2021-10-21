@@ -1,13 +1,15 @@
 import { Type } from '@angular/core';
-import { AbstractControl, AsyncValidatorFn, FormGroup, ValidatorFn } from '@angular/forms';
-import { DeepPropsObject, DeepPropType, Immutable, Maybe, NotNull, MakeKeysOptionalIfOptionalObject } from 'global-types';
+import { AbstractControl, AsyncValidatorFn, FormArray, FormControl, FormGroup, ValidatorFn } from '@angular/forms';
+import { DeepPropsObject, DeepPropType, Immutable, MakeKeysOptionalIfOptionalObject, Maybe, NotNull, ValueOf } from 'global-types';
 import { Observable } from 'rxjs';
 import { DeepPartial } from 'ts-essentials';
 import { DynamicHostDirective } from './dynamic-host.directive';
 
 export type GetControlReturnValue<T> = T extends ControlComponent<(infer V), any> ? V : never;
 export type GetOptionsFromComponent<T> = T extends ControlComponent<any, (infer Q)> ? Q : never;
+export type GetGroupControlViewOptions<T> = T extends DynamicControlGroup<any, any, (infer C)> ? GetGroupComponentOptions<C> : never;
 export type GetGroupComponentOptions<T> = T extends ControlGroupComponent<(infer O)> ? O : DefaultControlGroupComponentOptions;
+export type GetArrayComponentOptions<T> = T extends ControlArrayComponent<(infer O)> ? O : DefaultControlArrayComponentOptions;
 
 /** Represents a function that converts an error to a readable error message */
 export type ErrorDisplayFn = (err: unknown) => string;
@@ -22,11 +24,22 @@ export type HideOnValueChanges<TForm> = {[P in keyof NotNull<TForm>]: (val: TFor
 export type AsyncStateValidator<T> = ((state$: Observable<T>) => AsyncValidatorFn);
 
 /** Represents a map of properties from TForm with an associated control */
-export type ValidControlObject<TForm extends object> = {[P in keyof TForm]: ValidControl<TForm[P]> }
+export type ValidControlObject<TForm extends object> = { [P in keyof TForm]: ValidControl<TForm[P]> }
+export type GenericControlObject = {[P in keyof object]: ValidControl<any> | ValidControl<any[]> }
+
+export type FormControlType<TControl> =  
+    TControl extends DynamicControl<(infer ValueType), any> ? (GenericAbstractControl<ValueType> & FormControl)
+    : TControl extends DynamicControlArray<any,any> ? FormArray 
+    : TControl extends DynamicControlGroup<any, any, any> ? FormGroup
+    : FormControl
 
 /** Represents a valid control for a given form */
 export type ValidControl<TValueType> = 
         DynamicControl<TValueType, ControlComponent<TValueType, any>> | 
+        DynamicControlArray<
+            TValueType extends (infer V)[] ? ValidControl<V> : never, 
+            ControlArrayComponent<any> | null
+        > | 
         DynamicControlGroup<
             TValueType extends object ? NotNull<TValueType> : never, 
             ValidControlObject<TValueType extends object ? NotNull<TValueType> : never>,
@@ -53,11 +66,24 @@ export type ControlOverridesMap<
     [P in keyof TControls]: 
         TControls[P] extends DynamicControl<any, any>
             ? ControlOverrides<TForm, TInputState, TControls[P]>
+        : TControls[P] extends DynamicControlArray<any,any> 
+            ? ControlArrayOverrides<TForm, TInputState, TControls[P]> 
         : TControls[P] extends DynamicControlGroup<any, any, any> 
             ? ControlGroupOverrides<TForm, TInputState, TControls[P]>
-            : ControlOverrides<TForm, TInputState, any>
-    
+        : ControlOverrides<TForm, TInputState, any>
 }>
+ 
+export type ValidControlOverrides<
+    TForm extends object, 
+    TInputState extends object, 
+    TControl extends  ValidControl<any>
+> = TControl extends DynamicControl<any, any>
+        ? ControlOverrides<TForm, TInputState, TControl>
+    : TControl extends DynamicControlArray<any,any> 
+        ? ControlArrayOverrides<TForm, TInputState, TControl> 
+    : TControl extends DynamicControlGroup<any, any, any> 
+        ? ControlGroupOverrides<TForm, TInputState, TControl>
+    : ControlOverrides<TForm, TInputState, any>
 
 /** Represents an object of configurable properties on TGroup, allowing form state selectors. */
 export type ControlGroupOverrides<
@@ -67,8 +93,20 @@ export type ControlGroupOverrides<
 > = 
     AllowFormStateSelectors<Partial<DynamicGroupOptions>, TForm, TInputState> 
     & { 
-        viewOptions?: AllowFormStateSelectors<Partial<TGroup["viewOptions"]>, TForm, TInputState> 
+        viewOptions?: AllowFormStateSelectors<Partial<GetGroupControlViewOptions<TGroup>>, TForm, TInputState> 
         overrides?: ControlOverridesMap<TForm, TInputState, TGroup["controls"]> 
+    }
+
+/** Represents an object of configurable properties on TGroup, allowing form state selectors. */
+export type ControlArrayOverrides<
+    TForm extends object, 
+    TInputState extends object, 
+    TArray extends DynamicControlArray<any, any>
+> = 
+    AllowFormStateSelectors<Partial<DynamicArrayOptions>, TForm, TInputState> 
+    & { 
+        viewOptions?: AllowFormStateSelectors<Partial<TArray["viewOptions"]>, TForm, TInputState> 
+        templateOverrides?: ValidControlOverrides<TForm, TInputState, TArray["controlTemplate"]> 
     }
 
 /** Represents an object of configurable properties on TControl, allowing form state selectors. */
@@ -166,6 +204,24 @@ export interface DynamicControlGroup<
     viewOptions: AllowFormStateSelectors<GetGroupComponentOptions<TGroupComponent>, TForm, never>
 }
 
+/** Represents a group of controls, and relationships between them. */
+export interface DynamicControlArray<
+    TTemplate extends ValidControl<any>,
+    TArrayComponent extends ControlArrayComponent<any> | null = null,
+> extends DynamicArrayOptions {
+    /** A control group component for displaying the group. 
+     * @remarks Can only be null if default group is configured with {@link DYNAMIC_FORM_GLOBAL_OPTIONS} */
+    arrayComponent?: Type<TArrayComponent>,
+    /** The template control used for each entry */
+    controlTemplate: TTemplate;
+    /** Configuration options for the group component */
+    viewOptions: GetArrayComponentOptions<TArrayComponent>    
+    /** Override control options statically or dynamically from state or form */
+    templateOverrides?: TTemplate extends DynamicControlGroup<(infer V), any, any>
+        ? ValidControlOverrides<V, never, TTemplate> 
+        : ValidControlOverrides<never, never, TTemplate>
+}
+
 /** Describes the rendering, value and validation of an form control */
 export interface DynamicControl<
     TValueType, 
@@ -182,6 +238,9 @@ export interface DynamicControlOptions extends ControlOptions {
     /** Set to true if control is required. */
     required$?: boolean 
 }
+
+/** Represents configuration options for a dynamic control array */
+export interface DynamicArrayOptions extends ControlOptions {}
 
 /** Represents configuration options for a dynamic control group */
 export interface DynamicGroupOptions extends ControlOptions {} 
@@ -212,11 +271,14 @@ export interface ControlComponent<TValueType, TViewOptions extends object> exten
 
 /** Represents a control group component used to display a group of controls. */
 export interface ControlGroupComponent<TComponentConfig extends object> extends OnControlInit {
-    dynamicHost: DynamicHostDirective;
-
     formGroup: FormGroup;
-
     config: DynamicControlGroup<any, any, ControlGroupComponent<TComponentConfig>>
+}
+
+/** Represents a control group component used to display a group of controls. */
+export interface ControlArrayComponent<TComponentConfig extends object> extends OnControlInit {
+    formArray: FormArray;
+    config: DynamicControlArray<any, ControlArrayComponent<TComponentConfig>>
 }
 
 /** Represents a life cycle hook that runs when the control is initalized. */
@@ -242,12 +304,23 @@ export interface GenericAbstractControl<T>
 /** Represents component options for a default control group component configured with {@link DynamicFormDefaultOptions} 
  *  @remarks Use declaration merging to populate interface with options.
 */
-export interface DefaultControlGroupComponentOptions { }
+export interface DefaultControlGroupComponentOptions {
+    testOption$?: string
+}
+
+/** Represents component options for a default control array component configured with {@link DynamicFormDefaultOptions} 
+ *  @remarks Use declaration merging to populate interface with options.
+*/
+export interface DefaultControlArrayComponentOptions {
+    testOption$: string
+};
 
 /** Represents global configuration options for all dynamic forms in application. 
  *  @remarks Supplied with injection token {@link DYNAMIC_FORM_DEFAULT_OPTIONS} */
 export interface DynamicFormDefaultOptions {
     groupComponent?: Type<ControlGroupComponent<any>>;
+    arrayComponent?: Type<ControlGroupComponent<any>>;
     groupClass?: string;
+    arrayClass?: string;
     controlClass?: string;
 }
