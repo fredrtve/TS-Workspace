@@ -35,7 +35,7 @@ export class DynamicControlArrayComponent
     }
 
     addControl(){ 
-        this.formArray.push(this.controlFactory.createValidControl(this.config.controlTemplate)); 
+        this.formArray.push(this.controlFactory.createControl(this.config.controlTemplate)); 
     }
 
     removeEntry(index: number){ this.formArray.removeAt(index); }

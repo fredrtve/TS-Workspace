@@ -1,17 +1,17 @@
 import { Directive } from '@angular/core';
-import { AllowFormStateSelectors, FormStateResolver, FormStateSelector, GenericAbstractControl, ControlComponent } from 'dynamic-forms';
+import { AllowFormStateSelectors, FormStateResolver, FormStateSelector, GenericAbstractControl, ControlFieldComponent } from 'dynamic-forms';
 import { Immutable, Maybe } from 'global-types';
 import { Observable } from 'rxjs';
 import { _getValidationErrorMessage } from '../get-validation-error-message.helper';
 import { ValidationErrorMap } from '../interfaces';
-import { BaseViewOptions } from './base-view-options.interface';
+import { BaseFieldOptions } from './base-field-options.interface';
 
 
 /** A base component class for implementing a control component. 
  *  Responsible for declaring the neccesary inputs & exposing state bindings. */
 @Directive()
-export abstract class BaseControlComponent<TValueType, TOptions extends BaseViewOptions>
-    implements ControlComponent<TValueType, TOptions> {
+export abstract class BaseFieldComponent<TValueType, TOptions extends BaseFieldOptions>
+    implements ControlFieldComponent<TValueType, TOptions> {
 
   control: Maybe<GenericAbstractControl<TValueType>>;
 

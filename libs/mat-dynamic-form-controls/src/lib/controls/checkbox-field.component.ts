@@ -5,12 +5,12 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormStateResolver } from 'dynamic-forms';
 import { Observable } from 'rxjs';
-import { BaseControlComponent } from '../base-control/base-control.component';
-import { BaseViewOptions } from '../base-control/base-view-options.interface';
+import { BaseFieldComponent } from '../base-control/base-field.component';
+import { BaseFieldOptions } from '../base-control/base-field-options.interface';
 import { VALIDATION_ERROR_MESSAGES } from '../injection-tokens.const';
 import { ValidationErrorMap } from '../interfaces';
 
-export interface CheckboxOptions extends BaseViewOptions {
+export interface CheckboxOptions extends BaseFieldOptions {
   text$: string;
 }
 
@@ -38,7 +38,7 @@ type ViewModel = CheckboxOptions & { required$?: boolean }
   styles: [` :host { overflow: hidden } `],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CheckboxControlComponent extends BaseControlComponent<boolean, CheckboxOptions> {
+export class CheckboxFieldComponent extends BaseFieldComponent<boolean, CheckboxOptions> {
   
   vm$: Observable<ViewModel>;
 
@@ -56,7 +56,7 @@ export class CheckboxControlComponent extends BaseControlComponent<boolean, Chec
 }
 
 @NgModule({
-  declarations: [CheckboxControlComponent],
+  declarations: [CheckboxFieldComponent],
   imports:[
     CommonModule,   
     ReactiveFormsModule,

@@ -4,13 +4,13 @@ import { _compareProp } from '@shared-app/helpers/compare-with-prop.helper';
 import { IonDateControlComponent } from '@shared/scam/dynamic-form-controls/ion-date-time-control.component';
 import { isObjectValidator } from '@shared/validators/is-object.validator';
 import { DateRange } from 'date-time-helpers';
-import { DynamicFormBuilder, _createControl, _createControlGroup } from 'dynamic-forms';
-import { AutoCompleteControlComponent, InputControlComponent, SelectControlComponent } from 'mat-dynamic-form-controls';
+import { DynamicFormBuilder, _createControlField, _createControlGroup } from 'dynamic-forms';
+import { AutoCompleteFieldComponent, InputFieldComponent, SelectFieldComponent } from 'mat-dynamic-form-controls';
 import { ValidationRules } from '../../shared-app/constants/validation-rules.const';
 import { GooglePlacesAutoCompleteControlComponent } from '../scam/dynamic-form-controls/google-places-autocomplete-control.component';
 
-export const PhoneNumberControl = _createControl({
-    controlComponent: InputControlComponent,
+export const PhoneNumberControl = _createControlField({
+    viewComponent: InputFieldComponent,
     viewOptions: { placeholder$: "Kontaktnummer" }, 
     validators$: [
         Validators.minLength(ValidationRules.PhoneNumberMinLength), 
@@ -18,14 +18,14 @@ export const PhoneNumberControl = _createControl({
     ] 
 });
 
-export const EmailControl = _createControl({
-    controlComponent: InputControlComponent,
+export const EmailControl = _createControlField({
+    viewComponent: InputFieldComponent,
     viewOptions: { placeholder$: "Epost" },  
     validators$: [Validators.email] 
 });
 
-export const GoogleAddressControl = _createControl({
-    controlComponent: GooglePlacesAutoCompleteControlComponent,
+export const GoogleAddressControl = _createControlField({
+    viewComponent: GooglePlacesAutoCompleteControlComponent,
     viewOptions: {
         placeholder$: "Adresse", 
         hint$: "F.eks. Slottsplassen 1, 0010 Oslo",
@@ -34,24 +34,24 @@ export const GoogleAddressControl = _createControl({
     validators$: [Validators.maxLength(ValidationRules.AddressMaxLength)] 
 });
 
-export const NameControl = _createControl({
-    controlComponent: InputControlComponent,
+export const NameControl = _createControlField({
+    viewComponent: InputFieldComponent,
     viewOptions: { placeholder$: "Navn"},  
     validators$: [Validators.maxLength(ValidationRules.NameMaxLength)] 
 });
 
-export const FirstNameControl = _createControl({
-    controlComponent: InputControlComponent, viewOptions: { placeholder$: "Fornavn" },
+export const FirstNameControl = _createControlField({
+    viewComponent: InputFieldComponent, viewOptions: { placeholder$: "Fornavn" },
     validators$: [Validators.maxLength(ValidationRules.NameMaxLength)]
 });
 
-export const LastNameControl = _createControl({
-    controlComponent: InputControlComponent, viewOptions: { placeholder$: "Etternavn" },
+export const LastNameControl = _createControlField({
+    viewComponent: InputFieldComponent, viewOptions: { placeholder$: "Etternavn" },
     validators$: [Validators.maxLength(ValidationRules.NameMaxLength)]
 });
 
-export const MissionAutoCompleteControl = _createControl<AutoCompleteControlComponent<Mission>>({
-    controlComponent: AutoCompleteControlComponent,
+export const MissionAutoCompleteControl = _createControlField<AutoCompleteFieldComponent<Mission>>({
+    viewComponent: AutoCompleteFieldComponent,
     viewOptions: {
         options$: [],
         placeholder$: "Oppdrag",
@@ -67,8 +67,8 @@ export const MissionAutoCompleteControl = _createControl<AutoCompleteControlComp
     validators$:[ isObjectValidator("mission") ],
 });
 
-export const EmployerSelectControl = _createControl<SelectControlComponent<Employer>>({
-    controlComponent: SelectControlComponent,
+export const EmployerSelectControl = _createControlField<SelectFieldComponent<Employer>>({
+    viewComponent: SelectFieldComponent,
     viewOptions: {
         options$: [],
         valueFormatter$: (val) => val.name,
@@ -78,8 +78,8 @@ export const EmployerSelectControl = _createControl<SelectControlComponent<Emplo
     },  
 });
 
-export const UserSelectControl = _createControl<SelectControlComponent<User>>({
-    controlComponent: SelectControlComponent,
+export const UserSelectControl = _createControlField<SelectFieldComponent<User>>({
+    viewComponent: SelectFieldComponent,
     viewOptions: {
         options$: [],
         valueFormatter$: (val) => val.firstName + ' ' + val.lastName,
@@ -89,9 +89,9 @@ export const UserSelectControl = _createControl<SelectControlComponent<User>>({
     }, 
 });
 
-export const UserNameControl = _createControl({
+export const UserNameControl = _createControlField({
     viewOptions: {placeholder$: "Brukernavn", autoComplete$: "new-password"}, 
-    controlComponent: InputControlComponent,
+    viewComponent: InputFieldComponent,
     validators$: [
         Validators.pattern('^[a-zA-Z0-9_.-]*$'),
         Validators.minLength(ValidationRules.UserNameMinLength),
@@ -99,8 +99,8 @@ export const UserNameControl = _createControl({
     ] 
 });
 
-export const NewPasswordControl = _createControl({
-    controlComponent:  InputControlComponent, required$: true,
+export const NewPasswordControl = _createControlField({
+    viewComponent:  InputFieldComponent, required$: true,
     viewOptions: { 
         placeholder$: "Nytt passord", type$: "password", hideable$: true, defaultHidden$: true,
     },
@@ -110,8 +110,8 @@ export const NewPasswordControl = _createControl({
     ] 
 });
 
-export const ConfirmPasswordControl = _createControl({
-    controlComponent:  InputControlComponent, required$: true,
+export const ConfirmPasswordControl = _createControlField({
+    viewComponent:  InputFieldComponent, required$: true,
     viewOptions: { 
         placeholder$: "Gjenta nytt passord", type$: "password", hideable$: true, defaultHidden$: true,
     }, 
@@ -121,8 +121,8 @@ const grpBuilder = new DynamicFormBuilder<DateRange<string>>();
 export const DateRangeControlGroup = grpBuilder.group<DateRange<string>>()({ 
     controlClass$: "date-range-control-group",
     controls: {
-        start: _createControl<IonDateControlComponent>({
-            controlComponent: IonDateControlComponent,
+        start: _createControlField<IonDateControlComponent>({
+            viewComponent: IonDateControlComponent,
             viewOptions: {
                 placeholder$: "Fra dato", 
                 width$: "45%",
@@ -130,8 +130,8 @@ export const DateRangeControlGroup = grpBuilder.group<DateRange<string>>()({
                 datePipeFormat$: "MMM d, y"             
             },  
         }),
-        end: _createControl<IonDateControlComponent>({
-            controlComponent: IonDateControlComponent,
+        end: _createControlField<IonDateControlComponent>({
+            viewComponent: IonDateControlComponent,
             viewOptions: {
                 placeholder$: "Til dato", 
                 width$: "45%",

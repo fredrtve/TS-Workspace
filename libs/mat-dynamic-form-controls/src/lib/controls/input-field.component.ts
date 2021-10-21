@@ -5,15 +5,15 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { ControlComponent, FormStateResolver } from 'dynamic-forms';
+import { ControlFieldComponent, FormStateResolver } from 'dynamic-forms';
 import { Maybe } from 'global-types';
 import { Observable } from 'rxjs';
-import { BaseControlComponent } from '../base-control/base-control.component';
-import { BaseViewOptions } from '../base-control/base-view-options.interface';
+import { BaseFieldComponent } from '../base-control/base-field.component';
+import { BaseFieldOptions } from '../base-control/base-field-options.interface';
 import { VALIDATION_ERROR_MESSAGES } from '../injection-tokens.const';
 import { ValidationErrorMap } from '../interfaces';
 
-export interface InputOptions extends BaseViewOptions {
+export interface InputOptions extends BaseFieldOptions {
   type$?: "tel" | "text" | "number" | "email" | "file" | "password";
   hideable$?: boolean;
   defaultHidden$?: boolean;
@@ -53,7 +53,7 @@ type ViewModel = InputOptions & { required$?: boolean }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class InputControlComponent extends BaseControlComponent<string, InputOptions> implements ControlComponent<string, InputOptions> {
+export class InputFieldComponent extends BaseFieldComponent<string, InputOptions> implements ControlFieldComponent<string, InputOptions> {
 
   hideField: Maybe<boolean>;
 
@@ -72,7 +72,7 @@ export class InputControlComponent extends BaseControlComponent<string, InputOpt
 
 }
 @NgModule({
-  declarations: [InputControlComponent],
+  declarations: [InputFieldComponent],
   imports:[
     CommonModule,    
     ReactiveFormsModule,

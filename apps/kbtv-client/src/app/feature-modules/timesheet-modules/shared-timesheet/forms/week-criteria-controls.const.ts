@@ -1,7 +1,7 @@
 import { StateUsers } from '@core/state/global-state.interfaces';
 import { WeekCriteria } from '@shared-timesheet/interfaces';
 import { UserSelectControl } from '@shared/constants/common-controls.const';
-import { InputControlComponent } from 'mat-dynamic-form-controls';
+import { InputFieldComponent } from 'mat-dynamic-form-controls';
 import { IonDateControlComponent } from '@shared/scam/dynamic-form-controls/ion-date-time-control.component';
 import { isWeekInRange } from '@shared/validators/is-week-in-range.validator';
 import { DynamicFormBuilder } from 'dynamic-forms';
@@ -15,16 +15,16 @@ export const WeekCriteriaForm = builder.form({
     validators$: [isWeekInRange("weekNr", "year")],
     controls: {
         user: {...UserSelectControl, required$: true},
-        year: builder.control<IonDateControlComponent<number>>({ required$: true,
-            controlComponent: IonDateControlComponent,     
+        year: builder.field<IonDateControlComponent<number>>({ required$: true,
+            viewComponent: IonDateControlComponent,     
             viewOptions: { 
                 placeholder$: "Velg år", 
                 ionFormat$: "YYYY", 
                 valueSetter: (val) => new Date(val).getFullYear() 
             },
         }),
-        weekNr: builder.control({ required$: true,
-            controlComponent: InputControlComponent,
+        weekNr: builder.field({ required$: true,
+            viewComponent: InputFieldComponent,
             viewOptions: { 
                 placeholder$: "Velg uke", 
                 type$: "tel",

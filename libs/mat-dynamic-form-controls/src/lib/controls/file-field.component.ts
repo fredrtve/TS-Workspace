@@ -4,12 +4,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormStateResolver } from 'dynamic-forms';
 import { Observable } from 'rxjs';
-import { BaseControlComponent } from '../base-control/base-control.component';
-import { BaseViewOptions } from '../base-control/base-view-options.interface';
+import { BaseFieldComponent } from '../base-control/base-field.component';
+import { BaseFieldOptions } from '../base-control/base-field-options.interface';
 import { VALIDATION_ERROR_MESSAGES } from '../injection-tokens.const';
 import { ValidationErrorMap } from '../interfaces';
 
-export interface FileOptions extends BaseViewOptions { multiple$?: boolean; }
+export interface FileOptions extends BaseFieldOptions { multiple$?: boolean; }
 
 type ViewModel = FileOptions & { required$?: boolean }
 
@@ -36,7 +36,7 @@ type ViewModel = FileOptions & { required$?: boolean }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FileControlComponent extends BaseControlComponent<FileList, FileOptions> {
+export class FileFieldComponent extends BaseFieldComponent<FileList, FileOptions> {
 
   vm$: Observable<ViewModel>;
 
@@ -61,7 +61,7 @@ export class FileControlComponent extends BaseControlComponent<FileList, FileOpt
 
 }
 @NgModule({
-  declarations: [FileControlComponent],
+  declarations: [FileFieldComponent],
   imports:[
     CommonModule,    
     ReactiveFormsModule,

@@ -12,7 +12,7 @@ import { Immutable } from 'global-types';
 import { applyMixins } from 'global-utils';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { BaseControlComponent } from '../../base-control/base-control.component';
+import { BaseFieldComponent } from '../../base-control/base-field.component';
 import { ActiveStringFilterModule } from '../../directives/active-string-filter.directive';
 import { FuncModule } from '../../directives/func.pipe';
 import { WithLazyOptions } from '../../mixins/lazy-options.mixin';
@@ -22,15 +22,15 @@ import { ValidationErrorMap } from '../../interfaces';
 
 type ViewModel<T> = AutoCompleteOptions<T> & { criteria$: T | string | null, required$: boolean };
 
-class AutoCompleteControlBase<T> extends BaseControlComponent<T | string, AutoCompleteOptions<T>> {}
+class AutoCompleteControlBase<T> extends BaseFieldComponent<T | string, AutoCompleteOptions<T>> {}
 interface AutoCompleteControlBase<T> extends WithLazyOptions {}
 applyMixins(AutoCompleteControlBase, [WithLazyOptions])
 
 @Component({
-  templateUrl: 'auto-complete-control.component.html',
+  templateUrl: 'auto-complete-field.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AutoCompleteControlComponent<T> extends AutoCompleteControlBase<T>  {
+export class AutoCompleteFieldComponent<T> extends AutoCompleteControlBase<T>  {
 
     vm$: Observable<Immutable<ViewModel<T>>>
     
@@ -56,7 +56,7 @@ export class AutoCompleteControlComponent<T> extends AutoCompleteControlBase<T> 
     
 }
 @NgModule({
-    declarations: [AutoCompleteControlComponent],
+    declarations: [AutoCompleteFieldComponent],
     imports:[
       CommonModule,       
       ReactiveFormsModule,

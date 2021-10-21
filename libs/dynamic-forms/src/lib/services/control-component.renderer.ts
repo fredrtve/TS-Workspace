@@ -3,21 +3,14 @@ import { FormArray, FormControl, FormGroup } from "@angular/forms";
 import { Immutable, Maybe } from "global-types";
 import { pairwise, startWith } from "rxjs/operators";
 import { DYNAMIC_FORM_DEFAULT_OPTIONS } from "../injection-tokens.const";
-import { AllowFormStateSelectors, ControlArrayComponent, ControlComponent, ControlGroupComponent, DynamicControl, DynamicControlArray, DynamicControlGroup, DynamicControlOptions, DynamicFormDefaultOptions, FormStateSelector, GenericAbstractControl, ValidControl, ValidControlObject } from "../interfaces";
+import { AllowFormStateSelectors, ControlArrayComponent, ControlFieldComponent, ControlGroupComponent, DynamicControlField, DynamicControlArray, DynamicControlGroup, DynamicControlFieldOptions, DynamicFormDefaultOptions, FormStateSelector, GenericAbstractControl, ValidControl, ValidControlObject, FormControlType } from "../interfaces";
 import { _isControlArray, _isControlGroup, _isFormStateSelector } from "../helpers/type.helpers";
 import { FormStateResolver } from "./form-state.resolver";
 
-type ControlWithSelectors<T extends DynamicControl<any, ControlComponent<any, any>> = DynamicControl<any, ControlComponent<any, any>>> = 
-    Omit<T, keyof DynamicControlOptions> & AllowFormStateSelectors<DynamicControlOptions,any, ControlComponent<any, any>>
-
-type ValidFormControl<T extends ValidControl<any>> = 
-    T extends DynamicControl<(infer V),any> 
-        ? GenericAbstractControl<V> 
-    : T extends DynamicControlGroup<any,any,any> 
-        ? FormGroup
-    : FormArray;
-    
-type ValidFormComponent<T extends ValidControl<any>> = T extends DynamicControl<any,(infer Q)> ? ControlComponent<any, Q> : ControlGroupComponent<any>
+type ControlWithSelectors<T extends DynamicControlField<any, ControlFieldComponent<any, any>> = DynamicControlField<any, ControlFieldComponent<any, any>>> = 
+    Omit<T, keyof DynamicControlFieldOptions> & AllowFormStateSelectors<DynamicControlFieldOptions,any, ControlFieldComponent<any, any>>
+  
+type ValidFormComponent<T extends ValidControl<any>> = T extends DynamicControlField<any,(infer Q)> ? ControlFieldComponent<any, Q> : ControlGroupComponent<any>
 
 @Injectable()
 export class ControlComponentRenderer {
@@ -33,13 +26,13 @@ export class ControlComponentRenderer {
         for(const controlName in controls){
             const formControl = formGroup.get(controlName);
             if(formControl === null) throw Error(`No form control for control with name ${controlName} on group ${formGroup}`)
-             const ref = this.renderControl(controls[controlName], formControl, vcRef);
+             const ref = this.renderControl(controls[controlName], <FormControlType<any>> formControl, vcRef);
              if(ref) this.renderer.setAttribute(ref.location.nativeElement, "data-cy", "form-"+controlName)
              ref?.instance.onControlInit?.();
         }
     }
 
-    renderControl<C extends ValidControl<any>>(controlCfg: Immutable<C>, control: ValidFormControl<C>, vcRef: ViewContainerRef): ComponentRef<ValidFormComponent<C>> | undefined {
+    renderControl<C extends ValidControl<any>>(controlCfg: Immutable<C>, control: FormControlType<C>, vcRef: ViewContainerRef): ComponentRef<ValidFormComponent<C>> | undefined {
 
         let ref: ComponentRef<any> | undefined;
 
@@ -52,9 +45,9 @@ export class ControlComponentRenderer {
             this.setClass(ref, this.globalOptions?.arrayClass)
         }
         else {
-            ref = this.loadControl(<ControlWithSelectors> controlCfg, <FormControl><unknown> control, vcRef); 
+            ref = this.loadField(<ControlWithSelectors> controlCfg, <FormControl><unknown> control, vcRef); 
             if(ref === undefined) return; 
-            this.setClass(ref, this.globalOptions?.controlClass)
+            this.setClass(ref, this.globalOptions?.fieldClass)
         }
 
         this.setClass(ref, controlCfg.controlClass$)
@@ -63,14 +56,14 @@ export class ControlComponentRenderer {
 
     }
 
-    private loadControl(
+    private loadField(
         controlCfg: ControlWithSelectors,
         control: FormControl, 
         vcRef: ViewContainerRef
-    ): ComponentRef<ControlComponent<object | null, object>> | undefined {
-        if(!controlCfg.controlComponent) return;
+    ): ComponentRef<ControlFieldComponent<object | null, object>> | undefined {
+        if(!controlCfg.viewComponent) return;
         
-        const componentRef = this.loadComponent(controlCfg.controlComponent, vcRef);
+        const componentRef = this.loadComponent(controlCfg.viewComponent, vcRef);
 
         componentRef.instance.control = control;
 
@@ -82,11 +75,11 @@ export class ControlComponentRenderer {
     }
 
     private loadGroup(groupCfg: Immutable<DynamicControlGroup<any, any, any>>, formGroup: FormGroup, vcRef: ViewContainerRef): ComponentRef<ControlGroupComponent<any>> {
-        const groupComponent = groupCfg.groupComponent || this.globalOptions?.groupComponent;
+        const viewComponent = groupCfg.viewComponent || this.globalOptions?.groupViewComponent;
 
-        if(!groupComponent) throw Error("Missing control group component, Either specify in configuration or set a default component.")
+        if(!viewComponent) throw Error("Missing control group component, Either specify in configuration or set a default component.")
 
-        const componentRef = this.loadComponent(groupComponent, vcRef);
+        const componentRef = this.loadComponent(viewComponent, vcRef);
 
         componentRef.instance.config = groupCfg;
 
@@ -96,7 +89,7 @@ export class ControlComponentRenderer {
     }
 
     private loadArray(arrayCfg: Immutable<DynamicControlArray<any, any>>, formArray: FormArray, vcRef: ViewContainerRef): ComponentRef<ControlArrayComponent<any>> {
-        const arrComponent = arrayCfg.arrayComponent || this.globalOptions?.arrayComponent;
+        const arrComponent = arrayCfg.viewComponent || this.globalOptions?.arrayViewComponent;
 
         if(!arrComponent) throw Error("Missing control array component, Either specify in configuration or set a default component.")
 

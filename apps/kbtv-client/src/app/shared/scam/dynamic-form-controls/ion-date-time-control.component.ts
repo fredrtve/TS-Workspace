@@ -6,14 +6,14 @@ import { SharedModule } from '@shared/shared.module';
 import { _getISO, _getLastDayOfYear } from 'date-time-helpers';
 import { FormStateResolver } from 'dynamic-forms';
 import { Immutable } from 'global-types';
-import { BaseControlComponent, BaseViewOptions, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'mat-dynamic-form-controls';
+import { BaseFieldComponent, BaseFieldOptions, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'mat-dynamic-form-controls';
 import { combineLatest, merge, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 interface ValueSetterOptional { valueSetter?: (value: string) => string }
 interface ValueSetter<T> { valueSetter: (value: string) => T }
 
-export type IonDateOptions<T = string> = BaseViewOptions & (T extends string ? ValueSetterOptional : ValueSetter<T>) & {
+export type IonDateOptions<T = string> = BaseFieldOptions & (T extends string ? ValueSetterOptional : ValueSetter<T>) & {
     ionFormat$: string;
     datePipeFormat$?: string;
     minuteValues$?: number[];
@@ -63,7 +63,7 @@ const _monthShortNames = ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug"
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class IonDateControlComponent<T = string> extends BaseControlComponent<T, IonDateOptions<T>> {
+export class IonDateControlComponent<T = string> extends BaseFieldComponent<T, IonDateOptions<T>> {
 
   private defaultMin = _getISO(new Date(0));
   private defaultMax = _getISO(_getLastDayOfYear());

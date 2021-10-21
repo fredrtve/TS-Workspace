@@ -6,7 +6,7 @@ import { Roles } from '@core/roles.enum';
 import { StateEmployers, StateUsers } from '@core/state/global-state.interfaces';
 import { ValidationRules } from '@shared-app/constants/validation-rules.const';
 import { EmailControl, EmployerSelectControl, FirstNameControl, LastNameControl, PhoneNumberControl, UserNameControl } from '@shared/constants/common-controls.const';
-import { InputControlComponent, SelectControlComponent } from 'mat-dynamic-form-controls';
+import { InputFieldComponent, SelectFieldComponent } from 'mat-dynamic-form-controls';
 import { isUniqueAsyncValidator } from '@shared/validators/is-unique.async.validator';
 import { DynamicFormBuilder } from 'dynamic-forms';
 import { Immutable } from 'global-types';
@@ -23,16 +23,16 @@ const builder = new DynamicFormBuilder<SaveUserForm, FormState>();
 
 const AvailableRoles = Object.keys(Roles).filter(x => x !== Roles.Leder && x !== Roles.Admin).map(key => Roles[key as keyof typeof Roles]);
 
-const RoleControl = builder.control<SelectControlComponent<string>>({
-    required$: true, controlComponent: SelectControlComponent,
+const RoleControl = builder.field<SelectFieldComponent<string>>({
+    required$: true, viewComponent: SelectFieldComponent,
     viewOptions: {
         placeholder$: "Rolle",
         options$: AvailableRoles
     },  
 });
 
-const PasswordControl = builder.control({
-    required$: true, controlComponent: InputControlComponent, 
+const PasswordControl = builder.field({
+    required$: true, viewComponent: InputFieldComponent, 
     viewOptions: {placeholder$: "Passord", hideable$: true, defaultHidden$: true, autoComplete$: "new-password"},
     validators$: [
         Validators.minLength(ValidationRules.UserPasswordMinLength), 

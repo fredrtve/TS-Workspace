@@ -1,10 +1,10 @@
 import { UnknownState } from "global-types";
-import { ControlArrayComponent, ControlComponent, ControlGroupComponent, DynamicControl, DynamicControlArray, DynamicControlGroup, FormStateObserverSelector, FormStateSelector, GetControlReturnValue, ValidControl, ValidControlObject } from "../interfaces";
+import { ControlArrayComponent, ControlFieldComponent, ControlGroupComponent, DynamicControlField, DynamicControlArray, DynamicControlGroup, FormStateObserverSelector, FormStateSelector, GetControlFieldReturnValue, ValidControl, ValidControlObject } from "../interfaces";
 
 /** Constructs a type safe {@link DynamicControl}.  */
-export function _createControl<TControlComponent extends ControlComponent<any,any>>(
-        control: DynamicControl<GetControlReturnValue<TControlComponent>, TControlComponent>
-): DynamicControl<GetControlReturnValue<TControlComponent>, TControlComponent> {
+export function _createControlField<TControlComponent extends ControlFieldComponent<any,any>>(
+    control: DynamicControlField<GetControlFieldReturnValue<TControlComponent>, TControlComponent>
+): DynamicControlField<GetControlFieldReturnValue<TControlComponent>, TControlComponent> {
     return control;
 }
 

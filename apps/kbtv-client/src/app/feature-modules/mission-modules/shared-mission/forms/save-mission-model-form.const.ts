@@ -4,8 +4,8 @@ import { ModelState } from '@core/state/model-state.interface';
 import { ValidationRules } from '@shared-app/constants/validation-rules.const';
 import { _missionFormToSaveModelConverter } from '@shared-mission/forms/mission-form-to-save-model.converter';
 import { GoogleAddressControl, PhoneNumberControl } from '@shared/constants/common-controls.const';
-import { TextAreaControlComponent, AutoCompleteControlComponent, CheckboxControlComponent } from 'mat-dynamic-form-controls';
-import { DynamicFormBuilder, _createControl } from 'dynamic-forms';
+import { TextAreaFieldComponent, AutoCompleteFieldComponent, CheckboxFieldComponent } from 'mat-dynamic-form-controls';
+import { DynamicFormBuilder, _createControlField } from 'dynamic-forms';
 import { Immutable, Maybe } from 'global-types';
 import { Converter, ModelFormConfig } from 'model/form';
 
@@ -14,14 +14,14 @@ export interface MissionForm extends Pick<Mission, "address" | "phoneNumber" | "
     missionTypeInput: Maybe<string | MissionType>
 }
 
-const DescriptionControl = _createControl({ 
-    controlComponent: TextAreaControlComponent,
+const DescriptionControl = _createControlField({ 
+    viewComponent: TextAreaFieldComponent,
     viewOptions: { placeholder$: "Beskrivelse", rows$: 1 }, 
     validators$: [Validators.maxLength(ValidationRules.MissionDescriptionMaxLength)] 
 });
 
-const EmployerControl = _createControl<AutoCompleteControlComponent<Employer>>({ 
-    controlComponent: AutoCompleteControlComponent,
+const EmployerControl = _createControlField<AutoCompleteFieldComponent<Employer>>({ 
+    viewComponent: AutoCompleteFieldComponent,
     viewOptions: {
         options$: [],
         placeholder$: "Oppdragsgiver",
@@ -36,8 +36,8 @@ const EmployerControl = _createControl<AutoCompleteControlComponent<Employer>>({
     },  
 });
 
-const MissionTypeControl = _createControl<AutoCompleteControlComponent<MissionType>>({ 
-    controlComponent: AutoCompleteControlComponent,
+const MissionTypeControl = _createControlField<AutoCompleteFieldComponent<MissionType>>({ 
+    viewComponent: AutoCompleteFieldComponent,
     viewOptions: {
         options$: [],
         placeholder$: "Oppdragstype",
@@ -52,8 +52,8 @@ const MissionTypeControl = _createControl<AutoCompleteControlComponent<MissionTy
     } 
 });
 
-const FinishedControl = _createControl({ 
-    controlComponent: CheckboxControlComponent,
+const FinishedControl = _createControlField({ 
+    viewComponent: CheckboxFieldComponent,
     viewOptions: { text$: "Er oppdraget ferdig?" }, 
 });
 
@@ -74,7 +74,7 @@ export const MissionModelForm: Immutable<ModelFormConfig<ModelState, Mission, Mi
             employerInput: EmployerControl,
             missionTypeInput: MissionTypeControl,  
             finished: FinishedControl,
-            id: { controlComponent: null, viewOptions: {} },    
+            id: { viewComponent: null, viewOptions: {} },    
         },
         overrides: {
             address: { required$: true, },

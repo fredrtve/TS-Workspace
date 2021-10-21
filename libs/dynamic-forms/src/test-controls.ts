@@ -2,15 +2,15 @@ import { Directive } from '@angular/core';
 import { FormArray, FormGroup } from '@angular/forms';
 import { Immutable, Maybe } from 'global-types';
 import { Observable } from 'rxjs';
-import { AllowFormStateSelectors, ControlArrayComponent, ControlComponent, ControlGroupComponent, DynamicControlArray, DynamicControlGroup, FormStateSelector, GenericAbstractControl } from './lib/interfaces';
+import { AllowFormStateSelectors, ControlArrayComponent, ControlFieldComponent, ControlGroupComponent, DynamicControlArray, DynamicControlGroup, FormStateSelector, GenericAbstractControl } from './lib/interfaces';
 import { FormStateResolver } from './lib/services/form-state.resolver';
 import { DynamicFormBuilder, DynamicHostDirective } from './public-api';
 
 /** A base component class for implementing a control component. 
  *  Responsible for declaring the neccesary inputs & exposing state bindings. */
 @Directive()
-export abstract class BaseControlComponent<TValueType, TQuestion extends BaseQuestion>
-    implements ControlComponent<TValueType, TQuestion> {
+export abstract class BaseFieldComponent<TValueType, TQuestion extends BaseQuestion>
+    implements ControlFieldComponent<TValueType, TQuestion> {
 
   control: Maybe<GenericAbstractControl<TValueType>>;
 
@@ -62,7 +62,7 @@ export interface InputQuestion extends BaseQuestion {
 type ViewModel = InputQuestion & { required?: boolean }
 
 @Directive()
-export class InputControlComponent extends BaseControlComponent<string, InputQuestion> implements ControlComponent<string, InputQuestion> {
+export class InputFieldComponent extends BaseFieldComponent<string, InputQuestion> implements ControlFieldComponent<string, InputQuestion> {
   
     hideField: Maybe<boolean>;
   
@@ -106,8 +106,8 @@ export class TestControlArrayComponent implements ControlArrayComponent<TestCont
   const builder = new DynamicFormBuilder<{ arr: { nest1: string, nest2: string}[], fun: string}>();
   const iBuilder = new DynamicFormBuilder<{ nest1: string, nest2: string}>();
 
-  const stringControl = builder.control({
-    controlComponent: InputControlComponent,
+  const stringControl = builder.field({
+    viewComponent: InputFieldComponent,
     viewOptions: { width$: "" }
   });
 
@@ -123,7 +123,7 @@ export class TestControlArrayComponent implements ControlArrayComponent<TestCont
   });
 
   const arr = builder.array({
-    arrayComponent: TestControlArrayComponent,
+    viewComponent: TestControlArrayComponent,
     controlTemplate: group,
     viewOptions: { someOption$: " " },
     templateOverrides: {

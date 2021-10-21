@@ -9,14 +9,14 @@ import { Immutable, Maybe, Prop } from 'global-types';
 import { applyMixins } from 'global-utils';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { BaseControlComponent } from '../base-control/base-control.component';
-import { BaseViewOptions } from '../base-control/base-view-options.interface';
+import { BaseFieldComponent } from '../base-control/base-field.component';
+import { BaseFieldOptions } from '../base-control/base-field-options.interface';
 import { FuncModule } from '../directives/func.pipe';
 import { LazySelectOption, WithLazyOptions } from '../mixins/lazy-options.mixin';
 import { VALIDATION_ERROR_MESSAGES } from '../injection-tokens.const';
 import { ValidationErrorMap } from '../interfaces';
 
-export interface SelectOptions<T> extends BaseViewOptions {
+export interface SelectOptions<T> extends BaseFieldOptions {
   lazyOptions$?: LazySelectOption;
   valueProp$?: Prop<T>;
   valueFormatter$?: (val: Immutable<T>) => unknown;
@@ -26,7 +26,7 @@ export interface SelectOptions<T> extends BaseViewOptions {
 
 type ViewModel<T> = Omit<SelectOptions<T>, "lazyOptions"> & { required$?: boolean }
 
-class SelectControlBase<T> extends BaseControlComponent<T, SelectOptions<T>> {}
+class SelectControlBase<T> extends BaseFieldComponent<T, SelectOptions<T>> {}
 interface SelectControlBase<T> extends WithLazyOptions {}
 applyMixins(SelectControlBase, [WithLazyOptions])
 
@@ -66,7 +66,7 @@ applyMixins(SelectControlBase, [WithLazyOptions])
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SelectControlComponent<T> extends SelectControlBase<T> {
+export class SelectFieldComponent<T> extends SelectControlBase<T> {
 
   defaultCompareWith = (o1: unknown, o2: unknown) => o1 === o2;
 
@@ -93,7 +93,7 @@ export class SelectControlComponent<T> extends SelectControlBase<T> {
   
 }
 @NgModule({
-  declarations: [SelectControlComponent],
+  declarations: [SelectFieldComponent],
   imports:[
     CommonModule,     
     ReactiveFormsModule,

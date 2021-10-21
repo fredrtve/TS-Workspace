@@ -3,7 +3,7 @@ import { ModelState } from '@core/state/model-state.interface';
 import { ValidationRules } from '@shared-app/constants/validation-rules.const';
 import { NameControl } from '@shared/constants/common-controls.const';
 import { _formToSaveModelFileConverter } from '@shared/constants/form-to-save-model-file.converter';
-import { FileControlComponent } from 'mat-dynamic-form-controls';
+import { FileFieldComponent } from 'mat-dynamic-form-controls';
 import { fileExtensionValidator } from '@shared/validators/file-extension.validator';
 import { fileSizeValidator } from '@shared/validators/file-size.validator';
 import { DynamicFormBuilder } from 'dynamic-forms';
@@ -21,10 +21,10 @@ export const CreateMissionDocumentModelForm: Immutable<ModelFormConfig<ModelStat
     actionConverter: _formToSaveModelFileConverter,
     dynamicForm: builder.form({
         controls: { 
-            missionId:  { controlComponent: null, required$: true, viewOptions: {} },
+            missionId:  { viewComponent: null, required$: true, viewOptions: {} },
             name: NameControl, 
-            fileList: builder.control({
-                controlComponent: FileControlComponent, required$: true, viewOptions: {},
+            fileList: builder.field({
+                viewComponent: FileFieldComponent, required$: true, viewOptions: {},
                 validators$: [
                     fileExtensionValidator(ValidationRules.MissionDocumentFileExtensions),
                     fileSizeValidator(ValidationRules.ContentMaxByteLength)

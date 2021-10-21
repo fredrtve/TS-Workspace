@@ -3,14 +3,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormStateResolver } from 'dynamic-forms';
 import { Observable } from 'rxjs';
-import { BaseViewOptions } from '../base-control/base-view-options.interface';
-import { BaseControlComponent } from '../base-control/base-control.component';
+import { BaseFieldOptions } from '../base-control/base-field-options.interface';
+import { BaseFieldComponent } from '../base-control/base-field.component';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { VALIDATION_ERROR_MESSAGES } from '../injection-tokens.const';
 import { ValidationErrorMap } from '../interfaces';
 
-export interface TextAreaOptions extends BaseViewOptions {
+export interface TextAreaOptions extends BaseFieldOptions {
   rows$: number;
 }
 
@@ -37,7 +37,7 @@ type ViewModel = TextAreaOptions & { required$?: boolean }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TextAreaControlComponent extends BaseControlComponent<string, TextAreaOptions>  {
+export class TextAreaFieldComponent extends BaseFieldComponent<string, TextAreaOptions>  {
 
   vm$: Observable<ViewModel>;
 
@@ -54,7 +54,7 @@ export class TextAreaControlComponent extends BaseControlComponent<string, TextA
 
 }
 @NgModule({
-  declarations: [TextAreaControlComponent],
+  declarations: [TextAreaFieldComponent],
   imports:[
     CommonModule, 
     ReactiveFormsModule,  

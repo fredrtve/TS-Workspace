@@ -6,12 +6,12 @@ import { MatSliderModule } from '@angular/material/slider';
 import { FormStateResolver } from 'dynamic-forms';
 import { combineLatest, merge, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { BaseControlComponent } from '../base-control/base-control.component';
-import { BaseViewOptions } from '../base-control/base-view-options.interface';
+import { BaseFieldComponent } from '../base-control/base-field.component';
+import { BaseFieldOptions } from '../base-control/base-field-options.interface';
 import { VALIDATION_ERROR_MESSAGES } from '../injection-tokens.const';
 import { ValidationErrorMap } from '../interfaces';
 
-export interface SliderOptions extends BaseViewOptions {
+export interface SliderOptions extends BaseFieldOptions {
   tickInterval$?: number;
   min$?: number;
   max$?: number;
@@ -54,7 +54,7 @@ export interface SliderOptions extends BaseViewOptions {
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SliderControlComponent extends BaseControlComponent<number, SliderOptions> {
+export class SliderFieldComponent extends BaseFieldComponent<number, SliderOptions> {
 
     vm$: Observable<{controlValue: number, viewOptions: SliderOptions}>;
 
@@ -84,7 +84,7 @@ export class SliderControlComponent extends BaseControlComponent<number, SliderO
 
 }
 @NgModule({
-  declarations: [SliderControlComponent],
+  declarations: [SliderFieldComponent],
   imports:[
     CommonModule,   
     ReactiveFormsModule,

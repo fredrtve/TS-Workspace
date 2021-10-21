@@ -41,7 +41,7 @@ export class DynamicControlArrayEntryComponent {
 
     ngOnInit(): void {
         const controlCfg = _addIndexesToTemplate(this.config, this.index);
-        this.controlFactory.configureValidControl(controlCfg, this.control)
+        this.controlFactory.configureControl(controlCfg, this.control)
         const ref = this.controlRenderer.renderControl(controlCfg, this.control, this.dynamicHost.viewContainerRef);
         ref?.instance.onControlInit?.();
     }

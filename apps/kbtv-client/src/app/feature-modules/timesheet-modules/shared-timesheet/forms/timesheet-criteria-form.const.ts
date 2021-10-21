@@ -8,9 +8,9 @@ import { TimesheetCriteria } from '@shared-timesheet/timesheet-filter/timesheet-
 import { DateRangeControlGroup, MissionAutoCompleteControl, UserSelectControl } from '@shared/constants/common-controls.const';
 import { SyncModelDateRangeOptions } from '@shared/constants/common-form-state-setters.const';
 import { IonDateControlComponent } from '@shared/scam/dynamic-form-controls/ion-date-time-control.component';
-import { RadioGroupControlComponent } from 'mat-dynamic-form-controls';
+import { RadioGroupFieldComponent } from 'mat-dynamic-form-controls';
 import { DateRange, _getISO, _getMonthRange } from 'date-time-helpers';
-import { DynamicFormBuilder, _createControl } from 'dynamic-forms';
+import { DynamicFormBuilder, _createControlField } from 'dynamic-forms';
 import { FormSheetViewConfig } from 'form-sheet';
 import { Immutable, Maybe } from 'global-types';
 import { Converter } from 'model/form';
@@ -47,9 +47,9 @@ export interface UserTimesheetCriteriaForm extends Required<Pick<TimesheetCriter
 
 export type UserTimesheetCriteriaFormState = StateMissions & StateSyncConfig;
 
-const DateRangePresetControl = _createControl<RadioGroupControlComponent<DateRangePresets>>({ 
+const DateRangePresetControl = _createControlField<RadioGroupFieldComponent<DateRangePresets>>({ 
     required$: true, 
-    controlComponent: RadioGroupControlComponent,
+    viewComponent: RadioGroupFieldComponent,
     viewOptions: {   
         label$: "Velg tidsrom *",
         valueFormatter$: (val: DateRangePresets) => translations[DateRangePresets[val].toLowerCase()],
@@ -57,8 +57,8 @@ const DateRangePresetControl = _createControl<RadioGroupControlComponent<DateRan
     }, 
 });
 
-const CustomMonthControl = _createControl<IonDateControlComponent>({ 
-    controlComponent:  IonDateControlComponent,        
+const CustomMonthControl = _createControlField<IonDateControlComponent>({ 
+    viewComponent:  IonDateControlComponent,        
     viewOptions: {
         placeholder$: "Velg måned", 
         width$: "50%",
@@ -67,8 +67,8 @@ const CustomMonthControl = _createControl<IonDateControlComponent>({
     }, 
 });
 
-const StatusControl = _createControl<RadioGroupControlComponent<TimesheetStatus>>({ 
-    controlComponent:  RadioGroupControlComponent,
+const StatusControl = _createControlField<RadioGroupFieldComponent<TimesheetStatus>>({ 
+    viewComponent:  RadioGroupFieldComponent,
     viewOptions: {   
         label$: "Velg status", defaultOption$: "Begge",
         valueFormatter$: (val) => translations[TimesheetStatus[val]?.toLowerCase()],

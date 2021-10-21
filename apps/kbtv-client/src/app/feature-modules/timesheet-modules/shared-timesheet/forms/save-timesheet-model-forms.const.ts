@@ -5,9 +5,9 @@ import { ValidationRules } from '@shared-app/constants/validation-rules.const';
 import { _timesheetFormToSaveModelConverter, _userTimesheetFormToSaveModelConverter } from '@shared-timesheet/forms/timesheet-form-to-save-model.converter';
 import { MissionAutoCompleteControl, UserSelectControl } from '@shared/constants/common-controls.const';
 import { IonDateControlComponent } from '@shared/scam/dynamic-form-controls/ion-date-time-control.component';
-import { TextAreaControlComponent } from 'mat-dynamic-form-controls';
+import { TextAreaFieldComponent } from 'mat-dynamic-form-controls';
 import { _getISO } from 'date-time-helpers';
-import { DynamicFormBuilder, _createControl, _createControlGroup } from 'dynamic-forms';
+import { DynamicFormBuilder, _createControlField, _createControlGroup } from 'dynamic-forms';
 import { Immutable, Maybe } from 'global-types';
 import { Converter, ModelFormConfig } from 'model/form';
 
@@ -48,16 +48,16 @@ const DateTimeControlGroup = _createControlGroup<TimesheetDateTime>()({
     controlClass$: "timesheet-date-time-control-group",
     viewOptions: {},
     controls: {
-        date: _createControl<IonDateControlComponent>({ 
-            controlComponent: IonDateControlComponent, required$: true,
+        date: _createControlField<IonDateControlComponent>({ 
+            viewComponent: IonDateControlComponent, required$: true,
             viewOptions: {
                 placeholder$: "Dato", 
                 ionFormat$:"YYYY-MMMM-DD",
                 datePipeFormat$: "MMM d, y",
             }, 
         }),
-        startTime: _createControl<IonDateControlComponent>({
-            controlComponent: IonDateControlComponent, required$: true,
+        startTime: _createControlField<IonDateControlComponent>({
+            viewComponent: IonDateControlComponent, required$: true,
             viewOptions: {
                 placeholder$: "Starttid", 
                 ionFormat$:"HH:mm",
@@ -66,8 +66,8 @@ const DateTimeControlGroup = _createControlGroup<TimesheetDateTime>()({
                 defaultValue$: _timeValueDefault(7)
             },
         }),
-        endTime: _createControl<IonDateControlComponent>({         
-            controlComponent: IonDateControlComponent, required$: true,
+        endTime: _createControlField<IonDateControlComponent>({         
+            viewComponent: IonDateControlComponent, required$: true,
             viewOptions: {
                 placeholder$: "Sluttid", 
                 ionFormat$:"HH:mm",
@@ -93,8 +93,8 @@ const DateTimeControlGroup = _createControlGroup<TimesheetDateTime>()({
     }
 });
 
-const CommentControl = _createControl({ 
-    controlComponent: TextAreaControlComponent, required$: true,
+const CommentControl = _createControlField({ 
+    viewComponent: TextAreaFieldComponent, required$: true,
     viewOptions: { placeholder$: "Kommentar", rows$: 3 },
     validators$: [Validators.maxLength(ValidationRules.TimesheetCommentMaxLength)], 
 });
@@ -103,7 +103,7 @@ const CommonControls = {
     missionInput: MissionAutoCompleteControl, 
     dateTime: DateTimeControlGroup, 
     comment: CommentControl,
-    id: { required$: false, controlComponent: null, viewOptions: {} },
+    id: { required$: false, viewComponent: null, viewOptions: {} },
 }
 
 const CommonOptions = {

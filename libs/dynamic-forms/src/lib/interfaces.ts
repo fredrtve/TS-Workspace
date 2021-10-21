@@ -3,10 +3,9 @@ import { AbstractControl, AsyncValidatorFn, FormArray, FormControl, FormGroup, V
 import { DeepPropsObject, DeepPropType, Immutable, MakeKeysOptionalIfOptionalObject, Maybe, NotNull, ValueOf } from 'global-types';
 import { Observable } from 'rxjs';
 import { DeepPartial } from 'ts-essentials';
-import { DynamicHostDirective } from './dynamic-host.directive';
 
-export type GetControlReturnValue<T> = T extends ControlComponent<(infer V), any> ? V : never;
-export type GetOptionsFromComponent<T> = T extends ControlComponent<any, (infer Q)> ? Q : never;
+export type GetControlFieldReturnValue<T> = T extends ControlFieldComponent<(infer V), any> ? V : never;
+export type GetOptionsFromComponent<T> = T extends ControlFieldComponent<any, (infer Q)> ? Q : never;
 export type GetGroupControlViewOptions<T> = T extends DynamicControlGroup<any, any, (infer C)> ? GetGroupComponentOptions<C> : never;
 export type GetGroupComponentOptions<T> = T extends ControlGroupComponent<(infer O)> ? O : DefaultControlGroupComponentOptions;
 export type GetArrayComponentOptions<T> = T extends ControlArrayComponent<(infer O)> ? O : DefaultControlArrayComponentOptions;
@@ -28,14 +27,14 @@ export type ValidControlObject<TForm extends object> = { [P in keyof TForm]: Val
 export type GenericControlObject = {[P in keyof object]: ValidControl<any> | ValidControl<any[]> }
 
 export type FormControlType<TControl> =  
-    TControl extends DynamicControl<(infer ValueType), any> ? (GenericAbstractControl<ValueType> & FormControl)
+    TControl extends DynamicControlField<(infer ValueType), any> ? (GenericAbstractControl<ValueType> & FormControl)
     : TControl extends DynamicControlArray<any,any> ? FormArray 
     : TControl extends DynamicControlGroup<any, any, any> ? FormGroup
     : FormControl
 
-/** Represents a valid control for a given form */
+/** Represents valid controls for TValueType */
 export type ValidControl<TValueType> = 
-        DynamicControl<TValueType, ControlComponent<TValueType, any>> | 
+        DynamicControlField<TValueType, ControlFieldComponent<TValueType, any>> | 
         DynamicControlArray<
             TValueType extends (infer V)[] ? ValidControl<V> : never, 
             ControlArrayComponent<any> | null
@@ -64,26 +63,27 @@ export type ControlOverridesMap<
     TInputState extends object, 
     TControls extends ValidControlObject<any>> = MakeKeysOptionalIfOptionalObject<{  
     [P in keyof TControls]: 
-        TControls[P] extends DynamicControl<any, any>
-            ? ControlOverrides<TForm, TInputState, TControls[P]>
+        TControls[P] extends DynamicControlField<any, any>
+            ? ControlFieldOverrides<TForm, TInputState, TControls[P]>
         : TControls[P] extends DynamicControlArray<any,any> 
             ? ControlArrayOverrides<TForm, TInputState, TControls[P]> 
         : TControls[P] extends DynamicControlGroup<any, any, any> 
             ? ControlGroupOverrides<TForm, TInputState, TControls[P]>
-        : ControlOverrides<TForm, TInputState, any>
+        : ControlFieldOverrides<TForm, TInputState, any>
 }>
- 
-export type ValidControlOverrides<
+
+/** Get corresponding overrides object for a given TControl */
+export type ControlOverrides<
     TForm extends object, 
     TInputState extends object, 
     TControl extends  ValidControl<any>
-> = TControl extends DynamicControl<any, any>
-        ? ControlOverrides<TForm, TInputState, TControl>
+> = TControl extends DynamicControlField<any, any>
+        ? ControlFieldOverrides<TForm, TInputState, TControl>
     : TControl extends DynamicControlArray<any,any> 
         ? ControlArrayOverrides<TForm, TInputState, TControl> 
     : TControl extends DynamicControlGroup<any, any, any> 
         ? ControlGroupOverrides<TForm, TInputState, TControl>
-    : ControlOverrides<TForm, TInputState, any>
+    : ControlFieldOverrides<TForm, TInputState, any>
 
 /** Represents an object of configurable properties on TGroup, allowing form state selectors. */
 export type ControlGroupOverrides<
@@ -91,7 +91,7 @@ export type ControlGroupOverrides<
     TInputState extends object, 
     TGroup extends DynamicControlGroup<any, any, any>
 > = 
-    AllowFormStateSelectors<Partial<DynamicGroupOptions>, TForm, TInputState> 
+    AllowFormStateSelectors<Partial<DynamicControlGroupOptions>, TForm, TInputState> 
     & { 
         viewOptions?: AllowFormStateSelectors<Partial<GetGroupControlViewOptions<TGroup>>, TForm, TInputState> 
         overrides?: ControlOverridesMap<TForm, TInputState, TGroup["controls"]> 
@@ -103,19 +103,19 @@ export type ControlArrayOverrides<
     TInputState extends object, 
     TArray extends DynamicControlArray<any, any>
 > = 
-    AllowFormStateSelectors<Partial<DynamicArrayOptions>, TForm, TInputState> 
+    AllowFormStateSelectors<Partial<DynamicControlArrayOptions>, TForm, TInputState> 
     & { 
         viewOptions?: AllowFormStateSelectors<Partial<TArray["viewOptions"]>, TForm, TInputState> 
-        templateOverrides?: ValidControlOverrides<TForm, TInputState, TArray["controlTemplate"]> 
+        templateOverrides?: ControlOverrides<TForm, TInputState, TArray["controlTemplate"]> 
     }
 
 /** Represents an object of configurable properties on TControl, allowing form state selectors. */
-export type ControlOverrides<
+export type ControlFieldOverrides<
     TForm extends object, 
     TInputState extends object, 
-    TControl extends DynamicControl<any,any>
+    TControl extends DynamicControlField<any,any>
 > = 
-    AllowFormStateSelectors<Partial<DynamicControlOptions>, TForm, TInputState>
+    AllowFormStateSelectors<Partial<DynamicControlFieldOptions>, TForm, TInputState>
     & { viewOptions?: AllowFormStateSelectors<Partial<TControl["viewOptions"]>, TForm, TInputState> }
         
 
@@ -196,10 +196,10 @@ export interface DynamicControlGroup<
     TForm extends object, 
     TControls extends ValidControlObject<TForm>,
     TGroupComponent extends ControlGroupComponent<any> | null = null,
-> extends DynamicAbstractGroup<TForm, never, TControls>, AllowFormStateSelectors<DynamicGroupOptions, TForm, never> {
+> extends DynamicAbstractGroup<TForm, never, TControls>, AllowFormStateSelectors<DynamicControlGroupOptions, TForm, never> {
     /** A control group component for displaying the group. 
      * @remarks Can only be null if default group is configured with {@link DYNAMIC_FORM_GLOBAL_OPTIONS} */
-    groupComponent?: Type<TGroupComponent>,
+    viewComponent?: Type<TGroupComponent>,
     /** Configuration options for the group component */
     viewOptions: AllowFormStateSelectors<GetGroupComponentOptions<TGroupComponent>, TForm, never>
 }
@@ -208,44 +208,43 @@ export interface DynamicControlGroup<
 export interface DynamicControlArray<
     TTemplate extends ValidControl<any>,
     TArrayComponent extends ControlArrayComponent<any> | null = null,
-> extends DynamicArrayOptions {
+> extends DynamicControlArrayOptions {
     /** A control group component for displaying the group. 
      * @remarks Can only be null if default group is configured with {@link DYNAMIC_FORM_GLOBAL_OPTIONS} */
-    arrayComponent?: Type<TArrayComponent>,
+    viewComponent?: Type<TArrayComponent>,
     /** The template control used for each entry */
     controlTemplate: TTemplate;
     /** Configuration options for the group component */
     viewOptions: GetArrayComponentOptions<TArrayComponent>    
     /** Override control options statically or dynamically from state or form */
     templateOverrides?: TTemplate extends DynamicControlGroup<(infer V), any, any>
-        ? ValidControlOverrides<V, never, TTemplate> 
-        : ValidControlOverrides<never, never, TTemplate>
+        ? ControlOverrides<V, never, TTemplate> 
+        : ControlOverrides<never, never, TTemplate>
 }
 
-/** Describes the rendering, value and validation of an form control */
-export interface DynamicControl<
+/** Describes the rendering, value and validation of an form control field */
+export interface DynamicControlField<
     TValueType, 
-    TControlComponent extends ControlComponent<TValueType,any>
-> extends DynamicControlOptions { 
+    TControlComponent extends ControlFieldComponent<TValueType,any>
+> extends DynamicControlFieldOptions { 
     /** The control component that should be rendered */
-    controlComponent: Type<TControlComponent> | null;
+    viewComponent: Type<TControlComponent> | null;
     /** The control component view configuration */
     viewOptions: GetOptionsFromComponent<TControlComponent>;
 }
 
-/** Represents configuration options for a dynamic control */
-export interface DynamicControlOptions extends ControlOptions {
+/** Represents configuration options for a dynamic control field */
+export interface DynamicControlFieldOptions extends ControlOptions {
     /** Set to true if control is required. */
     required$?: boolean 
 }
-
 /** Represents configuration options for a dynamic control array */
-export interface DynamicArrayOptions extends ControlOptions {}
+export interface DynamicControlArrayOptions extends ControlOptions {}
 
 /** Represents configuration options for a dynamic control group */
-export interface DynamicGroupOptions extends ControlOptions {} 
+export interface DynamicControlGroupOptions extends ControlOptions {} 
 
-/** Represents configuration options for controls */
+/** Represents configuration options for all controls */
 export interface ControlOptions {
     /** Set to true to require a value before the form can be submitted. Default is false. */
     disabled$?: boolean,     
@@ -257,8 +256,8 @@ export interface ControlOptions {
     controlClass$?: string; 
 }
 
-/** Represents a control component that displays a field used to set the control value. */
-export interface ControlComponent<TValueType, TViewOptions extends object> extends OnControlInit {
+/** Represents a control field component that displays a field used to set the control value. */
+export interface ControlFieldComponent<TValueType, TViewOptions extends object> extends OnControlInit {
     /** Selectors for viewOptions values. Use with {@link FormStateResolver} to retrieve observable values. */
     viewOptionSelectors: AllowFormStateSelectors<TViewOptions, any, any>;
     /** Selector for the required status of the control. Use with {@link FormStateResolver} to retrieve observable value. */
@@ -318,9 +317,9 @@ export interface DefaultControlArrayComponentOptions {
 /** Represents global configuration options for all dynamic forms in application. 
  *  @remarks Supplied with injection token {@link DYNAMIC_FORM_DEFAULT_OPTIONS} */
 export interface DynamicFormDefaultOptions {
-    groupComponent?: Type<ControlGroupComponent<any>>;
-    arrayComponent?: Type<ControlGroupComponent<any>>;
+    arrayViewComponent?: Type<ControlArrayComponent<any>>;
+    groupViewComponent?: Type<ControlGroupComponent<any>>;
     groupClass?: string;
     arrayClass?: string;
-    controlClass?: string;
+    fieldClass?: string;
 }

@@ -1,6 +1,6 @@
 import { Validators } from '@angular/forms';
 import { DefaultState } from '@core/configurations/default-state.const';
-import { SliderControlComponent } from 'mat-dynamic-form-controls';
+import { SliderFieldComponent } from 'mat-dynamic-form-controls';
 import { _getISO } from 'date-time-helpers';
 import { DynamicFormBuilder } from 'dynamic-forms';
 import { FormSheetViewConfig } from 'form-sheet';
@@ -16,8 +16,8 @@ const builder = new DynamicFormBuilder<SyncConfigForm>();
 
 const SyncConfigForm = builder.form({
     controls: {
-        refreshTime: builder.control({
-            controlComponent:  SliderControlComponent, required$: true,
+        refreshTime: builder.field({
+            viewComponent:  SliderFieldComponent, required$: true,
             viewOptions: {
                 label$: "Synkroniseringstid",
                 hint$: "Hvor ofte skal det sjekkes etter oppdatert data?",
@@ -26,8 +26,8 @@ const SyncConfigForm = builder.form({
             }, 
             validators$: [Validators.min(1)] 
         }),
-        initialMonthISO: builder.control<IonDateControlComponent>({
-            controlComponent:  IonDateControlComponent, required$: true,
+        initialMonthISO: builder.field<IonDateControlComponent>({
+            viewComponent:  IonDateControlComponent, required$: true,
             viewOptions: {
                  placeholder$: "Synkroniseringsdato", 
                  hint$: "Hvor gammel data skal lastes inn? Kun data opprettet eller oppdatert etter gitt dato lastes inn.",

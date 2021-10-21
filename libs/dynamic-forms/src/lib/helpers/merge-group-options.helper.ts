@@ -1,5 +1,5 @@
 import { Immutable } from "global-types";
-import { ControlOverridesMap, DynamicControl, DynamicControlArray, DynamicControlGroup, GenericControlObject, ValidControlObject } from "../interfaces";
+import { ControlOverridesMap, DynamicControlField, DynamicControlArray, DynamicControlGroup, GenericControlObject, ValidControlObject } from "../interfaces";
 import { _isControlArray, _isControlGroup, _isFormStateSelector } from "./type.helpers";
 
 function _mergeValues<T extends object>(mergeInto?: Partial<T>, values?: Partial<T>, basePath?: string): Partial<T> {
@@ -10,23 +10,21 @@ function _mergeValues<T extends object>(mergeInto?: Partial<T>, values?: Partial
         if(values && (<any> values)[prop] !== undefined) continue; //Ignore values that are overridden
         const value = merged[prop];
         if(!_isFormStateSelector(value)) continue; 
-        // const slicesWithBasePath = [];
-        // for(const slice of value.formSlice) slicesWithBasePath.push(basePath + '.' + slice)
         merged[prop] = <any> {...value, baseFormPath: basePath}
     }
     return merged;
 }
 
-function _mergeUnknown(mergeInto: any, overrides: any, baseUrl?: string){
+function _mergeControl(mergeInto: any, overrides: any, baseUrl?: string){
     if(_isControlGroup(mergeInto) || _isControlGroup(overrides))
         return _mergeGroup<any>(mergeInto, overrides, baseUrl);
     else if(_isControlArray(mergeInto) || _isControlArray(overrides)) 
         return _mergeArray<any>(mergeInto, overrides, baseUrl);  
     else 
-        return _mergeControl<any>(mergeInto, overrides, baseUrl);
+        return _mergeField<any>(mergeInto, overrides, baseUrl);
 }
 
-function _mergeControl<T extends DynamicControl<any,any>>(mergeInto?: Partial<T>, control?: Partial<T>, baseUrl?: string): Partial<T> {
+function _mergeField<T extends DynamicControlField<any,any>>(mergeInto?: Partial<T>, control?: Partial<T>, baseUrl?: string): Partial<T> {
     const merged = _mergeValues(mergeInto, control, baseUrl);
 
     merged.viewOptions = _mergeValues(
@@ -46,7 +44,7 @@ function _mergeArray<T extends DynamicControlArray<any,any>>(mergeInto?: Partial
         baseUrl
     );
 
-    merged.templateOverrides = _mergeUnknown(mergeInto?.templateOverrides, control?.templateOverrides, baseUrl);
+    merged.templateOverrides = _mergeControl(mergeInto?.templateOverrides, control?.templateOverrides, baseUrl);
 
     return merged
 }
@@ -67,7 +65,7 @@ function _mergeGroup<T extends DynamicControlGroup<any, any, any>>(mergeInto?: P
     for(const controlName in merged.overrides){
         const control = group?.overrides?.[controlName];
         const controlMergeInto = mergeInto?.overrides?.[controlName];
-        merged.overrides[controlName] = _mergeUnknown(controlMergeInto, control, basePath)
+        merged.overrides[controlName] = _mergeControl(controlMergeInto, control, basePath)
     }
 
     return merged;
@@ -87,7 +85,7 @@ function _mergeWithOptions<T>(mergeInto: T, control?: Partial<T>, basePath?: str
         return <T><unknown> merged;
     }
 
-    return <T> _mergeControl(<any>mergeInto, <T> control);
+    return <T> _mergeField(<any>mergeInto, <T> control);
 }
 
 export function _mergeOverridesWithControls<TControls extends GenericControlObject>(

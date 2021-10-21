@@ -3,7 +3,7 @@ import { MissionNote } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
 import { ValidationRules } from '@shared-app/constants/validation-rules.const';
 import { _appFormToSaveModelConverter } from '@shared/app-form-to-save-model.converter';
-import { TextAreaControlComponent, InputControlComponent } from 'mat-dynamic-form-controls';
+import { TextAreaFieldComponent, InputFieldComponent } from 'mat-dynamic-form-controls';
 import { DynamicFormBuilder } from 'dynamic-forms';
 import { Immutable } from 'global-types';
 import { ModelFormConfig } from 'model/form';
@@ -12,14 +12,14 @@ export type SaveMissionNoteForm = Pick<MissionNote, "title" | "content" | "missi
 
 const builder = new DynamicFormBuilder<SaveMissionNoteForm, ModelState>();
 
-const TitleControl = builder.control({ 
-    controlComponent: InputControlComponent,
+const TitleControl = builder.field({ 
+    viewComponent: InputFieldComponent,
     viewOptions: {placeholder$: "Tittel"}, 
     validators$: [Validators.maxLength(ValidationRules.MissionNoteTitleMaxLength)] 
 });
 
-const ContentControl = builder.control({ 
-    controlComponent: TextAreaControlComponent, required$: true,
+const ContentControl = builder.field({ 
+    viewComponent: TextAreaFieldComponent, required$: true,
     viewOptions: {placeholder$: "Beskrivelse", rows$: 4},  
     validators$: [Validators.maxLength(ValidationRules.MissionNoteContentMaxLength)] 
 })
@@ -31,8 +31,8 @@ export const MissionNoteModelForm: Immutable<ModelFormConfig<ModelState, Mission
         controls: {
             title: TitleControl, 
             content: ContentControl, 
-            missionId: { controlComponent: null, required$: true, viewOptions: {} },
-            id: { controlComponent: null, viewOptions: {} }
+            missionId: { viewComponent: null, required$: true, viewOptions: {} },
+            id: { viewComponent: null, viewOptions: {} }
         },
         overrides: {}
     })

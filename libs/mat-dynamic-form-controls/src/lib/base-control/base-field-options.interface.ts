@@ -1,5 +1,5 @@
 /** Describes the data required to display a control in the form */
- export interface BaseViewOptions {
+ export interface BaseFieldOptions {
     /** A placeholder value for the field */
     placeholder$?: string;
     /** A label describing the field */

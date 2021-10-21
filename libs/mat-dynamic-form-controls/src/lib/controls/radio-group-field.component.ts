@@ -7,13 +7,13 @@ import { MatRadioModule } from '@angular/material/radio';
 import { FormStateResolver } from 'dynamic-forms';
 import { Immutable } from 'global-types';
 import { Observable } from 'rxjs';
-import { BaseControlComponent } from '../base-control/base-control.component';
-import { BaseViewOptions } from '../base-control/base-view-options.interface';
+import { BaseFieldComponent } from '../base-control/base-field.component';
+import { BaseFieldOptions } from '../base-control/base-field-options.interface';
 import { FuncModule } from '../directives/func.pipe';
 import { VALIDATION_ERROR_MESSAGES } from '../injection-tokens.const';
 import { ValidationErrorMap } from '../interfaces';
 
-export interface RadioGroupOptions<T> extends BaseViewOptions {
+export interface RadioGroupOptions<T> extends BaseFieldOptions {
     defaultOption$?: string;
     valueFormatter$?: (val: T) => unknown;
     valueSetter$?: (val: T) => unknown;
@@ -45,7 +45,7 @@ export interface RadioGroupOptions<T> extends BaseViewOptions {
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RadioGroupControlComponent<T> extends BaseControlComponent<T, RadioGroupOptions<T>> {
+export class RadioGroupFieldComponent<T> extends BaseFieldComponent<T, RadioGroupOptions<T>> {
   
   options$: Observable<RadioGroupOptions<T>>;
 
@@ -62,7 +62,7 @@ export class RadioGroupControlComponent<T> extends BaseControlComponent<T, Radio
 
 }
 @NgModule({
-  declarations: [RadioGroupControlComponent],
+  declarations: [RadioGroupFieldComponent],
   imports:[
     CommonModule,   
     ReactiveFormsModule,

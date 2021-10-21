@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { DeepPropsObject, Immutable, UnknownState } from "global-types";
 import { combineLatest, Observable, of, Subject } from "rxjs";
 import { distinctUntilChanged, map, take, takeUntil } from "rxjs/operators";
-import { _formControlsChanges$ } from "../helpers/select-form-controls.helper";
+import { _formControlsChanges$ } from "../helpers/form-control-changes.helper";
 import { AllowFormStateSelectors, FormStateObserverSelector, FormStateSelector } from "../interfaces";
 import { selectState } from "../helpers/select-state.operator";
 import { _isFormStateObserverSelector, _isFormStateSelector } from "../helpers/type.helpers";

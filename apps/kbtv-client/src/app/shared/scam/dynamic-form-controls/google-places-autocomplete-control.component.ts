@@ -9,11 +9,11 @@ import { GoogleMapsLoader } from '@core/services/google-maps.loader';
 import { FormStateResolver } from 'dynamic-forms';
 import { Immutable } from 'global-types';
 import { Address, GooglePlacesAutocompleteModule, Options } from 'google-places-autocomplete';
-import { BaseControlComponent, BaseViewOptions, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'mat-dynamic-form-controls';
+import { BaseFieldComponent, BaseFieldOptions, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'mat-dynamic-form-controls';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-export interface GooglePlacesAutoCompleteOptions extends BaseViewOptions {
+export interface GooglePlacesAutoCompleteOptions extends BaseFieldOptions {
     options$?: Partial<Options>;
     addressFormatter$?: (address: Address) => string; 
     resetable$?: boolean;
@@ -46,7 +46,7 @@ type ViewModel = GooglePlacesAutoCompleteOptions & { required$?: boolean }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GooglePlacesAutoCompleteControlComponent extends BaseControlComponent<string, GooglePlacesAutoCompleteOptions>  {
+export class GooglePlacesAutoCompleteControlComponent extends BaseFieldComponent<string, GooglePlacesAutoCompleteOptions>  {
     
     private defaultOptions: Immutable<Partial<Options>> = {
         types: ['geocode'],

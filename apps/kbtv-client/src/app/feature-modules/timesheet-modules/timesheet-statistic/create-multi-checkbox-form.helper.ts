@@ -1,5 +1,5 @@
-import { CheckboxControlComponent } from 'mat-dynamic-form-controls';
-import { DynamicForm, DynamicFormBuilder, _createControl } from 'dynamic-forms';
+import { CheckboxFieldComponent } from 'mat-dynamic-form-controls';
+import { DynamicForm, DynamicFormBuilder, _createControlField } from 'dynamic-forms';
 import { Immutable, Prop, UnknownState } from 'global-types';
 
 export interface MultiCheckboxForm<TState> { selections: Record<Prop<TState>, boolean> }
@@ -16,8 +16,8 @@ export function _createMultiCheckboxForm<TState extends object = object>(
 
 
     for(const keyOptions of keys){
-        controls[keyOptions.key] = _createControl({
-            controlComponent:  CheckboxControlComponent,
+        controls[keyOptions.key] = _createControlField({
+            viewComponent:  CheckboxFieldComponent,
             viewOptions: {   
                 width$: "45%",
                 text$: keyOptions.text || keyOptions.key, 

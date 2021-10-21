@@ -4,7 +4,7 @@ import { _compareProp } from '@shared-app/helpers/compare-with-prop.helper';
 import { DateRangeControlGroup, EmployerSelectControl } from '@shared/constants/common-controls.const';
 import { SyncModelDateRangeOptions } from '@shared/constants/common-form-state-setters.const';
 import { MissionCriteria } from '@shared/interfaces';
-import { SelectControlComponent, RadioGroupControlComponent, AutoCompleteControlComponent } from 'mat-dynamic-form-controls';
+import { SelectFieldComponent, RadioGroupFieldComponent, AutoCompleteFieldComponent } from 'mat-dynamic-form-controls';
 import { DateRange } from 'date-time-helpers';
 import { DynamicFormBuilder } from 'dynamic-forms';
 import { FormSheetViewConfig } from 'form-sheet';
@@ -21,8 +21,8 @@ export interface MissionCriteriaForm extends Required<Omit<MissionCriteria, "sea
 
 const builder = new DynamicFormBuilder<MissionCriteriaForm, MissionCriteriaFormState>();
 
-const SearchStringControl = builder.control<AutoCompleteControlComponent<Mission>>({
-    controlComponent:  AutoCompleteControlComponent, 
+const SearchStringControl = builder.field<AutoCompleteFieldComponent<Mission>>({
+    viewComponent:  AutoCompleteFieldComponent, 
     viewOptions: {
         options$: [],
         displayWith$: (val) => typeof val === "string" ? val : val?.address || "",
@@ -37,8 +37,8 @@ const SearchStringControl = builder.control<AutoCompleteControlComponent<Mission
     }, 
 });
 
-const MissionTypeControl = builder.control<SelectControlComponent<MissionType>>({
-    controlComponent:  SelectControlComponent,
+const MissionTypeControl = builder.field<SelectFieldComponent<MissionType>>({
+    viewComponent:  SelectFieldComponent,
     viewOptions: {
         options$: [],
         valueFormatter$: (val) => val.name,
@@ -48,8 +48,8 @@ const MissionTypeControl = builder.control<SelectControlComponent<MissionType>>(
     }, 
 });
 
-const FinishedControl = builder.control<RadioGroupControlComponent<boolean>>({
-    controlComponent:  RadioGroupControlComponent,
+const FinishedControl = builder.field<RadioGroupFieldComponent<boolean>>({
+    viewComponent:  RadioGroupFieldComponent,
     viewOptions: {   
         label$: "Velg status",
         valueFormatter$: (finished) => finished ? "Ferdig" : "Aktiv",

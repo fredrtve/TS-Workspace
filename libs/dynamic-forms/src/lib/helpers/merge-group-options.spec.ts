@@ -1,5 +1,5 @@
 
-import { InputControlComponent } from "../../test-controls";
+import { InputFieldComponent } from "../../test-controls";
 import { DynamicFormBuilder } from "../dynamic-form.builder";
 import { GenericFormStateSelector } from "../interfaces";
 import { _isFormStateSelector } from "./type.helpers";
@@ -16,16 +16,16 @@ const phone3WidthFinalBinding = builder.bind(['group1.phone2'], ["state1"], (f,s
 const address3WidthBinding = grp1Builder.bind(['group2.phone3'], [], (f,s) => "");
 const testForm = builder.form({
     controls: {
-        phone1: builder.control({ controlComponent: InputControlComponent, viewOptions: { width$: "" } }),
-        address1: builder.control({ controlComponent: InputControlComponent, viewOptions: { width$: "" } }),
+        phone1: builder.field({ viewComponent: InputFieldComponent, viewOptions: { width$: "" } }),
+        address1: builder.field({ viewComponent: InputFieldComponent, viewOptions: { width$: "" } }),
         group1: builder.group<TestFormGroup>()({
             controls:{
-                phone2: builder.control({ controlComponent: InputControlComponent, viewOptions: { width$: "" } }),
-                address2: builder.control({ controlComponent: InputControlComponent, viewOptions: { width$: "" } }),
+                phone2: builder.field({ viewComponent: InputFieldComponent, viewOptions: { width$: "" } }),
+                address2: builder.field({ viewComponent: InputFieldComponent, viewOptions: { width$: "" } }),
                 group2: builder.group<TestFormGroup2>()({
                     controls:{
-                        phone3: builder.control({ controlComponent: InputControlComponent, viewOptions: { width$: "" } }),
-                        address3: builder.control({ controlComponent: InputControlComponent, viewOptions: { width$: "" } }),
+                        phone3: builder.field({ viewComponent: InputFieldComponent, viewOptions: { width$: "" } }),
+                        address3: builder.field({ viewComponent: InputFieldComponent, viewOptions: { width$: "" } }),
                     },
                     viewOptions: {},
                     overrides: {
@@ -36,7 +36,7 @@ const testForm = builder.form({
             viewOptions: {},
             overrides: {
                 group2: {
-                    viewOptions: { },
+                    viewOptions: {},
                     overrides:{
                          phone3: { viewOptions: { width$: grp1Builder.bind(['address2'], [], (f,s) => "") }},
                          address3: { viewOptions: { width$: address3WidthBinding }}
@@ -72,9 +72,7 @@ describe("Merge group options", () => {
         const selector = <GenericFormStateSelector><any> group2.controls.address3.viewOptions.width$
         expect(selector.stateSlice.length).toBe(address3WidthBinding.stateSlice.length);
         expect(selector.formSlice.length).toBe(address3WidthBinding.formSlice.length);
-
-        const slice = selector.formSlice[0];
-        expect(slice).toBe("group1." + address3WidthBinding.formSlice[0]);
+        expect(selector.baseFormPath).toBe("group1");
 
         expect((<any> group2.viewOptions).test).toBe("isFinal");
 
