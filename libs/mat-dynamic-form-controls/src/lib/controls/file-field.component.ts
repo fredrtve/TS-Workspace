@@ -29,7 +29,7 @@ type ViewModel = FileOptions & { required$?: boolean }
 
     <mat-hint *ngIf="vm.hint$">{{ vm.hint$ }}</mat-hint>
 
-    <mat-error *ngIf="control && control.dirty && control.invalid">
+    <mat-error *ngIf="formControl && formControl.dirty && formControl.invalid">
       {{ getValidationErrorMessage() }}
     </mat-error>
   </div>
@@ -52,11 +52,11 @@ export class FileFieldComponent extends BaseFieldComponent<FileList, FileOptions
   }
 
   onFileChange(e: Event, takeAll: boolean): void {  
-    if(!this.control) return;
+    if(!this.formControl) return;
     const target = <HTMLInputElement> e.target;    
-    if(!target.files) return this.control.reset()
-    this.control.markAsDirty();
-    this.control.setValue(target.files);
+    if(!target.files) return this.formControl.reset()
+    this.formControl.markAsDirty();
+    this.formControl.setValue(target.files);
   }
 
 }

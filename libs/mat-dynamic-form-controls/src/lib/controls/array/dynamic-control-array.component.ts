@@ -5,7 +5,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatDividerModule } from "@angular/material/divider";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from "@angular/material/icon";
-import { ControlArrayComponent, ControlFactory, DynamicControlArray, DynamicFormsModule, FormStateResolver } from "dynamic-forms";
+import { AllowFormStateSelectors, ControlArrayComponent, ControlFactory, DynamicControlArray, DynamicFormsModule, FormStateResolver, ValidControl } from "dynamic-forms";
 import { Observable } from "rxjs";
 import { DynamicControlArrayEntryComponent } from "./dynamic-control-array-entry.component";
 
@@ -21,7 +21,9 @@ export class DynamicControlArrayComponent
 
     formArray: FormArray;
   
-    config: DynamicControlArray<any, ControlArrayComponent<DynamicControlArrayOptions>>;
+    viewOptionSelectors: AllowFormStateSelectors<DynamicControlArrayOptions, any, any>
+
+    controlTemplate: ValidControl<any>
 
     options$: Observable<DynamicControlArrayOptions>;
 
@@ -31,11 +33,11 @@ export class DynamicControlArrayComponent
     ) { }
 
     ngOnInit(): void {
-        this.options$ = this.resolver.resolveSlice$<DynamicControlArrayOptions>(this.config.viewOptions); 
+        this.options$ = this.resolver.resolveSlice$<DynamicControlArrayOptions>(this.viewOptionSelectors); 
     }
 
     addControl(){ 
-        this.formArray.push(this.controlFactory.createControl(this.config.controlTemplate)); 
+        this.formArray.push(this.controlFactory.createControl(this.controlTemplate)); 
     }
 
     removeEntry(index: number){ this.formArray.removeAt(index); }

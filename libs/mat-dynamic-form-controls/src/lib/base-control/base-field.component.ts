@@ -13,7 +13,7 @@ import { BaseFieldOptions } from './base-field-options.interface';
 export abstract class BaseFieldComponent<TValueType, TOptions extends BaseFieldOptions>
     implements ControlFieldComponent<TValueType, TOptions> {
 
-  control: Maybe<GenericAbstractControl<TValueType>>;
+  formControl: Maybe<GenericAbstractControl<TValueType>>;
 
   viewOptionSelectors: AllowFormStateSelectors<TOptions, any, any>;
 
@@ -27,7 +27,7 @@ export abstract class BaseFieldComponent<TValueType, TOptions extends BaseFieldO
   ) {}
 
   getValidationErrorMessage(): Maybe<string> {
-    return _getValidationErrorMessage(this.control?.errors, this.validationErrorMessages)
+    return _getValidationErrorMessage(this.formControl?.errors, this.validationErrorMessages)
   } 
 
   resolveOptions$(): Observable<Immutable<TOptions>> {

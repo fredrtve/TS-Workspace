@@ -28,18 +28,18 @@ type ViewModel = GooglePlacesAutoCompleteOptions & { required$?: boolean }
         <input lib-google-places-autocomplete
             [options]="vm.options$"
             [placeholder]="vm.placeholder$" 
-            [formControl]="control" 
+            [formControl]="formControl" 
             [required]="vm.required$"
             (onAddressChange)="onAddressChange($event, vm.addressFormatter$)"  matInput />
         
         <mat-hint *ngIf="vm.hint$">{{ vm.hint$ }}</mat-hint>
 
-        <button mat-icon-button matSuffix *ngIf="vm.resetable$ && control && !control.disabled  && control.value" aria-label="Clear" 
-            (tap)="control.setValue(''); control.markAsDirty()">
+        <button mat-icon-button matSuffix *ngIf="vm.resetable$ && formControl && !formControl.disabled  && formControl.value" aria-label="Clear" 
+            (tap)="formControl.setValue(''); formControl.markAsDirty()">
             <mat-icon>close</mat-icon>
         </button>
 
-        <mat-error *ngIf="control?.dirty && control?.invalid">
+        <mat-error *ngIf="formControl?.dirty && formControl?.invalid">
             {{ getValidationErrorMessage() }}
         </mat-error>
     </mat-form-field>
@@ -75,7 +75,7 @@ export class GooglePlacesAutoCompleteControlComponent extends BaseFieldComponent
     }
       
     onAddressChange(address: Address, formatter: (address: Address) => string){
-        this.control?.setValue(formatter(address))
+        this.formControl?.setValue(formatter(address))
     } 
 
 }

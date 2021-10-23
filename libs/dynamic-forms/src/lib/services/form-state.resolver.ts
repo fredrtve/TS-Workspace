@@ -70,7 +70,6 @@ export class FormStateResolver {
     };
 
     ngOnDestroy(): void {
-        console.log('completed')
         this.unsubscribeAllSubject.next();      
     }
 

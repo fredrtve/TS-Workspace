@@ -36,7 +36,7 @@ applyMixins(SelectControlBase, [WithLazyOptions])
         <mat-label *ngIf="vm.label$">{{ vm.label$ }}</mat-label>
         <mat-select 
           [placeholder]="vm.placeholder$" 
-          [formControl]="control" 
+          [formControl]="formControl" 
           [required]="vm.required$" 
           [compareWith]="vm.compareWith$ || defaultCompareWith"
           (openedChange)="vm.options$ ? null : showOptions()">
@@ -50,15 +50,15 @@ applyMixins(SelectControlBase, [WithLazyOptions])
             </ng-container>
 
             <ng-template #loading>
-              <mat-option *ngIf="control?.value" [value]="control?.value">
-                {{ (vm.valueFormatter$ | func : control?.value) || control?.value }}
+              <mat-option *ngIf="formControl?.value" [value]="formControl?.value">
+                {{ (vm.valueFormatter$ | func : formControl?.value) || formControl?.value }}
               </mat-option>
               <mat-option>Laster inn...</mat-option>
             </ng-template>
 
         </mat-select>
         <mat-hint *ngIf="vm.hint$">{{ vm.hint$ }}</mat-hint>
-        <mat-error *ngIf="control && control.dirty && control.invalid">
+        <mat-error *ngIf="formControl && formControl.dirty && formControl.invalid">
           {{ getValidationErrorMessage() }}
         </mat-error>
 
@@ -84,7 +84,7 @@ export class SelectFieldComponent<T> extends SelectControlBase<T> {
     const {lazyOptions$, options$, ...rest} = this.viewOptionSelectors;
     const lazy$ = lazyOptions$ === undefined ? undefined : this.resolve$(lazyOptions$);
     this.vm$ = combineLatest([
-      this.resolveLazyOptions$(this.control!, this.resolve$(options$), lazy$), 
+      this.resolveLazyOptions$(this.formControl!, this.resolve$(options$), lazy$), 
       this.resolveSlice$({...rest, required$: this.requiredSelector})
     ]).pipe(
       map(([options$, rest]) => <ViewModel<T>>{options$, ...rest})

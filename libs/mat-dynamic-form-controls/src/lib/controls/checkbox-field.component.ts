@@ -23,14 +23,14 @@ type ViewModel = CheckboxOptions & { required$?: boolean }
 
     <mat-checkbox style="margin-bottom:16px"
         [color]="vm.color$ || 'accent'" 
-        [formControl]="control" 
+        [formControl]="formControl" 
         [required]="vm.required$" >
         {{ vm.text$ }}
     </mat-checkbox>
 
     <mat-hint *ngIf="vm.hint$">{{ vm.hint$ }}</mat-hint>
 
-    <mat-error *ngIf="control && control.dirty && control.invalid">
+    <mat-error *ngIf="formControl && formControl.dirty && formControl.invalid">
       {{ getValidationErrorMessage() }}
     </mat-error>
   </ng-container>

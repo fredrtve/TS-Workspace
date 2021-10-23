@@ -47,7 +47,7 @@ export interface SliderOptions extends BaseFieldOptions {
           </mat-slider>
       </div>
 
-      <mat-error *ngIf="control && control.dirty && control.invalid">
+      <mat-error *ngIf="formControl && formControl.dirty && formControl.invalid">
         {{ getValidationErrorMessage() }}
       </mat-error>
     </ng-container>
@@ -68,7 +68,7 @@ export class SliderFieldComponent extends BaseFieldComponent<number, SliderOptio
     onControlInit(): void {
       this.vm$ = combineLatest([
         this.resolveOptions$(),
-        merge(of(this.control!.value), this.control!.valueChanges).pipe(
+        merge(of(this.formControl!.value), this.formControl!.valueChanges).pipe(
           map(x => x || 0)
         )
       ]).pipe(
@@ -77,9 +77,9 @@ export class SliderFieldComponent extends BaseFieldComponent<number, SliderOptio
     }
 
     updateValue(val: number){
-        if(!this.control) return;
-        this.control.setValue(val);
-        this.control.markAsDirty();
+        if(!this.formControl) return;
+        this.formControl.setValue(val);
+        this.formControl.markAsDirty();
     }
 
 }

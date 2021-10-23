@@ -3,7 +3,7 @@ import { InputFieldComponent } from "../../test-controls";
 import { DynamicFormBuilder } from "../dynamic-form.builder";
 import { GenericFormStateSelector } from "../interfaces";
 import { _isFormStateSelector } from "./type.helpers";
-import { _mergeOverridesWithControls } from "./merge-group-options.helper";
+import { _mergeOverridesWithControls } from "./merge-overrides-with-controls.helper";
 
 interface TestForm { phone1: string, address1: string, group1: TestFormGroup}
 interface TestFormGroup { phone2: string, address2: string, group2: TestFormGroup2 }

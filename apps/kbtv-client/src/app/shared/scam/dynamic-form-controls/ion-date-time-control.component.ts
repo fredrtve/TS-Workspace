@@ -29,19 +29,19 @@ const _monthShortNames = ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug"
 
 @Component({
   template:`
-   <div (tap)="dateTime.click()" class="w-100" [ngStyle]="{'pointer-events': control?.disabled ? 'none' : 'auto'}"
+   <div (tap)="dateTime.click()" class="w-100" [ngStyle]="{'pointer-events': formControl?.disabled ? 'none' : 'auto'}"
       *ngIf="vm$ | async; let vm">
      
       <mat-form-field style="pointer-events:none!important;" class="w-100" [color]="vm.viewOptions.color$ || 'accent'">
         <mat-label *ngIf="vm.viewOptions.label$">{{ vm.viewOptions.label$ }}</mat-label>
         <input matInput required 
-          [disabled]="control?.disabled" 
+          [disabled]="formControl?.disabled" 
           [value]="vm.viewOptions.datePipeFormat$ ? (vm.value | date : vm.viewOptions.datePipeFormat$) : vm.value" 
           [placeholder]="vm.viewOptions.placeholder$" 
           [attr.aria-label]="vm.viewOptions.ariaLabel$">  
             <mat-hint *ngIf="vm.viewOptions.hint$">{{ vm.viewOptions.hint$ }}</mat-hint>
 
-            <mat-error *ngIf="control && control.dirty && control.invalid">
+            <mat-error *ngIf="formControl && formControl.dirty && formControl.invalid">
               {{ getValidationErrorMessage() }}
             </mat-error>  
       </mat-form-field>
@@ -86,7 +86,7 @@ export class IonDateControlComponent<T = string> extends BaseFieldComponent<T, I
 
   onControlInit(): void {
     this.vm$ = combineLatest([
-      merge(of(this.control!.value), this.control!.valueChanges),
+      merge(of(this.formControl!.value), this.formControl!.valueChanges),
       this.resolveOptions$(),
       this.resolve$(this.requiredSelector)
     ]).pipe(
@@ -99,9 +99,9 @@ export class IonDateControlComponent<T = string> extends BaseFieldComponent<T, I
   }
 
   onChange(val: string, setter?: (value: string) => T){
-    if(!this.control) return;
-    this.control.setValue(setter ? setter(val) : <T><unknown> val);  
-    this.control.markAsDirty();
+    if(!this.formControl) return;
+    this.formControl.setValue(setter ? setter(val) : <T><unknown> val);  
+    this.formControl.markAsDirty();
     this.cdRef.markForCheck();
   }
 

@@ -26,9 +26,9 @@ export interface RadioGroupOptions<T> extends BaseFieldOptions {
     <style> mat-radio-group > * { margin-right: 8px } </style>
     <div class="pb-2" *ngIf="options$ | async; let options">
         <div class="mat-body-2" *ngIf="options.label$">{{ options.label$ }}</div>
-        <mat-radio-group [formControl]="control" [color]="options.color$ || 'accent'">
+        <mat-radio-group [formControl]="formControl" [color]="options.color$ || 'accent'">
             <mat-radio-button *ngIf="options.defaultOption$"
-              [checked]="control?.value == null">
+              [checked]="formControl?.value == null">
             {{ options.defaultOption$ }}
             </mat-radio-button>
             <mat-radio-button *ngFor="let option of options.options$" 
@@ -37,7 +37,7 @@ export interface RadioGroupOptions<T> extends BaseFieldOptions {
             </mat-radio-button>
         </mat-radio-group>
         <mat-hint *ngIf="options.hint$">{{ options.hint$ }}</mat-hint>
-        <mat-error *ngIf="control && control.dirty && control.invalid">
+        <mat-error *ngIf="formControl && formControl.dirty && formControl.invalid">
           {{ getValidationErrorMessage() }}
         </mat-error>
         <mat-divider *ngIf="options.divider$" style="margin-top:8px!important"></mat-divider>

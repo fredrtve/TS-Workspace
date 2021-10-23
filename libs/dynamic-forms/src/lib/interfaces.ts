@@ -258,26 +258,34 @@ export interface ControlOptions {
 
 /** Represents a control field component that displays a field used to set the control value. */
 export interface ControlFieldComponent<TValueType, TViewOptions extends object> extends OnControlInit {
+    /** The control accociated with the component */
+    formControl: Maybe<GenericAbstractControl<TValueType>>;
     /** Selectors for viewOptions values. Use with {@link FormStateResolver} to retrieve observable values. */
     viewOptionSelectors: AllowFormStateSelectors<TViewOptions, any, any>;
     /** Selector for the required status of the control. Use with {@link FormStateResolver} to retrieve observable value. */
     requiredSelector?: boolean | FormStateSelector<any, any, boolean | undefined, string, any>;
-    /** The control accociated with the component */
-    control: Maybe<GenericAbstractControl<TValueType>>;
     /** Resolve an observable for viewOptions values */
     resolveOptions$(): Observable<Immutable<TViewOptions>>;
 }
 
 /** Represents a control group component used to display a group of controls. */
-export interface ControlGroupComponent<TComponentConfig extends object> extends OnControlInit {
+export interface ControlGroupComponent<TViewOptions extends object> extends OnControlInit {
+    /** The form group control accociated with the component */
     formGroup: FormGroup;
-    config: DynamicControlGroup<any, any, ControlGroupComponent<TComponentConfig>>
+    /** Selectors for viewOptions values. Use with {@link FormStateResolver} to retrieve observable values. */
+    viewOptionSelectors: AllowFormStateSelectors<TViewOptions, any, any>;
+    /** The controls of the form group */
+    controls: ValidControlObject<any>
 }
 
-/** Represents a control group component used to display a group of controls. */
-export interface ControlArrayComponent<TComponentConfig extends object> extends OnControlInit {
+/** Represents a control array component used to display an array of controls. */
+export interface ControlArrayComponent<TViewOptions extends object> extends OnControlInit {
+    /** The form array control accociated with the component */
     formArray: FormArray;
-    config: DynamicControlArray<any, ControlArrayComponent<TComponentConfig>>
+    /** Selectors for viewOptions values. Use with {@link FormStateResolver} to retrieve observable values. */
+    viewOptionSelectors: AllowFormStateSelectors<TViewOptions, any, any>;
+    /** The control template for creating entries in the form array */
+    controlTemplate: ValidControl<any>
 }
 
 /** Represents a life cycle hook that runs when the control is initalized. */

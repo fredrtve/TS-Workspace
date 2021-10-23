@@ -31,7 +31,7 @@ type ViewModel = InputOptions & { required$?: boolean }
       <input matInput [attr.autocomplete]="vm.autoComplete$"
         [type]="hideField ? 'password' : (vm.type$ === 'password' ? 'text' : vm.type$)" 
         [placeholder]="vm.placeholder$" 
-        [formControl]="control" 
+        [formControl]="formControl" 
         [required]="vm.required$" />
 
       <mat-icon *ngIf="vm.hideable$" [color]="vm.color$ || 'accent'" matSuffix 
@@ -41,12 +41,12 @@ type ViewModel = InputOptions & { required$?: boolean }
 
       <mat-hint *ngIf="vm.hint$">{{ vm.hint$ }}</mat-hint>
 
-      <button mat-icon-button matSuffix *ngIf="vm.resetable$ && !control?.disabled && control?.value" aria-label="Clear" 
-        (tap)="control?.setValue(''); control?.markAsDirty()">
+      <button mat-icon-button matSuffix *ngIf="vm.resetable$ && !formControl?.disabled && formControl?.value" aria-label="Clear" 
+        (tap)="formControl?.setValue(''); formControl?.markAsDirty()">
         <mat-icon>close</mat-icon>
       </button>
 
-      <mat-error *ngIf="control?.dirty && control?.invalid">
+      <mat-error *ngIf="formControl?.dirty && formControl?.invalid">
         {{ getValidationErrorMessage() }}
       </mat-error>
     </mat-form-field>

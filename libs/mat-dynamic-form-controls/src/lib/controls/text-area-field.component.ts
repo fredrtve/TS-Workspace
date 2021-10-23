@@ -24,13 +24,13 @@ type ViewModel = TextAreaOptions & { required$?: boolean }
         <textarea matInput 
             [rows]="vm.rows$"
             [placeholder]="vm.placeholder$" 
-            [formControl]="control" 
+            [formControl]="formControl" 
             [required]="vm.required$">
         </textarea> 
 
         <mat-hint *ngIf="vm.hint$">{{ vm.hint$ }}</mat-hint>
 
-        <mat-error *ngIf="control && control.dirty && control.invalid">
+        <mat-error *ngIf="formControl && formControl.dirty && formControl.invalid">
           {{ getValidationErrorMessage() }}
         </mat-error>
     </mat-form-field>

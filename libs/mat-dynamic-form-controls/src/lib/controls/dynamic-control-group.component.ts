@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, NgModule, ViewChild } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { ControlComponentRenderer, ControlGroupComponent, DynamicControlGroup, DynamicFormsModule, DynamicHostDirective, FormStateResolver } from 'dynamic-forms';
+import { AllowFormStateSelectors, ControlComponentRenderer, ControlGroupComponent, DynamicControlGroup, DynamicFormsModule, DynamicHostDirective, FormStateResolver, ValidControlObject } from 'dynamic-forms';
 import { Observable } from 'rxjs';
 
 export interface DynamicFormGroupOptions { label$?: string }
@@ -39,7 +39,9 @@ export class DynamicControlGroupComponent implements ControlGroupComponent<Dynam
 
     formGroup: FormGroup;
 
-    config: DynamicControlGroup<any, any, ControlGroupComponent<DynamicFormGroupOptions>>;
+    viewOptionSelectors: AllowFormStateSelectors<DynamicFormGroupOptions, any, any>
+
+    controls: ValidControlObject<any>
 
     constructor(
       private controlRenderer: ControlComponentRenderer,
@@ -47,8 +49,8 @@ export class DynamicControlGroupComponent implements ControlGroupComponent<Dynam
     ) {}
 
     ngOnInit(): void {
-      this.options$ = this.resolver.resolveSlice$<DynamicFormGroupOptions>(this.config.viewOptions); 
-      this.controlRenderer.renderControls(this.config.controls, this.formGroup, this.dynamicHost.viewContainerRef);
+      this.options$ = this.resolver.resolveSlice$<DynamicFormGroupOptions>(this.viewOptionSelectors); 
+      this.controlRenderer.renderControls(this.controls, this.formGroup, this.dynamicHost.viewContainerRef);
     }
 }
 @NgModule({

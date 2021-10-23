@@ -3,7 +3,7 @@ import { FormGroup } from "@angular/forms";
 import { Immutable, Maybe } from "global-types";
 import { DeepPartial } from "ts-essentials";
 import { DynamicHostDirective } from "./dynamic-host.directive";
-import { _mergeOverridesWithControls } from "./helpers/merge-group-options.helper";
+import { _mergeOverridesWithControls } from "./helpers/merge-overrides-with-controls.helper";
 import { DynamicForm } from "./interfaces";
 import { ControlComponentRenderer } from "./services/control-component.renderer";
 import { ControlFactory } from "./services/control.factory";

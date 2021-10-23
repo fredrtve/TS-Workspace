@@ -2,7 +2,7 @@ import { Directive } from '@angular/core';
 import { FormArray, FormGroup } from '@angular/forms';
 import { Immutable, Maybe } from 'global-types';
 import { Observable } from 'rxjs';
-import { AllowFormStateSelectors, ControlArrayComponent, ControlFieldComponent, ControlGroupComponent, DynamicControlArray, DynamicControlGroup, FormStateSelector, GenericAbstractControl } from './lib/interfaces';
+import { AllowFormStateSelectors, ControlArrayComponent, ControlFieldComponent, ControlGroupComponent, DynamicControlArray, DynamicControlGroup, FormStateSelector, GenericAbstractControl, ValidControl, ValidControlObject } from './lib/interfaces';
 import { FormStateResolver } from './lib/services/form-state.resolver';
 import { DynamicFormBuilder, DynamicHostDirective } from './public-api';
 
@@ -12,7 +12,7 @@ import { DynamicFormBuilder, DynamicHostDirective } from './public-api';
 export abstract class BaseFieldComponent<TValueType, TQuestion extends BaseQuestion>
     implements ControlFieldComponent<TValueType, TQuestion> {
 
-  control: Maybe<GenericAbstractControl<TValueType>>;
+  formControl: Maybe<GenericAbstractControl<TValueType>>;
 
   viewOptionSelectors: AllowFormStateSelectors<TQuestion, any, any>;
 
@@ -87,18 +87,23 @@ export class TestControlGroupComponent implements ControlGroupComponent<TestCont
 
   formGroup: FormGroup;
 
-  config: DynamicControlGroup<any, any, ControlGroupComponent<TestControlGroupOptions>>;
+  viewOptionSelectors: AllowFormStateSelectors<TestControlGroupOptions, any, any>;
+
+  controls: ValidControlObject<any>
 
   constructor() {}
 }
 export interface TestControlArrayOptions { someOption$: string } ;
 @Directive()
 export class TestControlArrayComponent implements ControlArrayComponent<TestControlArrayOptions> {
+  
   dynamicHost: DynamicHostDirective;
 
   formArray: FormArray;
 
-  config: DynamicControlArray<any, ControlArrayComponent<TestControlArrayOptions>>;
+  viewOptionSelectors: AllowFormStateSelectors<TestControlArrayOptions, any, any>;
+
+  controlTemplate: ValidControl<any>
 
   constructor() {}
 }

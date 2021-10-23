@@ -46,9 +46,9 @@ export class AutoCompleteFieldComponent<T> extends AutoCompleteControlBase<T>  {
       const {lazyOptions$, options$, ...rest} = this.viewOptionSelectors;
       const lazy$ = lazyOptions$ === undefined ? undefined : this.resolve$(lazyOptions$);
       this.vm$ = combineLatest([
-        this.resolveLazyOptions$(this.control!, this.resolve$(options$), lazy$),
+        this.resolveLazyOptions$(this.formControl!, this.resolve$(options$), lazy$),
         this.resolveSlice$({...rest, required$: this.requiredSelector }),
-        this.control!.valueChanges.pipe(startWith(this.control!.value))
+        this.formControl!.valueChanges.pipe(startWith(this.formControl!.value))
       ]).pipe(
         map(([ options$, rest, criteria$ ]) => <Immutable<ViewModel<T>>> {options$, criteria$, ...rest})
       )

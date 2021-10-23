@@ -65,7 +65,7 @@ export class ControlComponentRenderer {
         
         const componentRef = this.loadComponent(controlCfg.viewComponent, vcRef);
 
-        componentRef.instance.control = control;
+        componentRef.instance.formControl = control;
 
         componentRef.instance.viewOptionSelectors = controlCfg.viewOptions || {};
 
@@ -74,28 +74,32 @@ export class ControlComponentRenderer {
         return componentRef;
     }
 
-    private loadGroup(groupCfg: Immutable<DynamicControlGroup<any, any, any>>, formGroup: FormGroup, vcRef: ViewContainerRef): ComponentRef<ControlGroupComponent<any>> {
+    private loadGroup(groupCfg: Immutable<DynamicControlGroup<any, any, ControlGroupComponent<any>>>, formGroup: FormGroup, vcRef: ViewContainerRef): ComponentRef<ControlGroupComponent<any>> {
         const viewComponent = groupCfg.viewComponent || this.globalOptions?.groupViewComponent;
 
         if(!viewComponent) throw Error("Missing control group component, Either specify in configuration or set a default component.")
 
         const componentRef = this.loadComponent(viewComponent, vcRef);
 
-        componentRef.instance.config = groupCfg;
+        componentRef.instance.viewOptionSelectors = groupCfg.viewOptions;
 
+        componentRef.instance.controls = groupCfg.controls;
+        
         componentRef.instance.formGroup = formGroup;
 
         return componentRef;   
     }
 
-    private loadArray(arrayCfg: Immutable<DynamicControlArray<any, any>>, formArray: FormArray, vcRef: ViewContainerRef): ComponentRef<ControlArrayComponent<any>> {
+    private loadArray(arrayCfg: Immutable<DynamicControlArray<any, ControlArrayComponent<any>>>, formArray: FormArray, vcRef: ViewContainerRef): ComponentRef<ControlArrayComponent<any>> {
         const arrComponent = arrayCfg.viewComponent || this.globalOptions?.arrayViewComponent;
 
         if(!arrComponent) throw Error("Missing control array component, Either specify in configuration or set a default component.")
 
         const componentRef = this.loadComponent(arrComponent, vcRef);
 
-        componentRef.instance.config = arrayCfg;
+        componentRef.instance.viewOptionSelectors = arrayCfg.viewOptions;
+
+        componentRef.instance.controlTemplate = arrayCfg.controlTemplate;
 
         componentRef.instance.formArray = formArray;
 

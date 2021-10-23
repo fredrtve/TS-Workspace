@@ -19,7 +19,7 @@
     <mat-form-field [color]="viewOptions.color$ || 'accent'" class="w-100">
         <mat-label *ngIf="viewOptions.label$">{{ viewOptions.label }}</mat-label>
         
-        <input matInput [placeholder]="viewOptions.placeholder$" [formControl]="control" [required]="viewOptions.required$"
+        <input matInput [placeholder]="viewOptions.placeholder$" [formControl]="formControl" [required]="viewOptions.required$"
             [matAutocomplete]="auto1">
 
         <mat-autocomplete #auto1="matAutocomplete" [displayWith]="viewOptions.displayWith$" (opened)="options ? null : showOptions()">
@@ -40,12 +40,12 @@
 
         <mat-hint *ngIf="viewOptions.hint$">{{ viewOptions.hint }}</mat-hint>
 
-        <button mat-icon-button matSuffix *ngIf="viewOptions.resetable$ && control && !control.disabled && control.value" aria-label="Clear" 
-            (tap)="control.setValue(''); control.markAsDirty()">
+        <button mat-icon-button matSuffix *ngIf="viewOptions.resetable$ && formControl && !formControl.disabled && formControl.value" aria-label="Clear" 
+            (tap)="formControl.setValue(''); formControl.markAsDirty()">
             <mat-icon>close</mat-icon>
         </button>
 
-        <mat-error *ngIf="control && control.dirty && control.invalid">
+        <mat-error *ngIf="formControl && formControl.dirty && formControl.invalid">
             {{ getValidationErrorMessage() }}
         </mat-error>
     </mat-form-field>
