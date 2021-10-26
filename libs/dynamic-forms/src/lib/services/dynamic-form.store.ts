@@ -17,7 +17,7 @@ export class DynamicFormStore<TInputState extends object = never> {
         return this.stateSubject.value 
     };
 
-    form: FormGroup;
+    form: FormGroup = new FormGroup({});
 
     constructor(){ }
 

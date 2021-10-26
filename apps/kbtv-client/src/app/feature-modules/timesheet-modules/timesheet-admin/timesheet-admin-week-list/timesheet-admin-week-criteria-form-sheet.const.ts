@@ -6,7 +6,7 @@ export const TimesheetAdminWeekCriteriaFormSheet: Immutable<FormSheetViewConfig<
 {
   formConfig: {
     ...WeekCriteriaForm, 
-    controls: { ...WeekCriteriaForm.controls, weekNr: { viewComponent: null, required$: true, viewOptions: {} }},  
+    controls: { ...WeekCriteriaForm.controls, weekNr: { required$: true, viewOptions: {} }},  
   },
   navConfig: {title: "Velg filtre"},
   actionConfig: { submitText: "Bruk", onlineRequired: true }

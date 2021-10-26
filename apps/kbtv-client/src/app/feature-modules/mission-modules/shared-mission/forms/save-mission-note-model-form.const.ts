@@ -31,8 +31,8 @@ export const MissionNoteModelForm: Immutable<ModelFormConfig<ModelState, Mission
         controls: {
             title: TitleControl, 
             content: ContentControl, 
-            missionId: { viewComponent: null, required$: true, viewOptions: {} },
-            id: { viewComponent: null, viewOptions: {} }
+            missionId: { required$: true, viewOptions: {} },
+            id: { viewOptions: {} }
         },
         overrides: {}
     })

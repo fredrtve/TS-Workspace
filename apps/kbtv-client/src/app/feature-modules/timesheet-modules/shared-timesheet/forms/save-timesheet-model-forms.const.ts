@@ -103,7 +103,7 @@ const CommonControls = {
     missionInput: MissionAutoCompleteControl, 
     dateTime: DateTimeControlGroup, 
     comment: CommentControl,
-    id: { required$: false, viewComponent: null, viewOptions: {} },
+    id: { required$: false, viewOptions: {} },
 }
 
 const CommonOptions = {

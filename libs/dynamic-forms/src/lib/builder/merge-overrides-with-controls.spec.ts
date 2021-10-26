@@ -1,8 +1,8 @@
 
-import { InputFieldComponent } from "../../test-controls";
-import { DynamicFormBuilder } from "../dynamic-form.builder";
+import { TestFieldComponent } from "../../test-controls/test-control-field.component";
+import { DynamicFormBuilder } from "../builder/dynamic-form.builder";
+import { _isFormStateSelector } from "../helpers/type.helpers";
 import { GenericFormStateSelector } from "../interfaces";
-import { _isFormStateSelector } from "./type.helpers";
 import { _mergeOverridesWithControls } from "./merge-overrides-with-controls.helper";
 
 interface TestForm { phone1: string, address1: string, group1: TestFormGroup}
@@ -16,16 +16,16 @@ const phone3WidthFinalBinding = builder.bind(['group1.phone2'], ["state1"], (f,s
 const address3WidthBinding = grp1Builder.bind(['group2.phone3'], [], (f,s) => "");
 const testForm = builder.form({
     controls: {
-        phone1: builder.field({ viewComponent: InputFieldComponent, viewOptions: { width$: "" } }),
-        address1: builder.field({ viewComponent: InputFieldComponent, viewOptions: { width$: "" } }),
+        phone1: builder.field({ viewComponent: TestFieldComponent, viewOptions: { width$: "" } }),
+        address1: builder.field({ viewComponent: TestFieldComponent, viewOptions: { width$: "" } }),
         group1: builder.group<TestFormGroup>()({
             controls:{
-                phone2: builder.field({ viewComponent: InputFieldComponent, viewOptions: { width$: "" } }),
-                address2: builder.field({ viewComponent: InputFieldComponent, viewOptions: { width$: "" } }),
+                phone2: builder.field({ viewComponent: TestFieldComponent, viewOptions: { width$: "" } }),
+                address2: builder.field({ viewComponent: TestFieldComponent, viewOptions: { width$: "" } }),
                 group2: builder.group<TestFormGroup2>()({
                     controls:{
-                        phone3: builder.field({ viewComponent: InputFieldComponent, viewOptions: { width$: "" } }),
-                        address3: builder.field({ viewComponent: InputFieldComponent, viewOptions: { width$: "" } }),
+                        phone3: builder.field({ viewComponent: TestFieldComponent, viewOptions: { width$: "" } }),
+                        address3: builder.field({ viewComponent: TestFieldComponent, viewOptions: { width$: "" } }),
                     },
                     viewOptions: {},
                     overrides: {

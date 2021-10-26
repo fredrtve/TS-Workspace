@@ -74,7 +74,7 @@ export const MissionModelForm: Immutable<ModelFormConfig<ModelState, Mission, Mi
             employerInput: EmployerControl,
             missionTypeInput: MissionTypeControl,  
             finished: FinishedControl,
-            id: { viewComponent: null, viewOptions: {} },    
+            id: { viewOptions: {} },    
         },
         overrides: {
             address: { required$: true, },

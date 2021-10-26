@@ -18,7 +18,7 @@ export class FormStateResolver {
         
     constructor(private store: DynamicFormStore<object>){}
 
-    resolveSlice$<T extends object>(setters: AllowFormStateSelectors<T, any,any>): Observable<Immutable<T>> {
+    resolveSlice$<T extends object>(setters: Immutable<AllowFormStateSelectors<T, any,any>>): Observable<Immutable<T>> {
         const observers: Observable<any>[] = [];
         const usedKeys: string[] = [];
         for(const key in setters){
@@ -36,7 +36,7 @@ export class FormStateResolver {
     }
 
     resolve$<T>(
-        setter: FormStateSelector<any, any, T, any, any> | T
+        setter: Immutable<FormStateSelector<any, any, T, any, any> | T>
     ): Observable<Immutable<T>> {
         if(_isFormStateSelector(setter)){
             
@@ -59,7 +59,7 @@ export class FormStateResolver {
     };
 
     resolve<T>(
-        setter: FormStateObserverSelector<any, T, any> | T
+        setter: Immutable<FormStateObserverSelector<any, T, any> | T>
     ): Immutable<T> {
         if(_isFormStateObserverSelector(setter))
             return <Immutable<T>> setter.setter( 

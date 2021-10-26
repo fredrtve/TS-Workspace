@@ -3,8 +3,9 @@ import { ConstructSliceFromPath, DeepPropsObject, DeepPropType, UnknownState } f
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { DeepRequired } from "ts-essentials";
-import { DynamicForm, FormStateObserverSelector, FormStateSelector, FormStateSelectorFn, ValidControlObject, ValidFormSlice } from "./interfaces";
-import { _createControlField, _createControlArray, _createControlGroup } from "./helpers/type.helpers";
+import { FormStateObserverSelector, FormStateSelector, FormStateSelectorFn } from "../interfaces";
+import { ControlSchemaMap, DynamicForm, ValidControlSchemaMap, ValidFormSlice } from "./interfaces";
+import { _createControlGroup, _createControlArray, _createControlField } from "./type.helpers";
 
 type PickOr<T, P extends keyof T, Else> = T extends never ? Else : P extends never ? Else : Pick<T, P>;
 
@@ -17,7 +18,7 @@ export class DynamicFormBuilder<TForm extends object, TInputState extends object
     bind<TFormSlice extends string, TStateSlice extends keyof TInputState, TReturnValue>(
         formSlice: ValidFormSlice<DeepRequired<TForm>, TFormSlice>[],      
         stateSlice: TStateSlice[],
-        setter: FormStateSelectorFn<DeepPropsObject<ConstructSliceFromPath<TFormSlice, TForm>, TFormSlice>, PickOr<TInputState, TStateSlice, never>, TReturnValue>,
+        setter: FormStateSelectorFn<DeepPropsObject<ConstructSliceFromPath<TFormSlice, TForm>, TFormSlice>, Partial<PickOr<TInputState, TStateSlice, never>>, TReturnValue>,
         onlyOnce?: boolean
     ): FormStateSelector<ConstructSliceFromPath<TFormSlice, TForm>, PickOr<TInputState, TStateSlice, never>, TReturnValue, string, TStateSlice> {
         return { formSlice, stateSlice, setter, onlyOnce }
@@ -26,6 +27,7 @@ export class DynamicFormBuilder<TForm extends object, TInputState extends object
     /** Constructs selectors for TState that resolve to reactive observables. Used to bind options to state. */
     bindState<TSlice extends keyof TInputState>(  
         slice: TSlice,
+        setter?: null,
         onlyOnce?: boolean
     ): FormStateSelector<never, PickOr<TInputState, TSlice, never>, TInputState[TSlice], string, TSlice>    
     bindState<TSlice extends keyof TInputState,  TReturnValue>(  
@@ -38,7 +40,7 @@ export class DynamicFormBuilder<TForm extends object, TInputState extends object
         setter: (state: Pick<TInputState, TSlice>) => TReturnValue,
         onlyOnce?: boolean
     ): FormStateSelector<never, PickOr<TInputState, TSlice, never>, TReturnValue,  string, TSlice>
-    bindState(slice: string | string[], setter?: any, onlyOnce?: boolean): FormStateSelector<never, Partial<TInputState>, any,  string, any> {
+    bindState(slice: any, setter?: any, onlyOnce?: boolean): FormStateSelector<never, any, any,  string, any> {
         if(Array.isArray(slice))
             return { formSlice: [], stateSlice: slice, setter, onlyOnce };
 
@@ -53,6 +55,7 @@ export class DynamicFormBuilder<TForm extends object, TInputState extends object
     /** Constructs selectors for TForm that resolve to reactive observables. Used to bind options to form. */
     bindForm<TSlice extends string>(  
         slice: ValidFormSlice<DeepRequired<TForm>, TSlice>,
+        setter?: null,
         onlyOnce?: boolean
     ): FormStateSelector<ConstructSliceFromPath<TSlice, TForm>, never, DeepPropType<TForm, TSlice, never>, string, never>    
     bindForm<TSlice extends string,  TReturnValue>(  
@@ -97,21 +100,21 @@ export class DynamicFormBuilder<TForm extends object, TInputState extends object
     } 
 
     /** Constructs a type safe {@link DynamicForm}.  */
-    form<TControls extends ValidControlObject<TForm>>(
+    form<TControls extends ValidControlSchemaMap<TForm>>(
         form: DynamicForm<TForm, TInputState, TControls>
     ): DynamicForm<TForm, TInputState, TControls> {
         return form
     }
 
-    /** Create a function for creating type safe {@link DynamicControlGroup} for a specified TGroup. 
-     *  @returns A function that creates type safe {@link DynamicControlGroup} for the specified TGroup
+    /** Create a function for creating type safe {@link ControlGroupSchema} for a specified TGroup. 
+     *  @returns A function that creates type safe {@link ControlGroupSchema} for the specified TGroup
       */
     group = _createControlGroup;
 
-    /** Constructs a type safe {@link DynamicControlArray}.  */
+    /** Constructs a type safe {@link ControlArraySchema}.  */
     array = _createControlArray;
 
-    /** Constructs a type safe {@link DynamicControlField}.  */
+    /** Constructs a type safe {@link ControlFieldSchema}.  */
     field = _createControlField;
 
 }

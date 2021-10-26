@@ -8,7 +8,7 @@ export const UserTimesheetWeekCriteriaFormSheet: Immutable<FormSheetViewConfig<W
         ...WeekCriteriaForm, 
         controls: {
             ...WeekCriteriaForm.controls, 
-            user: { viewComponent: null, required$: true, viewOptions: {} } 
+            user: { required$: true, viewOptions: {} } 
         } 
     },
     navConfig: {title: "Velg filtre"}, 

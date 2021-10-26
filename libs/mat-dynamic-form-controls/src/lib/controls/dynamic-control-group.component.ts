@@ -2,7 +2,8 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, NgModule, ViewChild } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { AllowFormStateSelectors, ControlComponentRenderer, ControlGroupComponent, DynamicControlGroup, DynamicFormsModule, DynamicHostDirective, FormStateResolver, ValidControlObject } from 'dynamic-forms';
+import { AllowFormStateSelectors, ControlComponentRenderer, ControlGroupComponent, DynamicControlMap, DynamicFormsModule, DynamicHostDirective, FormStateResolver } from 'dynamic-forms';
+import { Immutable } from 'global-types';
 import { Observable } from 'rxjs';
 
 export interface DynamicFormGroupOptions { label$?: string }
@@ -32,16 +33,16 @@ export interface DynamicFormGroupOptions { label$?: string }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DynamicControlGroupComponent implements ControlGroupComponent<DynamicFormGroupOptions> {
+export class DynamicControlGroupComponent implements ControlGroupComponent<any, DynamicFormGroupOptions> {
     @ViewChild(DynamicHostDirective, { static: true }) dynamicHost: DynamicHostDirective;
 
-    options$: Observable<DynamicFormGroupOptions>;
+    options$: Observable<Immutable<DynamicFormGroupOptions>>;
 
-    formGroup: FormGroup;
+    formControl: FormGroup;
 
-    viewOptionSelectors: AllowFormStateSelectors<DynamicFormGroupOptions, any, any>
+    viewOptionSelectors: Immutable<AllowFormStateSelectors<DynamicFormGroupOptions, any, any>>
 
-    controls: ValidControlObject<any>
+    controls: Immutable<DynamicControlMap<any, any>>
 
     constructor(
       private controlRenderer: ControlComponentRenderer,
@@ -50,7 +51,7 @@ export class DynamicControlGroupComponent implements ControlGroupComponent<Dynam
 
     ngOnInit(): void {
       this.options$ = this.resolver.resolveSlice$<DynamicFormGroupOptions>(this.viewOptionSelectors); 
-      this.controlRenderer.renderControls(this.controls, this.formGroup, this.dynamicHost.viewContainerRef);
+      this.controlRenderer.renderControls(this.controls, this.formControl, this.dynamicHost.viewContainerRef);
     }
 }
 @NgModule({

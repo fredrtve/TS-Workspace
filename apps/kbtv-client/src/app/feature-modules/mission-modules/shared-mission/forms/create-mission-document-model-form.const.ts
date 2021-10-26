@@ -21,7 +21,7 @@ export const CreateMissionDocumentModelForm: Immutable<ModelFormConfig<ModelStat
     actionConverter: _formToSaveModelFileConverter,
     dynamicForm: builder.form({
         controls: { 
-            missionId:  { viewComponent: null, required$: true, viewOptions: {} },
+            missionId:  { required$: true, viewOptions: {} },
             name: NameControl, 
             fileList: builder.field({
                 viewComponent: FileFieldComponent, required$: true, viewOptions: {},

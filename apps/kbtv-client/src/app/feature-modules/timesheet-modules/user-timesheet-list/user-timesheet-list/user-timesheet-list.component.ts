@@ -9,7 +9,6 @@ import { UserTimesheetModelForm, TimesheetForm, TimesheetFormState, UserTimeshee
 import { _timesheetCriteriaChipsFactory } from "@shared-timesheet/helpers/timesheet-criteria-chips-factory.helper";
 import { UserTimesheetCriteriaFormService } from "@shared-timesheet/timesheet-criteria-form-service";
 import { BottomIconButtons } from "@shared/constants/bottom-icon-buttons.const";
-import { ControlOverridesMap, ValidControlObject } from "dynamic-forms";
 import { Immutable, Maybe } from 'global-types';
 import { ModelFormService } from 'model/form';
 import { Observable } from "rxjs";

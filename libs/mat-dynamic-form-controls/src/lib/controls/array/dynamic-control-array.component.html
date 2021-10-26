@@ -13,7 +13,7 @@
         <mat-icon>add</mat-icon>
     </button>
 </div>
-<ng-container *ngFor="let entry of formArray.controls; index as i">
+<ng-container *ngFor="let entry of formControl.controls; index as i">
     <mat-divider></mat-divider>
     <lib-dynamic-control-array-entry 
         [control]="entry"

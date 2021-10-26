@@ -13,13 +13,13 @@ import { BaseFieldOptions } from './base-field-options.interface';
 export abstract class BaseFieldComponent<TValueType, TOptions extends BaseFieldOptions>
     implements ControlFieldComponent<TValueType, TOptions> {
 
-  formControl: Maybe<GenericAbstractControl<TValueType>>;
+  formControl: GenericAbstractControl<TValueType>;
 
-  viewOptionSelectors: AllowFormStateSelectors<TOptions, any, any>;
+  viewOptionSelectors: Immutable<AllowFormStateSelectors<TOptions, any, any>>;
 
-  requiredSelector?: boolean | FormStateSelector<any, any, boolean | undefined, string, any>;
+  requiredSelector?: Immutable<boolean | FormStateSelector<any, any, boolean | undefined, string, any>>;
 
-  viewOptions?: Immutable<TOptions>;
+  ɵviewOptions?: TOptions;
   
   constructor(
     private resolver: FormStateResolver,
@@ -34,11 +34,11 @@ export abstract class BaseFieldComponent<TValueType, TOptions extends BaseFieldO
     return this.resolver.resolveSlice$(this.viewOptionSelectors)
   }
 
-  resolve$<T>(setter: FormStateSelector<any, any, T, any, any> | T): Observable<Immutable<T>> {
+  resolve$<T>(setter: Immutable<FormStateSelector<any, any, T, any, any> | T>): Observable<Immutable<T>> {
     return this.resolver.resolve$(setter)
   }
 
-  resolveSlice$<T extends object>(setters: AllowFormStateSelectors<T, any,any>): Observable<Immutable<T>> {
+  resolveSlice$<T extends object>(setters: Immutable<AllowFormStateSelectors<T, any,any>>): Observable<Immutable<T>> {
     return this.resolver.resolveSlice$(setters)
   }
 }

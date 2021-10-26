@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewChild } from "@angular/core";
 import { FormArray, FormControl, FormGroup } from "@angular/forms";
-import { ControlArrayEntryProviders, ControlComponentRenderer, ControlFactory, DynamicHostDirective, ValidControl, _addIndexesToTemplate } from "dynamic-forms";
+import { AbstractDynamicControl, ControlArrayEntryProviders, ControlComponentRenderer, ControlFactory, DynamicHostDirective,  FormControlType,  _addIndexesToTemplate } from "dynamic-forms";
+import { Immutable } from "global-types";
 
 @Component({    
     selector: 'lib-dynamic-control-array-entry',
@@ -28,9 +29,9 @@ export class DynamicControlArrayEntryComponent {
 
     @Output() entryRemoved = new EventEmitter<any>();
   
-    @Input() control: FormControl | FormGroup | FormArray;
+    @Input() control: FormControlType<AbstractDynamicControl<any, any, any, any, any>>;
   
-    @Input() config: ValidControl<any>;
+    @Input() config: Immutable<AbstractDynamicControl<any, any, any, any, any>>;
 
     @Input() index: number;
 

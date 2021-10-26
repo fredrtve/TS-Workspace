@@ -5,7 +5,8 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatDividerModule } from "@angular/material/divider";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from "@angular/material/icon";
-import { AllowFormStateSelectors, ControlArrayComponent, ControlFactory, DynamicControlArray, DynamicFormsModule, FormStateResolver, ValidControl } from "dynamic-forms";
+import { AbstractDynamicControl, AllowFormStateSelectors, ControlArrayComponent, ControlFactory, DynamicFormsModule, FormStateResolver } from "dynamic-forms";
+import { Immutable } from "global-types";
 import { Observable } from "rxjs";
 import { DynamicControlArrayEntryComponent } from "./dynamic-control-array-entry.component";
 
@@ -17,15 +18,15 @@ export interface DynamicControlArrayOptions { label$?: string }
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DynamicControlArrayComponent
-    implements ControlArrayComponent<DynamicControlArrayOptions> {
+    implements ControlArrayComponent<any, DynamicControlArrayOptions> {
 
-    formArray: FormArray;
+    formControl: FormArray;
   
-    viewOptionSelectors: AllowFormStateSelectors<DynamicControlArrayOptions, any, any>
+    viewOptionSelectors: Immutable<AllowFormStateSelectors<DynamicControlArrayOptions, any, any>>
 
-    controlTemplate: ValidControl<any>
+    controlTemplate: Immutable<AbstractDynamicControl<any, any, any, any, any>>
 
-    options$: Observable<DynamicControlArrayOptions>;
+    options$: Observable<Immutable<DynamicControlArrayOptions>>;
 
     constructor(
         private controlFactory: ControlFactory,
@@ -37,10 +38,10 @@ export class DynamicControlArrayComponent
     }
 
     addControl(){ 
-        this.formArray.push(this.controlFactory.createControl(this.controlTemplate)); 
+        this.formControl.push(this.controlFactory.createControl(this.controlTemplate)); 
     }
 
-    removeEntry(index: number){ this.formArray.removeAt(index); }
+    removeEntry(index: number){ this.formControl.removeAt(index); }
 }
 @NgModule({
     declarations:[       

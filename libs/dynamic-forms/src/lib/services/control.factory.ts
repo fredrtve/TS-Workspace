@@ -2,25 +2,26 @@ import { Injectable } from "@angular/core";
 import { AbstractControl, AsyncValidatorFn, FormArray, FormControl, FormGroup, ValidatorFn, Validators } from "@angular/forms";
 import { Immutable } from "global-types";
 import { combineLatest } from "rxjs";
-import { AllowFormStateSelectors, ControlOptions, DynamicAbstractGroup, DynamicControlArrayOptions, DynamicControlArray, DynamicControlFieldOptions, FormControlType, ValidControl } from "../interfaces";
 import { _isControlArray, _isControlGroup } from "../helpers/type.helpers";
+import { AbstractDynamicControl, AllowFormStateSelectors, ControlOptions, DynamicControlArray, DynamicControlField, DynamicControlFieldOptions, DynamicControlGroup, FormControlType } from "../interfaces";
 import { FormStateResolver } from "./form-state.resolver";
-import { _addIndexesToTemplate } from "../helpers/add-indexes-to-template.helper";
 
-type ValidGroup = DynamicAbstractGroup<any,any,any> & AllowFormStateSelectors<ControlOptions,any,any>
-type ValidArray = DynamicControlArray<any,any> & AllowFormStateSelectors<DynamicControlArrayOptions,any,any>
+type ValidGroup = DynamicControlGroup<any,any,any,any,any> 
+type ValidArray = DynamicControlArray<any,any,any,any,any> 
+type ValidField = DynamicControlField<any,any,any,any>
+type ValidControl = AbstractDynamicControl<any, any, any, any>
 
 @Injectable()
 export class ControlFactory {
 
     constructor(private resolver: FormStateResolver){}
 
-    createControl<T extends ValidControl<any>>(controlCfg: T, initialValue?: unknown): FormControlType<T> {
+    createControl<T extends ValidControl>(controlCfg: T, initialValue?: unknown): FormControlType<T> {
         return <FormControlType<T>> (
                 _isControlGroup(controlCfg) 
-                    ? this.createControlGroup(controlCfg, initialValue)
+                    ? this.createControlGroup(<any> controlCfg, initialValue)
                 : _isControlArray(controlCfg) 
-                    ? this.createControlArray(controlCfg, <unknown[]> initialValue)
+                    ? this.createControlArray(<any> controlCfg, <unknown[]> initialValue)
                 : new FormControl(initialValue)
         )
     }
@@ -38,7 +39,7 @@ export class ControlFactory {
     }
 
     createControlArray(
-        arrayCfg: Immutable<DynamicControlArray<any,any>>, 
+        arrayCfg: Immutable<ValidArray>, 
         initialValues: any[] = [],
         formArray: FormArray = new FormArray([])
     ): FormArray {
@@ -48,34 +49,34 @@ export class ControlFactory {
         return formArray;
     }
 
-    configureControl<T extends ValidControl<any>>(controlCfg: T, control: FormControlType<T>): FormControlType<T> {
+    configureControl<T extends ValidControl>(controlCfg: T, control: FormControlType<T>): FormControlType<T> {
         return <FormControlType<T>>( 
                 _isControlGroup(controlCfg) 
-                    ? this.configureControlGroup(controlCfg, <FormGroup> control)
+                    ? this.configureControlGroup(<any> controlCfg, <FormGroup> control)
                 : _isControlArray(controlCfg) 
-                    ? this.configureControlArray(controlCfg, <FormArray> control)
-                : this.configureControlField(controlCfg, <FormControl> control)
+                    ? this.configureControlArray(<any> controlCfg, <FormArray><any> control)
+                : this.configureControlField(<any> controlCfg, <FormControl> control)
         )
     }
 
     configureControlGroup(
-        group: ValidGroup, 
+        group: Immutable<ValidGroup>, 
         formGroup: FormGroup
     ): FormGroup {
         this._setCommonOptions(formGroup, group);
         for(const controlName in group.controls){
             const controlCfg = group.controls[controlName];
             if(_isControlGroup(controlCfg))
-                this.configureControlGroup(controlCfg, <FormGroup> formGroup.get(controlName)!)
+                this.configureControlGroup(<any> controlCfg, <FormGroup> formGroup.get(controlName)!)
             else 
-                this.configureControlField(controlCfg, <FormControl> formGroup.get(controlName)!)
+                this.configureControlField(<any> controlCfg, <FormControl> formGroup.get(controlName)!)
             
         }
         return formGroup;
     }
 
     configureControlArray(
-        controlCfg: ValidArray, 
+        controlCfg: Immutable<ValidArray>, 
         control: FormArray, 
     ): FormArray {
         this._setCommonOptions(control, controlCfg);
@@ -83,7 +84,7 @@ export class ControlFactory {
     }
 
     configureControlField(
-        options: AllowFormStateSelectors<DynamicControlFieldOptions, any,any>, 
+        options: Immutable<ValidField>, 
         control: FormControl, 
     ): FormControl {
         const { validators$, required$, ...rest } = options;
@@ -91,8 +92,8 @@ export class ControlFactory {
         else {
             this._setCommonOptions(control, rest);
             combineLatest([
-                this.resolver.resolve$(options.validators$),
-                this.resolver.resolve$(options.required$)
+                this.resolver.resolve$(validators$),
+                this.resolver.resolve$(required$)
             ]).subscribe(([validators, required]) => {
                 control.setValidators(required ? [...validators || [], Validators.required] : <ValidatorFn[]> validators || [])
                 control.updateValueAndValidity();
@@ -102,7 +103,7 @@ export class ControlFactory {
         return control;
     }
 
-    private _setCommonOptions(control: AbstractControl, options: AllowFormStateSelectors<Partial<ControlOptions>, any,any>): void {
+    private _setCommonOptions(control: AbstractControl, options: Immutable<AllowFormStateSelectors<Partial<ControlOptions>, any,any>>): void {
   
         if(options.validators$ !== undefined)
             this.resolver.resolve$(options.validators$).subscribe(validators => {

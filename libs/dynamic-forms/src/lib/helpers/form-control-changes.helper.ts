@@ -1,7 +1,7 @@
-import { AbstractControl, FormGroup } from "@angular/forms";
+import { FormGroup } from "@angular/forms";
 import { DeepPropsObject, Immutable, UnknownState } from "global-types";
-import { combineLatest, Observable, of } from "rxjs";
-import { map, startWith, switchMap } from "rxjs/operators";
+import { combineLatest, Observable } from "rxjs";
+import { map, startWith } from "rxjs/operators";
 
  /** An rxjs operator used to listen to value changes on form controls from a form group
   * @param form - The form group containing the controls
@@ -15,11 +15,9 @@ import { map, startWith, switchMap } from "rxjs/operators";
     const controlListeners: Observable<unknown>[] = [];
     for(const path of paths){
         const fullPath = basePath ? basePath + '.' + path : path;
-        controlListeners.push(of(null).pipe(switchMap(x => {
-            const control = form.get(fullPath);
-            if(control === null) throw new Error(`No control found for path ${fullPath} on form ${form}`);
-            return control.valueChanges.pipe(startWith(control.value))
-        })))
+        const control = form.get(fullPath);
+        if(control === null) throw new Error(`No control found for path ${fullPath} on form ${form}`);
+        controlListeners.push(control.valueChanges.pipe(startWith(control.value)));
     }
     return combineLatest(controlListeners).pipe(map(x => {
         const mappedValues: UnknownState = {};
