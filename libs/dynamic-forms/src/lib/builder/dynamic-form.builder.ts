@@ -42,11 +42,11 @@ export class DynamicFormBuilder<TForm extends object, TInputState extends object
     ): FormStateSelector<never, PickOr<TInputState, TSlice, never>, TReturnValue,  string, TSlice>
     bindState(slice: any, setter?: any, onlyOnce?: boolean): FormStateSelector<never, any, any,  string, any> {
         if(Array.isArray(slice))
-            return { formSlice: [], stateSlice: slice, setter, onlyOnce };
+            return { formSlice: [], stateSlice: slice, setter: (f: any, s: any) => setter(s), onlyOnce };
 
         return { 
             formSlice: [], stateSlice: [slice], onlyOnce, 
-            setter: setter === undefined 
+            setter: (setter === undefined || setter === null)
                 ? (f: any, s: UnknownState) => s[slice] 
                 : (f: any, s: UnknownState) => setter(s[slice])
         }
@@ -74,7 +74,7 @@ export class DynamicFormBuilder<TForm extends object, TInputState extends object
 
         return { 
             stateSlice: [], formSlice: [slice], onlyOnce, 
-            setter: setter === undefined 
+            setter: (setter === undefined || setter === null)
                 ? (f: UnknownState) => f[slice] 
                 : (f: UnknownState) => setter(f[slice])
         }

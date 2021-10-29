@@ -22,9 +22,9 @@ export type HideOnValueChanges<TForm> = {[P in keyof NotNull<TForm>]: (val: TFor
 export type AsyncStateValidator<T> = ((state$: Observable<T>) => AsyncValidatorFn);
 
 export type FormControlType<TControl> =  
-    TControl extends DynamicControlField<any, any, (infer ValueType), any> ? (GenericAbstractControl<ValueType> & FormControl)
-    : TControl extends DynamicControlArray<any,any,any,any,any> ? FormArray 
+    TControl extends DynamicControlArray<any,any,any,any,any> ? FormArray 
     : TControl extends DynamicControlGroup<any,any,any,any,any> ? FormGroup
+    : TControl extends DynamicControlField<any, any, (infer ValueType), any> ? (GenericAbstractControl<ValueType> & FormControl) 
     : FormControl
 
 /** Represents a selector for a slice of form and state */

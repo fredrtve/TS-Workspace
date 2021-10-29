@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, ViewChild } from "@angular/core";
-import { FormGroup } from "@angular/forms";
+import { AbstractControl, FormGroup } from "@angular/forms";
 import { Immutable, Maybe } from "global-types";
 import { DeepPartial } from "ts-essentials";
 import { DynamicForm } from "./builder/interfaces";
@@ -47,9 +47,9 @@ export class DynamicFormComponent<TForm extends object, TInputState extends obje
     ) { }
 
     ngOnInit(): void {
-        this.controlFactory.createControlGroup(this._config!, this.initialValue, this.formGroup);  
+        this.controlFactory.createControl(this._config!, this.initialValue, <any> this.formGroup);  
         this.formStore.form = this.formGroup;
-        this.controlFactory.configureControlGroup(this._config!, this.formGroup);
+        this.controlFactory.configureControl(this._config!, <any> this.formGroup);
         this.controlRenderer.renderControls(this._config!.controls, this.formGroup, this.dynamicHost!.viewContainerRef)
 
         this.cdRef.markForCheck();

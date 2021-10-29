@@ -16,37 +16,14 @@ export class ControlFactory {
 
     constructor(private resolver: FormStateResolver){}
 
-    createControl<T extends ValidControl>(controlCfg: T, initialValue?: unknown): FormControlType<T> {
+    createControl<T extends ValidControl>(controlCfg: T, initialValue?: unknown, control?: FormControlType<T>): FormControlType<T> {
         return <FormControlType<T>> (
                 _isControlGroup(controlCfg) 
-                    ? this.createControlGroup(<any> controlCfg, initialValue)
+                    ? this.createControlGroup(<any> controlCfg, initialValue, <FormGroup> control)
                 : _isControlArray(controlCfg) 
-                    ? this.createControlArray(<any> controlCfg, <unknown[]> initialValue)
-                : new FormControl(initialValue)
+                    ? this.createControlArray(<any> controlCfg, <unknown[]> initialValue, <FormArray> control)
+                : control !== undefined ? control : new FormControl(initialValue)
         )
-    }
-
-    createControlGroup(
-        group: Immutable<ValidGroup>, 
-        initialValue: any = {},
-        formGroup: FormGroup = new FormGroup({})
-    ){
-        for(const controlName in group.controls){
-            const controlCfg = group.controls[controlName];
-            formGroup.addControl(controlName, this.createControl(controlCfg, initialValue[controlName]));
-        }
-        return formGroup;
-    }
-
-    createControlArray(
-        arrayCfg: Immutable<ValidArray>, 
-        initialValues: any[] = [],
-        formArray: FormArray = new FormArray([])
-    ): FormArray {
-        for(const value of initialValues) 
-            formArray.push(this.createControl(arrayCfg.controlTemplate, value));
-
-        return formArray;
     }
 
     configureControl<T extends ValidControl>(controlCfg: T, control: FormControlType<T>): FormControlType<T> {
@@ -59,7 +36,30 @@ export class ControlFactory {
         )
     }
 
-    configureControlGroup(
+    private createControlGroup(
+        group: Immutable<ValidGroup>, 
+        initialValue: any = {},
+        formGroup: FormGroup = new FormGroup({})
+    ){
+        for(const controlName in group.controls){
+            const controlCfg = group.controls[controlName];
+            formGroup.addControl(controlName, this.createControl(controlCfg, initialValue[controlName]));
+        }
+        return formGroup;
+    }
+
+    private createControlArray(
+        arrayCfg: Immutable<ValidArray>, 
+        initialValues: any[] = [],
+        formArray: FormArray = new FormArray([])
+    ): FormArray {
+        for(const value of initialValues) 
+            formArray.push(this.createControl(arrayCfg.controlTemplate, value));
+
+        return formArray;
+    }
+
+    private configureControlGroup(
         group: Immutable<ValidGroup>, 
         formGroup: FormGroup
     ): FormGroup {
@@ -75,7 +75,7 @@ export class ControlFactory {
         return formGroup;
     }
 
-    configureControlArray(
+    private configureControlArray(
         controlCfg: Immutable<ValidArray>, 
         control: FormArray, 
     ): FormArray {
@@ -83,7 +83,7 @@ export class ControlFactory {
         return control;
     }
 
-    configureControlField(
+    private configureControlField(
         options: Immutable<ValidField>, 
         control: FormControl, 
     ): FormControl {

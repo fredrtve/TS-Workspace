@@ -1,10 +1,16 @@
-import { Directive } from "@angular/core";
+import { Component, Directive } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { Immutable } from "global-types";
 import { AllowFormStateSelectors, ControlGroupComponent, DynamicControlMap } from "../lib/interfaces";
 
 export interface TestControlGroupOptions { someOption$: string } ;
-@Directive()
+
+export const TestControlGroupComponentSelector = "test-group-component";
+
+@Component({
+  template: ``,
+  selector: TestControlGroupComponentSelector
+})
 export class TestControlGroupComponent implements ControlGroupComponent<any, TestControlGroupOptions> {
 
   formControl: FormGroup;
@@ -12,6 +18,8 @@ export class TestControlGroupComponent implements ControlGroupComponent<any, Tes
   viewOptionSelectors: Immutable<AllowFormStateSelectors<TestControlGroupOptions, any, any>>;
 
   controls: Immutable<DynamicControlMap<any,any>>
+
+  ɵviewOptions?: TestControlGroupOptions;
 
   constructor() {}
 }

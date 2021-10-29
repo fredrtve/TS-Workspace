@@ -1,5 +1,6 @@
 import { DynamicFormBuilder } from './public-api';
-import { TestFieldComponent } from './test-controls/test-control-field.component';
+import { TestFieldComponent } from './test-assets/test-control-field.component';
+import { TestControlGroupComponent } from './test-assets/test-control-group.component';
 
 
   const builder = new DynamicFormBuilder<{ arr: { nest1: string, nest2: string}[], fun: string}, {state: string[], state2: string}>();
@@ -12,12 +13,13 @@ import { TestFieldComponent } from './test-controls/test-control-field.component
   });
  
   const group = builder.group<{ nest1: string, nest2: string}>()({
+    viewComponent: TestControlGroupComponent,
     disabled$: true,
     controls: {
       nest1: stringControl,
       nest2: stringControl
     },
-    viewOptions: { },
+    viewOptions: { someOption$: ""  },
     overrides: {
       nest1: { disabled$: iBuilder.bindForm("nest1", (arr) => true) }
     }

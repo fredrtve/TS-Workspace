@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { DeepPropsObject, Immutable, UnknownState } from "global-types";
-import { combineLatest, Observable, of, Subject } from "rxjs";
-import { distinctUntilChanged, map, take, takeUntil } from "rxjs/operators";
+import { asapScheduler, combineLatest, Observable, of, Subject } from "rxjs";
+import { debounceTime, distinctUntilChanged, map, take, takeUntil } from "rxjs/operators";
 import { _formControlsChanges$ } from "../helpers/form-control-changes.helper";
 import { AllowFormStateSelectors, FormStateObserverSelector, FormStateSelector } from "../interfaces";
 import { selectState } from "../helpers/select-state.operator";
@@ -44,10 +44,9 @@ export class FormStateResolver {
                 this._resolveFormSlice$(setter.formSlice, setter.baseFormPath), 
                 this._resolveStateSlice$(setter.stateSlice)
             ]).pipe(
-                map(x => {
-                    return <Immutable<T>> setter.setter(<DeepPropsObject<object, string>> x[0], <DeepPropsObject<object, string>> x[1])
-                }),
+                map(x => setter.setter(x[0], x[1])),
                 distinctUntilChanged(),
+                debounceTime(0, asapScheduler), 
                 takeUntil(this.unsubscribeAll$)
             );
 

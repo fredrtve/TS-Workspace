@@ -1,7 +1,7 @@
 import { FormGroup } from "@angular/forms";
 import { DeepPropsObject, Immutable, UnknownState } from "global-types";
-import { combineLatest, Observable } from "rxjs";
-import { map, startWith } from "rxjs/operators";
+import { asapScheduler, combineLatest, Observable } from "rxjs";
+import { debounceTime, distinctUntilChanged, map, startWith } from "rxjs/operators";
 
  /** An rxjs operator used to listen to value changes on form controls from a form group
   * @param form - The form group containing the controls
@@ -17,9 +17,9 @@ import { map, startWith } from "rxjs/operators";
         const fullPath = basePath ? basePath + '.' + path : path;
         const control = form.get(fullPath);
         if(control === null) throw new Error(`No control found for path ${fullPath} on form ${form}`);
-        controlListeners.push(control.valueChanges.pipe(startWith(control.value)));
+        controlListeners.push(control.valueChanges.pipe(startWith(control.value), distinctUntilChanged()));
     }
-    return combineLatest(controlListeners).pipe(map(x => {
+    return combineLatest(controlListeners).pipe(debounceTime(0, asapScheduler), map(x => {
         const mappedValues: UnknownState = {};
         for(let i = 0; i < paths.length; i++){
             mappedValues[paths[i]] = x[i]   

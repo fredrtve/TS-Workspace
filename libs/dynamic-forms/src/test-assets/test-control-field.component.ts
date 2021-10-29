@@ -10,9 +10,11 @@ export interface TestFieldQuestion  {
 
 type ElseString<T> = unknown extends T ? string : T;
 
+export const TestControlFieldComponentSelector = "test-field-component";
+
 @Component({
     template: ``,
-    selector: "test-field-component"
+    selector: TestControlFieldComponentSelector
 })
 export class TestFieldComponent<T> implements ControlFieldComponent<ElseString<T>, TestFieldQuestion> {
    
