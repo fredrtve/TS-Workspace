@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, ViewChild } from "@angular/core";
-import { AbstractControl, FormGroup } from "@angular/forms";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, ViewChild, ViewContainerRef } from "@angular/core";
+import { FormGroup } from "@angular/forms";
 import { Immutable, Maybe } from "global-types";
 import { DeepPartial } from "ts-essentials";
-import { DynamicForm } from "./builder/interfaces";
+import { ControlGroupSchema, ValidControlSchemaMap } from "./builder/interfaces";
 import { _mergeOverridesWithControls } from "./builder/merge-overrides-with-controls.helper";
 import { DynamicHostDirective } from "./dynamic-host.directive";
 import { DynamicControlGroup } from "./interfaces";
@@ -11,7 +11,7 @@ import { ControlFactory } from "./services/control.factory";
 import { DynamicFormStore } from "./services/dynamic-form.store";
 import { FormStateResolver } from "./services/form-state.resolver";
 
-@Component({    
+@Component({
     selector: 'lib-dynamic-form',
     template: `
         <ng-container *dynamicHost>
@@ -31,7 +31,7 @@ export class DynamicFormComponent<TForm extends object, TInputState extends obje
 
     private _config?: Immutable<DynamicControlGroup<TForm, TInputState, TForm, any, any>>;
     @Input('config') 
-    set config(value: Immutable<DynamicForm<TForm, TInputState>>) {
+    set config(value: Immutable<ControlGroupSchema<TForm, TInputState, ValidControlSchemaMap<TForm, any>,any>>) {
         this._config = {...value, viewOptions: {}, controls: _mergeOverridesWithControls(value.controls, value.overrides)}
     }
 
@@ -43,14 +43,16 @@ export class DynamicFormComponent<TForm extends object, TInputState extends obje
         private cdRef: ChangeDetectorRef,
         private controlFactory: ControlFactory,
         private controlRenderer: ControlComponentRenderer,
-        private formStore: DynamicFormStore<TInputState>,
+        private formStore: DynamicFormStore<TInputState>
     ) { }
 
     ngOnInit(): void {
         this.controlFactory.createControl(this._config!, this.initialValue, <any> this.formGroup);  
         this.formStore.form = this.formGroup;
         this.controlFactory.configureControl(this._config!, <any> this.formGroup);
-        this.controlRenderer.renderControls(this._config!.controls, this.formGroup, this.dynamicHost!.viewContainerRef)
+        this.controlRenderer.renderControl<DynamicControlGroup<TForm, TInputState, TForm, any, any>>(
+            this._config!, this.formGroup, this.dynamicHost!.viewContainerRef
+        )
 
         this.cdRef.markForCheck();
     }

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { DynamicForm } from 'dynamic-forms';
+import { ControlGroupSchema } from 'dynamic-forms';
 import { Immutable } from 'global-types';
 import { _hasSameState } from 'global-utils';
 import { Observable } from 'rxjs';
@@ -9,7 +9,7 @@ import { DeepPartial } from 'ts-essentials';
 import { FormCanceledByUserEvent } from '../form-canceled-by-user-event.const';
 import { FormActionsOptions } from '../interfaces';
 
-/** Responsible for rendering a dynamic form with a {@link DynamicForm} configuration. */
+/** Responsible for rendering a dynamic form with a {@link ControlGroupSchema} configuration. */
 @Component({
   selector: 'lib-form-sheet',
   templateUrl: './form-sheet.component.html',
@@ -20,7 +20,7 @@ export class FormSheetComponent<TForm extends object, TInputState extends object
     @Input() inputState: Immutable<TInputState>;
     @Input() initialValue: Immutable<DeepPartial<TForm>>;
 
-    @Input() formConfig: Immutable<DynamicForm<TForm, TInputState>>; 
+    @Input() formConfig: Immutable<ControlGroupSchema<TForm, TInputState, any, any>>; 
     @Input() actionConfig: Immutable<FormActionsOptions<TForm>>;
     @Input() formClass: string | undefined;
 

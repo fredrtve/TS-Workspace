@@ -28,6 +28,8 @@ export class DynamicControlArrayComponent
 
     options$: Observable<Immutable<DynamicControlArrayOptions>>;
 
+    ɵviewOptions?: DynamicControlArrayOptions
+
     constructor(
         private controlFactory: ControlFactory,
         private resolver: FormStateResolver

@@ -17,7 +17,7 @@ describe("Add indexes to template", () => {
             },
         });
         const withIndexes = _addIndexesToTemplate(template, 1);
-        expect((<any> withIndexes.viewOptions.testOption$).baseFormPath).toEqual("test.1")
+        expect(((<any> withIndexes.viewOptions).testOption$).baseFormPath).toEqual("test.1")
         expect((<any> withIndexes.controls.nested1.disabled$).baseFormPath).toEqual("test.1")
     })
 

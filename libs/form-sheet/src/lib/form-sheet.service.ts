@@ -25,7 +25,7 @@ export class FormService {
    */
   open<
     TForm extends object, 
-    TInputState extends object = never, 
+    TInputState extends object = {}, 
     TCustomResults = never
   >(
     view: Immutable<FormSheetViewConfig<TForm, TInputState>>, 

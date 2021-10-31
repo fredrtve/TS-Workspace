@@ -100,7 +100,8 @@ const hideDateRangeOnCustom = userBuilder.bindForm("dateRangePreset",
 
 const onDateRangeCustom = userBuilder.bindForm("dateRangePreset", (preset) => preset === DateRangePresets.Custom);
 
-const UserTimesheetCriteriaForm = userBuilder.form({
+const UserTimesheetCriteriaForm = userBuilder.group()({
+    viewOptions:{}, viewComponent: null,
     controls: CommonControls,
     overrides:{
         ...CommonOptions, 
@@ -121,7 +122,8 @@ export const UserTimesheetCriteriaFormSheet: Immutable<FormSheetViewConfig<UserT
 }
 
 const builder = new DynamicFormBuilder<TimesheetCriteriaForm, TimesheetCriteriaFormState>();
-const TimesheetCriteriaForm = builder.form({
+const TimesheetCriteriaForm = builder.group()({
+    viewOptions:{}, viewComponent: null,
     controls: {
         user: UserSelectControl,
         ...CommonControls,

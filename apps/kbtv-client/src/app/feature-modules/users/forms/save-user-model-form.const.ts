@@ -46,7 +46,8 @@ export const UserModelForm: Immutable<ModelFormConfig<FormState, User,  SaveUser
     includes: {prop: "users", includes: ["employer"]}, 
     actionConverter: _userFormToSaveUserConverter,
     actionOptions: { getRawValue: true },
-    dynamicForm: builder.form({
+    dynamicForm: builder.group()({
+        viewOptions: {}, viewComponent: null,
         controls: {
             userName: UserNameControl,
             password: PasswordControl,

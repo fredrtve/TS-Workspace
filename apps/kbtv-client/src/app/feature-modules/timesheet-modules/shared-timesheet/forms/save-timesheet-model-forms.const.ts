@@ -115,7 +115,8 @@ export const UserTimesheetModelForm: Immutable<ModelFormConfig<StateUserTimeshee
     actionConverter: _userTimesheetFormToSaveModelConverter,
     modelConverter: _modelToForm,
     actionOptions: { getRawValue: true },
-    dynamicForm: userBuilder.form({
+    dynamicForm: userBuilder.group()({
+        viewOptions: {},
         controls: CommonControls,
         overrides: CommonOptions
     })
@@ -128,7 +129,8 @@ export const TimesheetModelForm: Immutable<ModelFormConfig<StateTimesheets & Sta
     actionConverter: _timesheetFormToSaveModelConverter,
     modelConverter: _modelToForm,
     actionOptions: { getRawValue: true },
-    dynamicForm: builder.form({
+    dynamicForm: builder.group()({
+        viewOptions: {},
         controls: {
             ...CommonControls,
             user: UserSelectControl,

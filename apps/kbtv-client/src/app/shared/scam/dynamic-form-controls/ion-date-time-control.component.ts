@@ -81,7 +81,6 @@ export class IonDateControlComponent<T = string> extends BaseFieldComponent<T, I
     @Inject(VALIDATION_ERROR_MESSAGES) @Optional() validationErrorMessages?: ValidationErrorMap
   ) { 
       super(resolver, validationErrorMessages);
-      console.log(this.defaultMax, this.defaultMin)
   }
 
   onControlInit(): void {

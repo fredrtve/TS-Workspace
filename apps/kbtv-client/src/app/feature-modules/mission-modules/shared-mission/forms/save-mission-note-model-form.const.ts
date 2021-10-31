@@ -7,10 +7,11 @@ import { TextAreaFieldComponent, InputFieldComponent } from 'mat-dynamic-form-co
 import { DynamicFormBuilder } from 'dynamic-forms';
 import { Immutable } from 'global-types';
 import { ModelFormConfig } from 'model/form';
+import { StateMissionNotes } from '@core/state/global-state.interfaces';
 
 export type SaveMissionNoteForm = Pick<MissionNote, "title" | "content" | "missionId" | "id">;
 
-const builder = new DynamicFormBuilder<SaveMissionNoteForm, ModelState>();
+const builder = new DynamicFormBuilder<SaveMissionNoteForm, StateMissionNotes>();
 
 const TitleControl = builder.field({ 
     viewComponent: InputFieldComponent,
@@ -24,10 +25,11 @@ const ContentControl = builder.field({
     validators$: [Validators.maxLength(ValidationRules.MissionNoteContentMaxLength)] 
 })
 
-export const MissionNoteModelForm: Immutable<ModelFormConfig<ModelState, MissionNote, SaveMissionNoteForm>> = {
+export const MissionNoteModelForm: Immutable<ModelFormConfig<StateMissionNotes, MissionNote, SaveMissionNoteForm>> = {
     includes: {prop: "missionNotes"}, 
     actionConverter: _appFormToSaveModelConverter,
-    dynamicForm: builder.form({
+    dynamicForm: builder.group()({
+        viewOptions:{}, viewComponent: null,
         controls: {
             title: TitleControl, 
             content: ContentControl, 

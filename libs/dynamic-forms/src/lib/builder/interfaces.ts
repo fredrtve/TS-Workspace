@@ -1,4 +1,5 @@
-import { DeepPropType, NotNull } from "global-types";
+import { Type } from "@angular/core";
+import { DeepPropType, Maybe, NotNull } from "global-types";
 import { 
     AbstractDynamicControl, AllowFormStateSelectors, ControlArrayComponent, ControlComponent, 
     ControlFieldComponent, ControlGroupComponent, ControlOptions, DefaultControlArrayComponentOptions, 
@@ -15,25 +16,27 @@ export type ValidFormSlice<TForm, TSlice extends string> = keyof {
 } extends never ? TSlice : never;  
 
 /** Represents a map of properties from TForm with an associated control */
-export type ValidControlSchemaMap<TForm extends object> = { [P in keyof TForm]: ValidControlSchema<TForm[P]> }
+export type ValidControlSchemaMap<TForm extends object, TInputState extends object> = { [P in keyof TForm]: ValidControlSchema<TForm[P], TInputState> }
 
 /** Represents valid controls for TValueType */
-export type ValidControlSchema<TValueType> = 
-        ControlFieldSchema<TValueType, ControlFieldComponent<TValueType, any> | null> | 
+export type ValidControlSchema<TValueType, TInputState extends object> = 
+        ControlFieldSchema<TValueType, Type<ControlFieldComponent<TValueType, any>> | undefined> | 
         ControlArraySchema<
-            TValueType extends (infer V)[] ? ValidControlSchema<V> : never, 
-            ControlArrayComponent<any, any> | null
+            Partial<TInputState>,
+            TValueType extends (infer V)[] ? ValidControlSchema<V, Partial<TInputState>> : never, 
+            Type<ControlArrayComponent<any, any>> | undefined
         > | 
         ControlGroupSchema<
-            TValueType extends object ? NotNull<TValueType> : never, 
-            ValidControlSchemaMap<TValueType extends object ? NotNull<TValueType> : never>,
-            ControlGroupComponent<any, any> | null
+            TValueType extends object ? NotNull<TValueType> : never,  
+            Partial<TInputState>,
+            ValidControlSchemaMap<TValueType extends object ? NotNull<TValueType> : never, TInputState>,
+            Maybe<Type<ControlGroupComponent<any, any>>>
         >;
 
 /** Represents a map of properties from TForm with an associated control schema */
 export type ControlSchemaMap<TForm extends object> = { 
     [P in keyof TForm]: 
-        AbstractDynamicControl<TForm[P] extends object ? TForm[P] : never,  never, TForm[P], ControlComponent<TForm[P], any> | null, any> 
+        AbstractDynamicControl<TForm[P] extends object ? TForm[P] : never,  never, TForm[P], Maybe<Type<ControlComponent<TForm[P], any>>>, any> 
 }
 
 export type DynamicControlMapFromSchema<TForm extends object, TInputState extends object, TMap extends ControlSchemaMap<any>> = {
@@ -41,49 +44,37 @@ export type DynamicControlMapFromSchema<TForm extends object, TInputState extend
 } 
 
 export type ConvertSchemaToControl<TForm extends object, TInputState extends object, TSchema> = 
-    TSchema extends ControlGroupSchema<(infer ValueType),(infer ControlMap),(infer Component)>
+    TSchema extends ControlGroupSchema<(infer ValueType), any, (infer ControlMap),(infer Component)>
         ? DynamicControlGroup<TForm, TInputState, ValueType, DynamicControlMapFromSchema<TForm, TInputState, ControlMap>, Component>
-    : TSchema extends ControlArraySchema<(infer Template), (infer Component)> 
+    : TSchema extends ControlArraySchema<TInputState, (infer Template), (infer Component)> 
         ? DynamicControlArray<TForm, TInputState, any[], Template, Component>
     : TSchema extends ControlFieldSchema<(infer ValueType), (infer Component)>
         ? DynamicControlField<TForm, TInputState, ValueType, Component>
     : never;
 
-/** Describes a form that can render dynamically with the {@link DynamicFormComponent}
- *  Creates a reactive form with visible fields to change the values of the form. 
- *  @see {@link https://angular.io/guide/reactive-forms} */
-export interface DynamicForm<
-    TForm extends object, 
-    TInputState extends object, 
-    TControls extends ValidControlSchemaMap<TForm> = ValidControlSchemaMap<TForm>
-> extends AllowFormStateSelectors<ControlOptions, TForm, TInputState> { 
-    /** The form controls that make up the group */
-    controls: TControls
-    /** Override control options statically or dynamically from state or form */
-    overrides?: ControlOverridesMap<TForm, TInputState, TControls>
-} 
-
 /** Represents a group of controls, and relationships between them. */
 export interface ControlGroupSchema<
     TValueType extends object, 
-    TControls extends ValidControlSchemaMap<TValueType>,
-    TGroupComponent extends ControlGroupComponent<TValueType, any> | null = null,
-> extends DynamicControlGroup<TValueType, never, TValueType, TControls, TGroupComponent>,
-          ControlGroupOverridables<TValueType, never, TControls, GetViewOptionsFromComponent<TGroupComponent, DefaultControlGroupComponentOptions>> {}
+    TInputState extends object,
+    TControls extends ValidControlSchemaMap<TValueType, TInputState>,
+    TGroupComponent extends Maybe<Type<ControlGroupComponent<TValueType, any>>>,
+> extends DynamicControlGroup<TValueType, TInputState, TValueType, TControls, TGroupComponent>,
+          ControlGroupOverridables<TValueType, TInputState, TControls, GetViewOptionsFromComponent<TGroupComponent, DefaultControlGroupComponentOptions>> {}
 
 /** Represents a group of controls, and relationships between them. */
 export interface ControlArraySchema<
-    TTemplate extends AbstractDynamicControl<any, any, any, any, any>,
-    TArrayComponent extends ControlArrayComponent<GetValueTypeFromControl<TTemplate>, any> | null = null,
-> extends ControlArrayOverridables<GetValueTypeFromControl<TTemplate>, never, TTemplate, GetViewOptionsFromComponent<TArrayComponent, DefaultControlArrayComponentOptions>>, 
-          DynamicControlArray<GetValueTypeFromControl<TTemplate>, never, GetValueTypeFromControl<TTemplate>, TTemplate, TArrayComponent> {}
+    TInputState extends object,
+    TTemplate extends AbstractDynamicControl<any, TInputState, any, any, any>,
+    TArrayComponent extends Type<ControlArrayComponent<GetValueTypeFromControl<TTemplate>, any>> | undefined = undefined,
+> extends DynamicControlArray<GetValueTypeFromControl<TTemplate>, TInputState, GetValueTypeFromControl<TTemplate>, TTemplate, TArrayComponent> ,
+          ControlArrayOverridables<GetValueTypeFromControl<TTemplate>, TInputState, TTemplate, GetViewOptionsFromComponent<TArrayComponent, DefaultControlArrayComponentOptions>>{}
 
 /** Describes the rendering, value and validation of an form control field */
 export interface ControlFieldSchema<
     TValueType, 
-    TControlComponent extends ControlFieldComponent<TValueType, any> | null = null
-> extends DynamicControlField<never, never, TValueType, TControlComponent>, 
-          ControlFieldOverridables<never, never, GetViewOptionsFromComponent<TControlComponent>> {}
+    TControlComponent extends Type<ControlFieldComponent<TValueType, any>> | undefined = undefined
+> extends DynamicControlField<never, {}, TValueType, TControlComponent>, 
+          ControlFieldOverridables<never, {}, GetViewOptionsFromComponent<TControlComponent>> {}
 
 
 /** Represents a map of controls and their configurable properties, allowing form state selectors. */
@@ -96,7 +87,7 @@ export type ControlOverridesMap<
             ? ControlFieldOverrides<TForm, TInputState, TControls[P]>
         : TControls[P] extends ControlArraySchema<any,any> 
             ? ControlArrayOverrides<TForm, TInputState, TControls[P]> 
-        : TControls[P] extends ControlGroupSchema<any, any, any> 
+        : TControls[P] extends ControlGroupSchema<any, any, any, any> 
             ? ControlGroupOverrides<TForm, TInputState, TControls[P]>
         : ControlFieldOverrides<TForm, TInputState, any>
 }
@@ -110,7 +101,7 @@ export type ControlOverrides<
         ? ControlFieldOverrides<TForm, TInputState, TControl>
     : TControl extends ControlArraySchema<any,any> 
         ? ControlArrayOverrides<TForm, TInputState, TControl> 
-    : TControl extends ControlGroupSchema<any, any, any> 
+    : TControl extends ControlGroupSchema<any, any, any, any> 
         ? ControlGroupOverrides<TForm, TInputState, TControl>
     : ControlFieldOverrides<TForm, TInputState, any>
 
@@ -118,7 +109,7 @@ export type ControlOverrides<
 export type ControlGroupOverrides<
     TForm extends object, 
     TInputState extends object, 
-    TGroup extends ControlGroupSchema<any, any, any>
+    TGroup extends ControlGroupSchema<any, any, any, any>
 > = Partial<ControlGroupOverridables<TForm, TInputState, TGroup["controls"], Partial<GetViewOptionsFromControl<TGroup>>>>
 
 /** Represents an object of configurable properties on TGroup, allowing form state selectors. */

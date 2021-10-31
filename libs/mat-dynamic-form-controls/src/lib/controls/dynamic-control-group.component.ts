@@ -44,9 +44,11 @@ export class DynamicControlGroupComponent implements ControlGroupComponent<any, 
 
     controls: Immutable<DynamicControlMap<any, any>>
 
+    ɵviewOptions?: DynamicFormGroupOptions
+    
     constructor(
       private controlRenderer: ControlComponentRenderer,
-      private resolver: FormStateResolver,
+      private resolver: FormStateResolver
     ) {}
 
     ngOnInit(): void {

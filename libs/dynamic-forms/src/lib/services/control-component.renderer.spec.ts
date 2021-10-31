@@ -122,7 +122,7 @@ describe("Control Component Renderer", () => {
     it('should render control array with specified component & properties set & default class', () => {
         fixture = getFixture();
         let { renderer, vcRef } = fixture.componentInstance;
-        const testArr = _createControlArray({
+        const testArr = _createControlArray<any>()({
             viewComponent:  TestControlArrayComponent,
             controlTemplate: _createControlField({ viewOptions: {} }),
             viewOptions: { someOption$: "something" },
@@ -145,7 +145,7 @@ describe("Control Component Renderer", () => {
         });
         fixture = getFixture();
         let { renderer, vcRef } = fixture.componentInstance;
-        const testArr = _createControlArray({ viewOptions: { testOption$: "" }, controlTemplate: <any>{} });
+        const testArr = _createControlArray<any>()({ viewOptions: { testOption$: "" }, controlTemplate: <any>{} });
         let compRef = renderer.renderControl(testArr, new FormArray([]), vcRef);
         expect(compRef!.componentType).toBe(TestControlArrayComponent);
     })
@@ -153,7 +153,7 @@ describe("Control Component Renderer", () => {
     it('should throw error if no array component specified', () => {
         fixture = getFixture();
         let { renderer, vcRef } = fixture.componentInstance;
-        const testArr = _createControlArray({ viewOptions: { testOption$: "" }, controlTemplate: <any>{} });
+        const testArr = _createControlArray<any>()({ viewOptions: { testOption$: "" }, controlTemplate: <any>{} });
         const action = () => renderer.renderControl(testArr, new FormArray([]), vcRef);;
         expect(action).toThrowError();
     })
@@ -169,7 +169,7 @@ describe("Control Component Renderer", () => {
                 group: _createControlGroup<{field: string}>()({ 
                     viewComponent: TestControlGroupComponent, viewOptions: { someOption$: "" }, controls: { field: stringField}
                 }),
-                arr: _createControlArray({ viewComponent: TestControlArrayComponent, controlTemplate: stringField, viewOptions: { someOption$: "" }})
+                arr: _createControlArray<{}>()({ viewComponent: TestControlArrayComponent, controlTemplate: stringField, viewOptions: { someOption$: "" }})
             },
         });
 

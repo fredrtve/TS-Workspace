@@ -15,7 +15,8 @@ const builder = new DynamicFormBuilder<InboundEmailPassword, ModelState>()
 export const InboundEmailPasswordModelForm: Immutable<ModelFormConfig<ModelState, InboundEmailPassword, CreateInboundEmailPasswordForm>> = {
     includes: {prop: "inboundEmailPasswords"},
     actionConverter: _appFormToSaveModelConverter,
-    dynamicForm: builder.form({
+    dynamicForm: builder.group()({
+        viewOptions:{}, viewComponent: null,
         controls: { 
             password: builder.field({
                 viewComponent: InputFieldComponent, required$: true,   

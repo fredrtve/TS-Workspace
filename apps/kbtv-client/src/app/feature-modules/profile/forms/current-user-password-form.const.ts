@@ -8,7 +8,8 @@ export interface CurrentUserPasswordForm { oldPassword: string, newPassword: str
 
 const builder = new DynamicFormBuilder<CurrentUserPasswordForm>();
 
-const CurrentUserPasswordForm = builder.form({  
+const CurrentUserPasswordForm = builder.group()({ 
+    viewOptions:{}, viewComponent: null, 
     validators$: [ 
         isSamePasswordsValidator<CurrentUserPasswordForm>("newPassword", "confirmPassword") 
     ],

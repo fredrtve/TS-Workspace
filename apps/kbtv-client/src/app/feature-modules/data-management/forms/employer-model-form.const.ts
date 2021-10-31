@@ -13,7 +13,8 @@ const builder = new DynamicFormBuilder<Employer, ModelState>()
 export const EmployerModelForm: Immutable<ModelFormConfig<ModelState, Employer>> = {
     includes: {prop: "employers"},
     actionConverter: _appFormToSaveModelConverter,
-    dynamicForm: builder.form({
+    dynamicForm: builder.group()({
+        viewOptions: {},
         controls: {
             name: NameControl, 
             phoneNumber: PhoneNumberControl, 

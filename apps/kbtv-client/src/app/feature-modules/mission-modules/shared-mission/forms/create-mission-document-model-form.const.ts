@@ -19,7 +19,8 @@ const builder = new DynamicFormBuilder<CreateMissionDocumentForm, ModelState>();
 export const CreateMissionDocumentModelForm: Immutable<ModelFormConfig<ModelState, MissionDocument, CreateMissionDocumentForm>> = {
     includes: { prop: "missionDocuments" }, 
     actionConverter: _formToSaveModelFileConverter,
-    dynamicForm: builder.form({
+    dynamicForm: builder.group()({
+        viewOptions:{}, viewComponent: null,
         controls: { 
             missionId:  { required$: true, viewOptions: {} },
             name: NameControl, 

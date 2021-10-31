@@ -1,7 +1,6 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewChild } from "@angular/core";
-import { FormArray, FormControl, FormGroup } from "@angular/forms";
-import { AbstractDynamicControl, ControlArrayEntryProviders, ControlComponentRenderer, ControlFactory, DynamicHostDirective,  FormControlType,  _addIndexesToTemplate } from "dynamic-forms";
-import { Immutable } from "global-types";
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, Type, ViewChild } from "@angular/core";
+import { AbstractDynamicControl, ControlArrayEntryProviders, ControlComponent, ControlComponentRenderer, ControlFactory, DynamicHostDirective, FormControlType, _addIndexesToTemplate } from "dynamic-forms";
+import { Immutable, Maybe } from "global-types";
 
 @Component({    
     selector: 'lib-dynamic-control-array-entry',
@@ -31,13 +30,13 @@ export class DynamicControlArrayEntryComponent {
   
     @Input() control: FormControlType<AbstractDynamicControl<any, any, any, any, any>>;
   
-    @Input() config: Immutable<AbstractDynamicControl<any, any, any, any, any>>;
+    @Input() config: Immutable<AbstractDynamicControl<any, any, any, Maybe<Type<ControlComponent<any, any>>>, any>>;
 
     @Input() index: number;
 
     constructor(
         private controlFactory: ControlFactory,
-        private controlRenderer: ControlComponentRenderer,
+        private controlRenderer: ControlComponentRenderer
     ) { }
 
     ngOnInit(): void {

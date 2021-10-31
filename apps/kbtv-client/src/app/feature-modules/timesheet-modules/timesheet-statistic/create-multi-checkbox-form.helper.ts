@@ -1,5 +1,5 @@
 import { CheckboxFieldComponent } from 'mat-dynamic-form-controls';
-import { DynamicForm, DynamicFormBuilder, _createControlField } from 'dynamic-forms';
+import { ControlGroupSchema, DynamicFormBuilder, _createControlField } from 'dynamic-forms';
 import { Immutable, Prop, UnknownState } from 'global-types';
 
 export interface MultiCheckboxForm<TState> { selections: Record<Prop<TState>, boolean> }
@@ -9,8 +9,8 @@ export interface KeyOptions<TState = UnknownState> { key: Prop<TState>, text: st
 
 export function _createMultiCheckboxForm<TState extends object = object>(
     keys: KeyOptions<TState>[], 
-    baseForm?: Partial<Omit<DynamicForm<MultiCheckboxForm<TState>, never>, "controls">>
-): Immutable<DynamicForm<MultiCheckboxForm<TState>, never>> {
+    baseForm?: Partial<Omit<ControlGroupSchema<MultiCheckboxForm<TState>, {}, any,any>, "controls">>
+): Immutable<ControlGroupSchema<MultiCheckboxForm<TState>, {}, any, null>> {
 
     let controls: Record<string, object> =  { }
 
@@ -27,15 +27,17 @@ export function _createMultiCheckboxForm<TState extends object = object>(
     
     const builder = new DynamicFormBuilder<MultiCheckboxForm<TState>>();
 
-    return <Immutable<DynamicForm<MultiCheckboxForm<TState>, never>>> builder.form({
+    return <Immutable<ControlGroupSchema<MultiCheckboxForm<TState>, {}, any, null>>> builder.group()({
         controls: {
             selections: {
                 controls: <any> controls,
                 viewOptions: { label$: "Velg kolonner", },
                 controlClass$: "multi-checkbox-group",
             } 
-        },    
+        },  
+        viewOptions:{},  
+        viewComponent: null,
         overrides:{},
-        ...(baseForm || {}),
+        ...(<any> baseForm || {}),
     });
 }

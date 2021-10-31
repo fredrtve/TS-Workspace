@@ -50,7 +50,7 @@ describe("Control Component Renderer", () => {
         const initialValue = [ {test: "value1"}, {test: "value2"} ]; 
         const controlFieldCfg = _createControlField({ viewOptions: {} });
         const controlGrpCfg = _createControlGroup<any>()({ controls: { test: controlFieldCfg }, viewOptions: {} })
-        const controlCfg = _createControlArray({ controlTemplate: controlGrpCfg, viewOptions: { testOption$: "" } });
+        const controlCfg = _createControlArray<any>()({ controlTemplate: controlGrpCfg, viewOptions: { testOption$: "" } });
         const control = factory.createControl(controlCfg, initialValue);
 
         assertCreateControl(control, FormArray, initialValue);
@@ -70,7 +70,7 @@ describe("Control Component Renderer", () => {
         const controlFieldCfg = _createControlField({ viewOptions: {} });
         const controlCfg = _createControlGroup<typeof initialValue>()({ viewOptions: {}, controls: { 
             testField: controlFieldCfg,
-            testArr: _createControlArray({ controlTemplate: controlFieldCfg, viewOptions: { testOption$: "" } }),
+            testArr: _createControlArray<{}>()({ controlTemplate: controlFieldCfg, viewOptions: { testOption$: "" } }),
             testGrp: _createControlGroup<any>()({ controls: { test: controlFieldCfg }, viewOptions: {} }) 
         }});
 

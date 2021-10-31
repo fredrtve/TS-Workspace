@@ -1,4 +1,4 @@
-import { DynamicForm } from 'dynamic-forms';
+import { ControlGroupSchema } from 'dynamic-forms';
 import { FormActionsOptions } from 'form-sheet';
 import { Immutable, Maybe } from 'global-types';
 import { RelationInclude, StateModels, StatePropByModel } from 'model/core';
@@ -31,7 +31,7 @@ export interface ModelFormConfig<
     TInputState extends object = {}>
 {    
     /** The form being used */
-    dynamicForm: DynamicForm<TForm, TState & TInputState>;
+    dynamicForm: ControlGroupSchema<TForm, TState & TInputState, any, any>;
     /** Configure what relational state that will be mapped to entity and included in form state. */
     includes: RelationInclude<TState, TModel>
     /** Configure actions on the form */
@@ -44,7 +44,7 @@ export interface ModelFormConfig<
 }
 
 /** Represents a configuration object for the model form service. */
-export interface ModelFormServiceOptions<TInputState extends object = never, TForm extends object = object> {
+export interface ModelFormServiceOptions<TInputState extends object = {}, TForm extends object = object> {
     /** Additional form state that should be merged with model state */ 
     inputState?: Immutable<TInputState> | Observable<Immutable<TInputState>>,
     /** If set to false, the delete option will not be displayed. */

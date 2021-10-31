@@ -13,7 +13,8 @@ const builder = new DynamicFormBuilder<MissionType, ModelState>();
 export const MissionTypeModelForm: Immutable<ModelFormConfig<ModelState, MissionType, CreateMissionTypeForm>> = {
     includes: {prop: "missionTypes"}, 
     actionConverter: _appFormToSaveModelConverter,
-    dynamicForm: builder.form({
+    dynamicForm: builder.group()({
+        viewOptions:{}, viewComponent: null,
         controls: { name: NameControl },
         overrides: {
             name: { required$: true, }

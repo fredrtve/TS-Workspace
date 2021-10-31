@@ -4,15 +4,15 @@ import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { DeepRequired } from "ts-essentials";
 import { FormStateObserverSelector, FormStateSelector, FormStateSelectorFn } from "../interfaces";
-import { ControlSchemaMap, DynamicForm, ValidControlSchemaMap, ValidFormSlice } from "./interfaces";
-import { _createControlGroup, _createControlArray, _createControlField } from "./type.helpers";
+import { ValidFormSlice } from "./interfaces";
+import { _createControlArray, _createControlField, _createControlGroup } from "./type.helpers";
 
 type PickOr<T, P extends keyof T, Else> = T extends never ? Else : P extends never ? Else : Pick<T, P>;
 
 /** Responsible for constructing type safe forms for a given TForm and TInputState. 
  *  @remarks Does not perform runtime checks, primarily used for type safe compilation. 
  */
-export class DynamicFormBuilder<TForm extends object, TInputState extends object = never> {
+export class DynamicFormBuilder<TForm extends object, TInputState extends object = {}> {
 
     /** Constructs selectors for TForm and TState that resolve to reactive observables. Used to bind options to form or state. */
     bind<TFormSlice extends string, TStateSlice extends keyof TInputState, TReturnValue>(
@@ -98,21 +98,16 @@ export class DynamicFormBuilder<TForm extends object, TInputState extends object
             setter: (state$: Observable<UnknownState>) => setter(state$.pipe(map(x => x[slice])))
         }
     } 
-
-    /** Constructs a type safe {@link DynamicForm}.  */
-    form<TControls extends ValidControlSchemaMap<TForm>>(
-        form: DynamicForm<TForm, TInputState, TControls>
-    ): DynamicForm<TForm, TInputState, TControls> {
-        return form
-    }
-
+    
     /** Create a function for creating type safe {@link ControlGroupSchema} for a specified TGroup. 
      *  @returns A function that creates type safe {@link ControlGroupSchema} for the specified TGroup
       */
-    group = _createControlGroup;
+    group<TGroup extends object = TForm>(){
+        return _createControlGroup<TGroup, TInputState>()
+    };
 
     /** Constructs a type safe {@link ControlArraySchema}.  */
-    array = _createControlArray;
+    array = _createControlArray<TInputState>();
 
     /** Constructs a type safe {@link ControlFieldSchema}.  */
     field = _createControlField;

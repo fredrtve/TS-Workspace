@@ -1,11 +1,11 @@
 import { Type } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, FormArray, FormControl, FormGroup, ValidatorFn } from '@angular/forms';
-import { DeepPropsObject, DeepPropType, Immutable, NotNull } from 'global-types';
+import { DeepPropsObject, DeepPropType, Immutable, Maybe, NotNull } from 'global-types';
 import { Observable } from 'rxjs';
 import { DeepPartial } from 'ts-essentials';
 
 export type GetControlFieldReturnValue<T> = T extends ControlFieldComponent<(infer V), any> ? V : never;
-export type GetViewOptionsFromComponent<T, Else = never> = T extends ControlComponent<any, (infer Q)> ? Q : Else;
+export type GetViewOptionsFromComponent<T, Else = never> = T extends null ? {} : T extends Type<ControlComponent<any, (infer Q)>> ? Q : Else;
 export type GetValueTypeFromControl<T> = T extends AbstractDynamicControl<any, any, (infer V), any,any> ? V : never;
 export type GetViewOptionsFromControl<T> = T extends AbstractDynamicControl<any, any, any, (infer C), (infer D)> ? GetViewOptionsFromComponent<C, D> : never;
 
@@ -85,7 +85,7 @@ export type GenericFormStateObserverSelector = FormStateObserverSelector<any, an
 /** Represents a map of properties from TForm with an associated control schema */
 export type DynamicControlMap<TForm extends object, TInputState extends object> = { 
     [P in keyof TForm]: 
-        AbstractDynamicControl<TForm,  TInputState, any, ControlComponent<any, any> | null, any> 
+        AbstractDynamicControl<TForm,  TInputState, any, Maybe<Type<ControlComponent<any, any>>>, any> 
 }
 
 export interface DynamicControlGroup<
@@ -93,7 +93,7 @@ export interface DynamicControlGroup<
     TInputState extends object,
     TValueType extends object,
     TControls extends DynamicControlMap<TValueType, TInputState>,
-    TGroupComponent extends ControlGroupComponent<TValueType, any> | null = null,
+    TGroupComponent extends Maybe<Type<ControlGroupComponent<TValueType, any>>>,
 > extends AbstractDynamicControl<TForm, TInputState, TValueType, TGroupComponent, DefaultControlGroupComponentOptions>,
           AllowFormStateSelectors<DynamicControlGroupOptions, TForm, TInputState> {
     /** The form controls that make up the group */
@@ -104,19 +104,21 @@ export interface DynamicControlArray<
     TForm extends object,
     TInputState extends object,
     TValueType,
-    TTemplate extends AbstractDynamicControl<TForm, TInputState, TValueType, any, any>,
-    TControlComponent extends ControlArrayComponent<TValueType, any> | null = null, 
+    TTemplate extends AbstractDynamicControl<TForm, any, TValueType, any, any>,
+    TControlComponent extends Type<ControlArrayComponent<TValueType, any>> | undefined = undefined, 
 > extends AbstractDynamicControl<TForm, TInputState, TValueType[], TControlComponent, DefaultControlArrayComponentOptions>,
           AllowFormStateSelectors<DynamicControlArrayOptions, TForm, TInputState> {
      /** The template control used for each entry */
-    controlTemplate: TTemplate;       
+    controlTemplate: TInputState extends ControlState<TTemplate> ? TTemplate : never;       
 }
+
+type ControlState<T> = T extends AbstractDynamicControl<any, (infer S), any, any,any> ? S : never;
 
 export interface DynamicControlField<
     TForm extends object,
     TInputState extends object,
     TValueType,
-    TControlComponent extends ControlComponent<TValueType, any> | null = null
+    TControlComponent extends Type<ControlComponent<TValueType, any>> | undefined = undefined
 > extends AbstractDynamicControl<TForm, TInputState, TValueType, TControlComponent, never>,
           AllowFormStateSelectors<DynamicControlFieldOptions, TForm, TInputState> {}
 
@@ -124,15 +126,25 @@ export interface AbstractDynamicControl<
     TForm extends object,
     TInputState extends object,
     TValueType,
-    TControlComponent extends ControlComponent<TValueType, any> | null = null, 
+    TControlComponent extends Maybe<Type<ControlComponent<TValueType, any>>> = undefined, 
     TViewOptionDefault = never,
->  {
-      /** The control component that should be rendered */
-      viewComponent?: Type<TControlComponent>;
+> {
+      /** The control component that should be rendered.
+       * @remarks 
+       * For arrays and groups; a value of undefined indicates the use of default component. 
+       * For groups; a value of null indicates no component
+       */
+      viewComponent?: TControlComponent;
       /** The control component view options */
       viewOptions: AllowFormStateSelectors<GetViewOptionsFromComponent<TControlComponent, TViewOptionDefault>, TForm, TInputState>;
-      ɵvalueType?: TValueType
+      ɵvalueType?: TValueType,
 }
+
+// type ViewOptions<TOptions> = TOptions extends null ? {} : {viewOptions: TOptions}
+
+// interface ViewOptionsOptional {
+//     viewOptions?: AllowFormStateSelectors<GetViewOptionsFromComponent<TControlComponent, TViewOptionDefault>, TForm, TInputState>;
+// }
 
 /** Represents configuration options for a dynamic control field */
 export interface DynamicControlFieldOptions extends ControlOptions {
@@ -218,14 +230,14 @@ export interface GenericAbstractControl<T>
  *  @remarks Use declaration merging to populate interface with options.
 */
 export interface DefaultControlGroupComponentOptions {
-    testOption$?: string
+ 
 }
 
 /** Represents component options for a default control array component configured with {@link DynamicFormDefaultOptions} 
  *  @remarks Use declaration merging to populate interface with options.
 */
 export interface DefaultControlArrayComponentOptions {
-    testOption$: string
+
 };
 
 /** Represents default configuration options for all dynamic forms in module scope. 

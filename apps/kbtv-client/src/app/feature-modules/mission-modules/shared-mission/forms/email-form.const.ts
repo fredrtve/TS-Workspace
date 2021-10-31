@@ -6,7 +6,8 @@ export interface EmailForm { email: string };
 
 const builder = new DynamicFormBuilder<EmailForm>()
 
-const EmailForm = builder.form({
+const EmailForm = builder.group()({
+    viewOptions:{}, viewComponent: null,
     controls: { email: EmailControl },
     overrides: {
         email: { required$: true, }

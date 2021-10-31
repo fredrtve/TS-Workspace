@@ -1,7 +1,7 @@
 import { EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
-import { DynamicForm } from 'dynamic-forms';
+import { ControlGroupSchema } from 'dynamic-forms';
 import { Immutable, Maybe, NotNull } from 'global-types';
 import { Observable } from 'rxjs';
 import { DeepPartial } from 'ts-essentials';
@@ -10,7 +10,7 @@ import { FormSheetWrapperComponent } from './form-sheet-wrapper.component';
 /** Represents the configuration for {@link FormSheetWrapperComponent} */
 export interface FormSheetWrapperConfig<
     TForm extends object, 
-    TInputState extends object = never,
+    TInputState extends object = {},
 > extends FormSheetConfigurations<TForm, TInputState>, FormSheetState<TForm, TInputState>{
     /** Function that executes when form is submitted. */
     submitCallback?: Maybe<(val: Immutable<NotNull<TForm>>) => void>;
@@ -20,7 +20,7 @@ export interface FormSheetWrapperConfig<
 /** Represents configuration for opening a form with {@link FormService} */
 export interface FormSheetViewConfig<
     TForm extends object, 
-    TInputState extends object = never
+    TInputState extends object = {}
 > extends FormSheetConfigurations<TForm, TInputState> {
     /** Set to true to enable full screen forms on mobile. Defaults to true */
     fullScreen?: boolean;
@@ -31,10 +31,10 @@ export interface FormSheetViewConfig<
 
 export interface FormSheetConfigurations<
     TForm extends object, 
-    TInputState extends object = never
+    TInputState extends object = {}
 >{
     /** The form config passed to the provided form component */
-    formConfig: DynamicForm<TForm, TInputState>; 
+    formConfig: ControlGroupSchema<TForm, TInputState, any,any>; 
     /** Configuration for the top navigation bar on bottom sheet */
     navConfig: FormSheetNavConfig;
     /** Configuration for the form submit bar */

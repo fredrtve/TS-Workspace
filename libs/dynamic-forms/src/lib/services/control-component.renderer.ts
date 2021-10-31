@@ -1,4 +1,4 @@
-import { ComponentFactoryResolver, ComponentRef, Inject, Injectable, Optional, Renderer2, Type, ViewContainerRef } from "@angular/core";
+import { ComponentFactoryResolver, ComponentRef, Inject, Injectable, Injector, Optional, Renderer2, Type, ViewContainerRef } from "@angular/core";
 import { FormArray, FormControl, FormGroup } from "@angular/forms";
 import { Immutable, Maybe, NotNull } from "global-types";
 import { pairwise, startWith } from "rxjs/operators";
@@ -10,8 +10,8 @@ import { FormStateResolver } from "./form-state.resolver";
 // type ControlWithSelectors<T extends ControlFieldSchema<any, ControlFieldComponent<any, any>> = ControlFieldSchema<any, ControlFieldComponent<any, any>>> = 
 //     Omit<T, keyof DynamicControlFieldOptions> & AllowFormStateSelectors<DynamicControlFieldOptions,any, ControlFieldComponent<any, any>>
   
- type ControlFormComponent<T> = T extends AbstractDynamicControl<any, any, any, (infer C), any> ? NotNull<C> : never;
-
+ type ControlFormComponent<T> = T extends AbstractDynamicControl<any, any, any, (infer C), any> ? NotNull<ComponentFromType<C>> : never;
+ type ComponentFromType<T> = T extends Type<(infer C)> ? C : never
 @Injectable()
 export class ControlComponentRenderer {
  
@@ -46,6 +46,7 @@ export class ControlComponentRenderer {
 
         if(_isControlGroup(controlCfg)){
             ref = this.loadGroup(controlCfg, <FormGroup> control, vcRef);
+            if(ref === undefined) return;
             this.setClass(ref, this.globalOptions?.groupClass)
         }
         else if(_isControlArray(controlCfg)){
@@ -65,7 +66,7 @@ export class ControlComponentRenderer {
     }
 
     private loadField(
-        controlCfg: DynamicControlField<any,any,any,any>,
+        controlCfg: DynamicControlField<any,any,any,Type<ControlFieldComponent<any, any>>>,
         control: FormControl, 
         vcRef: ViewContainerRef
     ): ComponentRef<ControlFieldComponent<object | null, object>> | undefined {
@@ -83,10 +84,14 @@ export class ControlComponentRenderer {
     }
 
     private loadGroup(
-        groupCfg: Immutable<DynamicControlGroup<any, any, any, any, any>>, 
+        groupCfg: Immutable<DynamicControlGroup<any, any, any, any, Type<ControlGroupComponent<any, any>>>>, 
         formGroup: FormGroup, 
         vcRef: ViewContainerRef
-    ): ComponentRef<ControlGroupComponent<any, any>> {
+    ): ComponentRef<ControlGroupComponent<any, any>> | undefined {
+        if(groupCfg.viewComponent === null) {
+            this.renderControls(groupCfg.controls, formGroup, vcRef);
+            return;
+        }
         const viewComponent = groupCfg.viewComponent || this.globalOptions?.groupViewComponent;
 
         if(!viewComponent) throw Error("Missing control group component, Either specify in configuration or set a default component.")
@@ -103,7 +108,7 @@ export class ControlComponentRenderer {
     }
 
     private loadArray(
-        arrayCfg: Immutable<DynamicControlArray<any,any,any,any,any>>, 
+        arrayCfg: Immutable<DynamicControlArray<any,any,any,any,Type<ControlArrayComponent<any, any>>>>, 
         formArray: FormArray, 
         vcRef: ViewContainerRef
     ): ComponentRef<ControlArrayComponent<any, any>> {
@@ -122,9 +127,11 @@ export class ControlComponentRenderer {
         return componentRef;   
     }
 
-    private loadComponent<TComponent>(component: Type<TComponent>, vcRef: ViewContainerRef): ComponentRef<TComponent>{
+    private loadComponent<TComponent extends Type<any>>(
+        component: TComponent, vcRef: ViewContainerRef
+    ): ComponentRef<ComponentFromType<TComponent>>{
         const componentFactory = this.componentFactoryResolver.resolveComponentFactory(component);
-        return vcRef.createComponent<TComponent>(componentFactory);
+        return vcRef.createComponent<ComponentFromType<TComponent>>(componentFactory);
     }
 
     private setClass(ref: ComponentRef<any>, controlClass?: string | Immutable<FormStateSelector<any, any, any, any, any>>): void {

@@ -11,7 +11,8 @@ export interface WeekCriteriaForm extends Pick<WeekCriteria, "user" | "year"> { 
 
 const builder = new DynamicFormBuilder<WeekCriteriaForm, WeekCriteriaFormState>();
 
-export const WeekCriteriaForm = builder.form({
+export const WeekCriteriaForm = builder.group()({
+    viewOptions:{}, viewComponent: null,
     validators$: [isWeekInRange("weekNr", "year")],
     controls: {
         user: {...UserSelectControl, required$: true},

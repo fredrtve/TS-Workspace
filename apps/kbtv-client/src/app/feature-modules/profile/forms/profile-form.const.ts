@@ -11,7 +11,8 @@ export interface ProfileForm extends Pick<User, "userName">, IContactable, IFull
 
 const builder = new DynamicFormBuilder<ProfileForm>();
 
-const ProfileForm = builder.form({
+const ProfileForm = builder.group()({
+    viewOptions:{}, viewComponent: null,
     controls: {
         userName: UserNameControl,
         firstName: FirstNameControl,

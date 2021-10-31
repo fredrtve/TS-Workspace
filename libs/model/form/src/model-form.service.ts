@@ -27,7 +27,7 @@ export class ModelFormService<TState extends object> {
   open<
     TModel extends StateModels<TState>, 
     TForm extends object = TModel extends object ? TModel : never, 
-    TInputState extends object = never
+    TInputState extends object = {}
   >(
     config: Immutable<ModelFormConfig<TState, TModel, TForm, TInputState>>,
     initialValue?: Immutable<Maybe<DeepPartial<TModel>>>,
@@ -54,7 +54,7 @@ export class ModelFormService<TState extends object> {
   private getFormSheetViewConfig<
     TModel extends StateModels<TState>, 
     TForm extends object = TModel extends object ? TModel : never, 
-    TInputState extends object = never
+    TInputState extends object = {}
   >(
     config: Immutable<ModelFormConfig<TState, TModel, TForm, TInputState>>,
     entityId: Maybe<string>,

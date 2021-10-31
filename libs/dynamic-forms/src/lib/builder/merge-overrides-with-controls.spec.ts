@@ -1,5 +1,6 @@
 
 import { TestFieldComponent } from "../../test-assets/test-control-field.component";
+import { TestControlGroupComponent } from "../../test-assets/test-control-group.component";
 import { DynamicFormBuilder } from "../builder/dynamic-form.builder";
 import { _isFormStateSelector } from "../helpers/type.helpers";
 import { FormStateSelector, GenericFormStateSelector } from "../interfaces";
@@ -26,7 +27,7 @@ const group2 = builder.group<TestFormGroup2>()({
         phone3: { viewOptions: { width$: grp2Builder.bind(['address3'], [], (f,s) => "") }},
     }
 });
-const testForm = builder.form({
+const testForm = builder.group()({
     controls: {
         phone1: builder.field({ viewComponent: TestFieldComponent, viewOptions: { width$: "" } }),
         address1: builder.field({ viewComponent: TestFieldComponent, viewOptions: { width$: "" } }),
@@ -61,7 +62,8 @@ const testForm = builder.form({
                 }
             }
         }
-    }
+    },
+    viewOptions: {}
 })
 
 

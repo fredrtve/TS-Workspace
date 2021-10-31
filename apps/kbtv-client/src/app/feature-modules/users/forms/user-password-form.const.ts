@@ -8,7 +8,8 @@ export interface UserPasswordForm { userName: string, newPassword: string, confi
 
 const builder = new DynamicFormBuilder<UserPasswordForm>();
 
-export const UserPasswordForm = builder.form({
+export const UserPasswordForm = builder.group()({
+    viewOptions: {}, viewComponent: null,
     controls: {
         userName: UserNameControl,
         newPassword: NewPasswordControl,

@@ -6,14 +6,15 @@ import { Immutable } from 'global-types';
 
 const builder = new DynamicFormBuilder<LeaderSettings>();
 
-const LeaderSettingsForm = builder.form({
+const LeaderSettingsForm = builder.group()({
     controls: {
         confirmTimesheetsMonthly: builder.field({ 
             viewComponent: CheckboxFieldComponent, 
             viewOptions: { text$: "Lås timer automatisk hver måned" }
         }),
     },
-    overrides: {}
+    overrides: {},
+    viewOptions: {},
 })
 
 export const LeaderSettingsFormSheet: Immutable<FormSheetViewConfig<LeaderSettings>> = {

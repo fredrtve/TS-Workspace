@@ -57,7 +57,8 @@ const FinishedControl = builder.field<RadioGroupFieldComponent<boolean>>({
     }, 
 });
 
-const MissionCriteriaForm = builder.form({  
+const MissionCriteriaForm = builder.group()({  
+    viewOptions:{}, viewComponent: null,
     controls: {
         searchString: SearchStringControl,
         employer: EmployerSelectControl,

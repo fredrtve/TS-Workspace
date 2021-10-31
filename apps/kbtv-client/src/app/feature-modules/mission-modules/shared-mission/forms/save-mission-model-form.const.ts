@@ -4,9 +4,9 @@ import { ModelState } from '@core/state/model-state.interface';
 import { ValidationRules } from '@shared-app/constants/validation-rules.const';
 import { _missionFormToSaveModelConverter } from '@shared-mission/forms/mission-form-to-save-model.converter';
 import { GoogleAddressControl, PhoneNumberControl } from '@shared/constants/common-controls.const';
-import { TextAreaFieldComponent, AutoCompleteFieldComponent, CheckboxFieldComponent } from 'mat-dynamic-form-controls';
 import { DynamicFormBuilder, _createControlField } from 'dynamic-forms';
 import { Immutable, Maybe } from 'global-types';
+import { AutoCompleteFieldComponent, CheckboxFieldComponent, TextAreaFieldComponent } from 'mat-dynamic-form-controls';
 import { Converter, ModelFormConfig } from 'model/form';
 
 export interface MissionForm extends Pick<Mission, "address" | "phoneNumber" | "description" | "id" | "finished"> {
@@ -63,10 +63,11 @@ const _missionToMissionFormConverter: Converter<Mission, MissionForm> = ({missio
 const builder = new DynamicFormBuilder<MissionForm, ModelState>();
 
 export const MissionModelForm: Immutable<ModelFormConfig<ModelState, Mission, MissionForm>> = {
-    includes: {prop: "missions", includes: ["employer", "missionType"]},
+    includes: {prop: "missions", includes: ["employer", "missionType", "missionNotes"]},
     actionConverter: _missionFormToSaveModelConverter,
     modelConverter: _missionToMissionFormConverter,
-    dynamicForm: builder.form({
+    dynamicForm: builder.group()({
+        viewOptions:{}, viewComponent: null,
         controls: {
             address: GoogleAddressControl,
             phoneNumber: PhoneNumberControl,
@@ -74,7 +75,7 @@ export const MissionModelForm: Immutable<ModelFormConfig<ModelState, Mission, Mi
             employerInput: EmployerControl,
             missionTypeInput: MissionTypeControl,  
             finished: FinishedControl,
-            id: { viewOptions: {} },    
+            id: { viewOptions: {} }
         },
         overrides: {
             address: { required$: true, },

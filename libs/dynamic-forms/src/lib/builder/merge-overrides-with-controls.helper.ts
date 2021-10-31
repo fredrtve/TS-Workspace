@@ -96,9 +96,9 @@ function _mergeWithOptions<T extends AbstractDynamicControl<any,any,any,any,any>
     return <T> _mergeBaseControl(mergeInto, overrides);
 }
 
-export function _mergeOverridesWithControls<TForm extends object, TControls extends ValidControlSchemaMap<TForm>>(
+export function _mergeOverridesWithControls<TForm extends object, TControls extends ValidControlSchemaMap<TForm, any>>(
     controls: Immutable<TControls>, 
-    overrides?: Immutable<ControlOverridesMap<TForm, any, ValidControlSchemaMap<TForm>>>, 
+    overrides?: Immutable<ControlOverridesMap<TForm, any, ValidControlSchemaMap<TForm, any>>>, 
     basePath?: string
 ): DynamicControlMapFromSchema<TForm, any, TControls> {
     const result: any = {};

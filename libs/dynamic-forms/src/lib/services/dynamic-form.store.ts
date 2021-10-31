@@ -5,7 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 /** Exposes form & state  */
 @Injectable()
-export class DynamicFormStore<TInputState extends object = never> {
+export class DynamicFormStore<TInputState extends object = {}> {
     
     private stateSubject = new BehaviorSubject<Immutable<Partial<TInputState>>>(<Immutable<TInputState>> {})
 

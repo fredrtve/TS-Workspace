@@ -14,7 +14,8 @@ export interface SyncConfigForm extends Pick<SyncConfig, "refreshTime"> {
 
 const builder = new DynamicFormBuilder<SyncConfigForm>();
 
-const SyncConfigForm = builder.form({
+const SyncConfigForm = builder.group()({
+    viewOptions:{}, viewComponent: null,
     controls: {
         refreshTime: builder.field({
             viewComponent:  SliderFieldComponent, required$: true,
