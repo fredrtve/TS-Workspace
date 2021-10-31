@@ -14,7 +14,7 @@ export class WithLazyOptions {
     showOptionsSubject: BehaviorSubject<boolean>;
 
     resolveLazyOptions$<T>(
-        control: GenericAbstractControl<T>, 
+        control: GenericAbstractControl<any>, 
         options$: Observable<Immutable<Maybe<T[]>>>, 
         lazy$?: Observable<LazySelectOption>
     ): Observable<Immutable<Maybe<T[]>>> {

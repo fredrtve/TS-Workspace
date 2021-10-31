@@ -18,5 +18,7 @@ export * from './lib/base-control/base-field-options.interface';
 export * from './lib/controls/auto-complete-field/auto-complete-field.component';
 export * from './lib/controls/auto-complete-field/auto-complete-options.interface';
 
+export * from './lib/controls/chips-auto-complete-field/chips-auto-complete-field.component';
+
 export * from './lib/controls/array/dynamic-control-array.component';
 export * from './lib/controls/array/dynamic-control-array-entry.component';

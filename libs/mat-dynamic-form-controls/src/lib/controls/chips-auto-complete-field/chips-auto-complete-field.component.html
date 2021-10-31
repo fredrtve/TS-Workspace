@@ -1,0 +1,51 @@
+<mat-form-field *ngIf="vm$ | async; let vm" [color]="vm.color$ || 'accent'" class="w-100" >
+    
+    <mat-label *ngIf="vm.label$">{{ vm.label$ }}</mat-label>
+
+    <mat-chip-list #chipList>
+      <mat-chip
+        *ngFor="let selection of selections$ | async"
+        [removable]="vm.removeableChips$"
+        (removed)="remove(selection)">
+        {{ (vm.displayWith$ | func : selection) || selection }}
+       
+          <mat-icon matChipRemove *ngIf="vm.removeableChips$">cancel</mat-icon>
+     
+      </mat-chip>
+
+      <input #valueInput
+        [placeholder]="vm.placeholder$"
+        [formControl]="valueControl"
+        [matAutocomplete]="auto"
+        [matChipInputFor]="chipList"
+        [matChipInputSeparatorKeyCodes]="vm.separatorKeysCodes$"
+        (matChipInputTokenEnd)="add($event)">
+    </mat-chip-list>
+
+    <mat-autocomplete #auto="matAutocomplete" 
+      [displayWith]="vm.displayWith$"  
+      (optionSelected)="selected($event)" 
+      (opened)="vm.options$ ? null : showOptions()">
+
+      <ng-container *ngIf="vm.options$; else loading">
+        <mat-option *ngFor="let option of vm.options$" 
+            [value]="option">
+            {{ (vm.displayWith$ | func : option) || option }}
+        </mat-option>
+      </ng-container>
+
+      <ng-template #loading>
+          <mat-option>
+              Laster inn...
+          </mat-option>
+      </ng-template>
+
+    </mat-autocomplete>
+
+    <mat-hint *ngIf="vm.hint$">{{ vm.hint$ }}</mat-hint>
+
+  </mat-form-field>   
+  
+  <mat-error *ngIf="formControl && formControl.dirty && formControl.invalid">
+    {{ getValidationErrorMessage() }}
+  </mat-error>

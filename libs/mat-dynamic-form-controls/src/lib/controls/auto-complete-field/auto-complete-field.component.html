@@ -1,5 +1,5 @@
 <mat-form-field *ngIf="vm$ | async; let vm" [color]="vm.color$ || 'accent'" class="w-100">
-    <mat-label *ngIf="vm.label$">{{ vm.label }}</mat-label>
+    <mat-label *ngIf="vm.label$">{{ vm.label$ }}</mat-label>
     
     <input matInput [placeholder]="vm.placeholder$" [formControl]="formControl" [required]="vm.required$"
         [matAutocomplete]="auto1">
@@ -21,7 +21,7 @@
         
     </mat-autocomplete>
 
-    <mat-hint *ngIf="vm.hint$">{{ vm.hint }}</mat-hint>
+    <mat-hint *ngIf="vm.hint$">{{ vm.hint$ }}</mat-hint>
 
     <button mat-icon-button matSuffix *ngIf="vm.resetable$ && formControl && !formControl.disabled && formControl.value" aria-label="Clear" 
         (tap)="formControl.setValue(''); formControl.markAsDirty()">
