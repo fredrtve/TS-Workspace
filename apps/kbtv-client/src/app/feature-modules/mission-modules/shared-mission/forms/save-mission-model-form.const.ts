@@ -29,7 +29,7 @@ const EmployerControl = _createControlField<AutoCompleteFieldComponent<Employer>
         resetable$: true, 
         lazyOptions$: "all",
         displayWith$: (val) => typeof val === "string" ? val : val?.name || "",
-        activeFilter$: { 
+        filterConfig$: { 
             criteriaFormatter: (s) => s?.toLowerCase(), 
             filter: (e, s) => e.name.toLowerCase().indexOf(s) !== -1 
         },
@@ -45,7 +45,7 @@ const MissionTypeControl = _createControlField<AutoCompleteFieldComponent<Missio
         resetable$: true,
         lazyOptions$: "all",
         displayWith$: (val) => typeof val === "string" ? val : val?.name || "",
-        activeFilter$: { 
+        filterConfig$: { 
             criteriaFormatter: (s) => s?.toLowerCase(),
             filter: (e, s) => e.name.toLowerCase().indexOf(s) !== -1 ,
         },

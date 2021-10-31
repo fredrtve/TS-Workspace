@@ -11,16 +11,16 @@ import { FormStateResolver } from 'dynamic-forms';
 import { Immutable } from 'global-types';
 import { applyMixins } from 'global-utils';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { map, startWith, tap } from 'rxjs/operators';
 import { BaseFieldComponent } from '../../base-control/base-field.component';
-import { ActiveStringFilterModule } from '../../directives/active-string-filter.directive';
 import { FuncModule } from '../../directives/func.pipe';
-import { WithLazyOptions } from '../../mixins/lazy-options.mixin';
-import { AutoCompleteOptions } from './auto-complete-options.interface';
+import { _filterOptions } from '../../helpers/filter-options.helper';
 import { VALIDATION_ERROR_MESSAGES } from '../../injection-tokens.const';
 import { ValidationErrorMap } from '../../interfaces';
+import { WithLazyOptions } from '../../mixins/lazy-options.mixin';
+import { AutoCompleteOptions } from './auto-complete-options.interface';
 
-type ViewModel<T> = AutoCompleteOptions<T> & { criteria$: T | string | null, required$: boolean };
+type ViewModel<T> = AutoCompleteOptions<T> & { required$: boolean };
 
 class AutoCompleteControlBase<T> extends BaseFieldComponent<T | string, AutoCompleteOptions<T>> {}
 interface AutoCompleteControlBase<T> extends WithLazyOptions {}
@@ -47,10 +47,13 @@ export class AutoCompleteFieldComponent<T> extends AutoCompleteControlBase<T>  {
       const lazy$ = lazyOptions$ === undefined ? undefined : this.resolve$(lazyOptions$);
       this.vm$ = combineLatest([
         this.resolveLazyOptions$(this.formControl!, this.resolve$(options$), lazy$),
-        this.resolveSlice$({...rest, required$: this.requiredSelector }),
-        this.formControl!.valueChanges.pipe(startWith(this.formControl!.value))
+        this.resolveSlice$<Partial<ViewModel<T | string>>>({...rest, required$: this.requiredSelector }),
+        this.formControl!.valueChanges.pipe(startWith(this.formControl!.value)),
       ]).pipe(
-        map(([ options$, rest, criteria$ ]) => <Immutable<ViewModel<T>>> {options$, criteria$, ...rest})
+        map(([options$, rest, criteria$ ]) => <Immutable<ViewModel<T>>> {
+          ...rest,
+          options$: options$ ? _filterOptions(criteria$, options$, rest.filterConfig$!) : null
+        }),
       )
     }
     
@@ -66,8 +69,7 @@ export class AutoCompleteFieldComponent<T> extends AutoCompleteControlBase<T>  {
       MatIconModule,
       MatButtonModule,
       MatAutocompleteModule,
-      FuncModule,
-      ActiveStringFilterModule
+      FuncModule
     ]
   })
   class AutoCompleteControlModule {}

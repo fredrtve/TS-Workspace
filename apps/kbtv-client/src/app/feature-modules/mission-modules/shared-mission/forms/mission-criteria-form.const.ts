@@ -29,7 +29,7 @@ const SearchStringControl = builder.field<AutoCompleteFieldComponent<Mission>>({
         lazyOptions$: "all",
         placeholder$: "Søk med adresse",
         resetable$: true,
-        activeFilter$: { 
+        filterConfig$: { 
             criteriaFormatter: (s) => s?.toLowerCase(), 
             filter: (e, s) => e.address!.toLowerCase().indexOf(s) !== -1, 
             maxChecks: 50 

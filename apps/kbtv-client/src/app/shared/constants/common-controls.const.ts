@@ -58,7 +58,7 @@ export const MissionAutoCompleteControl = _createControlField<AutoCompleteFieldC
         lazyOptions$: "all",
         displayWith$: (mission) => mission?.address || "",
         resetable$: true,
-        activeFilter$: { 
+        filterConfig$: { 
             criteriaFormatter: (s) => (s !== null && typeof s === "object") ? null : s?.toLowerCase(),
             filter: (m, s) => m.address!.toLowerCase().indexOf(s) !== -1, 
             maxChecks: 50 

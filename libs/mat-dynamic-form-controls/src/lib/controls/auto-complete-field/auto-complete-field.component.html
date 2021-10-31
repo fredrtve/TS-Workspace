@@ -1,53 +1,34 @@
-<ng-container *ngIf="vm$ | async; let vm">
-    <ng-container *ngIf="!vm.activeFilter$ else activeFilterView" 
-        [ngTemplateOutlet]="autocomplete"
-        [ngTemplateOutletContext]="{options: vm.options$, viewOptions: vm}">
-    </ng-container>
-
-    <ng-template #activeFilterView>
-        <ng-template   
-            *appActiveStringFilter="let filtered$; config: vm.activeFilter$; options: vm.options$; criteria: vm.criteria$"
-            [ngTemplateOutlet]="autocomplete" 
-            [ngTemplateOutletContext]="{options:filtered$ | async, viewOptions: vm}">
-        </ng-template>
-    </ng-template>
+<mat-form-field *ngIf="vm$ | async; let vm" [color]="vm.color$ || 'accent'" class="w-100">
+    <mat-label *ngIf="vm.label$">{{ vm.label }}</mat-label>
     
-</ng-container>
+    <input matInput [placeholder]="vm.placeholder$" [formControl]="formControl" [required]="vm.required$"
+        [matAutocomplete]="auto1">
 
-<ng-template #autocomplete let-options="options" let-viewOptions="viewOptions">
-
-    <mat-form-field [color]="viewOptions.color$ || 'accent'" class="w-100">
-        <mat-label *ngIf="viewOptions.label$">{{ viewOptions.label }}</mat-label>
+    <mat-autocomplete
+        #auto1="matAutocomplete" [displayWith]="vm.displayWith$" (opened)="vm.options$ ? null : showOptions()">
         
-        <input matInput [placeholder]="viewOptions.placeholder$" [formControl]="formControl" [required]="viewOptions.required$"
-            [matAutocomplete]="auto1">
+        <ng-container *ngIf="vm.options$; else loading">
+            <mat-option *ngFor="let option of vm.options$" 
+                [value]="option">
+                {{ (vm.displayWith$ | func : option) || option }}
+            </mat-option>
+        </ng-container>
+        <ng-template #loading>
+            <mat-option>
+                Laster inn...
+            </mat-option>
+        </ng-template>
+        
+    </mat-autocomplete>
 
-        <mat-autocomplete #auto1="matAutocomplete" [displayWith]="viewOptions.displayWith$" (opened)="options ? null : showOptions()">
-            
-            <ng-container *ngIf="options; else loading">
-                <mat-option *ngFor="let option of options" 
-                    [value]="option">
-                    {{ (viewOptions.displayWith$ | func : option) || option }}
-                </mat-option>
-            </ng-container>
-            <ng-template #loading>
-                <mat-option>
-                    Laster inn...
-                </mat-option>
-            </ng-template>
-            
-        </mat-autocomplete>
+    <mat-hint *ngIf="vm.hint$">{{ vm.hint }}</mat-hint>
 
-        <mat-hint *ngIf="viewOptions.hint$">{{ viewOptions.hint }}</mat-hint>
+    <button mat-icon-button matSuffix *ngIf="vm.resetable$ && formControl && !formControl.disabled && formControl.value" aria-label="Clear" 
+        (tap)="formControl.setValue(''); formControl.markAsDirty()">
+        <mat-icon>close</mat-icon>
+    </button>
 
-        <button mat-icon-button matSuffix *ngIf="viewOptions.resetable$ && formControl && !formControl.disabled && formControl.value" aria-label="Clear" 
-            (tap)="formControl.setValue(''); formControl.markAsDirty()">
-            <mat-icon>close</mat-icon>
-        </button>
-
-        <mat-error *ngIf="formControl && formControl.dirty && formControl.invalid">
-            {{ getValidationErrorMessage() }}
-        </mat-error>
-    </mat-form-field>
-
-</ng-template>
+    <mat-error *ngIf="formControl && formControl.dirty && formControl.invalid">
+        {{ getValidationErrorMessage() }}
+    </mat-error>
+</mat-form-field>
