@@ -2,7 +2,7 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { ScrollingModule } from "@angular/cdk/scrolling";
 import { CommonModule } from "@angular/common";
 import { ChangeDetectionStrategy, Component, ElementRef, Inject, NgModule, Optional, ViewChild } from "@angular/core";
-import { FormControl, ReactiveFormsModule, ValidatorFn } from "@angular/forms";
+import { FormControl, ReactiveFormsModule } from "@angular/forms";
 import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
 import { MatButtonModule } from "@angular/material/button";
 import { MatChipInputEvent, MatChipsModule } from "@angular/material/chips";
@@ -10,13 +10,11 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { FormStateResolver } from "dynamic-forms";
-import { Maybe } from 'global-types';
 import { applyMixins } from "global-utils";
 import { BehaviorSubject, combineLatest, Observable } from "rxjs";
-import { map, startWith, tap } from "rxjs/operators";
+import { map, startWith } from "rxjs/operators";
 import { BaseFieldComponent } from "../../base-control/base-field.component";
 import { FuncModule } from "../../directives/func.pipe";
-import { _getValidationErrorMessage } from '../../get-validation-error-message.helper';
 import { _filterOptions } from "../../helpers/filter-options.helper";
 import { VALIDATION_ERROR_MESSAGES } from "../../injection-tokens.const";
 import { ValidationErrorMap } from "../../interfaces";
@@ -73,9 +71,10 @@ export class ChipsAutocompleteFieldComponent<T> extends ChipsAutoCompleteFieldBa
             ...rest,
             removeableChips$: rest.removeableChips$ == null ? true :  rest.removeableChips$,
             separatorKeysCodes$: rest.separatorKeysCodes$ || this.defaultSeparatorKeysCodes,
-            options$: options$ ? _filterOptions<any, T | string>(criteria$, options$, rest.filterConfig$!) : null
+            options$: criteria$ != null && typeof criteria$ === "object" 
+              ? options$ 
+              : options$ ? _filterOptions<any, T | string>(criteria$, options$, rest.filterConfig$!) : null
           }),
-          tap(x => console.log(this.formControl))
         )
       }  
       
