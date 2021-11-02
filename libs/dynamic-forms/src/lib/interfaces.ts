@@ -167,6 +167,8 @@ export interface ControlOptions {
     asyncValidators?: AsyncValidatorFn[],      
     /** A custom class added to the anchor tag of the control component */
     controlClass$?: string; 
+    /** Clears the control value if true. Ignores initial value.  */
+    clearValue$?: boolean;
 }
 
 /** Represents a control field component that displays a field used to set the control value. */

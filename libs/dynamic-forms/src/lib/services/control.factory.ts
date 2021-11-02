@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { AbstractControl, AsyncValidatorFn, FormArray, FormControl, FormGroup, ValidatorFn, Validators } from "@angular/forms";
 import { Immutable } from "global-types";
 import { combineLatest } from "rxjs";
+import { skip } from "rxjs/operators";
 import { _isControlArray, _isControlGroup } from "../helpers/type.helpers";
 import { AbstractDynamicControl, AllowFormStateSelectors, ControlOptions, DynamicControlArray, DynamicControlField, DynamicControlFieldOptions, DynamicControlGroup, FormControlType } from "../interfaces";
 import { FormStateResolver } from "./form-state.resolver";
@@ -122,6 +123,11 @@ export class ControlFactory {
         if(options.disabled$ !== undefined)
             this.resolver.resolve$(options.disabled$).subscribe(disabled => 
                 disabled ? control.disable() : control.enable()
-            )      
+            )    
+            
+        if(options.clearValue$ !== undefined)
+            this.resolver.resolve$(options.clearValue$).pipe(skip(1)).subscribe(shouldClear => 
+                shouldClear ? control.setValue(null) : null
+            )  
     }
 }

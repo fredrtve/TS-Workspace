@@ -129,7 +129,10 @@ const CommonControls = {
 
 const CommonOptions = {
     missionInput: { required$: true, viewOptions: { options$: userBuilder.bindState("missions") } },
-    missionActivity: { viewOptions: { options$: activitiesSelector }}
+    missionActivity: { 
+        viewOptions: { options$: activitiesSelector }, 
+        clearValue$: userBuilder.bindForm("missionInput", x => typeof x === "object") 
+    }
 };
 
 export const UserTimesheetModelForm: Immutable<ModelFormConfig<UserTimesheetFormState, UserTimesheet, UserTimesheetForm>> = {
