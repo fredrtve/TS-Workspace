@@ -1,7 +1,7 @@
 import { Immutable, ShallowCopy, UnionOmit } from "global-types";
 import { StateModels, StatePropByModel, ValidRelationProps } from "../interfaces";
 import { _getModelConfig } from "../model-state-config-helpers";
-import { ModelQueryHandlerMap } from "./handlers";
+import { ModelQueryHandlerMap, QueryIncludeValue } from "./handlers";
 import { QueryIncludeFn, RestrictedQuery, Restrictions } from "./interfaces";
 import { QueryEngine } from "./query-engine/query.engine";
 
@@ -57,6 +57,15 @@ export class ModelQuery<
     run(state: Immutable<Partial<TState>>): ShallowCopy<TModel>[] {
         if(!state) return [];
         return this._engine.run((<any> state)[this._stateProp], { state, modelConfig: _getModelConfig(this._stateProp) })
+    }
+
+    getSelectedStateProps(): string[] {
+        const props: string[] = [<string> this._stateProp];
+        const actions = this._engine.getActions();
+        for(const entry of actions){
+            if(entry.type === "include") props.push(<string> (<QueryIncludeValue<TState, TModel>> entry.value).prop)
+        }
+        return props;
     }
 
     private cloneQuery() {

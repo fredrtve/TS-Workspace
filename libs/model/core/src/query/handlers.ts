@@ -7,9 +7,9 @@ import { ModelQuery } from "./model-query";
 import { QueryActionHandler, QueryActionHandlerMap } from "./query-engine/interfaces";
 import { QueryEngine } from "./query-engine/query.engine";
 
-type QueryWhereValue = (entity: Immutable<unknown>) => boolean
-type QuerySelectValue = (entity: Immutable<unknown>) => any
-type QueryIncludeValue<TState, TModel extends StateModels<TState>>  = {
+export type QueryWhereValue = (entity: Immutable<unknown>) => boolean
+export type QuerySelectValue = (entity: Immutable<unknown>) => any
+export type QueryIncludeValue<TState, TModel extends StateModels<TState>>  = {
     prop: ValidRelationProps<TState, TModel>,
     query: QueryIncludeFn<TState, TModel, any> | undefined, 
 }
@@ -25,9 +25,9 @@ export const modelQueryHandlers: ModelQueryHandlerMap<any,any> = {
     where: (exp) => (model, next) => exp(model) === true ? next(model) : null,
     include: ({prop, query}, {modelConfig, state}) => {
         
-        const resolveSlice = (stateProp: string) => query ?
-            (<ModelQuery<any,any>> query(new ModelQuery(stateProp, new QueryEngine(modelQueryHandlers)))).run(state) :
-            state[stateProp];
+        const resolveSlice = query ? 
+            (stateProp: string) => (<ModelQuery<any,any>> query(new ModelQuery(stateProp, new QueryEngine(modelQueryHandlers)))).run(state) :
+            (stateProp: string) => state[stateProp];
 
         const childRel = (<ModelChildrenMap<UnknownModelState, any>><any> modelConfig.children)[<string> prop];
 

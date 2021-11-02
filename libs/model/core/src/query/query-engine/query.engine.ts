@@ -35,4 +35,8 @@ export class QueryEngine<THandlerMap extends QueryActionHandlerMap<any, any>> {
         return result;
     }
 
+    getActions(): Immutable<QueryActions<THandlerMap>[]> {
+        return this._actions;
+    }   
+
 }

@@ -17,7 +17,7 @@ export type RelationPropQuery<TState, TModel extends StateModels<TState>, TProp>
     NestedIncludeQuery<TState, ModelChildByChildProp<TModel, TProp>>;
 
 export type QueryIncludeFn<TState, TModel extends StateModels<TState>, TProp extends ValidRelationProps<TState, TModel>> = 
-    (x: RelationPropQuery<TState, TModel, TProp>) => RelationPropQuery<TState, TModel, TProp>
+    (x: RelationPropQuery<TState, TModel, TProp>) => RelationPropQuery<TState, TModel, any>
 
 export type NestedIncludeQuery<TState, TRel, TRestrictions extends Restrictions = ""> = 
     TRel extends StateModels<TState> ? 
