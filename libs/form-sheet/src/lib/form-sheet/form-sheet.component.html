@@ -7,7 +7,7 @@
     }
 </style>
 
-<form novalidate [ngClass]="formClass">
+<form novalidate [ngClass]="formClass" (submit)="preventDefaultSubmit($event)">
 
     <lib-dynamic-form
         [inputState]="inputState" 

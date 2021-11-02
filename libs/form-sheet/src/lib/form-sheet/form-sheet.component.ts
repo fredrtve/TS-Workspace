@@ -55,5 +55,7 @@ export class FormSheetComponent<TForm extends object, TInputState extends object
         this.formGroup.reset(this.actionConfig.resetState || {});
         this.formGroup.markAsDirty()
     }
+
+    preventDefaultSubmit = (e: Event) => e.preventDefault();
     
 }
