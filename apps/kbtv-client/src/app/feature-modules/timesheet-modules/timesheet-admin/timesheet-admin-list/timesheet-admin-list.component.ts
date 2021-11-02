@@ -66,7 +66,7 @@ export class TimesheetAdminListComponent extends WithUnsubscribe() {
       timesheet.status === TimesheetStatus.Confirmed ? TimesheetStatus.Open : TimesheetStatus.Confirmed
     );
 
-  openTimesheetForm = (initialValue?: Immutable<Partial<TimesheetForm>>): void => 
+  openTimesheetForm = (initialValue?: Immutable<Partial<Timesheet>>): void => 
     this.facade.openTimesheetForm(initialValue);
   
   openTimesheetCard = (timesheet: Immutable<Timesheet>) =>

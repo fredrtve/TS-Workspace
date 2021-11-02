@@ -1,7 +1,7 @@
 import { DatePipe, registerLocaleData } from "@angular/common";
 import norwayLocale from '@angular/common/locales/nb';
 import { ApiUrl } from "@core/api-url.enum";
-import { Mission, Timesheet, User } from "@core/models";
+import { Activity, Mission, MissionActivity, Timesheet, User } from "@core/models";
 import { Roles } from "@core/roles.enum";
 import { TimesheetStatus } from "@shared-app/enums/timesheet-status.enum";
 import { TimesheetSummary } from "@shared-timesheet/interfaces";
@@ -22,7 +22,8 @@ describe('Timesheet Statistic', () => {
 
     const mission : Mission = { id: '1', address: 'test' };
     const user : User = { userName: "test", firstName: "first", lastName: "last", role: Roles.Ansatt }   
-
+    const activity : Activity = { id: '1', name: "testactivity" };
+    const missionActivity : MissionActivity = { id: '1', missionId: mission.id, activityId: activity.id };
 
     const getAllCriteria: TimesheetCriteria = { 
         dateRange: { start: 0, end: new Date().getTime() + 1e15 },
@@ -30,7 +31,8 @@ describe('Timesheet Statistic', () => {
 
     const login = (criteria: Partial<TimesheetCriteria>, timesheets: Timesheet[]) => 
         cy.login('Leder', '/timestatistikk', { 
-            timesheetStatisticTimesheetCriteria: criteria, missions: [mission], timesheets
+            timesheetStatisticTimesheetCriteria: criteria, missions: [mission], 
+            timesheets, activities: [activity], missionActivities: [missionActivity]
         }); 
 
     const getChipWithText = (text: string) => cy.getCy('bar-chip').filter(`:contains('${text}')`);
@@ -46,6 +48,7 @@ describe('Timesheet Statistic', () => {
             id: '5', totalHours: 4, status: TimesheetStatus.Open, userName: user.userName,
             startTime: new Date().getTime() - 5e6, 
             endTime: new Date().getTime(),  
+            missionActivityId: missionActivity.id
         }
 
         login(getAllCriteria, [timesheet]); 
@@ -53,11 +56,13 @@ describe('Timesheet Statistic', () => {
         getChipWithText('Ingen').click();  
 
         cy.get('[row-index="0"]').should('exist').within(() => {
-            cy.get(colId('date')).should('contain', datePipe.transform(timesheet.startTime, "d. MMM YYYY"))   
-            cy.get(colId('startTime')).should('contain', datePipe.transform(timesheet.startTime, "HH:mm"))
-            cy.get(colId('endTime')).should('contain', datePipe.transform(timesheet.endTime, "HH:mm"))
-            cy.get(colId('fullName')).should('contain', getFullName(user))
-            cy.get(colId('status')).should('contain', getStatusText(timesheet.status))
+            cy.get(colId('date')).should('contain', datePipe.transform(timesheet.startTime, "d. MMM YYYY")); 
+            cy.get(colId('startTime')).should('contain', datePipe.transform(timesheet.startTime, "HH:mm"));
+            cy.get(colId('endTime')).should('contain', datePipe.transform(timesheet.endTime, "HH:mm"));
+            cy.get(colId('fullName')).should('contain', getFullName(user));
+            cy.get(colId(<any> 'mission')).should('contain', mission.address);
+            cy.get(colId(<any> 'missionActivity')).should('contain', activity.name);
+            cy.get(colId('status')).should('contain', getStatusText(timesheet.status));
             cy.get(colId('totalHours')).should('contain', timesheet.totalHours);
         })
     })

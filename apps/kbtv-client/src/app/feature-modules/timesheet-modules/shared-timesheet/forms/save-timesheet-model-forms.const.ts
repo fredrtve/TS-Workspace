@@ -1,25 +1,27 @@
 import { Validators } from '@angular/forms';
-import { Mission, Timesheet, User, UserTimesheet } from '@core/models';
-import { StateMissions, StateTimesheets, StateUsers, StateUserTimesheets } from '@core/state/global-state.interfaces';
+import { Mission, MissionActivity, Timesheet, User, UserTimesheet } from '@core/models';
+import { StateActivities, StateMissionActivities, StateMissions, StateTimesheets, StateUsers, StateUserTimesheets } from '@core/state/global-state.interfaces';
 import { ValidationRules } from '@shared-app/constants/validation-rules.const';
 import { _timesheetFormToSaveModelConverter, _userTimesheetFormToSaveModelConverter } from '@shared-timesheet/forms/timesheet-form-to-save-model.converter';
 import { MissionAutoCompleteControl, UserSelectControl } from '@shared/constants/common-controls.const';
 import { IonDateControlComponent } from '@shared/scam/dynamic-form-controls/ion-date-time-control.component';
-import { TextAreaFieldComponent } from 'mat-dynamic-form-controls';
+import { SelectFieldComponent, TextAreaFieldComponent } from 'mat-dynamic-form-controls';
 import { _getISO } from 'date-time-helpers';
 import { DynamicFormBuilder, _createControlField, _createControlGroup } from 'dynamic-forms';
 import { Immutable, Maybe } from 'global-types';
 import { Converter, ModelFormConfig } from 'model/form';
+import{ _compareProp } from '@shared-app/helpers/compare-with-prop.helper'
+import { modelCtx } from '@core/configurations/model/app-model-context';
 
-type FormState = TimesheetFormState;
+type FormState = StateMissions & StateActivities & StateMissionActivities;
 interface TimesheetDateTime { startTime: string; endTime: string; date: string; }
 
-const userBuilder = new DynamicFormBuilder<UserTimesheetForm, StateUserTimesheets & StateMissions>();
-
-export type TimesheetFormState = StateMissions & StateUsers;
+export type TimesheetFormState = FormState & StateTimesheets & StateUsers;
+export type UserTimesheetFormState = FormState & StateUserTimesheets & StateUsers;
 
 export interface UserTimesheetForm {
     missionInput: Maybe<Mission | string>;  
+    missionActivity: Maybe<MissionActivity>;
     dateTime: TimesheetDateTime
     comment: string;
     id?: string
@@ -28,6 +30,8 @@ export interface TimesheetForm extends UserTimesheetForm {
     user: User;
 }
 
+const userBuilder = new DynamicFormBuilder<UserTimesheetForm, UserTimesheetFormState>();
+
 const _timeValueDefault = (hours: number = 0, minutes: number = 0): string => 
     new Date(new Date().getFullYear(), 1, 1, hours, minutes, 0).toISOString();
 
@@ -35,8 +39,8 @@ const _minMaxTime = (hours: number = 0, minutes: number = 0): string =>
     new Date(Date.UTC(new Date().getFullYear(), 1, 1, hours, minutes, 0)).toISOString();
 
 const _modelToForm: Converter<Timesheet, Partial<TimesheetForm>> = 
-    ({id, mission, startTime, endTime, comment, user}) => {
-        return {id, missionInput: mission, comment, user, dateTime: {
+    ({id, missionActivity, startTime, endTime, comment, user}) => {
+        return {id, missionInput: missionActivity?.mission, missionActivity, comment, user, dateTime: {
             startTime: startTime ? _getISO(startTime) : "", 
             endTime: endTime ? _getISO(endTime) : "",
             date: startTime ? _getISO(startTime) : ""
@@ -99,8 +103,25 @@ const CommentControl = _createControlField({
     validators$: [Validators.maxLength(ValidationRules.TimesheetCommentMaxLength)], 
 });
 
+const MissionActivitySelectControl = _createControlField<SelectFieldComponent<MissionActivity>>({
+    viewComponent: SelectFieldComponent, required$: true,
+    viewOptions: {
+        options$: [],
+        valueFormatter$: (val) => val.activity?.name,
+        compareWith$: _compareProp<MissionActivity>("id"),
+        placeholder$: "Velg aktivitet"
+    }, 
+});
+
+const activitiesSelector = userBuilder.bind(["missionInput"], ["activities", "missionActivities"], (f,s) => { 
+    if(!f.missionInput || typeof f.missionInput === "string") return [];
+    return modelCtx.get("missionActivities")
+        .where(x => x.missionId === (<Mission> f.missionInput).id!).include("activity").run(s);
+});
+
 const CommonControls = { 
     missionInput: MissionAutoCompleteControl, 
+    missionActivity: MissionActivitySelectControl,
     dateTime: DateTimeControlGroup, 
     comment: CommentControl,
     id: { required$: false, viewOptions: {} },
@@ -108,10 +129,12 @@ const CommonControls = {
 
 const CommonOptions = {
     missionInput: { required$: true, viewOptions: { options$: userBuilder.bindState("missions") } },
+    missionActivity: { viewOptions: { options$: activitiesSelector }}
 };
 
-export const UserTimesheetModelForm: Immutable<ModelFormConfig<StateUserTimesheets & StateMissions, UserTimesheet, UserTimesheetForm, FormState>> = {
-    includes: {prop: "userTimesheets", includes: ["mission"]},
+export const UserTimesheetModelForm: Immutable<ModelFormConfig<UserTimesheetFormState, UserTimesheet, UserTimesheetForm>> = {
+    stateProp: "userTimesheets",
+    includes: x => x.include("missionActivity", x => x.include("activity").include("mission")),
     actionConverter: _userTimesheetFormToSaveModelConverter,
     modelConverter: _modelToForm,
     actionOptions: { getRawValue: true },
@@ -122,10 +145,11 @@ export const UserTimesheetModelForm: Immutable<ModelFormConfig<StateUserTimeshee
     })
 }
 
-const builder = new DynamicFormBuilder<TimesheetForm, StateTimesheets & StateMissions & StateUsers>();
+const builder = new DynamicFormBuilder<TimesheetForm, TimesheetFormState>();
 
-export const TimesheetModelForm: Immutable<ModelFormConfig<StateTimesheets & StateMissions & StateUsers, Timesheet, TimesheetForm, FormState>> = {
-    includes: {prop: "timesheets", includes: ["mission", "user"]},
+export const TimesheetModelForm: Immutable<ModelFormConfig<TimesheetFormState, Timesheet, TimesheetForm>> = {
+    stateProp: "timesheets",
+    includes: x => x.include("user").include("missionActivity", x => x.include("activity").include("mission")),
     actionConverter: _timesheetFormToSaveModelConverter,
     modelConverter: _modelToForm,
     actionOptions: { getRawValue: true },

@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
+import { modelCtx } from '@core/configurations/model/app-model-context';
 import { Timesheet } from '@core/models';
 import { GroupByPeriod } from '@shared-app/enums/group-by-period.enum';
 import { _setFullNameOnUserForeigns } from '@shared-app/helpers/add-full-name-to-user-foreign.helper';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { _getSummariesByType } from '@shared-timesheet/helpers/get-summaries-by-type.helper';
-import { SharedTimesheetActions } from '@shared-timesheet/state/actions.const';
 import { AgGridConfig } from '@shared/components/abstracts/ag-grid-config.interface';
 import { filterRecords } from '@shared/operators/filter-records.operator';
 import { Immutable, ImmutableArray, Maybe } from 'global-types';
-import { FetchingStatus, ModelFetcherActions } from 'model/state-fetcher';
+import { FetchingStatus } from 'model/state-fetcher';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Store } from 'state-management';
@@ -20,6 +20,8 @@ import { StoreState } from './state/store-state';
 
 type ValidRecord = Timesheet | TimesheetSummary;
 
+const timesheetQuery = modelCtx.get("timesheets").include("missionActivity");
+
 @Injectable({providedIn: "any"})
 export class TimesheetStatisticFacade extends WithUnsubscribe() {
 
@@ -28,10 +30,17 @@ export class TimesheetStatisticFacade extends WithUnsubscribe() {
 
     groupBy$ = this.store.selectProperty$("timesheetStatisticGroupBy");
 
-    private filteredTimesheets$ = this.store.select$(['timesheets', 'timesheetStatisticTimesheetCriteria']).pipe(
-        map(x => <[ImmutableArray<Timesheet>, Immutable<TimesheetCriteria>]> [x.timesheets, x.timesheetStatisticTimesheetCriteria]),
+    private mappedTimesheets = this.store.select$(['timesheets', 'missionActivities']).pipe(
+        map(x => timesheetQuery.run(x))
+    )
+
+    private filteredTimesheets$ = combineLatest([
+        this.mappedTimesheets, 
+        this.store.selectProperty$("timesheetStatisticTimesheetCriteria")]
+    ).pipe(
         filterRecords(TimesheetFilter), 
-        map(x => x.records));
+        map(x => x.records)
+    );
 
     private groupedTimesheets$ = combineLatest([
         this.filteredTimesheets$,

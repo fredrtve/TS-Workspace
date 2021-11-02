@@ -1,6 +1,6 @@
 import { DatePipe } from "@angular/common";
 import { ApiUrl } from "@core/api-url.enum";
-import { Mission, UserTimesheet } from "@core/models";
+import { Activity, Mission, MissionActivity, UserTimesheet } from "@core/models";
 import { StateUserTimesheets } from "@core/state/global-state.interfaces";
 import { ValidationRules } from "@shared-app/constants/validation-rules.const";
 import { TimesheetStatus } from "@shared-app/enums/timesheet-status.enum";
@@ -21,7 +21,11 @@ describe("User Timesheet Form", () => {
     const oneHour = 3.6e6;
     const mission: Mission = {id: '1', address: 'testaddress', lastVisited: new Date().getTime(), createdAt: new Date().getTime() }
     const mission2: Mission = {id: '2', address: 'uniqueaddr2', lastVisited: new Date().getTime(), createdAt: new Date().getTime() }
-    const timesheet: UserTimesheet = { id: '1', missionId: mission.id, 
+    const activity: Activity = { id: '1', name: "testactivity" };
+    const missionActivity: MissionActivity = { id:'1', missionId: '1', activityId: '1' }
+    const activity2: Activity = { id: '2', name: "testactivity2" };
+    const missionActivity2: MissionActivity = { id:'2', missionId: '2', activityId: '2' }
+    const timesheet: UserTimesheet = { id: '1', missionActivityId: missionActivity.id, 
         status: TimesheetStatus.Open, comment: "test", totalHours: 8, 
         startTime: _getFirstDayOfWeek().getTime(), endTime: _getFirstDayOfWeek().getTime() + 8*oneHour
     }
@@ -34,7 +38,9 @@ describe("User Timesheet Form", () => {
 
 
     it('can fill in form and create timesheet', () => {  
-        cy.login('Leder', '/mine-timer/liste', { missions: [mission,mission2] }); 
+        cy.login('Leder', '/mine-timer/liste', { 
+            missions: [mission,mission2], missionActivities: [missionActivity, missionActivity2], activities: [activity, activity2] 
+        }); 
         cy.mainFabClick();
         cy.wait(200);
 
@@ -47,6 +53,10 @@ describe("User Timesheet Form", () => {
 
         isNotSubmittable();
 
+        cy.getCy('form-missionActivity').click().wait(200);
+        cy.get('mat-option').filter(`:contains("${activity.name}")`).click();
+
+        isNotSubmittable();
         //Check that it is not submittable with invalid comment
         const comment = 'thisisatestcomment';
         cy.assertTextFormControl("comment", comment, [
@@ -87,7 +97,7 @@ describe("User Timesheet Form", () => {
         cy.storeState<StateUserTimesheets>().then(state => {
             expect(state.userTimesheets).to.have.lengthOf(1);
             const timesheet = state.userTimesheets![0];
-            expect(timesheet.missionId).to.equal(mission.id);
+            expect(timesheet.missionActivityId).to.equal(missionActivity.id);
             expect(timesheet.comment).to.equal(comment);
             expect(timesheet.totalHours).to.equal(endParams.hour - startParams.hour);
             expect(timesheet.startTime).to.be.closeTo(
@@ -100,18 +110,24 @@ describe("User Timesheet Form", () => {
     });
 
     it('shows current values on update & updates changed values', () => {
-        cy.login('Leder', '/mine-timer', { missions: [mission,mission2], userTimesheets: [timesheet] });  
+        cy.login('Leder', '/mine-timer', { 
+            missions: [mission,mission2], userTimesheets: [timesheet], 
+            missionActivities: [missionActivity, missionActivity2], activities: [activity, activity2] 
+        });  
         cy.get('app-timesheet-mission-bar').click();
         cy.wait(200);   
         
         //Check that existing values are filled in
         cy.getCy('form-missionInput','input').invoke('val').should('equal', mission.address);      
+        cy.getCy('form-missionActivity').should('contain', activity.name)  
         cy.getCy('form-date','input').invoke('val').should('equal', datePipe.transform(timesheet.startTime, "MMM d, y"));   
         cy.getCy('form-startTime','input').invoke('val').should('equal', datePipe.transform(timesheet.startTime, "HH:mm"));   
         cy.getCy('form-endTime','input').invoke('val').should('equal', datePipe.transform(timesheet.endTime, "HH:mm"));  
         cy.getCy('form-comment','textarea').invoke('val').should('equal', timesheet.comment);
 
-        const updated = { mission: mission2, 
+        const updated = { 
+            mission: mission2, 
+            activity: activity2,
             date: { year: 2019, month: 4, day: 12 }, 
             start: { hour: 6, minutes: 15 }, 
             end: { hour: 9, minutes: 15 } 
@@ -120,6 +136,9 @@ describe("User Timesheet Form", () => {
         //Update values
         cy.getCy('form-missionInput','input').clear().type(updated.mission.address!); 
         cy.wait(500).get('mat-option').first().click();
+
+        cy.getCy('form-missionActivity').click().wait(100);
+        cy.get('mat-option').filter(`:contains("${updated.activity.name}")`).click();
 
         cy.getCy('form-date').wait(1000).click().wait(1000);//Ensure ion picker shows up
         cy.wait(2000); //Have to wait for selection to work on first
@@ -143,7 +162,7 @@ describe("User Timesheet Form", () => {
         const {year, month, day} = updated.date;
         cy.storeState<StateUserTimesheets>().then(state => {
             const timesheet = state.userTimesheets![0];
-            expect(timesheet.missionId).to.equal(updated.mission.id);
+            expect(timesheet.missionActivityId).to.equal(missionActivity2.id);
             expect(timesheet.totalHours).to.equal(updated.end.hour - updated.start.hour);
             expect(timesheet.startTime).to.be.closeTo(
                 new Date(year, month, day, updated.start.hour, updated.start.minutes).getTime(), 6e4

@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { MatBottomSheetRef } from "@angular/material/bottom-sheet";
-import { StateMissions, StateUsers } from "@core/state/global-state.interfaces";
+import { StateActivities, StateMissionActivities, StateMissions, StateUsers } from "@core/state/global-state.interfaces";
 import { TimesheetCriteriaForm, TimesheetCriteriaFormSheet, TimesheetCriteriaFormState, UserTimesheetCriteriaForm, UserTimesheetCriteriaFormSheet, UserTimesheetCriteriaFormState, _criteriaFormToTimesheetCriteria, _timesheetCriteriaToForm } from "@shared-timesheet/forms/timesheet-criteria-form.const";
 import { FormService } from "form-sheet";
 import { Immutable } from "global-types";
@@ -15,7 +15,7 @@ export class TimesheetCriteriaFormService {
 
     constructor(
         private formService: FormService,
-        private store: Store<StateMissions & StateUsers>
+        private store: Store<StateMissions & StateUsers & StateActivities & StateMissionActivities>
     ){}
 
     open(onSubmit: (t: Immutable<TimesheetCriteria>) => void, initialValue?: Immutable<TimesheetCriteria>): MatBottomSheetRef {
@@ -23,7 +23,7 @@ export class TimesheetCriteriaFormService {
             TimesheetCriteriaFormSheet,
             { 
                 initialValue: initialValue ? _timesheetCriteriaToForm(initialValue) : null,
-                formState: this.store.select$(["missions", "users"]).pipe(
+                formState: this.store.select$(["missions", "users", "missionActivities", "activities"]).pipe(
                     map(state => { return { ...state, users: _noEmployersFilter(state.users) }}))
             },
             (val) => onSubmit(_criteriaFormToTimesheetCriteria(val))
@@ -35,7 +35,7 @@ export class TimesheetCriteriaFormService {
 export class UserTimesheetCriteriaFormService {
     constructor(
         private formService: FormService,
-        private store: Store<StateMissions & StateSyncConfig>
+        private store: Store<StateMissions & StateSyncConfig & StateActivities & StateMissionActivities>
     ){}
 
     open(onSubmit: (t: Immutable<TimesheetCriteria>) => void, initialValue?: Immutable<TimesheetCriteria>): MatBottomSheetRef {
@@ -43,7 +43,7 @@ export class UserTimesheetCriteriaFormService {
             UserTimesheetCriteriaFormSheet,
             { 
                 initialValue: initialValue ? _timesheetCriteriaToForm(initialValue) : null, 
-                formState: this.store.select$(["missions", "syncConfig"]) 
+                formState: this.store.select$(["missions", "syncConfig", "missionActivities", "activities"]) 
             },
             (val) => onSubmit(_criteriaFormToTimesheetCriteria(<Immutable<UserTimesheetCriteriaForm>> val))
         )

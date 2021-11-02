@@ -4,10 +4,10 @@ import { MissionNote } from './mission-note.interface';
 import { EmployerForeign } from './relationships/employer-foreign.interface';
 import { MissionTypeForeign } from './relationships/mission-type-foreign.interface';
 import { ModelFile } from './base-entity-file.interface';
-import { Timesheet, UserTimesheet } from './timesheet.interface';
 import { IContactable } from './sub-interfaces/icontactable.interface';
 import { IAddress } from './sub-interfaces/iaddress.interface';
 import { IPosition } from './sub-interfaces/iposition.interface';
+import { MissionActivity } from './mission-activity.interface';
 
 export interface Mission extends ModelFile, EmployerForeign, MissionTypeForeign, IContactable, IAddress {
     description?: string;
@@ -18,8 +18,7 @@ export interface Mission extends ModelFile, EmployerForeign, MissionTypeForeign,
     missionImages?: MissionImage[];
     missionDocuments?: MissionDocument[];
     missionNotes?: MissionNote[];
-    timesheets?: Timesheet[];
-    userTimesheets?: UserTimesheet[];
+    missionActivities?: MissionActivity[];
 
     position?: IPosition;
 };

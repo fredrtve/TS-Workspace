@@ -14,6 +14,7 @@ const TimesheetCriteriaChipOptions: {[key in keyof TimesheetCriteria]: CriteriaC
     dateRange: { valueFormatter: (val) => val ? _formatDateRange(val, _formatShortDate) : undefined }, 
     dateRangePreset: { ignored: true },
     status: { valueFormatter: (val) => val ? translations[TimesheetStatus[val]?.toLowerCase()] : undefined }, 
+    activity: { valueFormatter: (val) => val?.name }, 
 }
 
 export const _timesheetCriteriaChipsFactory = _weakMemoizer(timesheetCriteriaChipsFactory);

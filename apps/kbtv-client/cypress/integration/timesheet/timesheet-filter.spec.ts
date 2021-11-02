@@ -4,7 +4,7 @@ import { registerLocaleData } from '@angular/common';
 import norwayLocale from '@angular/common/locales/nb';
 import { TimesheetCriteria } from "@shared-timesheet/timesheet-filter/timesheet-criteria.interface";
 import { TimesheetStatus } from "@shared-app/enums/timesheet-status.enum";
-import { Mission, User } from "@core/models";
+import { Activity, Mission, User } from "@core/models";
 import { Roles } from "@core/roles.enum";
 import { DateRangePresets } from "@shared-app/enums/date-range-presets.enum";
 import { ApiUrl } from "@core/api-url.enum";
@@ -29,9 +29,11 @@ describe('Timesheet Filter', () => {
     const user : User = { userName: "test", firstName: "first", lastName: "last", role: Roles.Ansatt }    
     const mission2 : Mission = { id: '2', address: 'test2' };
     const user2 : User = { userName: "test2", firstName: "first2", lastName: "last2", role: Roles.Ansatt }
+    const activity : Activity = { id: '1', name: "testactivity1" }
+    const activity2 : Activity = { id: '2', name: "testactivity2" }
 
     const existingCriteria: TimesheetCriteria = { 
-        status: TimesheetStatus.Open, mission, user, dateRangePreset: DateRangePresets.Custom,
+        status: TimesheetStatus.Open, mission, user, dateRangePreset: DateRangePresets.Custom, activity,
         dateRange: { start: _getISO(new Date().setMonth(3)), end: _getISO(new Date().setMonth(5)) },
     }
 
@@ -40,7 +42,7 @@ describe('Timesheet Filter', () => {
         cy.intercept('GET', '**' + ApiUrl.Timesheet + '**', { statusCode: 200, body: [] }, );
 
         cy.login('Leder', '/timestatistikk', { 
-            timesheetStatisticTimesheetCriteria: existingCriteria, missions: [mission, mission2] 
+            timesheetStatisticTimesheetCriteria: existingCriteria, missions: [mission, mission2],activities: [activity, activity2]    
         });  
         cy.getCy('bottom-bar-action').filter(":contains('Filtre')").click();
         cy.wait("@getUsers"); 
@@ -52,6 +54,7 @@ describe('Timesheet Filter', () => {
         //Check that existing values are filled in   
         cy.getCy('form-user').should('contain', getFullName(user))  
         cy.getCy('form-mission','input').invoke('val').should('eq', mission.address);
+        cy.getCy('form-activity').should('contain', activity.name) ;
         getPresetOption("dateRangePreset", "Velg tid").should('have.class', 'mat-radio-checked');
         cy.getCy('form-start','input').invoke('val').should('eq', datePipe.transform(dateRange!.start, "MMM d, y"));
         cy.getCy('form-end','input').invoke('val').should('eq', datePipe.transform(dateRange!.end, "MMM d, y"));
@@ -60,6 +63,7 @@ describe('Timesheet Filter', () => {
         const newValues: TimesheetCriteria = { 
             status: TimesheetStatus.Confirmed, 
             user: user2, mission: mission2, 
+            activity: activity2,
             dateRangePreset: DateRangePresets.CurrentYear,
         }
 
@@ -68,6 +72,9 @@ describe('Timesheet Filter', () => {
 
         cy.getCy('form-mission','input').clear().type(mission2.address!).wait(500);
         cy.get(".mat-autocomplete-panel").children().first().click();
+
+        cy.getCy('form-activity').click().wait(100);
+        cy.get('mat-option').filter(`:contains("${newValues.activity!.name}")`).click();
 
         getPresetOption("dateRangePreset", "I år").click();
 
@@ -79,6 +86,7 @@ describe('Timesheet Filter', () => {
             const criteria = state.timesheetStatisticTimesheetCriteria;
             expect(criteria.user?.userName).to.equal(newValues.user?.userName);
             expect(criteria.mission?.address).to.equal(newValues.mission?.address);
+            expect(criteria.activity!.id).to.equal(newValues.activity!.id);
             expect(criteria.dateRangePreset).to.equal(DateRangePresets.CurrentYear);
             expect(criteria.dateRange).to.not.be.undefined;
             expect((<Date> criteria.dateRange!.start).getTime()).to.equal(_getFirstDayOfYear().getTime())
@@ -89,8 +97,9 @@ describe('Timesheet Filter', () => {
     it('can reset values', () => {
         cy.contains('Nullstill').click();
 
-        cy.getCy('form-user').should('contain', 'Velg ansatt'); 
+        cy.getCy('form-user').should('contain', 'Velg ansatt');
         cy.getCy('form-mission','input').invoke('val').should('not.be.ok');
+        cy.getCy('form-activity').should('contain', 'Velg aktivitet'); 
         cy.getCy('form-dateRangePreset','mat-radio-button').should('not.have.class', 'mat-radio-checked');
         getPresetOption("status", "Begge").should('have.class', 'mat-radio-checked');
     })

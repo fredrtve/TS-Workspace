@@ -1,7 +1,7 @@
 import { ApiUrl } from "../../api-url.enum";
 import { ModelState } from "../../state/model-state.interface";
 
-export const ModelBaseUrls: Record<keyof ModelState, string> = {
+export const ModelBaseUrls: Partial<Record<keyof ModelState, string>> = {
     missions: ApiUrl.Mission,
     missionImages: ApiUrl.MissionImage,
     missionDocuments: ApiUrl.MissionDocument,

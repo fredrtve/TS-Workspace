@@ -1,10 +1,10 @@
 import { ModelState } from '../../state/model-state.interface';
 import { _idGenerator } from '@shared-app/helpers/id/id-generator.helper';
 import { Immutable } from 'global-types';
-import { StateModels, ValidStateModelArray } from 'model/core';
+import { StateModels, ValidStateModelArray, ModelChildrenMap } from 'model/core';
 import { ModelFetcherConfig } from 'model/state-fetcher';
 import { ApiUrl } from '../../api-url.enum';
-import { User } from '../../models';
+import { Mission, User } from '../../models';
 import { ModelIdProps } from './model-id-props.const';
 
 export type AppModelConfigMap = { 
@@ -26,8 +26,7 @@ export const ModelConfigMap: AppModelConfigMap = {
             missionImages: {stateProp: "missionImages", childKey: "missionId", cascadeDelete: true}, 
             missionDocuments: {stateProp: "missionDocuments", childKey: "missionId", cascadeDelete: true},
             missionNotes: {stateProp: "missionNotes", childKey: "missionId", cascadeDelete: true}, 
-            timesheets: {stateProp: "timesheets", childKey: "missionId"},
-            userTimesheets: {stateProp: "userTimesheets", childKey: "missionId"},
+            missionActivities: {stateProp: "missionActivities", childKey: "missionId", cascadeDelete: true}, 
         }, 
         foreigns: {
             missionType: {stateProp: "missionTypes", foreignKey: "missionTypeId"},
@@ -47,6 +46,19 @@ export const ModelConfigMap: AppModelConfigMap = {
         displayFn: (m) => m.name!,   
         idGenerator: _idGenerator, 
         foreigns: {}, children: {}
+    },   
+    missionActivities: {
+        stateProp: "missionActivities",
+        idProp: ModelIdProps.missionActivities,  
+        idGenerator: _idGenerator,
+        children: {
+            timesheets: { stateProp: "timesheets", childKey: "missionActivityId" },
+            userTimesheets: { stateProp: "userTimesheets", childKey: "missionActivityId" },
+        },
+        foreigns: { 
+            mission: { stateProp: "missions", foreignKey: "missionId" },   
+            activity: { stateProp: "activities", foreignKey: "activityId" },    
+        }, 
     }, 
     missionImages: {
         stateProp: "missionImages",
@@ -102,7 +114,7 @@ export const ModelConfigMap: AppModelConfigMap = {
         idGenerator: _idGenerator,
         children: {},
         foreigns: { 
-            mission: { stateProp: "missions", foreignKey: "missionId" }
+            missionActivity: { stateProp: "missionActivities", foreignKey: "missionActivityId" },
         },            
     },    
     timesheets: {
@@ -112,8 +124,14 @@ export const ModelConfigMap: AppModelConfigMap = {
         idGenerator: _idGenerator,
         children: {},
         foreigns: { 
-            mission: { stateProp: "missions", foreignKey: "missionId" },
+            missionActivity: { stateProp: "missionActivities", foreignKey: "missionActivityId" },
             user: { stateProp: "users", foreignKey: "userName" }
         },     
+    },    
+    activities: {
+        stateProp: "activities",
+        idProp: ModelIdProps.activities,  
+        idGenerator: _idGenerator,
+        children: {}, foreigns: {}, 
     }, 
 }

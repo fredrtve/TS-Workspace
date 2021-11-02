@@ -26,8 +26,14 @@
 
     <app-list-item>
       <mat-icon left-side class="pl-2 pr-2">home</mat-icon>
-      ({{timesheet.missionId}}) {{ timesheet.mission?.address }}
-    </app-list-item>
+        ({{timesheet.missionActivity?.missionId}}) {{ timesheet.missionActivity?.mission?.address }}
+      </app-list-item>
+    <mat-divider inset=true></mat-divider>
+
+    <app-list-item>
+      <mat-icon left-side class="pl-2 pr-2">handyman</mat-icon>
+        {{ timesheet.missionActivity?.activity?.name }}
+      </app-list-item>
     <mat-divider inset=true></mat-divider>
 
     <app-list-item>

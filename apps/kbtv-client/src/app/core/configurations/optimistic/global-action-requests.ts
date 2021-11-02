@@ -14,7 +14,7 @@ export const _setSaveModelRequest = _entry(GlobalActions.setSaveModel, (a) => {
     return a.isNew ? 
         { 
             method: "POST", stateProp: a.stateProp, body,
-            apiUrl: ModelBaseUrls[a.stateProp],
+            apiUrl: ModelBaseUrls[a.stateProp] || "",
             headers: { [CommandIdHeader]: _idGenerator(4) },
             type: SaveModelRequest
         } : 

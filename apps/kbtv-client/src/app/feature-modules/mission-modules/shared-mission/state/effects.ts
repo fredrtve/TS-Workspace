@@ -31,7 +31,8 @@ export class CreateMissionImagesEffect implements Effect {
                     
                     actions.push(_formToSaveModelFileConverter({
                         stateProp: "missionImages", 
-                        formValue: <ModelFileForm> { missionId: x.action.missionId, fileList: [file] }
+                        formValue: <ModelFileForm> { missionId: x.action.missionId, fileList: [file] },
+                        initialValue: {}
                     }))
                 }
 

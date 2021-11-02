@@ -56,7 +56,7 @@ export class TimesheetAdminWeekListComponent extends WithUnsubscribe() {
       ).subscribe();
     }
 
-  openTimesheetForm = (initialValue?: Immutable<Partial<TimesheetForm>>): void => 
+  openTimesheetForm = (initialValue?: Immutable<Partial<Timesheet>>): void => 
     this.facade.openTimesheetForm(initialValue);
     
   confirmTimesheets = (timesheets: Timesheet[]): void => {

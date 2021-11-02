@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { modelCtx } from '@core/configurations/model/app-model-context';
 import { Timesheet } from '@core/models';
-import { StateMissions, StateUserTimesheets } from '@core/state/global-state.interfaces';
+import { StateActivities, StateMissionActivities, StateMissions, StateUserTimesheets } from '@core/state/global-state.interfaces';
 import { DateRangePresets } from '@shared-app/enums/date-range-presets.enum';
 import { TimesheetCriteria } from '@shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { TimesheetFilter } from '@shared-timesheet/timesheet-filter/timesheet-filter.model';
@@ -16,26 +16,24 @@ import { UserTimesheetListLocalActions } from './state/local-state';
 import { UserTimesheetListState } from './state/user-timesheet-list.state';
 import { UserTimesheetListCriteriaQueryParam } from './user-timesheet-list-route-params.const';
 
-type State = StateMissions & StateUserTimesheets & StateSyncConfig;
+type State = StateMissions & StateUserTimesheets & StateSyncConfig & StateMissionActivities & StateActivities;
+
+const timesheetQuery = modelCtx.get("userTimesheets").include("missionActivity", x => x.include("mission").include("activity"))
 
 @Injectable()
 export class UserTimesheetListFacade {
     
       get criteria(){ return this.componentStore.state.timesheetCriteria; } 
       criteria$ = this.componentStore.selectProperty$("timesheetCriteria");
-  
-      private filteredTimesheets$ = combineLatest([
-          this.store.selectProperty$("userTimesheets"),
-          this.criteria$
-      ]).pipe(filterRecords(TimesheetFilter), map(x => x.records));
 
-      timesheets$: Observable<Maybe<Immutable<Timesheet>[]>> = combineLatest([
-        this.filteredTimesheets$, 
-        this.store.selectProperty$("missions")
-      ]).pipe(
-          map(([userTimesheets, missions]) =>  !userTimesheets ? null :
-            modelCtx.get("userTimesheets").include("mission").run({userTimesheets, missions})
-          )
+      private mappedTimesheets$: Observable<Maybe<Immutable<Timesheet>[]>> = 
+        this.store.select$(["userTimesheets", "missions", "missionActivities", "activities"]).pipe(
+          map(state => timesheetQuery.run(state))
+        );
+
+      timesheets$ = combineLatest([this.mappedTimesheets$,this.criteria$]).pipe(
+        filterRecords(TimesheetFilter), 
+        map(x => x.records)
       );
 
       constructor(

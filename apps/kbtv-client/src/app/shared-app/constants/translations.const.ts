@@ -43,6 +43,12 @@ export const translations: { [key: string]: string } = {
   mission: "Oppdrag",   
   missionid: "Oppdrag",
 
+  missionactivity: "Aktivitet",   
+  missionactivityid: "Aktivitet",
+
+  activity: "Aktivitet",   
+  activityId: "Aktivitet",
+
   employer: "Oppdragsgiver",
   employerid: "Oppdragsgiver",
   

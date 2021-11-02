@@ -24,6 +24,8 @@ import { TimesheetFilter } from '../shared-timesheet/timesheet-filter/timesheet-
 import { TimesheetAdminActions } from './state/actions.const';
 import { StoreState } from './store-state';
 
+const timesheetQuery = modelCtx.get("timesheets").include("missionActivity", x => x.include("mission").include("activity"))
+
 @Injectable({providedIn: 'any'})
 export class TimesheetAdminFacade {
 
@@ -42,8 +44,14 @@ export class TimesheetAdminFacade {
     weekCriteriaFormState$: Observable<WeekCriteriaFormState> = 
         this.users$.pipe(map(x => { return { users: x } } ))
 
-    private _weeklySummaries$ = this.store.select$(['timesheets', 'timesheetAdminTimesheetCriteria']).pipe(
-        map(x => <[ImmutableArray<Timesheet>, Immutable<TimesheetCriteria>]> [x.timesheets, x.timesheetAdminTimesheetCriteria]),
+    private mappedTimesheets$ = this.store.select$(['timesheets', 'missions', 'activities', 'missionActivities']).pipe(
+        map(x => timesheetQuery.run(x))
+    );
+
+    private _weeklySummaries$ = combineLatest([
+        this.mappedTimesheets$, 
+        this.store.selectProperty$('timesheetAdminTimesheetCriteria')
+    ]).pipe(
         filterRecords(TimesheetFilter), 
         map(x => _getSummariesByType(GroupByPeriod.Week, x.records))
     );
@@ -54,14 +62,11 @@ export class TimesheetAdminFacade {
 
     selectedWeekTimesheets$: Observable<Maybe<Immutable<Timesheet>[]>> = combineLatest([
         this.weeklySummaries$,
-        this.store.select$(['timesheetAdminSelectedWeekNr', 'missions'])
-    ]).pipe(map(([summaries, {timesheetAdminSelectedWeekNr, missions}]) => {
-        const summary = _find<TimesheetSummary>(summaries, timesheetAdminSelectedWeekNr, "weekNr");
+        this.store.selectProperty$('timesheetAdminSelectedWeekNr')
+    ]).pipe(map(([summaries, selectedWeekNr]) => {
+        const summary = _find<TimesheetSummary>(summaries, selectedWeekNr, "weekNr");
         if(!summary?.timesheets?.length) return;
-        return modelCtx.get("timesheets")
-            .include("mission")
-            .select({missions, timesheets: summary.timesheets}, 
-                x => { return <Timesheet> {...x, fullName: summary.fullName}})
+        return summary.timesheets.map(x => ({...x, fullName: summary.fullName!}))
     }))
     
     constructor(
@@ -70,7 +75,7 @@ export class TimesheetAdminFacade {
         this.store.dispatch(TimesheetAdminActions.fetchTimesheets<ModelState>({props: ["users"]}))
     }
     
-    openTimesheetForm = (initialValue?: Immutable<Partial<TimesheetForm>>): void => {
+    openTimesheetForm = (initialValue?: Immutable<Partial<Timesheet>>): void => {
         this.modelFormService.open(TimesheetModelForm, initialValue)
     };
 

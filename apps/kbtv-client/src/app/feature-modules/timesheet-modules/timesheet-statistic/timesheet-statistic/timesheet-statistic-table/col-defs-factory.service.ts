@@ -1,17 +1,17 @@
 import { DatePipe } from "@angular/common";
 import { Injectable } from "@angular/core";
-import { Mission, Timesheet } from "@core/models";
-import { Immutable, Maybe, UnknownState } from "global-types";
-import { TimesheetSummary } from '@shared-timesheet/interfaces';
-import { TimesheetStatus } from "@shared-app/enums/timesheet-status.enum";
+import { Activity, Mission, MissionActivity, Timesheet } from "@core/models";
+import { StateActivities, StateMissionActivities, StateMissions } from "@core/state/global-state.interfaces";
 import { translations } from "@shared-app/constants/translations.const";
-import { ColDef, ValueFormatterParams } from "ag-grid-community";
-import { Store } from "state-management";
-import { StateMissions } from "@core/state/global-state.interfaces";
-import { _convertArrayToObject } from "array-helpers";
-import { WithUnsubscribe } from "@shared-app/mixins/with-unsubscribe.mixin";
-import { takeUntil } from "rxjs/operators";
+import { TimesheetStatus } from "@shared-app/enums/timesheet-status.enum";
 import { _idGenerator } from "@shared-app/helpers/id/id-generator.helper";
+import { WithUnsubscribe } from "@shared-app/mixins/with-unsubscribe.mixin";
+import { TimesheetSummary } from '@shared-timesheet/interfaces';
+import { ColDef, ValueFormatterParams } from "ag-grid-community";
+import { _convertArrayToObject } from "array-helpers";
+import { Immutable, Maybe, UnknownState } from "global-types";
+import { takeUntil } from "rxjs/operators";
+import { Store } from "state-management";
 
 @Injectable()
 export class ColDefsFactoryService extends WithUnsubscribe() {
@@ -20,10 +20,11 @@ export class ColDefsFactoryService extends WithUnsubscribe() {
   private timesheetColDefs: ColDef[];
 
   private missionMap: Record<string, Maybe<Immutable<Mission>>> = {};
+  private activityMap: Record<string, Maybe<Immutable<Activity>>> = {};
 
   constructor(
     private datePipe: DatePipe,
-    private store: Store<StateMissions>
+    private store: Store<StateMissions & StateMissionActivities & StateActivities>
   ) {
     super();
     this.summaryColDefs = [
@@ -43,13 +44,15 @@ export class ColDefsFactoryService extends WithUnsubscribe() {
       { field: "startTime", valueFormatter: this.convertTime },
       { field: "endTime", valueFormatter: this.convertTime },
       { field: "status", valueFormatter: this.convertStatus },
+      { field: "missionActivity", valueFormatter: this.convertMissionActivityIdToName },
+      { colId: "mission", field: "missionActivity", headerName: translations["mission"], valueFormatter: this.convertMissionActivityIdToAddress },
       { field: "comment", maxWidth: 200 },
-      { field: "missionId", valueFormatter: this.convertMissionId },
     ];
 
-    this.store.selectProperty$("missions").pipe(takeUntil(this.unsubscribe)).subscribe(x => 
-      this.missionMap = _convertArrayToObject(x, "id")
-    )
+    this.store.select$(["missions", "activities"]).pipe(takeUntil(this.unsubscribe)).subscribe(state => {
+      this.missionMap = _convertArrayToObject(state.missions, "id");
+      this.activityMap = _convertArrayToObject(state.activities, "id");
+    });
   }
 
   createColDefs(entity: TimesheetSummary | Timesheet): ColDef[]  {
@@ -97,6 +100,16 @@ export class ColDefsFactoryService extends WithUnsubscribe() {
   private convertStatus = (params: ValueFormatterParams): string => 
     translations[TimesheetStatus[params.value]?.toLowerCase()]
 
-  private convertMissionId = (params: ValueFormatterParams): string  => 
-    params.value ? `(${params.value}) ${this.missionMap[params.value]?.address || ''}` : "";
+  private convertMissionActivityIdToName = (params: ValueFormatterParams): string => {
+    if(!params.value) return "";
+    const missionActivity = <MissionActivity> params.value;
+    const activity = this.activityMap[missionActivity.activityId!];
+    return activity  ? `${activity.name}` : `${missionActivity.id}`;
+  }
+
+  private convertMissionActivityIdToAddress = (params: ValueFormatterParams): string => {
+    if(!params.value) return "";
+    const mission = this.missionMap[(<MissionActivity> params.value).missionId!];
+    return mission ? `${mission.address}` : ''; 
+  }
 }

@@ -16,4 +16,6 @@ export const AppOptimisticStateProps: Prop<State>[] =  [
     "userTimesheets", 
     "currentUser",
     "syncTimestamp",
+    "activities",
+    "missionActivities"
 ]

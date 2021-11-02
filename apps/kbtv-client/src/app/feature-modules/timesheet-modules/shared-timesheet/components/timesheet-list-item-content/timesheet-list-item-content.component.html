@@ -5,7 +5,8 @@
     {{ timesheet.startTime | date : 'shortTime' }} - {{ timesheet.endTime | date : 'shortTime' }}
   </div>
   <div class="mat-body ellipsis">
-    {{ timesheet.mission?.address || 'Finner ikke oppdrag' }}
+    {{ timesheet.missionActivity?.mission?.address || 'Finner ikke oppdrag' }}
+    ( {{ timesheet.missionActivity?.activity?.name }} )
   </div>
   <div class="mat-small ellipsis">
     {{ timesheet.comment }}

@@ -1,5 +1,5 @@
-import { Mission } from '@core/models';
-import { StateMissions, StateUsers } from '@core/state/global-state.interfaces';
+import { Activity, Mission } from '@core/models';
+import { StateActivities, StateMissionActivities, StateMissions, StateUsers } from '@core/state/global-state.interfaces';
 import { translations } from '@shared-app/constants/translations.const';
 import { DateRangePresets } from '@shared-app/enums/date-range-presets.enum';
 import { TimesheetStatus } from '@shared-app/enums/timesheet-status.enum';
@@ -8,7 +8,7 @@ import { TimesheetCriteria } from '@shared-timesheet/timesheet-filter/timesheet-
 import { DateRangeControlGroup, MissionAutoCompleteControl, UserSelectControl } from '@shared/constants/common-controls.const';
 import { SyncModelDateRangeOptions } from '@shared/constants/common-form-state-setters.const';
 import { IonDateControlComponent } from '@shared/scam/dynamic-form-controls/ion-date-time-control.component';
-import { RadioGroupFieldComponent } from 'mat-dynamic-form-controls';
+import { RadioGroupFieldComponent, SelectFieldComponent } from 'mat-dynamic-form-controls';
 import { DateRange, _getISO, _getMonthRange } from 'date-time-helpers';
 import { DynamicFormBuilder, _createControlField } from 'dynamic-forms';
 import { FormSheetViewConfig } from 'form-sheet';
@@ -16,6 +16,7 @@ import { Immutable, Maybe } from 'global-types';
 import { Converter } from 'model/form';
 import { StateSyncConfig } from 'state-sync';
 import { DeepPartial } from 'ts-essentials';
+import{ _compareProp } from '@shared-app/helpers/compare-with-prop.helper'
 
 export const _criteriaFormToTimesheetCriteria : Converter<UserTimesheetCriteriaForm, TimesheetCriteria> =
     ({customMonthISO, ...rest}) => {
@@ -35,17 +36,17 @@ export const _timesheetCriteriaToForm : Converter<TimesheetCriteria, DeepPartial
         }
     }
 
-export type TimesheetCriteriaFormState = StateUsers & StateMissions;
+export type TimesheetCriteriaFormState = StateUsers & StateMissions & StateMissionActivities & StateActivities;
 
 export interface TimesheetCriteriaForm extends UserTimesheetCriteriaForm, Required<Pick<TimesheetCriteria, "user">> {};
 
-export interface UserTimesheetCriteriaForm extends Required<Pick<TimesheetCriteria, "dateRangePreset" | "status">> {
+export interface UserTimesheetCriteriaForm extends Required<Pick<TimesheetCriteria, "dateRangePreset" | "status" | "activity">> {
     customMonthISO?: Maybe<string>;
     mission: Mission |  string;
     dateRange: DateRange<string>;
 };
 
-export type UserTimesheetCriteriaFormState = StateMissions & StateSyncConfig;
+export type UserTimesheetCriteriaFormState = StateMissions & StateSyncConfig & StateActivities & StateMissionActivities;
 
 const DateRangePresetControl = _createControlField<RadioGroupFieldComponent<DateRangePresets>>({ 
     required$: true, 
@@ -76,10 +77,22 @@ const StatusControl = _createControlField<RadioGroupFieldComponent<TimesheetStat
     }, 
 });
 
+const ActivitySelectControl = _createControlField<SelectFieldComponent<Activity>>({
+    viewComponent: SelectFieldComponent,
+    viewOptions: {
+        options$: [],
+        valueFormatter$: (val) => val.name,
+        compareWith$: _compareProp<Activity>("id"),
+        lazyOptions$: "all",
+        placeholder$: "Velg aktivitet"
+    }, 
+});
+
 const userBuilder = new DynamicFormBuilder<UserTimesheetCriteriaForm, UserTimesheetCriteriaFormState>();
 
 const CommonControls = {
     mission: {...MissionAutoCompleteControl, required$: false},
+    activity: ActivitySelectControl,
     dateRangePreset: DateRangePresetControl,
     dateRange: DateRangeControlGroup,
     customMonthISO: CustomMonthControl,
@@ -87,6 +100,7 @@ const CommonControls = {
 }
 
 const CommonOptions = {
+    activity: { viewOptions: { options$: userBuilder.bindState("activities") }},
     mission: { viewOptions: { options$: userBuilder.bindState("missions") } },
     customMonthISO: {
         required$: userBuilder.bindForm("dateRangePreset", (preset) => preset === DateRangePresets.CustomMonth),

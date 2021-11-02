@@ -5,11 +5,11 @@ import { ModelState } from "@core/state/model-state.interface";
 import { AppButton } from "@shared-app/interfaces/app-button.interface";
 import { AppChip } from '@shared-app/interfaces/app-chip.interface';
 import { UserTimesheetCardDialogWrapperComponent } from "@shared-timesheet/components/user-timesheet-card-dialog-wrapper.component";
-import { UserTimesheetModelForm, TimesheetForm, TimesheetFormState, UserTimesheetForm } from '@shared-timesheet/forms/save-timesheet-model-forms.const';
+import { TimesheetFormState, UserTimesheetForm, UserTimesheetModelForm } from '@shared-timesheet/forms/save-timesheet-model-forms.const';
 import { _timesheetCriteriaChipsFactory } from "@shared-timesheet/helpers/timesheet-criteria-chips-factory.helper";
 import { UserTimesheetCriteriaFormService } from "@shared-timesheet/timesheet-criteria-form-service";
 import { BottomIconButtons } from "@shared/constants/bottom-icon-buttons.const";
-import { Immutable, Maybe } from 'global-types';
+import { Immutable } from 'global-types';
 import { ModelFormService } from 'model/form';
 import { Observable } from "rxjs";
 import { map } from 'rxjs/operators';
@@ -34,7 +34,7 @@ export class UserTimesheetListComponent {
 
   actionFab: AppButton = { 
     icon: "add", aria: 'Legg til', 
-    callback: () => this.openTimesheetForm(<Immutable<Partial<TimesheetForm>>> this.facade.criteria) 
+    callback: () => this.openTimesheetForm(<Immutable<Partial<UserTimesheet>>> this.facade.criteria) 
   }
 
   constructor(
@@ -48,7 +48,7 @@ export class UserTimesheetListComponent {
         callback: this.openTimesheetFilter }
     ]
   }
-  openTimesheetForm = (initialValue?: Immutable<Partial<TimesheetForm>>): void => {
+  openTimesheetForm = (initialValue?: Immutable<Partial<UserTimesheet>>): void => {
     this.modelFormService.open<UserTimesheet, UserTimesheetForm, TimesheetFormState>(
       UserTimesheetModelForm,
       initialValue,

@@ -11,5 +11,7 @@ export const ModelIdProps: {[key in keyof ModelState]: ModelState[key] extends V
     timesheets: 'id',
     userTimesheets: 'id',
     inboundEmailPasswords: 'id',
+    missionActivities: 'id',
+    activities: 'id',
     users: 'userName',    
 }

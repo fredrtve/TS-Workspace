@@ -16,20 +16,19 @@ export const _timesheetFormToSaveModelConverter = (input: Immutable<ModelFormRes
 }
 
 export const _userTimesheetFormToSaveModelConverter = (input: Immutable<ModelFormResult<FormState, UserTimesheet, UserTimesheetForm>>) => {      
-    const {id, missionInput, comment, dateTime} = input.formValue;
+    const {id, missionActivity, comment, dateTime} = input.formValue;
    
     var entity: Timesheet = {
-        id, comment, missionId: (<Mission> missionInput)?.id,    
+        id, comment, 
+        missionActivityId: missionActivity?.id,    
         status: TimesheetStatus.Open,     
         startTime: dateTime!.startTime ? _mergeDateAndTime(dateTime!.date, dateTime!.startTime).getTime() : undefined,
         endTime:  dateTime!.endTime ? _mergeDateAndTime(dateTime!.date, dateTime!.endTime).getTime() : undefined,
     }; 
-    
-    if(!id) entity.createdAt = new Date().getTime();
 
     entity.totalHours = _getTotalHours(entity.startTime || 0, entity.endTime || 0)
 
-    return GlobalActions.saveModel<Model>({ 
+    return GlobalActions.saveModel<UserTimesheet>({ 
         entity, 
         stateProp: input.stateProp
     })

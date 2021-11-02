@@ -31,7 +31,12 @@ export class TimesheetFilter extends DataFilter<Timesheet, TimesheetCriteria>{
         }
         
         if(this.criteria.mission) {
-            exp = exp && record.missionId === this.criteria.mission.id;  
+            exp = exp && record.missionActivity?.missionId === this.criteria.mission.id;  
+            if(exp === false) return exp;
+        }
+
+        if(this.criteria.activity) {
+            exp = exp && record.missionActivity?.activityId === this.criteria.activity.id;  
             if(exp === false) return exp;
         }
 
@@ -60,7 +65,7 @@ export class TimesheetFilter extends DataFilter<Timesheet, TimesheetCriteria>{
     }
     
     private isObjectContainedIn(baseValue: Immutable<UnknownState>, prop: Prop<TimesheetCriteria>): boolean{
-        const fkRel = <ForeignRelation<ModelState, Timesheet, "user" | "mission">> (<UnknownState>this.modelConfig.foreigns)[prop];
+        const fkRel = <ForeignRelation<ModelState, Timesheet, "user" | "missionActivity">> (<UnknownState>this.modelConfig.foreigns)[prop];
         const modelCfg = _getModelConfig<ModelState, Model>(fkRel.stateProp);
         const value = <UnknownState> this.criteria[prop];
 

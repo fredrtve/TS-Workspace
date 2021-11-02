@@ -1,5 +1,5 @@
 import { ApiUrl } from "@core/api-url.enum";
-import { Mission, Timesheet, User } from "@core/models";
+import { Activity, Mission, MissionActivity, Timesheet, User } from "@core/models";
 import { Roles } from "@core/roles.enum";
 import { StateTimesheets } from "@core/state/global-state.interfaces";
 import { TimesheetStatus } from "@shared-app/enums/timesheet-status.enum";
@@ -19,21 +19,22 @@ describe("Timesheet Admin List", () => {
 
     const user : User = 
         { userName: "user", firstName: "firstName", lastName: "lastName", role: Roles.Leder };
-    
+    const activity : Activity = { id: '1', name: "testactivity" }
     const mission : Mission = { id: '1', address : 'testaddress' }
-
+    const missionActivity : MissionActivity = { id: '1', missionId: mission.id, activityId: activity.id }
+    
     const timesheetsDescending: Timesheet[] = [
-        { id: '4', totalHours: 4, status: TimesheetStatus.Open, userName: user.userName, missionId: mission.id,
+        { id: '4', totalHours: 4, status: TimesheetStatus.Open, userName: user.userName, missionActivityId: missionActivity.id,
             comment: "test4",
             startTime: _getDateByDateParams(thisYear, thisWeek, 6).getTime() + 4e6, 
             endTime: _getDateByDateParams(thisYear, thisWeek, 6).getTime() + 6e6,  
         },
-        { id: '3', totalHours: 3, status: TimesheetStatus.Confirmed, userName: user.userName, missionId: mission.id,
+        { id: '3', totalHours: 3, status: TimesheetStatus.Confirmed, userName: user.userName, missionActivityId: missionActivity.id,
             comment: "test3",
             startTime: _getDateByDateParams(thisYear, thisWeek, 4).getTime() + 4e6, 
             endTime: _getDateByDateParams(thisYear, thisWeek, 4).getTime() + 12e6,  
         },
-        { id: '1', totalHours: 2, status: TimesheetStatus.Open, userName: user.userName, missionId: mission.id,
+        { id: '1', totalHours: 2, status: TimesheetStatus.Open, userName: user.userName, missionActivityId: missionActivity.id,
             comment: "test1",
             startTime: _getDateByDateParams(thisYear, thisWeek, 2).getTime() + 5e6, 
             endTime: _getDateByDateParams(thisYear, thisWeek, 2).getTime() + 10e6,  
@@ -50,7 +51,8 @@ describe("Timesheet Admin List", () => {
 
     const login = (criteria: Partial<WeekCriteria>, weekNr: number | null) => 
         cy.login("Leder", `/timeadministrering/uker;criteria=${JSON.stringify(criteria || {})}/timer;weekNr=${weekNr}`, { 
-            users: [user], missions: [mission], timesheets: [...timesheetsDescending.slice().reverse(), timesheetOtherWeek]
+            users: [user], missions: [mission], activities: [activity], missionActivities: [missionActivity], 
+            timesheets: [...timesheetsDescending.slice().reverse(), timesheetOtherWeek]
         });
 
     const assertItemStatus = (listItem: Cypress.Chainable, status: TimesheetStatus) => {
@@ -98,6 +100,7 @@ describe("Timesheet Admin List", () => {
             const timesheet = timesheetsDescending[i];
             assertItemStatus(cy.wrap($el), timesheet.status!);
             cy.wrap($el).should('contain', mission.address);
+            cy.wrap($el).should('contain', activity.name);
             cy.wrap($el).should('contain', timesheet.comment);
             cy.wrap($el).should('contain', datePipe.transform(timesheet.startTime, "longDate"))
             cy.wrap($el).should('contain', `${datePipe.transform(timesheet.startTime, "shortTime")} - ${datePipe.transform(timesheet.endTime, "shortTime")}`)
