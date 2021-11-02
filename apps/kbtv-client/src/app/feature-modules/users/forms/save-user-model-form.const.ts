@@ -43,7 +43,8 @@ const PasswordControl = builder.field({
 const hasUserNameBinding = builder.bindForm("userName", (name) => name != null, true);
 
 export const UserModelForm: Immutable<ModelFormConfig<FormState, User,  SaveUserForm, FormState>> = {
-    includes: {prop: "users", includes: ["employer"]}, 
+    stateProp: "users",
+    includes: x => x.include("employer"), 
     actionConverter: _userFormToSaveUserConverter,
     actionOptions: { getRawValue: true },
     dynamicForm: builder.group()({

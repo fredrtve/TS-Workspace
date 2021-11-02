@@ -26,7 +26,7 @@ const ContentControl = builder.field({
 })
 
 export const MissionNoteModelForm: Immutable<ModelFormConfig<StateMissionNotes, MissionNote, SaveMissionNoteForm>> = {
-    includes: {prop: "missionNotes"}, 
+    stateProp: "missionNotes", 
     actionConverter: _appFormToSaveModelConverter,
     dynamicForm: builder.group()({
         viewOptions:{}, viewComponent: null,

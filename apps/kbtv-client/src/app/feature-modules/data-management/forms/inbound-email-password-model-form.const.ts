@@ -13,7 +13,7 @@ export interface CreateInboundEmailPasswordForm extends Pick<InboundEmailPasswor
 const builder = new DynamicFormBuilder<InboundEmailPassword, ModelState>()
 
 export const InboundEmailPasswordModelForm: Immutable<ModelFormConfig<ModelState, InboundEmailPassword, CreateInboundEmailPasswordForm>> = {
-    includes: {prop: "inboundEmailPasswords"},
+    stateProp: "inboundEmailPasswords",
     actionConverter: _appFormToSaveModelConverter,
     dynamicForm: builder.group()({
         viewOptions:{}, viewComponent: null,

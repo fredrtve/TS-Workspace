@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { MatBottomSheetRef } from "@angular/material/bottom-sheet";
 import { FormService, FormSheetViewConfig, FormSheetWrapperComponent } from 'form-sheet';
 import { Immutable, Maybe, NotNull } from "global-types";
-import { StateModels, _getModelConfig } from "model/core";
+import { ModelContext, ModelQuery, StateModels, _getModelConfig } from "model/core";
 import { combineLatest, isObservable, Observable, of } from "rxjs";
 import { map } from "rxjs/operators";
 import { DeepPartial } from "ts-essentials";
@@ -34,19 +34,22 @@ export class ModelFormService<TState extends object> {
     options?: ModelFormServiceOptions<TInputState, TForm>,
   ): MatBottomSheetRef<FormSheetWrapperComponent, Immutable<NotNull<TForm>> | 'deleted'> {
 
-    this.formStore.loadModels(<any> config.includes);
+    const { idProp } = _getModelConfig<TState, TModel>(config.stateProp);
+    const entityId = (<any> initialValue)?.[idProp];
+    let findQuery = new ModelContext<TState>().get(<any> config.stateProp).where(x => (<any> x)[idProp] === entityId);
+    let query = <ModelQuery<TState, TModel, any, any>> (config.includes ? config.includes(<any> findQuery) : findQuery);
 
-    const entityId = (<any> initialValue)?.[_getModelConfig(config.includes.prop).idProp];
-
+    this.formStore.loadModels(query.getSelectedStateProps());
+    const { formValue, modelValue } = this.getInitialValue(initialValue, config, entityId ? query : undefined);
     return this.formService.open<TForm, TState & TInputState, 'deleted'>(   
       this.getFormSheetViewConfig(config, entityId, options || {}),
       { 
-        formState: this.getInputState$(options?.inputState, <any> config), 
-        initialValue: this.getInitialValue(initialValue, entityId, <any> config)
+        formState: this.getInputState$(options?.inputState), 
+        initialValue: formValue
       },
       (form) => {
         if(options?.submitCallback) options.submitCallback(form);
-        this.onSubmit(form, <any> config)
+        this.onSubmit(form, <any> config, modelValue)
       }
     );
   }
@@ -72,7 +75,7 @@ export class ModelFormService<TState extends object> {
       navConfig: {
         title: options?.customTitle || 
           `${entityId ? "Oppdater" : "Registrer"} 
-          ${this.formStore.translateStateProp(<any> config.includes.prop)}`,   
+          ${this.formStore.translateStateProp(<any> config.stateProp)}`,   
         buttons: (options?.deleteDisabled || !(entityId)) ? 
             undefined : 
             [{ icon: 'delete_forever', color: "warn", 
@@ -84,38 +87,41 @@ export class ModelFormService<TState extends object> {
 
   private getInputState$(
     inputState: Maybe<Immutable<any> | Observable<Immutable<any>>>, 
-    config: Immutable<ModelFormConfig<TState, StateModels<TState>, any, any>>,
   ){
-    if(!inputState) return this.formStore.getModelState$(config.includes);
+    if(!inputState) return this.formStore.getState$();
     return combineLatest([
       isObservable(inputState) ? inputState : of(inputState),
-      this.formStore.getModelState$(config.includes)
+      this.formStore.getState$()
     ]).pipe(
-      map(([inputState, modelState]) => { return {...inputState, ...modelState} }), 
+      map(([inputState, modelState]) => { return {...modelState, ...inputState} }), 
     );
   }
 
-  private getInitialValue(
+  private getInitialValue<TModel extends StateModels<TState>>(
     initialValue: Maybe<Immutable<any>>,
-    entityId: Maybe<string>,
-    config: Immutable<ModelFormConfig<TState, StateModels<TState>, any, any>>,
-  ){
+    config: Immutable<ModelFormConfig<TState, TModel, any, any>>,
+    modelQuery?: ModelQuery<TState, TModel, any, any>,
+  ): { formValue: any, modelValue: any } {
     let modelValue: Maybe<Immutable<any>> = initialValue;
 
-    if(entityId){
-      const model = this.formStore.getModel(entityId, config.includes);
+    if(modelQuery){
+      const model = this.formStore.getModel(modelQuery);
       if(model) modelValue = {...initialValue, ...(<any> model)};
     } 
 
-    return config.modelConverter! ? config.modelConverter(<any> modelValue || {}) : modelValue
+    return {
+      formValue: config.modelConverter! ? config.modelConverter(<any> modelValue || {}) : modelValue,
+      modelValue
+    }
   }
 
-  private onSubmit(form: any, config: Immutable<ModelFormConfig<TState, StateModels<TState>, any, any>>){
+  private onSubmit(form: any, config: Immutable<ModelFormConfig<TState, StateModels<TState>, any, any>>, initialValueMerged: any){
     const converter = config.actionConverter || _formToSaveModelConverter
     this.formStore.save(converter({
       formValue: form, 
       options: this.formStore.getState(),
-      stateProp: config.includes.prop
+      stateProp: config.stateProp,
+      initialValue: initialValueMerged
     }))
   }
 

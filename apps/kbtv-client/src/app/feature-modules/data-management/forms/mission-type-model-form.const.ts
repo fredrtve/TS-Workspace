@@ -11,7 +11,7 @@ export interface CreateMissionTypeForm extends Pick<MissionType, "name"> {};
 const builder = new DynamicFormBuilder<MissionType, ModelState>();
 
 export const MissionTypeModelForm: Immutable<ModelFormConfig<ModelState, MissionType, CreateMissionTypeForm>> = {
-    includes: {prop: "missionTypes"}, 
+    stateProp: "missionTypes", 
     actionConverter: _appFormToSaveModelConverter,
     dynamicForm: builder.group()({
         viewOptions:{}, viewComponent: null,

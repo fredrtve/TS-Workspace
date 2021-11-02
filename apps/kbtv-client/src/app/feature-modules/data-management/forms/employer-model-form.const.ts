@@ -11,7 +11,7 @@ export interface CreateEmployerForm extends Pick<Employer, "name" | "phoneNumber
 const builder = new DynamicFormBuilder<Employer, ModelState>()
 
 export const EmployerModelForm: Immutable<ModelFormConfig<ModelState, Employer>> = {
-    includes: {prop: "employers"},
+    stateProp: "employers",
     actionConverter: _appFormToSaveModelConverter,
     dynamicForm: builder.group()({
         viewOptions: {},

@@ -1,7 +1,7 @@
 import { ControlGroupSchema } from 'dynamic-forms';
 import { FormActionsOptions } from 'form-sheet';
 import { Immutable, Maybe } from 'global-types';
-import { RelationInclude, StateModels, StatePropByModel } from 'model/core';
+import { RelationInclude, StateModels, StatePropByModel, ModelQuery, RestrictedQuery } from 'model/core';
 import { Observable } from 'rxjs';
 import { StateAction } from 'state-management';
 import { DeepPartial } from 'ts-essentials';
@@ -21,6 +21,8 @@ export interface ModelFormResult<
     options?: Maybe<Partial<TState>>,
     /** The state property corresponding with the model */
     stateProp: StatePropByModel<TState, TModel>
+    /** The initial value of the form */
+    initialValue: DeepPartial<TModel>
 }
 
 /** Represents a configuration object for a model form */
@@ -32,15 +34,17 @@ export interface ModelFormConfig<
 {    
     /** The form being used */
     dynamicForm: ControlGroupSchema<TForm, TState & TInputState, any, any>;
+    /** The state property representing TModel state */
+    stateProp: StatePropByModel<TState, TModel>
     /** Configure what relational state that will be mapped to entity and included in form state. */
-    includes: RelationInclude<TState, TModel>
+    includes?: (x: ModelQuery<TState, TModel, "", "">) => RestrictedQuery<TState, TModel, any, any>;
     /** Configure actions on the form */
-    actionOptions?: Partial<FormActionsOptions<TForm>>
+    actionOptions?: Partial<FormActionsOptions<TForm>>;
     /** A custom converter used to convert form to a state action on submit. 
      *  Defaults to {@link _formToSaveModelConverter} with form value as entity.  */
-    actionConverter?: Converter<ModelFormResult<TState, TModel, TForm>, StateAction>
+    actionConverter?: Converter<ModelFormResult<TState, TModel, TForm>, StateAction>;
     /** A custom converter used to convert the model data to form. Only required on edit. If null, form value is treated as model */
-    modelConverter?: Maybe<Converter<DeepPartial<TModel>, Partial<TForm>>>
+    modelConverter?: Maybe<Converter<DeepPartial<TModel>, Partial<TForm>>>;
 }
 
 /** Represents a configuration object for the model form service. */
