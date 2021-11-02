@@ -4,6 +4,7 @@ import { Timesheet } from '@core/models';
 import { AgGridConfig } from '@shared/components/abstracts/ag-grid-config.interface';
 import { AgGridTableComponent } from '@shared/components/abstracts/ag-grid-table.component';
 import { TimesheetSummary } from '@shared-timesheet/interfaces';
+import { _isTimesheetSummary } from '@shared-timesheet/helpers/is-timesheet-summary.helper';
 import { ColDefsFactoryService } from './col-defs-factory.service';
 import { Immutable } from 'global-types';
 
@@ -16,7 +17,6 @@ import { Immutable } from 'global-types';
 export class TimesheetStatisticTableComponent extends AgGridTableComponent<TimesheetSummary | Timesheet, AgGridConfig<TimesheetSummary | Timesheet>> {
 
   @Input() overlayNoRowsTemplate: HTMLElement;
-  private isSummaryData: boolean;
 
   constructor(private colDefsFactory: ColDefsFactoryService) { super(); }
 
@@ -24,14 +24,13 @@ export class TimesheetStatisticTableComponent extends AgGridTableComponent<Times
     if(!cfg?.data || cfg.data.length === 0) return super.initNgGrid(cfg);
 
     const sample = <Immutable<TimesheetSummary>> cfg.data[0];
-    this.isSummaryData = (sample.confirmedHours || sample.openHours) ? true : false
 
     super.initNgGrid(cfg);
 
     this.dataGrid?.api.setPinnedBottomRowData(
-      this.isSummaryData ? 
-      this.addSummaryBottomRow(<AgGridConfig<TimesheetSummary>> cfg) : 
-      this.addTimesheetBottomRow(<AgGridConfig<Timesheet>> cfg) 
+      _isTimesheetSummary(sample) ? 
+        this.addSummaryBottomRow(<AgGridConfig<TimesheetSummary>> cfg) : 
+        this.addTimesheetBottomRow(<AgGridConfig<Timesheet>> cfg) 
     );  
   }
 

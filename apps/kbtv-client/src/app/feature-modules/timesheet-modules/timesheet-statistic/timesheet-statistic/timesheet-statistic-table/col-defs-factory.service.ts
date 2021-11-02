@@ -6,6 +6,7 @@ import { translations } from "@shared-app/constants/translations.const";
 import { TimesheetStatus } from "@shared-app/enums/timesheet-status.enum";
 import { _idGenerator } from "@shared-app/helpers/id/id-generator.helper";
 import { WithUnsubscribe } from "@shared-app/mixins/with-unsubscribe.mixin";
+import { _isTimesheetSummary } from "@shared-timesheet/helpers/is-timesheet-summary.helper";
 import { TimesheetSummary } from '@shared-timesheet/interfaces';
 import { ColDef, ValueFormatterParams } from "ag-grid-community";
 import { _convertArrayToObject } from "array-helpers";
@@ -56,14 +57,14 @@ export class ColDefsFactoryService extends WithUnsubscribe() {
   }
 
   createColDefs(entity: TimesheetSummary | Timesheet): ColDef[]  {
-    const isSummary = ((<TimesheetSummary> entity).confirmedHours || (<TimesheetSummary> entity).openHours) ? true : false;
-    return this._createColDefs(entity, isSummary ? this.summaryColDefs : this.timesheetColDefs);
+    const isSummary = _isTimesheetSummary(entity);
+    return isSummary ? this._createColDefs(this.summaryColDefs, entity) : this._createColDefs(this.timesheetColDefs);
   }
 
-  private _createColDefs(object: {}, colDefs: ColDef[]): ColDef[] {
+  private _createColDefs(colDefs: ColDef[], object?: {}): ColDef[] {
     const result: ColDef[] = [];
     for (const colDef of colDefs) {
-      if (colDef?.field && (<UnknownState>object)[colDef.field] != null)
+      if (colDef?.field && (object === undefined || (<UnknownState> object)[colDef.field] != null))
         result.push(this.mergeDefaultColDef(colDef));
     }
     return result;
