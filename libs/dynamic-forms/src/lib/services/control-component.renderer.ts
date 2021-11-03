@@ -4,7 +4,7 @@ import { Immutable, Maybe, NotNull } from "global-types";
 import { pairwise, startWith } from "rxjs/operators";
 import { _isControlArray, _isControlGroup, _isFormStateSelector } from "../helpers/type.helpers";
 import { DYNAMIC_FORM_DEFAULT_OPTIONS } from "../injection-tokens.const";
-import { AbstractDynamicControl, ControlArrayComponent, ControlFieldComponent, ControlGroupComponent, ControlOptions, DynamicControlArray, DynamicControlField, DynamicControlGroup, DynamicControlMap, DynamicFormDefaultOptions, FormControlType, FormStateSelector } from "../interfaces";
+import { AbstractDynamicControl, ControlArrayComponent, ControlComponent, ControlFieldComponent, ControlGroupComponent, ControlOptions, DynamicControlArray, DynamicControlField, DynamicControlGroup, DynamicControlMap, DynamicFormDefaultOptions, FormControlType, FormStateSelector } from "../interfaces";
 import { FormStateResolver } from "./form-state.resolver";
 
 // type ControlWithSelectors<T extends ControlFieldSchema<any, ControlFieldComponent<any, any>> = ControlFieldSchema<any, ControlFieldComponent<any, any>>> = 
@@ -42,22 +42,19 @@ export class ControlComponentRenderer {
         vcRef: ViewContainerRef
     ): ComponentRef<ControlFormComponent<TControl>> | undefined {
 
-        let ref: ComponentRef<any> | undefined;
+        let ref: ComponentRef<ControlComponent<any, any>> | undefined;
 
-        if(_isControlGroup(controlCfg)){
-            ref = this.loadGroup(controlCfg, <FormGroup> control, vcRef);
-            if(ref === undefined) return;
-            this.setClass(ref, this.globalOptions?.groupClass)
-        }
-        else if(_isControlArray(controlCfg)){
-            ref = this.loadArray(controlCfg, <FormArray> control, vcRef);
-            this.setClass(ref, this.globalOptions?.arrayClass)
-        }
-        else {
-            ref = this.loadField(controlCfg, <FormControl> control, vcRef); 
-            if(ref === undefined) return; 
-            this.setClass(ref, this.globalOptions?.fieldClass)
-        }
+        if(_isControlGroup(controlCfg))
+            ref = this.loadGroup(controlCfg, <FormGroup> control, vcRef);       
+        else if(_isControlArray(controlCfg))
+            ref = this.loadArray(controlCfg, vcRef);
+        else 
+            ref = this.loadField(controlCfg, vcRef); 
+        
+        if(ref === undefined) return; 
+
+        ref.instance.viewOptionSelectors = controlCfg.viewOptions || {};
+        ref.instance.formControl = control;
 
         this.setClass(ref, (<ControlOptions> controlCfg).controlClass$)
         
@@ -67,18 +64,15 @@ export class ControlComponentRenderer {
 
     private loadField(
         controlCfg: DynamicControlField<any,any,any,Type<ControlFieldComponent<any, any>>>,
-        control: FormControl, 
         vcRef: ViewContainerRef
     ): ComponentRef<ControlFieldComponent<object | null, object>> | undefined {
         if(!controlCfg.viewComponent) return;
         
         const componentRef = this.loadComponent(controlCfg.viewComponent, vcRef);
 
-        componentRef.instance.formControl = control;
-
-        componentRef.instance.viewOptionSelectors = controlCfg.viewOptions || {};
-
         componentRef.instance.requiredSelector = controlCfg.required$;
+
+        this.setClass(componentRef, this.globalOptions?.fieldClass)
 
         return componentRef;
     }
@@ -98,18 +92,15 @@ export class ControlComponentRenderer {
 
         const componentRef = this.loadComponent(viewComponent, vcRef);
 
-        componentRef.instance.viewOptionSelectors = groupCfg.viewOptions;
-
         componentRef.instance.controls = groupCfg.controls;
-        
-        componentRef.instance.formControl = formGroup;
+
+        this.setClass(componentRef, this.globalOptions?.groupClass)
 
         return componentRef;   
     }
 
     private loadArray(
         arrayCfg: Immutable<DynamicControlArray<any,any,any,any,Type<ControlArrayComponent<any, any>>>>, 
-        formArray: FormArray, 
         vcRef: ViewContainerRef
     ): ComponentRef<ControlArrayComponent<any, any>> {
         const arrComponent = arrayCfg.viewComponent || this.globalOptions?.arrayViewComponent;
@@ -118,11 +109,9 @@ export class ControlComponentRenderer {
 
         const componentRef = this.loadComponent(arrComponent, vcRef);
 
-        componentRef.instance.viewOptionSelectors = arrayCfg.viewOptions;
-
         componentRef.instance.controlTemplate = arrayCfg.controlTemplate;
 
-        componentRef.instance.formControl = formArray;
+        this.setClass(componentRef, this.globalOptions?.arrayClass)
 
         return componentRef;   
     }
