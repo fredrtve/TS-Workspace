@@ -242,6 +242,12 @@ export interface DefaultControlArrayComponentOptions {
 
 };
 
+/** Represents a custom html attribute for a given control */
+export interface CustomAttribute<TControl extends AbstractDynamicControl<any,any,any,any,any> = AbstractDynamicControl<any,any,any,any,any>> {
+    attribute: string, 
+    value: (name: string, config: TControl) => string 
+}
+
 /** Represents default configuration options for all dynamic forms in module scope. 
  *  @remarks Supplied with injection token {@link DYNAMIC_FORM_DEFAULT_OPTIONS} */
 export interface DynamicFormDefaultOptions {
@@ -250,4 +256,5 @@ export interface DynamicFormDefaultOptions {
     groupClass?: string;
     arrayClass?: string;
     fieldClass?: string;
+    controlAttributes?: CustomAttribute[]
 }

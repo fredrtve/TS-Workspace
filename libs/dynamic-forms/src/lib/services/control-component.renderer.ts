@@ -31,7 +31,13 @@ export class ControlComponentRenderer {
             const formControl = formGroup.get(controlName);
             if(formControl === null) throw Error(`No form control for control with name ${controlName} on group ${formGroup}`)
              const ref = this.renderControl(controls[controlName], <any> formControl, vcRef);
-             if(ref) this.renderer.setAttribute(ref.location.nativeElement, "data-cy", "form-"+controlName)
+             if(ref === undefined) continue;
+             
+             if(this.globalOptions?.controlAttributes)
+                for(const { attribute, value } of this.globalOptions.controlAttributes){     
+                    this.renderer.setAttribute(ref.location.nativeElement, attribute, value(controlName, controls[controlName]))
+                }
+
              ref?.instance.onControlInit?.();
         }
     }

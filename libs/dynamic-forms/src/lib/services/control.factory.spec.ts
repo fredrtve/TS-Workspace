@@ -7,7 +7,7 @@ import { DynamicFormBuilder } from "../builder/dynamic-form.builder";
 import { _createControlArray, _createControlField, _createControlGroup } from "../builder/type.helpers";
 import { ControlOptions, DynamicControlFieldOptions } from "../interfaces";
 
-type TestState = Required<Omit<ControlOptions, "controlClass$" | "asyncValidators">>
+type TestState = Required<Omit<ControlOptions, "controlClass$" | "asyncValidators" | "clearValue$">>
 
 const bindOptionsToState = (controlCfg: any, keys: string[]) => {
     const builder = new DynamicFormBuilder<any, TestState>();
