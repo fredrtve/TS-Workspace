@@ -52,7 +52,7 @@ export class AutoCompleteFieldComponent<T> extends AutoCompleteControlBase<T>  {
       ]).pipe(
         map(([options$, rest, criteria$ ]) => <Immutable<ViewModel<T>>> {
           ...rest,
-          options$: options$ ? _filterOptions(criteria$, options$, rest.filterConfig$!) : null
+          options$: options$ ? _filterOptions(options$, rest.filterConfig$!, criteria$) : null
         }),
       )
     }

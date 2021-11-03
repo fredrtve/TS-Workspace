@@ -1,5 +1,6 @@
 import { _filter } from "array-helpers";
 import { Immutable, Maybe } from "global-types";
+import { _weakMemoizer } from "global-utils";
 import { FilterConfig } from "./filter.config";
 
 function filterRecord<TRecord, TCriteria>(
@@ -16,10 +17,10 @@ function filterRecord<TRecord, TCriteria>(
     return valid;
 }
 
-export function _filterOptions<TRecord, TCriteria>(
-    criteria: Maybe<Partial<TCriteria>>, 
+function filterOptions<TRecord, TCriteria>(
     options: Maybe<Immutable<TRecord[]>>,
-    config: FilterConfig<TRecord, TCriteria>
+    config: FilterConfig<TRecord, TCriteria>,
+    criteria: Maybe<Partial<TCriteria>>, 
 ): Immutable<TRecord[]> {
     if(config.criteriaFormatter) 
         criteria = config.criteriaFormatter(criteria);
@@ -33,3 +34,5 @@ export function _filterOptions<TRecord, TCriteria>(
         return _filter<TRecord>(options, (t) => filterRecord(t, criteria, filter, checkCount, config.maxChecks));    
     }   
 }
+
+export const _filterOptions = _weakMemoizer(filterOptions);

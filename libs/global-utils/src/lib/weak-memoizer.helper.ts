@@ -7,7 +7,7 @@ var cache = new WeakMap();
  * @param fn - The function that should be memoized
  * @returns A function that memoizes the results of the input function
   */
-export function _weakMemoizer<TFunction extends (...args: unknown[]) => unknown>(fn: TFunction): TFunction{ 
+export function _weakMemoizer<TFunction extends (...args: any[]) => any>(fn: TFunction): TFunction{ 
   return <TFunction> function(...args: Parameters<TFunction>): ReturnType<TFunction> {
     var fnCache = cache.get(fn);
 

@@ -73,7 +73,7 @@ export class ChipsAutocompleteFieldComponent<T> extends ChipsAutoCompleteFieldBa
             separatorKeysCodes$: rest.separatorKeysCodes$ || this.defaultSeparatorKeysCodes,
             options$: criteria$ != null && typeof criteria$ === "object" 
               ? options$ 
-              : options$ ? _filterOptions<any, T | string>(criteria$, options$, rest.filterConfig$!) : null
+              : options$ ? _filterOptions<any, T | string>(options$, rest.filterConfig$!, criteria$) : null
           }),
         )
       }  
