@@ -17,7 +17,7 @@ function filterRecord<TRecord, TCriteria>(
     return valid;
 }
 
-function filterOptions<TRecord, TCriteria>(
+function filterOptions<TRecord, TCriteria extends string>(
     options: Maybe<Immutable<TRecord[]>>,
     config: FilterConfig<TRecord, TCriteria>,
     criteria: Maybe<Partial<TCriteria>>, 
@@ -25,8 +25,8 @@ function filterOptions<TRecord, TCriteria>(
     if(config.criteriaFormatter) 
         criteria = config.criteriaFormatter(criteria);
                  
-    const filter = criteria ? config.filter : config.nullFilter;
-
+    const filter = (criteria && criteria.length !== 0) ? config.filter : config.nullFilter;
+    
     if(!filter) 
         return (config.maxChecks ? options?.slice(0, config.maxChecks) : options) || []; 
     else {

@@ -24,7 +24,7 @@
     <mat-hint *ngIf="vm.hint$">{{ vm.hint$ }}</mat-hint>
 
     <button mat-icon-button matSuffix *ngIf="vm.resetable$ && formControl && !formControl.disabled && formControl.value" aria-label="Clear" 
-        (tap)="formControl.setValue(''); formControl.markAsDirty()">
+        (tap)="resetValue()">
         <mat-icon>close</mat-icon>
     </button>
 

@@ -50,11 +50,17 @@ export class AutoCompleteFieldComponent<T> extends AutoCompleteControlBase<T>  {
         this.resolveSlice$<Partial<ViewModel<T | string>>>({...rest, required$: this.requiredSelector }),
         this.formControl!.valueChanges.pipe(startWith(this.formControl!.value)),
       ]).pipe(
-        map(([options$, rest, criteria$ ]) => <Immutable<ViewModel<T>>> {
+        map(([options$, rest, criteria$]) => <Immutable<ViewModel<T>>> {
           ...rest,
-          options$: options$ ? _filterOptions(options$, rest.filterConfig$!, criteria$) : null
+          options$: (options$ && typeof criteria$ === "string") 
+            ? _filterOptions(options$, rest.filterConfig$!, criteria$) : options$
         }),
       )
+    }
+
+    resetValue():void {
+      this.formControl.setValue(''); 
+      this.formControl.markAsDirty()
     }
     
 }
