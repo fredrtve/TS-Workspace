@@ -3,6 +3,7 @@ import { StateModels, StatePropByModel, ValidRelationProps } from "../interfaces
 import { _getModelConfig } from "../model-state-config-helpers";
 import { ModelQueryHandlerMap, QueryIncludeValue } from "./handlers";
 import { QueryIncludeFn, RestrictedQuery, Restrictions } from "./interfaces";
+import { InferHandlerActionValue, QueryAction } from "./query-engine/interfaces";
 import { QueryEngine } from "./query-engine/query.engine";
 
 type RemainingIncludes<TState, TModel extends StateModels<TState>, TIncludedProps extends ValidRelationProps<TState, TModel> | "" > = 
@@ -26,15 +27,14 @@ export class ModelQuery<
     where(
         exp: (entity: Immutable<ModelWithIncludes<TState, TModel, TIncludes>>) => boolean
     ): RestrictedQuery<TState, TModel, TRestrictions, TIncludes> {
-        this._engine.add({type: 'where', value: exp});
-        return this.cloneQuery();
+        return this._addAction({type: 'where', value: exp})
     }
     
     include<TProp extends RemainingIncludes<TState, TModel, TIncludes>>(prop: TProp): RestrictedQuery<TState, TModel, TRestrictions, TIncludes | TProp>;
     include<TProp extends RemainingIncludes<TState, TModel, TIncludes>>(prop: TProp, query: QueryIncludeFn<TState, TModel, TProp>): RestrictedQuery<TState, TModel, TRestrictions, TIncludes | TProp>;
     include<TProp extends RemainingIncludes<TState, TModel, TIncludes>>(prop: TProp, query?: QueryIncludeFn<TState, TModel, TProp>): RestrictedQuery<TState, TModel, TRestrictions, TIncludes | TProp> {
-        this._engine.add({type: 'include', value: {prop, query}});
-        return <RestrictedQuery<TState, TModel, TRestrictions, TIncludes | TProp>> this.cloneQuery();
+        return <RestrictedQuery<TState, TModel, TRestrictions, TIncludes | TProp>> 
+            this._addAction({type: 'include', value: {prop, query}})
     }
 
     first(
@@ -68,8 +68,12 @@ export class ModelQuery<
         return props;
     }
 
-    private cloneQuery() {
-        return new ModelQuery<TState, TModel, TRestrictions, TIncludes>(this._stateProp, this._engine);
+    private _addAction<T extends keyof ModelQueryHandlerMap<TState, TModel>>(
+        action: QueryAction<T, InferHandlerActionValue<ModelQueryHandlerMap<TState, TModel>[T]>>
+    ){
+        const engineClone = this._engine.clone();
+        engineClone.add(action);
+        return new ModelQuery<TState, TModel, TRestrictions, TIncludes>(this._stateProp, engineClone);
     }
 
 }

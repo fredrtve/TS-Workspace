@@ -4,10 +4,9 @@ import { QueryBuilder } from "./query.builder";
 
 export class QueryEngine<THandlerMap extends QueryActionHandlerMap<any, any>> {
 
-    private _actions: Immutable<QueryActions<THandlerMap>>[] = [];
-
     constructor(
-        private _handlers: THandlerMap
+        private _handlers: THandlerMap,
+        private _actions: Immutable<QueryActions<THandlerMap>>[] = []
     ){}
 
     add<T extends keyof THandlerMap>(
@@ -37,6 +36,10 @@ export class QueryEngine<THandlerMap extends QueryActionHandlerMap<any, any>> {
 
     getActions(): Immutable<QueryActions<THandlerMap>[]> {
         return this._actions;
-    }   
+    }  
+    
+    clone(): QueryEngine<THandlerMap> {
+        return new QueryEngine(this._handlers, this._actions.slice())
+    }
 
 }
