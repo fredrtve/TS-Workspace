@@ -3,7 +3,7 @@ import { ConstructSliceFromPath, DeepPropsObject, DeepPropType, UnknownState } f
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { DeepRequired } from "ts-essentials";
-import { FormStateObserverSelector, FormStateSelector, FormStateSelectorFn } from "../interfaces";
+import { AsyncValidatorSelector, FormStateObserverSelector, FormStateSelector, FormStateSelectorFn } from "../interfaces";
 import { ValidFormSlice } from "./interfaces";
 import { _createControlArray, _createControlField, _createControlGroup } from "./type.helpers";
 
@@ -21,7 +21,7 @@ export class DynamicFormBuilder<TForm extends object, TInputState extends object
         setter: FormStateSelectorFn<DeepPropsObject<ConstructSliceFromPath<TFormSlice, TForm>, TFormSlice>, Partial<PickOr<TInputState, TStateSlice, never>>, TReturnValue>,
         onlyOnce?: boolean
     ): FormStateSelector<ConstructSliceFromPath<TFormSlice, TForm>, PickOr<TInputState, TStateSlice, never>, TReturnValue, string, TStateSlice> {
-        return { formSlice, stateSlice, setter, onlyOnce }
+        return { formSlice, stateSlice, setter, onlyOnce, selectorType: "regular" }
     } 
 
     /** Constructs selectors for TState that resolve to reactive observables. Used to bind options to state. */
@@ -42,10 +42,10 @@ export class DynamicFormBuilder<TForm extends object, TInputState extends object
     ): FormStateSelector<never, PickOr<TInputState, TSlice, never>, TReturnValue,  string, TSlice>
     bindState(slice: any, setter?: any, onlyOnce?: boolean): FormStateSelector<never, any, any,  string, any> {
         if(Array.isArray(slice))
-            return { formSlice: [], stateSlice: slice, setter: (f: any, s: any) => setter(s), onlyOnce };
+            return { formSlice: [], stateSlice: slice, setter: (f: any, s: any) => setter(s), onlyOnce, selectorType: "regular" };
 
         return { 
-            formSlice: [], stateSlice: [slice], onlyOnce, 
+            formSlice: [], stateSlice: [slice], onlyOnce, selectorType: "regular", 
             setter: (setter === undefined || setter === null)
                 ? (f: any, s: UnknownState) => s[slice] 
                 : (f: any, s: UnknownState) => setter(s[slice])
@@ -70,33 +70,32 @@ export class DynamicFormBuilder<TForm extends object, TInputState extends object
     ): FormStateSelector<ConstructSliceFromPath<TSlice, TForm>, never, TReturnValue, string, never>
     bindForm(slice: string | string[], setter?: any, onlyOnce?: boolean): FormStateSelector<object, never, any,  string, never> {
         if(Array.isArray(slice))
-            return { stateSlice: [], formSlice:slice, setter, onlyOnce };
+            return { stateSlice: [], formSlice:slice, setter, onlyOnce, selectorType: "regular" };
 
         return { 
-            stateSlice: [], formSlice: [slice], onlyOnce, 
+            stateSlice: [], formSlice: [slice], onlyOnce, selectorType: "regular", 
             setter: (setter === undefined || setter === null)
                 ? (f: UnknownState) => f[slice] 
                 : (f: UnknownState) => setter(f[slice])
         }
     } 
 
-    /** Constructs an observable selector for TState that returns an async validator. */
-    asyncValidator<TSlice extends keyof TInputState>(  
-        slice: TSlice,
-        setter: (state$: Observable<TInputState[TSlice]>) => AsyncValidatorFn
-    ): FormStateObserverSelector<PickOr<TInputState, TSlice, never>, AsyncValidatorFn, TSlice>
-    asyncValidator<TSlice extends keyof TInputState>(  
-        slice: TSlice[],
-        setter: (state$: Observable<Pick<TInputState, TSlice>>) => AsyncValidatorFn
-    ): FormStateObserverSelector<PickOr<TInputState, TSlice, never>, AsyncValidatorFn, TSlice>
-    asyncValidator(slice: string | string[], setter?: any): FormStateObserverSelector<PickOr<TInputState, any, never>, AsyncValidatorFn, any> {
-        if(Array.isArray(slice))
-            return { stateSlice: slice, setter };
+    /** Constructs selectors for TForm and TState with observable setters */
+    bindObserver<TFormSlice extends string, TStateSlice extends keyof TInputState, TReturnValue>(
+        formSlice: ValidFormSlice<DeepRequired<TForm>, TFormSlice>[],      
+        stateSlice: TStateSlice[],
+        setter: FormStateSelectorFn<Observable<DeepPropsObject<ConstructSliceFromPath<TFormSlice, TForm>, TFormSlice>>, Observable<Partial<PickOr<TInputState, TStateSlice, never>>>, Observable<TReturnValue>>,
+    ): FormStateObserverSelector<ConstructSliceFromPath<TFormSlice, TForm>, PickOr<TInputState, TStateSlice, never>, TReturnValue, string, TStateSlice> {
+        return { formSlice, stateSlice, setter, selectorType: "observer" }
+    } 
 
-        return { 
-            stateSlice: [slice],
-            setter: (state$: Observable<UnknownState>) => setter(state$.pipe(map(x => x[slice])))
-        }
+    /** Constructs an observable selector for TState that returns an async validator. */
+    asyncValidator<TFormSlice extends string, TStateSlice extends keyof TInputState>(
+        formSlice: ValidFormSlice<DeepRequired<TForm>, TFormSlice>[],      
+        stateSlice: TStateSlice[],
+        setter: FormStateSelectorFn<Observable<DeepPropsObject<ConstructSliceFromPath<TFormSlice, TForm>, TFormSlice>>, Observable<Partial<PickOr<TInputState, TStateSlice, never>>>, AsyncValidatorFn>,
+    ): AsyncValidatorSelector<ConstructSliceFromPath<TFormSlice, TForm>, PickOr<TInputState, TStateSlice, never>, string, TStateSlice> {
+        return { formSlice, stateSlice, setter, selectorType: "asyncValidator" }
     } 
     
     /** Create a function for creating type safe {@link ControlGroupSchema} for a specified TGroup. 

@@ -2,7 +2,7 @@ import { ComponentFactoryResolver, ComponentRef, Inject, Injectable, Injector, O
 import { FormArray, FormControl, FormGroup } from "@angular/forms";
 import { Immutable, Maybe, NotNull } from "global-types";
 import { pairwise, startWith } from "rxjs/operators";
-import { _isControlArray, _isControlGroup, _isFormStateSelector } from "../helpers/type.helpers";
+import { _isControlArray, _isControlGroup, _isFormStateSelector, _isReactiveSelector } from "../helpers/type.helpers";
 import { DYNAMIC_FORM_DEFAULT_OPTIONS } from "../injection-tokens.const";
 import { AbstractDynamicControl, ControlArrayComponent, ControlComponent, ControlFieldComponent, ControlGroupComponent, ControlOptions, DynamicControlArray, DynamicControlField, DynamicControlGroup, DynamicControlMap, DynamicFormDefaultOptions, FormControlType, FormStateSelector } from "../interfaces";
 import { FormStateResolver } from "./form-state.resolver";
@@ -132,7 +132,7 @@ export class ControlComponentRenderer {
     private setClass(ref: ComponentRef<any>, controlClass?: string | Immutable<FormStateSelector<any, any, any, any, any>>): void {
         if(controlClass === undefined) return;
         const el = <HTMLElement> ref.location.nativeElement;    
-        if(_isFormStateSelector(controlClass))
+        if(_isReactiveSelector(controlClass))
             this.resolver.resolve$(controlClass).pipe(
                 startWith(undefined),
                 pairwise<string | undefined>()

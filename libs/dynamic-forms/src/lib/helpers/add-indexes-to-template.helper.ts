@@ -1,6 +1,6 @@
 import { UnknownState } from "global-types";
 import { AbstractDynamicControl, DynamicControlGroup } from "../interfaces";
-import { _isControlArray, _isControlGroup, _isFormStateSelector } from "./type.helpers";
+import { _isControlArray, _isControlGroup, _isReactiveSelector } from "./type.helpers";
 
 const indexRegex = new RegExp("{index}")
 
@@ -8,7 +8,7 @@ function _addIndexesToObj<T>(template: T, index: number): T {
     const withIndexes = {...template};
     for(const prop in template){
         const value = template[prop];
-        if(!_isFormStateSelector(value)) continue;
+        if(!_isReactiveSelector(value)) continue;
         withIndexes[prop] = { ...value, 
             baseFormPath: value.baseFormPath?.replace(indexRegex, <string><any> index) };
     }

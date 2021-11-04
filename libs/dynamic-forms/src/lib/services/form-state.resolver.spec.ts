@@ -1,13 +1,13 @@
 import { fakeAsync, flush } from "@angular/core/testing";
 import { FormControl, FormGroup } from "@angular/forms";
 import { Immutable } from "global-types";
-import { bufferCount, debounce, debounceTime, finalize, first, take, tap, throttleTime } from "rxjs/operators";
+import { bufferCount, debounce, debounceTime, finalize, first, map, take, tap, throttleTime } from "rxjs/operators";
 import { matchObservable } from "../../test-assets/match-observable.helper";
 import { DynamicFormBuilder } from "../builder/dynamic-form.builder";
 import { DynamicFormStore } from "./dynamic-form.store";
 import { FormStateResolver } from "./form-state.resolver";
 import { TestScheduler } from 'rxjs/testing';
-import { asapScheduler } from "rxjs";
+import { asapScheduler, combineLatest } from "rxjs";
 
 interface TestState { state1: string, state2: number }
 interface TestForm { prop1: string, prop2: { nested1: string }}
@@ -75,6 +75,20 @@ describe("Form State Resolver", () => {
 
     it('Should create form and state observable', (done) => {
         resolver.resolve$<any>(builder.bind(["prop1"], ["state1"], (f,s) => [f.prop1,s.state1])).pipe(
+            take(2), bufferCount(2)).subscribe(([val1, val2]) => {
+            expect(val1).toEqual([initialForm.prop1, initialState.state1]);
+            expect(val2).toEqual([newForm.prop1, newState.state1]);
+            done();
+        });
+        Promise.resolve().then(x => {
+            store.form.patchValue(newForm);
+            store.setState({state1: newState.state1});
+        })
+    });
+
+    it('Should create form and state observable from observer selector', (done) => {
+        resolver.resolve$<any>(builder.bindObserver(["prop1"], ["state1"], 
+            (f,s) => combineLatest([f.pipe(map(x => x.prop1)),s.pipe(map(x => x.state1))]))).pipe(
             take(2), bufferCount(2)).subscribe(([val1, val2]) => {
             expect(val1).toEqual([initialForm.prop1, initialState.state1]);
             expect(val2).toEqual([newForm.prop1, newState.state1]);

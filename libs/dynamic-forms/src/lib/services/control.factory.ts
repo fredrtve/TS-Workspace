@@ -4,7 +4,7 @@ import { Immutable } from "global-types";
 import { combineLatest } from "rxjs";
 import { skip } from "rxjs/operators";
 import { _isControlArray, _isControlGroup } from "../helpers/type.helpers";
-import { AbstractDynamicControl, AllowFormStateSelectors, ControlOptions, DynamicControlArray, DynamicControlField, DynamicControlFieldOptions, DynamicControlGroup, FormControlType } from "../interfaces";
+import { AbstractDynamicControl, AllowFormStateSelectors, ControlOptions, DynamicControlArray, DynamicControlField, DynamicControlGroup, FormControlType } from "../interfaces";
 import { FormStateResolver } from "./form-state.resolver";
 
 type ValidGroup = DynamicControlGroup<any,any,any,any,any> 
@@ -115,7 +115,7 @@ export class ControlFactory {
         if(options.asyncValidators !== undefined){
             const validators : AsyncValidatorFn[] = [];
             for(const validator of options.asyncValidators)
-                validators.push(this.resolver.resolve(<any> validator))
+                validators.push(this.resolver.resolveAsyncValidator(validator))
             control.setAsyncValidators(validators);
             control.updateValueAndValidity();
         }
@@ -130,4 +130,5 @@ export class ControlFactory {
                 shouldClear ? control.setValue(null) : null
             )  
     }
+
 }

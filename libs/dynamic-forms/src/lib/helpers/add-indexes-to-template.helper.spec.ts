@@ -12,7 +12,7 @@ describe("Add indexes to template", () => {
             controls: {
                 nested1: builder.field({ 
                     viewOptions: {}, 
-                    disabled$: { stateSlice: [], formSlice: ["nested1"], setter: () => true, baseFormPath: "test.{index}" } 
+                    disabled$: { stateSlice: [], formSlice: ["nested1"], setter: () => true, baseFormPath: "test.{index}", selectorType: "regular"} 
                 })
             },
         });
@@ -28,7 +28,7 @@ describe("Add indexes to template", () => {
                     controlTemplate: builder.group<{nested2: string}>()({ viewOptions: {},
                         controls: {
                             nested2: builder.field({  viewOptions: {},
-                                disabled$: { stateSlice: [], formSlice: ["nested2"], setter: () => true, baseFormPath: "test.{index}.arr2.{index}" }
+                                disabled$: { stateSlice: [], formSlice: ["nested2"], setter: () => true, baseFormPath: "test.{index}.arr2.{index}", selectorType: "regular" }
                             })
                         }
                     }),

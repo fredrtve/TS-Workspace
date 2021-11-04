@@ -12,6 +12,7 @@ import { DynamicFormBuilder } from 'dynamic-forms';
 import { Immutable } from 'global-types';
 import { ModelFormConfig } from 'model/form';
 import { _userFormToSaveUserConverter } from './user-form-to-save-user.converter';
+import { map } from 'rxjs/operators';
 
 export interface SaveUserForm extends Pick<User, "userName" | "role" | "employer">, IContactable, IFullName {
     password?: string;
@@ -70,7 +71,8 @@ export const UserModelForm: Immutable<ModelFormConfig<FormState, User,  SaveUser
                 disabled$: hasUserNameBinding,
                 required$: true,     
                 asyncValidators: [
-                    builder.asyncValidator("users", (users$) => isUniqueAsyncValidator(users$, (x, y) => x.userName.toLowerCase() === y.toLowerCase()))
+                    builder.asyncValidator([], ["users"], (f$,s$) => 
+                        isUniqueAsyncValidator(s$.pipe(map(x => x.users)), (x, y) => x.userName.toLowerCase() === y.toLowerCase()))
                 ], 
             },
             employer: { 

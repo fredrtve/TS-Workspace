@@ -1,11 +1,13 @@
-import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { Injectable, Optional } from "@angular/core";
+import { AsyncValidatorFn } from "@angular/forms";
 import { DeepPropsObject, Immutable, UnknownState } from "global-types";
 import { asapScheduler, combineLatest, Observable, of, Subject } from "rxjs";
 import { debounceTime, distinctUntilChanged, map, take, takeUntil } from "rxjs/operators";
 import { _formControlsChanges$ } from "../helpers/form-control-changes.helper";
-import { AllowFormStateSelectors, FormStateObserverSelector, FormStateSelector } from "../interfaces";
 import { selectState } from "../helpers/select-state.operator";
-import { _isFormStateObserverSelector, _isFormStateSelector } from "../helpers/type.helpers";
+import { _isAsyncValidatorSelector, _isFormStateObserverSelector, _isFormStateSelector } from "../helpers/type.helpers";
+import { AllowedFormStateSelector, AllowFormStateSelectors, AsyncValidatorSelector, ReactiveSelector } from "../interfaces";
 import { DynamicFormStore } from "./dynamic-form.store";
 
 @Injectable()
@@ -16,7 +18,10 @@ export class FormStateResolver {
     private unsubscribeAll$: Observable<any> = 
         this.unsubscribeAllSubject.asObservable();
         
-    constructor(private store: DynamicFormStore<object>){}
+    constructor(
+        private store: DynamicFormStore<object>,
+        @Optional() private httpClient?: HttpClient
+    ){}
 
     resolveSlice$<T extends object>(setters: Immutable<AllowFormStateSelectors<T, any,any>>): Observable<Immutable<T>> {
         const observers: Observable<any>[] = [];
@@ -36,15 +41,14 @@ export class FormStateResolver {
     }
 
     resolve$<T>(
-        setter: Immutable<FormStateSelector<any, any, T, any, any> | T>
+        setter: Immutable<AllowedFormStateSelector<T, any, any>>
     ): Observable<Immutable<T>> {
-        if(_isFormStateSelector(setter)){
-            
+        if(_isFormStateSelector(setter)){         
             const observer =  combineLatest([
                 this._resolveFormSlice$(setter.formSlice, setter.baseFormPath), 
                 this._resolveStateSlice$(setter.stateSlice)
             ]).pipe(
-                map(x => setter.setter(x[0], x[1])),
+                map(x => setter.setter(x[0], x[1], this.httpClient)),
                 distinctUntilChanged(),
                 debounceTime(0, asapScheduler), 
                 takeUntil(this.unsubscribeAll$)
@@ -53,19 +57,32 @@ export class FormStateResolver {
             if(setter.onlyOnce === true) return observer.pipe(take(1));
             else return observer;    
         } 
+        if(_isFormStateObserverSelector(setter)){
+            return setter.setter(
+                this._resolveFormSlice$(setter.formSlice, setter.baseFormPath), 
+                this._resolveStateSlice$(setter.stateSlice), 
+                this.httpClient
+            ).pipe(
+                distinctUntilChanged(),
+                debounceTime(0, asapScheduler), 
+                takeUntil(this.unsubscribeAll$)
+            )
+        }
 
         return of(<Immutable<T>> setter)
     };
 
-    resolve<T>(
-        setter: Immutable<FormStateObserverSelector<any, T, any> | T>
-    ): Immutable<T> {
-        if(_isFormStateObserverSelector(setter))
-            return <Immutable<T>> setter.setter( 
-                this._resolveStateSlice$(setter.stateSlice)
+    resolveAsyncValidator(
+        setter: Immutable<AsyncValidatorSelector<any, any, any, any> | Immutable<AsyncValidatorFn>>
+    ): Immutable<AsyncValidatorFn> {
+        if(_isAsyncValidatorSelector(setter))
+            return setter.setter( 
+                this._resolveFormSlice$(setter.formSlice, setter.baseFormPath), 
+                this._resolveStateSlice$(setter.stateSlice), 
+                this.httpClient
             ); 
         
-        return <Immutable<T>> setter
+        return <AsyncValidatorFn> setter
     };
 
     ngOnDestroy(): void {

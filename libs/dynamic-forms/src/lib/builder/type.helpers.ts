@@ -1,7 +1,10 @@
 import { Type } from "@angular/core";
 import { Maybe } from "global-types";
+import { UnionToIntersection } from "ts-essentials";
 import { AbstractDynamicControl, ControlArrayComponent, ControlFieldComponent, ControlGroupComponent, GetControlFieldReturnValue } from "../interfaces";
 import { ControlArrayOverridables, ControlArraySchema, ControlFieldSchema, ControlGroupOverridables, ControlGroupSchema, ValidControlSchemaMap } from "./interfaces";
+
+type NoUnion<Key> = [Key] extends [UnionToIntersection<Key>] ? Key : undefined; 
 
 /** Constructs a type safe {@link DynamicControl}.  */
 export function _createControlField<TControlComponent extends ControlFieldComponent<any,any>>(
@@ -15,8 +18,8 @@ export function _createControlField<TControlComponent extends ControlFieldCompon
 */
 export function _createControlGroup<TForm extends object, TInputState extends object = {}>(): 
     <TControls extends ValidControlSchemaMap<TForm, TInputState>, TGroupComponent extends Maybe<Type<ControlGroupComponent<any, any>>> = undefined>(
-        group: ControlGroupSchema<TForm, TInputState, TControls, TGroupComponent>
-    ) => ControlGroupSchema<TForm, TInputState, TControls, TGroupComponent> {
+        group: ControlGroupSchema<TForm, TInputState, TControls, NoUnion<TGroupComponent>>
+    ) => ControlGroupSchema<TForm, TInputState, TControls, NoUnion<TGroupComponent>> {
     return (group) => (group)
 }
 
@@ -25,8 +28,8 @@ export function _createControlArray<TInputState extends object>(): <
     TTemplate extends AbstractDynamicControl<any, TInputState, any, any, any>, 
     TArrayComponent extends Type<ControlArrayComponent<any, any>> | undefined = undefined
 >(
-    control: ControlArraySchema<TInputState, TTemplate, TArrayComponent>
-) => ControlArraySchema<TInputState, TTemplate, TArrayComponent> {
+    control: ControlArraySchema<TInputState, TTemplate, NoUnion<TArrayComponent>>
+) => ControlArraySchema<TInputState, TTemplate, NoUnion<TArrayComponent>> {
     return (control) => control;
 }
 

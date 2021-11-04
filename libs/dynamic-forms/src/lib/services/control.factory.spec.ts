@@ -68,14 +68,14 @@ describe("Control Component Renderer", () => {
         const { factory } = getFixture().componentInstance;
         const initialValue = { testField: "test1", testArr: ["test2", "test3"], testGrp: { test: "test4" }}; 
         const controlFieldCfg = _createControlField({ viewOptions: {} });
-        const controlCfg = _createControlGroup<typeof initialValue>()({ viewOptions: {}, controls: { 
+        const controlCfg = _createControlGroup<typeof initialValue>()({ viewOptions: { pls: "2"}, controls: { 
             testField: controlFieldCfg,
-            testArr: _createControlArray<{}>()({ controlTemplate: controlFieldCfg, viewOptions: { testOption$: "" } }),
-            testGrp: _createControlGroup<any>()({ controls: { test: controlFieldCfg }, viewOptions: {} }) 
+            testArr: _createControlArray<{}>()({ controlTemplate: controlFieldCfg, viewOptions: { pls: "2" } }),
+            testGrp: _createControlGroup<{ test: string }>()({ controls: { test: controlFieldCfg }, viewOptions: { pls: "" } }) 
         }});
 
         const control = factory.createControl(controlCfg, initialValue);
-        const nestedArr = <FormArray> control.controls.testArr;
+        const nestedArr = <FormArray> control.controls.testArr; 
         assertCreateControl(control, FormGroup, initialValue);
         assertCreateControl(control.controls.testField, FormControl, initialValue.testField);
         assertCreateControl(control.controls.testGrp, FormGroup, initialValue.testGrp);
@@ -186,8 +186,8 @@ describe("Control Component Renderer", () => {
         const { factory, store } = getFixture().componentInstance;
         const initialState = { asyncValidatorToggle: false }
         store.setState(initialState);
-        const testAsyncValidator = new DynamicFormBuilder<any, any>().asyncValidator("asyncValidatorToggle", 
-            (s$) => (control) => s$.pipe(first(), map(x => x ? {asyncErr: "err"} : null))
+        const testAsyncValidator = new DynamicFormBuilder<any, any>().asyncValidator([], ["asyncValidatorToggle"], 
+            (f$, s$) => (control) => s$.pipe(first(), map(x => x.asyncValidatorToggle ? {asyncErr: "err"} : null))
         );
         let controlCfg: any = { viewOptions: {}, asyncValidators: [testAsyncValidator] }; 
         const control = factory.configureControl(controlCfg, new FormControl());

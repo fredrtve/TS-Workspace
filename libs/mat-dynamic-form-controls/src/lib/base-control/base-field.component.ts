@@ -1,5 +1,5 @@
 import { Directive } from '@angular/core';
-import { AllowFormStateSelectors, FormStateResolver, FormStateSelector, GenericAbstractControl, ControlFieldComponent } from 'dynamic-forms';
+import { AllowFormStateSelectors, FormStateResolver, FormStateSelector, GenericAbstractControl, ControlFieldComponent, ReactiveSelector, AllowedFormStateSelector } from 'dynamic-forms';
 import { Immutable, Maybe } from 'global-types';
 import { Observable } from 'rxjs';
 import { _getValidationErrorMessage } from '../get-validation-error-message.helper';
@@ -17,7 +17,7 @@ export abstract class BaseFieldComponent<TValueType, TOptions extends BaseFieldO
 
   viewOptionSelectors: Immutable<AllowFormStateSelectors<TOptions, any, any>>;
 
-  requiredSelector?: Immutable<boolean | FormStateSelector<any, any, boolean | undefined, string, any>>;
+  requiredSelector?: Immutable<AllowedFormStateSelector<boolean | undefined, any, any>>;
 
   ɵviewOptions?: TOptions;
   
@@ -34,7 +34,7 @@ export abstract class BaseFieldComponent<TValueType, TOptions extends BaseFieldO
     return this.resolver.resolveSlice$(this.viewOptionSelectors)
   }
 
-  resolve$<T>(setter: Immutable<FormStateSelector<any, any, T, any, any> | T>): Observable<Immutable<T>> {
+  resolve$<T>(setter: Immutable<ReactiveSelector<any, any> | T>): Observable<Immutable<T>> {
     return this.resolver.resolve$(setter)
   }
 

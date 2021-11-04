@@ -1,6 +1,7 @@
+import { HttpClient, HttpContext } from '@angular/common/http';
 import { Type } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, FormArray, FormControl, FormGroup, ValidatorFn } from '@angular/forms';
-import { DeepPropsObject, DeepPropType, Immutable, Maybe, NotNull } from 'global-types';
+import { DeepPropsObject, Immutable, Maybe, NotNull } from 'global-types';
 import { Observable } from 'rxjs';
 import { DeepPartial } from 'ts-essentials';
 
@@ -33,30 +34,59 @@ export interface FormStateSelector<
     TInputState extends object,
     TReturnValue, 
     TFormSlice extends string, 
-    TStateSlice extends keyof TInputState> {
-    formSlice: TFormSlice[],
-    stateSlice: TStateSlice[],
-    setter: FormStateSelectorFn<DeepPropsObject<TForm, TFormSlice>, Partial<TInputState>, TReturnValue>,
+    TStateSlice extends keyof TInputState> extends ReactiveSelector<TFormSlice, TStateSlice> {
+    setter: FormStateSelectorFn<DeepPropsObject<TForm, TFormSlice>, Partial<TInputState>, TReturnValue>;
+    selectorType: "regular";
     onlyOnce?: boolean,
-    baseFormPath?: string,
     ɵform?: TForm,
     ɵstate?: TInputState
 } 
 
 /** Represents a selector for an observable slice of form and state  */
 export interface FormStateObserverSelector<
+    TForm extends object, 
     TInputState extends object,
     TReturnValue, 
-    TStateSlice extends keyof TInputState> {
-    stateSlice: TStateSlice[],
-    setter: (state$: Observable<Partial<TInputState>>) => TReturnValue,
+    TFormSlice extends string, 
+    TStateSlice extends keyof TInputState> extends ReactiveSelector<TFormSlice, TStateSlice> {
+    setter: FormStateSelectorFn<Observable<DeepPropsObject<TForm, TFormSlice>>, Observable<Partial<TInputState>>, Observable<TReturnValue>>;
+    selectorType: "observer";
+    ɵform?: TForm,
+    ɵstate?: TInputState,
 } 
+
+/** Represents a selector for async validators */
+export interface AsyncValidatorSelector<
+    TForm extends object, 
+    TInputState extends object,
+    TFormSlice extends string, 
+    TStateSlice extends keyof TInputState> extends ReactiveSelector<TFormSlice, TStateSlice> {
+    setter: FormStateSelectorFn<Observable<DeepPropsObject<TForm, TFormSlice>>, Observable<Partial<TInputState>>, AsyncValidatorFn>;
+    selectorType: "asyncValidator"
+    ɵform?: TForm,
+    ɵstate?: TInputState,
+} 
+
+/** Represents a generic reactive selector */
+export interface ReactiveSelector<TFormSlice extends string, TStateSlice extends string | number | symbol> {
+    stateSlice: TStateSlice[],
+    formSlice: TFormSlice[],
+    setter: FormStateSelectorFn<any,any,any>,
+    baseFormPath?: string,
+}
 
 /** Represents the selector function of form state {@link FormStateSetter} */
 export type FormStateSelectorFn<TForm, TInputState, TReturnValue> = (
     form: TForm,
     state: TInputState, 
+    http?: HttpClient
  ) => TReturnValue
+
+/** A union of eligible form state selectors  */
+export type AllowedFormStateSelector<TValueType, TForm extends object, TInputState extends object> = 
+    FormStateSelector<DeepPartial<TForm>, Partial<TInputState>, TValueType, string, keyof TInputState> | 
+    FormStateObserverSelector<DeepPartial<TForm>, Partial<TInputState>, TValueType, string, keyof TInputState> | 
+    TValueType;
 
 /** Returns an object where all properties allow a form state selectors with respective return values */
 export type AllowFormStateSelectors<
@@ -65,9 +95,11 @@ export type AllowFormStateSelectors<
  TInputState extends object
 > = { 
     [P in keyof TObject]: P extends `${any}$` 
-        ? FormStateSelector<DeepPartial<TForm>, Partial<TInputState>, TObject[P], string, keyof TInputState> | TObject[P] 
+        ? FormStateSelector<DeepPartial<TForm>, Partial<TInputState>, TObject[P], string, keyof TInputState> | 
+          FormStateObserverSelector<DeepPartial<TForm>, Partial<TInputState>, TObject[P], string, keyof TInputState> | 
+          TObject[P] 
         : NotNull<TObject[P]> extends AsyncValidatorFn[] 
-        ? (FormStateObserverSelector<Partial<TInputState>, AsyncValidatorFn, keyof TInputState> | AsyncValidatorFn)[]
+        ? (AsyncValidatorSelector<DeepPartial<TForm>, Partial<TInputState>, string, keyof TInputState> | AsyncValidatorFn)[]
         : TObject[P]
 }
 
@@ -80,7 +112,7 @@ export type RemoveFormStateSelectors<TObject extends object> = {
 export type GenericFormStateSelector = FormStateSelector<object, any, any, string, any>
 
 /** Represents a generic form state selector */
-export type GenericFormStateObserverSelector = FormStateObserverSelector<any, any, any>
+export type GenericFormStateObserverSelector = FormStateObserverSelector<object, any, any, string, any>
 
 /** Represents a map of properties from TForm with an associated control schema */
 export type DynamicControlMap<TForm extends object, TInputState extends object> = { 
@@ -127,7 +159,7 @@ export interface AbstractDynamicControl<
     TInputState extends object,
     TValueType,
     TControlComponent extends Maybe<Type<ControlComponent<TValueType, any>>> = undefined, 
-    TViewOptionDefault = never,
+    TViewOptionDefault extends object = never,
 > {
       /** The control component that should be rendered.
        * @remarks 
@@ -139,12 +171,6 @@ export interface AbstractDynamicControl<
       viewOptions: AllowFormStateSelectors<GetViewOptionsFromComponent<TControlComponent, TViewOptionDefault>, TForm, TInputState>;
       ɵvalueType?: TValueType,
 }
-
-// type ViewOptions<TOptions> = TOptions extends null ? {} : {viewOptions: TOptions}
-
-// interface ViewOptionsOptional {
-//     viewOptions?: AllowFormStateSelectors<GetViewOptionsFromComponent<TControlComponent, TViewOptionDefault>, TForm, TInputState>;
-// }
 
 /** Represents configuration options for a dynamic control field */
 export interface DynamicControlFieldOptions extends ControlOptions {
@@ -177,7 +203,7 @@ export interface ControlFieldComponent<TValueType, TViewOptions extends object>
     /** The control accociated with the component */
     formControl: GenericAbstractControl<TValueType>;
     /** Selector for the required status of the control. Use with {@link FormStateResolver} to retrieve observable value. */
-    requiredSelector?: Immutable<boolean | FormStateSelector<any, any, boolean | undefined, string, any>>;
+    requiredSelector?: Immutable<AllowedFormStateSelector<boolean | undefined, any, any>>;
     /** Resolve an observable for viewOptions values */
     resolveOptions$(): Observable<Immutable<TViewOptions>>;
 }
@@ -231,16 +257,12 @@ export interface GenericAbstractControl<T>
 /** Represents component options for a default control group component configured with {@link DynamicFormDefaultOptions} 
  *  @remarks Use declaration merging to populate interface with options.
 */
-export interface DefaultControlGroupComponentOptions {
- 
-}
+export interface DefaultControlGroupComponentOptions { }
 
 /** Represents component options for a default control array component configured with {@link DynamicFormDefaultOptions} 
  *  @remarks Use declaration merging to populate interface with options.
 */
-export interface DefaultControlArrayComponentOptions {
-
-};
+export interface DefaultControlArrayComponentOptions { };
 
 /** Represents a custom html attribute for a given control */
 export interface CustomAttribute<TControl extends AbstractDynamicControl<any,any,any,any,any> = AbstractDynamicControl<any,any,any,any,any>> {

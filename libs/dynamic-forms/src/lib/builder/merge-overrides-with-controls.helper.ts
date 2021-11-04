@@ -1,8 +1,8 @@
 import { Immutable } from "global-types";
 import { _weakMemoizer } from "global-utils";
-import { _isFormStateSelector } from "../helpers/type.helpers";
-import { AbstractDynamicControl, DynamicControlMap } from "../interfaces";
-import { ControlArrayOverridables, ControlArraySchema, ControlGroupOverridables, ControlGroupSchema, ControlOverridables, ControlOverridesMap, ControlSchemaMap, DynamicControlMapFromSchema, ValidControlSchemaMap } from "./interfaces";
+import { _isReactiveSelector } from "../helpers/type.helpers";
+import { AbstractDynamicControl } from "../interfaces";
+import { ControlArrayOverridables, ControlGroupOverridables, ControlOverridables, ControlOverridesMap, DynamicControlMapFromSchema, ValidControlSchemaMap } from "./interfaces";
 import { _isControlArrayOverridables, _isControlArraySchema, _isControlGroupOverridables, _isControlGroupSchema } from "./type.helpers";
 
 function mergeValues<T extends object>(mergeInto?: Partial<T>, values?: Partial<T>, basePath?: string): Partial<T> {
@@ -12,7 +12,7 @@ function mergeValues<T extends object>(mergeInto?: Partial<T>, values?: Partial<
     for(const prop in mergeInto){
         if(values && (<any> values)[prop] !== undefined) continue; //Ignore values that are overridden
         const value = merged[prop];
-        if(!_isFormStateSelector(value)) continue; 
+        if(!_isReactiveSelector(value)) continue; 
         merged[prop] = <any> {...value, baseFormPath: basePath}
     }
     return merged;
