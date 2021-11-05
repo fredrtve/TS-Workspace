@@ -9,13 +9,13 @@ Represents the range between two specified dates
 <b>Signature:</b>
 
 ```typescript
-export interface DateRange 
+export interface DateRange<T extends Date | string | number = Date | string | number> 
 ```
 
 ## Properties
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [end](./date-time-helpers.daterange.end.md) | Date \| string \| number |  |
-|  [start](./date-time-helpers.daterange.start.md) | Date \| string \| number |  |
+|  [end](./date-time-helpers.daterange.end.md) | T |  |
+|  [start](./date-time-helpers.daterange.start.md) | T |  |
 

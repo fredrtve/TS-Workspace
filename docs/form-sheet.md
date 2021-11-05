@@ -18,7 +18,9 @@ A library for rendering dynamic forms in a mat bottom sheet.
 
 |  Interface | Description |
 |  --- | --- |
-|  [FormServiceConfig](./form-sheet.formserviceconfig.md) | Represents configuration for opening a form with [FormService](./form-sheet.formservice.md) |
+|  [FormActionsComponent](./form-sheet.formactionscomponent.md) |  |
+|  [FormActionsOptions](./form-sheet.formactionsoptions.md) | Represents different options for customizing behaviour of the form actions |
+|  [FormSheetConfigurations](./form-sheet.formsheetconfigurations.md) |  |
 |  [FormSheetNavButton](./form-sheet.formsheetnavbutton.md) | Represents a button used in the form sheet navigation bar. |
 |  [FormSheetNavConfig](./form-sheet.formsheetnavconfig.md) | Represents a configuration object for the top navigation bar on the form sheet |
 |  [FormSheetState](./form-sheet.formsheetstate.md) | Represents configuration for opening a form with [FormService](./form-sheet.formservice.md) |

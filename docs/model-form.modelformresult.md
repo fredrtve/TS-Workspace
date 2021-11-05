@@ -17,7 +17,7 @@ export interface ModelFormResult<TState extends object, TModel extends StateMode
 |  Property | Type | Description |
 |  --- | --- | --- |
 |  [formValue](./model-form.modelformresult.formvalue.md) | TForm | The actual value of the form |
+|  [initialValue](./model-form.modelformresult.initialvalue.md) | DeepPartial&lt;TModel&gt; | The initial value of the form |
 |  [options?](./model-form.modelformresult.options.md) | Maybe&lt;Partial&lt;TState&gt;&gt; | <i>(Optional)</i> Any options used in the form |
-|  [saveAction](./model-form.modelformresult.saveaction.md) | SaveAction | The type of action being handled |
 |  [stateProp](./model-form.modelformresult.stateprop.md) | StatePropByModel&lt;TState, TModel&gt; | The state property corresponding with the model |
 

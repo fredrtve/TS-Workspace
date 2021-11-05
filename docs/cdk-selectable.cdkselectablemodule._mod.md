@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-static ɵmod: i0.ɵɵNgModuleDeclaration<CdkSelectableModule, [typeof i1.CdkSelectableContainerDirective], [typeof i0.ApplicationModule], [typeof i1.CdkSelectableContainerDirective]>;
+static ɵmod: i0.ɵɵNgModuleDeclaration<CdkSelectableModule, [typeof i1.CdkSelectableContainerDirective], never, [typeof i1.CdkSelectableContainerDirective]>;
 ```

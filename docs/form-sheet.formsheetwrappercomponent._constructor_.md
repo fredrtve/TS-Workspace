@@ -9,15 +9,16 @@ Constructs a new instance of the `FormSheetWrapperComponent` class
 <b>Signature:</b>
 
 ```typescript
-constructor(componentFactoryResolver: ComponentFactoryResolver, viewContainerRef: ViewContainerRef, _bottomSheetRef: MatBottomSheetRef<FormSheetWrapperComponent, unknown>, config: FormSheetWrapperConfig<object, object, UnknownState, unknown>);
+constructor(_bottomSheetRef: MatBottomSheetRef<FormSheetWrapperComponent, unknown>, _renderer: Renderer2, _cfr: ComponentFactoryResolver, _vcr: ViewContainerRef, config: FormSheetWrapperConfig<object, object>);
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  componentFactoryResolver | ComponentFactoryResolver |  |
-|  viewContainerRef | ViewContainerRef |  |
 |  \_bottomSheetRef | MatBottomSheetRef&lt;[FormSheetWrapperComponent](./form-sheet.formsheetwrappercomponent.md)<!-- -->, unknown&gt; |  |
-|  config | [FormSheetWrapperConfig](./form-sheet.formsheetwrapperconfig.md)<!-- -->&lt;object, object, UnknownState, unknown&gt; |  |
+|  \_renderer | Renderer2 |  |
+|  \_cfr | ComponentFactoryResolver |  |
+|  \_vcr | ViewContainerRef |  |
+|  config | [FormSheetWrapperConfig](./form-sheet.formsheetwrapperconfig.md)<!-- -->&lt;object, object&gt; |  |
 

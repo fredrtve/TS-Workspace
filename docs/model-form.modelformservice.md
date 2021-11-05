@@ -16,7 +16,7 @@ export declare class ModelFormService<TState extends object>
 
 |  Constructor | Modifiers | Description |
 |  --- | --- | --- |
-|  [(constructor)(formService, facade)](./model-form.modelformservice._constructor_.md) |  | Constructs a new instance of the <code>ModelFormService</code> class |
+|  [(constructor)(formService, formStore)](./model-form.modelformservice._constructor_.md) |  | Constructs a new instance of the <code>ModelFormService</code> class |
 
 ## Properties
 

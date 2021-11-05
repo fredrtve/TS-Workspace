@@ -11,6 +11,7 @@ A library consisting of core logic required for configuring, querying and saving
 |  Class | Description |
 |  --- | --- |
 |  [ModelContext](./model-core.modelcontext.md) |  |
+|  [ModelQuery](./model-core.modelquery.md) |  |
 
 ## Functions
 
@@ -29,6 +30,7 @@ A library consisting of core logic required for configuring, querying and saving
 |  [ChildRelation](./model-core.childrelation.md) | Represents a one-to-many relationship for TModel\[TProp\] in TState |
 |  [ForeignRelation](./model-core.foreignrelation.md) | Represents a foreign relationship on TModel in TState |
 |  [ModelConfig](./model-core.modelconfig.md) |  |
+|  [ModelQueryHandlerOptions](./model-core.modelqueryhandleroptions.md) |  |
 |  [RelationInclude](./model-core.relationinclude.md) | Information on which relationships should be included together with model |
 |  [SaveModelResult](./model-core.savemodelresult.md) | Represents the results from saving a model with [\_saveModel()](./model-core._savemodel.md) |
 |  [StateRelation](./model-core.staterelation.md) | Represents a relation to a property of TState |
@@ -39,12 +41,18 @@ A library consisting of core logic required for configuring, querying and saving
 |  --- | --- |
 |  [ExtractedModelState](./model-core.extractedmodelstate.md) | Represents the extracted models from saving a model. Ordered by state prop. |
 |  [IdGenerator](./model-core.idgenerator.md) | A custom id generator used to create ids of type TType. |
+|  [IncludeRestrictions](./model-core.includerestrictions.md) |  |
 |  [ModelByStateProp](./model-core.modelbystateprop.md) |  |
 |  [ModelChildByChildProp](./model-core.modelchildbychildprop.md) |  |
 |  [ModelChildrenMap](./model-core.modelchildrenmap.md) |  |
 |  [ModelConfigMap](./model-core.modelconfigmap.md) |  |
 |  [ModelForeignByForeignProp](./model-core.modelforeignbyforeignprop.md) |  |
 |  [ModelForeignsMap](./model-core.modelforeignsmap.md) |  |
+|  [NestedIncludeQuery](./model-core.nestedincludequery.md) |  |
+|  [QueryIncludeFn](./model-core.queryincludefn.md) |  |
+|  [RelationPropQuery](./model-core.relationpropquery.md) |  |
+|  [RestrictedQuery](./model-core.restrictedquery.md) |  |
+|  [Restrictions](./model-core.restrictions.md) |  |
 |  [StateModels](./model-core.statemodels.md) |  |
 |  [StatePropByModel](./model-core.statepropbymodel.md) |  |
 |  [StatePropByModelChildProp](./model-core.statepropbymodelchildprop.md) |  |

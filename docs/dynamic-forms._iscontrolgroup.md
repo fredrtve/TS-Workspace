@@ -4,21 +4,21 @@
 
 ## \_isControlGroup() function
 
-Check if the given object is a valid control group [DynamicControlGroup](./dynamic-forms.dynamiccontrolgroup.md)<!-- -->.
+Check if the given object is a valid control group [ControlGroupSchema](./dynamic-forms.controlgroupschema.md)<!-- -->.
 
 <b>Signature:</b>
 
 ```typescript
-export declare function _isControlGroup(control: ValidControl<any>): control is DynamicControlGroup<UnknownState, UnknownState>;
+export declare function _isControlGroup(control: any): control is DynamicControlGroup<any, any, any, any, any>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  control | [ValidControl](./dynamic-forms.validcontrol.md)<!-- -->&lt;any&gt; | The control object that should be checked.  Returns true if the object is a valid control group, else false. |
+|  control | any | The control object that should be checked.  Returns true if the object is a valid control group, else false. |
 
 <b>Returns:</b>
 
-control is [DynamicControlGroup](./dynamic-forms.dynamiccontrolgroup.md)<!-- -->&lt;UnknownState, UnknownState&gt;
+control is [DynamicControlGroup](./dynamic-forms.dynamiccontrolgroup.md)<!-- -->&lt;any, any, any, any, any&gt;
 

@@ -11,10 +11,10 @@ _formToSaveModelConverter: <TState extends object, TModel extends import("model/
     readonly formValue: Immutable<TModel>;
     readonly options?: Immutable<Partial<TState>> | null | undefined;
     readonly stateProp: Immutable<import("model/core").StatePropByModel<TState, TModel>>;
-    readonly saveAction: import("model/state-commands").SaveAction;
+    readonly initialValue: Immutable<import("ts-essentials").DeepPartial<TModel>>;
 }) => {
     type: string;
-    saveAction: import("model/state-commands").SaveAction;
+    isNew?: boolean | undefined;
     entity: Immutable<TModel>;
     stateProp: Immutable<import("model/core").StatePropByModel<TState, TModel>>;
 }

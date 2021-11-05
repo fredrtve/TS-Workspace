@@ -9,5 +9,5 @@ the initial value of the form
 <b>Signature:</b>
 
 ```typescript
-initialValue?: Maybe<DeepPartial<TForm>>;
+initialValue?: Maybe<Immutable<DeepPartial<TForm>>>;
 ```

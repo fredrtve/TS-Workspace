@@ -24,6 +24,7 @@ export declare class ModelDataTableComponent
 |  --- | --- | --- | --- |
 |  [agGrid](./model-data-table.modeldatatablecomponent.aggrid.md) |  | AgGridAngular |  |
 |  [agGridTheme](./model-data-table.modeldatatablecomponent.aggridtheme.md) |  | string |  |
+|  [frameworkComponents](./model-data-table.modeldatatablecomponent.frameworkcomponents.md) |  | { validationTooltip: typeof ValidationTooltipComponent; } |  |
 |  [getRowNodeId](./model-data-table.modeldatatablecomponent.getrownodeid.md) |  | (t: UnknownState) =&gt; unknown |  |
 |  [ɵcmp](./model-data-table.modeldatatablecomponent._cmp.md) | <code>static</code> | i0.ɵɵComponentDeclaration&lt;[ModelDataTableComponent](./model-data-table.modeldatatablecomponent.md)<!-- -->, "lib-model-data-table", never, { "agGridTheme": "agGridTheme"; "modelProperty": "modelProperty"; }, {}, never, never&gt; |  |
 |  [ɵfac](./model-data-table.modeldatatablecomponent._fac.md) | <code>static</code> | i0.ɵɵFactoryDeclaration&lt;[ModelDataTableComponent](./model-data-table.modeldatatablecomponent.md)<!-- -->, never&gt; |  |

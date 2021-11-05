@@ -16,5 +16,5 @@ export interface SaveModelPayload<TState, TModel extends StateModels<TState>> ex
 |  Property | Type | Description |
 |  --- | --- | --- |
 |  [entity](./model-state-commands.savemodelpayload.entity.md) | TModel |  |
-|  [saveAction](./model-state-commands.savemodelpayload.saveaction.md) | [SaveAction](./model-state-commands.saveaction.md) |  |
+|  [isNew?](./model-state-commands.savemodelpayload.isnew.md) | boolean | <i>(Optional)</i> Only neccesary if manually creating id for new entity |
 

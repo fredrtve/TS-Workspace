@@ -4,19 +4,16 @@
 
 ## DynamicControlGroup interface
 
-Describes a group of controls that make up an object in the form model
-
 <b>Signature:</b>
 
 ```typescript
-export interface DynamicControlGroup<TValueType extends object, TFormState extends object | null = null> extends DynamicAbstractGroup<TValueType, TFormState> 
+export interface DynamicControlGroup<TForm extends object, TInputState extends object, TValueType extends object, TControls extends DynamicControlMap<TValueType, TInputState>, TGroupComponent extends Maybe<Type<ControlGroupComponent<TValueType, any>>>> extends AbstractDynamicControl<TForm, TInputState, TValueType, TGroupComponent, DefaultControlGroupComponentOptions>, AllowFormStateSelectors<DynamicControlGroupOptions, TForm, TInputState> 
 ```
-<b>Extends:</b> [DynamicAbstractGroup](./dynamic-forms.dynamicabstractgroup.md)<!-- -->&lt;TValueType, TFormState&gt;
+<b>Extends:</b> [AbstractDynamicControl](./dynamic-forms.abstractdynamiccontrol.md)<!-- -->&lt;TForm, TInputState, TValueType, TGroupComponent, [DefaultControlGroupComponentOptions](./dynamic-forms.defaultcontrolgroupcomponentoptions.md)<!-- -->&gt;, [AllowFormStateSelectors](./dynamic-forms.allowformstateselectors.md)<!-- -->&lt;[DynamicControlGroupOptions](./dynamic-forms.dynamiccontrolgroupoptions.md)<!-- -->, TForm, TInputState&gt;
 
 ## Properties
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [controlGroupComponent?](./dynamic-forms.dynamiccontrolgroup.controlgroupcomponent.md) | Type&lt;DynamicAbstractGroupComponent&lt;[DynamicControlGroup](./dynamic-forms.dynamiccontrolgroup.md)<!-- -->&lt;TValueType, TFormState&gt;&gt;&gt; | <i>(Optional)</i> A custom control group component for displaying the group |
-|  [label?](./dynamic-forms.dynamiccontrolgroup.label.md) | string | <i>(Optional)</i> A visual label displayed above the group on the rendered form |
+|  [controls](./dynamic-forms.dynamiccontrolgroup.controls.md) | TControls | The form controls that make up the group |
 

@@ -18,5 +18,5 @@ export declare class CdkSelectableModule
 |  --- | --- | --- | --- |
 |  [ɵfac](./cdk-selectable.cdkselectablemodule._fac.md) | <code>static</code> | i0.ɵɵFactoryDeclaration&lt;[CdkSelectableModule](./cdk-selectable.cdkselectablemodule.md)<!-- -->, never&gt; |  |
 |  [ɵinj](./cdk-selectable.cdkselectablemodule._inj.md) | <code>static</code> | i0.ɵɵInjectorDeclaration&lt;[CdkSelectableModule](./cdk-selectable.cdkselectablemodule.md)<!-- -->&gt; |  |
-|  [ɵmod](./cdk-selectable.cdkselectablemodule._mod.md) | <code>static</code> | i0.ɵɵNgModuleDeclaration&lt;[CdkSelectableModule](./cdk-selectable.cdkselectablemodule.md)<!-- -->, \[typeof i1.[CdkSelectableContainerDirective](./cdk-selectable.cdkselectablecontainerdirective.md)<!-- -->\], \[typeof i0.ApplicationModule\], \[typeof i1.[CdkSelectableContainerDirective](./cdk-selectable.cdkselectablecontainerdirective.md)<!-- -->\]&gt; |  |
+|  [ɵmod](./cdk-selectable.cdkselectablemodule._mod.md) | <code>static</code> | i0.ɵɵNgModuleDeclaration&lt;[CdkSelectableModule](./cdk-selectable.cdkselectablemodule.md)<!-- -->, \[typeof i1.[CdkSelectableContainerDirective](./cdk-selectable.cdkselectablecontainerdirective.md)<!-- -->\], never, \[typeof i1.[CdkSelectableContainerDirective](./cdk-selectable.cdkselectablecontainerdirective.md)<!-- -->\]&gt; |  |
 

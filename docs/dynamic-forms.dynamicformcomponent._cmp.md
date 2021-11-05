@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-static ɵcmp: i0.ɵɵComponentDeclaration<DynamicFormComponent<any, any>, "lib-dynamic-form", never, { "inputState": "inputState"; "initialValue": "initialValue"; "config": "config"; }, { "formSubmitted": "formSubmitted"; }, never, never>;
+static ɵcmp: i0.ɵɵComponentDeclaration<DynamicFormComponent<any, any>, "lib-dynamic-form", never, { "inputState": "inputState"; "config": "config"; "formGroup": "formGroup"; "initialValue": "initialValue"; }, {}, never, never>;
 ```

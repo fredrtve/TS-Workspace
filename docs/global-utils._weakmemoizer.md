@@ -9,7 +9,7 @@ An higher order function that memoizes the results of the input function. Object
 <b>Signature:</b>
 
 ```typescript
-export declare function _weakMemoizer<TFunction extends (...args: unknown[]) => unknown>(fn: TFunction): TFunction;
+export declare function _weakMemoizer<TFunction extends (...args: any[]) => any>(fn: TFunction): TFunction;
 ```
 
 ## Parameters

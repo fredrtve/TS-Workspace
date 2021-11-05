@@ -15,6 +15,6 @@ export interface SetSaveModelStatePayload<TState, TModel extends StateModels<TSt
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [saveAction](./model-state-commands.setsavemodelstatepayload.saveaction.md) | [SaveAction](./model-state-commands.saveaction.md) |  |
+|  [isNew](./model-state-commands.setsavemodelstatepayload.isnew.md) | boolean |  |
 |  [saveModelResult](./model-state-commands.setsavemodelstatepayload.savemodelresult.md) | SaveModelResult&lt;TState, TModel&gt; |  |
 

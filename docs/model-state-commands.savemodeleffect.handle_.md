@@ -9,7 +9,7 @@
 ```typescript
 handle$(actions$: DispatchedActions): import("rxjs").Observable<{
         type: string;
-        saveAction: import("model/state-commands").SaveAction;
+        isNew: boolean;
         saveModelResult: {
             readonly modifiedState: {};
             readonly fullModel: unknown;
@@ -27,5 +27,5 @@ handle$(actions$: DispatchedActions): import("rxjs").Observable<{
 
 <b>Returns:</b>
 
-import("rxjs").Observable&lt;{ type: string; saveAction: import("model/state-commands").[SaveAction](./model-state-commands.saveaction.md)<!-- -->; saveModelResult: { readonly modifiedState: {}; readonly fullModel: unknown; readonly flatModels: {}; }; stateProp: never; }&gt;
+import("rxjs").Observable&lt;{ type: string; isNew: boolean; saveModelResult: { readonly modifiedState: {}; readonly fullModel: unknown; readonly flatModels: {}; }; stateProp: never; }&gt;
 

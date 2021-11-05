@@ -17,12 +17,6 @@ The library depends on the 'state-management' library to dispatch relevant actio
 |  [ModelStateCommandsModule](./model-state-commands.modelstatecommandsmodule.md) | Responsible for providing reducers and effects for deleting &amp; saving models. |
 |  [SaveModelEffect](./model-state-commands.savemodeleffect.md) |  |
 
-## Enumerations
-
-|  Enumeration | Description |
-|  --- | --- |
-|  [ModelCommand](./model-state-commands.modelcommand.md) |  |
-
 ## Interfaces
 
 |  Interface | Description |
@@ -38,10 +32,4 @@ The library depends on the 'state-management' library to dispatch relevant actio
 |  --- | --- |
 |  [ModelCommandReducers](./model-state-commands.modelcommandreducers.md) |  |
 |  [ModelCommands](./model-state-commands.modelcommands.md) |  |
-
-## Type Aliases
-
-|  Type Alias | Description |
-|  --- | --- |
-|  [SaveAction](./model-state-commands.saveaction.md) |  |
 

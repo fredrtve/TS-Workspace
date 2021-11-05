@@ -18,7 +18,7 @@ export declare class StateAuthModule
 |  --- | --- | --- | --- |
 |  [ɵfac](./state-auth.stateauthmodule._fac.md) | <code>static</code> | i0.ɵɵFactoryDeclaration&lt;[StateAuthModule](./state-auth.stateauthmodule.md)<!-- -->, never&gt; |  |
 |  [ɵinj](./state-auth.stateauthmodule._inj.md) | <code>static</code> | i0.ɵɵInjectorDeclaration&lt;[StateAuthModule](./state-auth.stateauthmodule.md)<!-- -->&gt; |  |
-|  [ɵmod](./state-auth.stateauthmodule._mod.md) | <code>static</code> | i0.ɵɵNgModuleDeclaration&lt;[StateAuthModule](./state-auth.stateauthmodule.md)<!-- -->, \[typeof i1.[IfRoleDirective](./state-auth.ifroledirective.md)<!-- -->\], \[typeof i0.ApplicationModule\], \[typeof i1.[IfRoleDirective](./state-auth.ifroledirective.md)<!-- -->\]&gt; |  |
+|  [ɵmod](./state-auth.stateauthmodule._mod.md) | <code>static</code> | i0.ɵɵNgModuleDeclaration&lt;[StateAuthModule](./state-auth.stateauthmodule.md)<!-- -->, \[typeof i1.[IfRoleDirective](./state-auth.ifroledirective.md)<!-- -->\], never, \[typeof i1.[IfRoleDirective](./state-auth.ifroledirective.md)<!-- -->\]&gt; |  |
 
 ## Methods
 

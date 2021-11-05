@@ -9,16 +9,15 @@ Constructs a new instance of the `DynamicFormComponent` class
 <b>Signature:</b>
 
 ```typescript
-constructor(componentFactoryResolver: ComponentFactoryResolver, cdRef: ChangeDetectorRef, formFactory: DynamicFormFactory, validationErrorMessages: ValidationErrorMap, formStore: DynamicFormStore<TFormState>);
+constructor(cdRef: ChangeDetectorRef, controlFactory: ControlFactory, controlRenderer: ControlComponentRenderer, formStore: DynamicFormStore<TInputState>);
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  componentFactoryResolver | ComponentFactoryResolver |  |
 |  cdRef | ChangeDetectorRef |  |
-|  formFactory | DynamicFormFactory |  |
-|  validationErrorMessages | [ValidationErrorMap](./dynamic-forms.validationerrormap.md) |  |
-|  formStore | [DynamicFormStore](./dynamic-forms.dynamicformstore.md)<!-- -->&lt;TFormState&gt; |  |
+|  controlFactory | [ControlFactory](./dynamic-forms.controlfactory.md) |  |
+|  controlRenderer | [ControlComponentRenderer](./dynamic-forms.controlcomponentrenderer.md) |  |
+|  formStore | DynamicFormStore&lt;TInputState&gt; |  |
 

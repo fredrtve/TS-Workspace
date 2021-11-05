@@ -16,5 +16,5 @@ export declare class ModelFormModule
 |  --- | --- | --- | --- |
 |  [ɵfac](./model-form.modelformmodule._fac.md) | <code>static</code> | i0.ɵɵFactoryDeclaration&lt;[ModelFormModule](./model-form.modelformmodule.md)<!-- -->, never&gt; |  |
 |  [ɵinj](./model-form.modelformmodule._inj.md) | <code>static</code> | i0.ɵɵInjectorDeclaration&lt;[ModelFormModule](./model-form.modelformmodule.md)<!-- -->&gt; |  |
-|  [ɵmod](./model-form.modelformmodule._mod.md) | <code>static</code> | i0.ɵɵNgModuleDeclaration&lt;[ModelFormModule](./model-form.modelformmodule.md)<!-- -->, \[typeof i1.ModelFormComponent\], \[typeof i2.CommonModule, typeof i3.DynamicFormsModule, typeof i4.FormSheetModule, typeof i5.ConfirmDialogModule\], never&gt; |  |
+|  [ɵmod](./model-form.modelformmodule._mod.md) | <code>static</code> | i0.ɵɵNgModuleDeclaration&lt;[ModelFormModule](./model-form.modelformmodule.md)<!-- -->, never, \[typeof i1.FormSheetModule\], never&gt; |  |
 

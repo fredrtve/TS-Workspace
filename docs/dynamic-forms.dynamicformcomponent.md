@@ -4,41 +4,31 @@
 
 ## DynamicFormComponent class
 
-Responsible for rendering a dynamic form with a [DynamicForm](./dynamic-forms.dynamicform.md) configuration.
-
 <b>Signature:</b>
 
 ```typescript
-export declare class DynamicFormComponent<TForm extends object, TFormState extends object | null> extends DynamicAbstractGroupComponent<DynamicForm<TForm, TFormState>> implements FormComponent<DynamicForm<TForm, TFormState>, TForm, Partial<TFormState>, Immutable<TForm>> 
+export declare class DynamicFormComponent<TForm extends object, TInputState extends object> 
 ```
-<b>Extends:</b> DynamicAbstractGroupComponent&lt;[DynamicForm](./dynamic-forms.dynamicform.md)<!-- -->&lt;TForm, TFormState&gt;&gt;
-
-<b>Implements:</b> [FormComponent](./dynamic-forms.formcomponent.md)<!-- -->&lt;[DynamicForm](./dynamic-forms.dynamicform.md)<!-- -->&lt;TForm, TFormState&gt;, TForm, Partial&lt;TFormState&gt;, Immutable&lt;TForm&gt;&gt;
 
 ## Constructors
 
 |  Constructor | Modifiers | Description |
 |  --- | --- | --- |
-|  [(constructor)(componentFactoryResolver, cdRef, formFactory, validationErrorMessages, formStore)](./dynamic-forms.dynamicformcomponent._constructor_.md) |  | Constructs a new instance of the <code>DynamicFormComponent</code> class |
+|  [(constructor)(cdRef, controlFactory, controlRenderer, formStore)](./dynamic-forms.dynamicformcomponent._constructor_.md) |  | Constructs a new instance of the <code>DynamicFormComponent</code> class |
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [config](./dynamic-forms.dynamicformcomponent.config.md) |  | Immutable&lt;[DynamicForm](./dynamic-forms.dynamicform.md)<!-- -->&lt;TForm, TFormState&gt;&gt; |  |
-|  [dynamicHost](./dynamic-forms.dynamicformcomponent.dynamichost.md) |  | DynamicHostDirective |  |
-|  [formSubmitted](./dynamic-forms.dynamicformcomponent.formsubmitted.md) |  | EventEmitter&lt;Maybe&lt;Immutable&lt;TForm&gt;&gt;&gt; |  |
-|  [initialValue$](./dynamic-forms.dynamicformcomponent.initialvalue_.md) |  | Observable&lt;Immutable&lt;Partial&lt;TForm&gt;&gt;&gt; |  |
-|  [ɵcmp](./dynamic-forms.dynamicformcomponent._cmp.md) | <code>static</code> | i0.ɵɵComponentDeclaration&lt;[DynamicFormComponent](./dynamic-forms.dynamicformcomponent.md)<!-- -->&lt;any, any&gt;, "lib-dynamic-form", never, { "inputState": "inputState"; "initialValue": "initialValue"; "config": "config"; }, { "formSubmitted": "formSubmitted"; }, never, never&gt; |  |
+|  [dynamicHost?](./dynamic-forms.dynamicformcomponent.dynamichost.md) |  | [DynamicHostDirective](./dynamic-forms.dynamichostdirective.md) | <i>(Optional)</i> |
+|  [formGroup](./dynamic-forms.dynamicformcomponent.formgroup.md) |  | FormGroup |  |
+|  [initialValue](./dynamic-forms.dynamicformcomponent.initialvalue.md) |  | Immutable&lt;DeepPartial&lt;TForm&gt;&gt; |  |
+|  [ɵcmp](./dynamic-forms.dynamicformcomponent._cmp.md) | <code>static</code> | i0.ɵɵComponentDeclaration&lt;[DynamicFormComponent](./dynamic-forms.dynamicformcomponent.md)<!-- -->&lt;any, any&gt;, "lib-dynamic-form", never, { "inputState": "inputState"; "config": "config"; "formGroup": "formGroup"; "initialValue": "initialValue"; }, {}, never, never&gt; |  |
 |  [ɵfac](./dynamic-forms.dynamicformcomponent._fac.md) | <code>static</code> | i0.ɵɵFactoryDeclaration&lt;[DynamicFormComponent](./dynamic-forms.dynamicformcomponent.md)<!-- -->&lt;any, any&gt;, never&gt; |  |
-|  [resetEnabled$](./dynamic-forms.dynamicformcomponent.resetenabled_.md) |  | Observable&lt;boolean&gt; |  |
 
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [getValidationErrorMessage()](./dynamic-forms.dynamicformcomponent.getvalidationerrormessage.md) |  |  |
-|  [onCancel()](./dynamic-forms.dynamicformcomponent.oncancel.md) |  |  |
-|  [onReset()](./dynamic-forms.dynamicformcomponent.onreset.md) |  |  |
-|  [onSubmit()](./dynamic-forms.dynamicformcomponent.onsubmit.md) |  |  |
+|  [ngOnInit()](./dynamic-forms.dynamicformcomponent.ngoninit.md) |  |  |
 

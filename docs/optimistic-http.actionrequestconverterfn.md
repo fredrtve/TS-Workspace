@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type ActionRequestConverterFn<TAction> = (a: TAction) => OptimisticHttpRequest<SupportedContentTypes>;
+export declare type ActionRequestConverterFn<TAction> = (a: TAction) => Maybe<OptimisticHttpRequest<SupportedContentTypes>>;
 ```
 <b>References:</b> [OptimisticHttpRequest](./optimistic-http.optimistichttprequest.md)<!-- -->, [SupportedContentTypes](./optimistic-http.supportedcontenttypes.md)
 

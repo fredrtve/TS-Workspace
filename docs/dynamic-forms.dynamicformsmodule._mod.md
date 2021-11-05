@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-static ɵmod: i0.ɵɵNgModuleDeclaration<DynamicFormsModule, [typeof i1.DynamicFormComponent, typeof i2.DynamicControlGroupComponent, typeof i3.FormActionsComponent, typeof i4.DynamicHostDirective], [typeof i5.CommonModule, typeof i6.ReactiveFormsModule, typeof i7.MatButtonModule, typeof i8.MatFormFieldModule, typeof i9.MatProgressSpinnerModule], [typeof i1.DynamicFormComponent]>;
+static ɵmod: i0.ɵɵNgModuleDeclaration<DynamicFormsModule, [typeof i1.DynamicFormComponent, typeof i2.DynamicHostDirective], [typeof i3.CommonModule, typeof i4.ReactiveFormsModule], [typeof i1.DynamicFormComponent, typeof i2.DynamicHostDirective]>;
 ```

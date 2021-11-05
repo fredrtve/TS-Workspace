@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-static ɵmod: i0.ɵɵNgModuleDeclaration<FormSheetModule, [typeof i1.FormSheetWrapperComponent, typeof i2.FormSheetNavBarComponent], [typeof i3.CommonModule, typeof i4.MatBottomSheetModule, typeof i5.MatToolbarModule, typeof i6.MatButtonModule, typeof i7.MatIconModule, typeof i8.DynamicFormsModule], never>;
+static ɵmod: i0.ɵɵNgModuleDeclaration<FormSheetModule, [typeof i1.FormSheetWrapperComponent, typeof i2.FormSheetNavBarComponent, typeof i3.FormActionsComponent, typeof i4.FormSheetComponent], [typeof i5.CommonModule, typeof i6.MatBottomSheetModule, typeof i7.MatToolbarModule, typeof i8.MatButtonModule, typeof i9.MatIconModule, typeof i8.MatButtonModule, typeof i10.MatFormFieldModule, typeof i11.DynamicFormsModule], never>;
 ```

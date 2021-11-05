@@ -10,6 +10,6 @@ Definitions used to render a column for a property on the model.
 
 ```typescript
 propertyColDefs: {
-        [key in keyof TModel]: ModelPropertyColDef<TModel>;
+        [key in keyof TModel]: ModelPropertyColDef<TModel, key>;
     };
 ```

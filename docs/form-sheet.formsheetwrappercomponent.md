@@ -16,12 +16,13 @@ export declare class FormSheetWrapperComponent
 
 |  Constructor | Modifiers | Description |
 |  --- | --- | --- |
-|  [(constructor)(componentFactoryResolver, viewContainerRef, \_bottomSheetRef, config)](./form-sheet.formsheetwrappercomponent._constructor_.md) |  | Constructs a new instance of the <code>FormSheetWrapperComponent</code> class |
+|  [(constructor)(\_bottomSheetRef, \_renderer, \_cfr, \_vcr, config)](./form-sheet.formsheetwrappercomponent._constructor_.md) |  | Constructs a new instance of the <code>FormSheetWrapperComponent</code> class |
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
+|  [config](./form-sheet.formsheetwrappercomponent.config.md) |  | [FormSheetWrapperConfig](./form-sheet.formsheetwrapperconfig.md)<!-- -->&lt;object, object&gt; |  |
 |  [ɵcmp](./form-sheet.formsheetwrappercomponent._cmp.md) | <code>static</code> | i0.ɵɵComponentDeclaration&lt;[FormSheetWrapperComponent](./form-sheet.formsheetwrappercomponent.md)<!-- -->, "lib-form-sheet-wrapper", never, {}, {}, never, never&gt; |  |
 |  [ɵfac](./form-sheet.formsheetwrappercomponent._fac.md) | <code>static</code> | i0.ɵɵFactoryDeclaration&lt;[FormSheetWrapperComponent](./form-sheet.formsheetwrappercomponent.md)<!-- -->, never&gt; |  |
 
@@ -31,4 +32,6 @@ export declare class FormSheetWrapperComponent
 |  --- | --- | --- |
 |  [ngOnDestroy()](./form-sheet.formsheetwrappercomponent.ngondestroy.md) |  |  |
 |  [ngOnInit()](./form-sheet.formsheetwrappercomponent.ngoninit.md) |  |  |
+|  [onCancel()](./form-sheet.formsheetwrappercomponent.oncancel.md) |  |  |
+|  [onSubmit(res)](./form-sheet.formsheetwrappercomponent.onsubmit.md) |  |  |
 

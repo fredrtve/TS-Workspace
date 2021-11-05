@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-static ɵmod: i0.ɵɵNgModuleDeclaration<ModelDataTableModule, [typeof i1.ModelDataTableComponent], [typeof i2.CommonModule, typeof i3.AgGridModule], [typeof i1.ModelDataTableComponent]>;
+static ɵmod: i0.ɵɵNgModuleDeclaration<ModelDataTableModule, [typeof i1.ModelDataTableComponent, typeof i2.ValidationTooltipComponent], [typeof i3.CommonModule, typeof i4.AgGridModule], [typeof i1.ModelDataTableComponent]>;
 ```

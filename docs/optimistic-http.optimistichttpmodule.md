@@ -31,5 +31,5 @@ export declare class OptimisticHttpModule
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
 |  [forFeature(actionRequestMap, optimisticStateProps)](./optimistic-http.optimistichttpmodule.forfeature.md) | <code>static</code> |  |
-|  [forRoot(actionRequestMap, optimisticStateProps)](./optimistic-http.optimistichttpmodule.forroot.md) | <code>static</code> |  |
+|  [forRoot(actionRequestMap, optimisticStateProps, baseUrl)](./optimistic-http.optimistichttpmodule.forroot.md) | <code>static</code> |  |
 

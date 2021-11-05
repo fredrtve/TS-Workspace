@@ -20,7 +20,7 @@ get<TProp extends keyof TState>(stateProp: TProp): ModelByStateProp<TState, TPro
 
 <b>Returns:</b>
 
-[ModelByStateProp](./model-core.modelbystateprop.md)<!-- -->&lt;TState, TProp&gt; extends [StateModels](./model-core.statemodels.md)<!-- -->&lt;TState&gt; ? ModelQuery&lt;TState, [ModelByStateProp](./model-core.modelbystateprop.md)<!-- -->&lt;TState, TProp&gt;&gt; : any
+[ModelByStateProp](./model-core.modelbystateprop.md)<!-- -->&lt;TState, TProp&gt; extends [StateModels](./model-core.statemodels.md)<!-- -->&lt;TState&gt; ? [ModelQuery](./model-core.modelquery.md)<!-- -->&lt;TState, [ModelByStateProp](./model-core.modelbystateprop.md)<!-- -->&lt;TState, TProp&gt;&gt; : any
 
 A model query object
 

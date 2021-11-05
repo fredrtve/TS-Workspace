@@ -10,12 +10,15 @@ A collection of generic utility functions
 
 |  Function | Description |
 |  --- | --- |
+|  [\_hasSameState(state1, state2)](./global-utils._hassamestate.md) |  |
 |  [\_tryWithLogging(func)](./global-utils._trywithlogging.md) | An higher order function that writes errors from an function to the console. |
 |  [\_weakMemoizer(fn)](./global-utils._weakmemoizer.md) | An higher order function that memoizes the results of the input function. Object arguments are stored as weak references. |
+|  [applyMixins(derivedCtor, constructors)](./global-utils.applymixins.md) |  |
 
 ## Variables
 
 |  Variable | Description |
 |  --- | --- |
 |  [awaitOnline](./global-utils.awaitonline.md) |  |
+|  [debounceAfterFirst](./global-utils.debounceafterfirst.md) |  |
 

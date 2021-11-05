@@ -9,5 +9,5 @@ A custom converter used to convert the model data to form. Only required on edit
 <b>Signature:</b>
 
 ```typescript
-modelConverter?: Maybe<Converter<TModel, Partial<TForm>>>;
+modelConverter?: Maybe<Converter<DeepPartial<TModel>, Partial<TForm>>>;
 ```

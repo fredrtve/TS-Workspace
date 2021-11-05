@@ -23,17 +23,17 @@ ModelCommands: {
         stateProp: Immutable<StatePropByModel<TState, TModel>>;
     };
     save: <TState_1, TModel_1 extends import("model/core").ValueOf<{ [key_1 in keyof TState_1]: import("model/core").ModelByStateProp<TState_1, key_1>; }>>(payload: {
-        readonly saveAction: SaveAction;
+        readonly isNew?: boolean | undefined;
         readonly entity: Immutable<TModel_1>;
         readonly stateProp: Immutable<StatePropByModel<TState_1, TModel_1>>;
     }) => {
         type: string;
-        saveAction: SaveAction;
+        isNew?: boolean | undefined;
         entity: Immutable<TModel_1>;
         stateProp: Immutable<StatePropByModel<TState_1, TModel_1>>;
     };
     setSave: <TState_2, TModel_2 extends import("model/core").ValueOf<{ [key_2 in keyof TState_2]: import("model/core").ModelByStateProp<TState_2, key_2>; }>>(payload: {
-        readonly saveAction: SaveAction;
+        readonly isNew: boolean;
         readonly saveModelResult: {
             readonly modifiedState: Immutable<Partial<TState_2>>;
             readonly fullModel: Immutable<TModel_2>;
@@ -42,7 +42,7 @@ ModelCommands: {
         readonly stateProp: Immutable<StatePropByModel<TState_2, TModel_2>>;
     }) => {
         type: string;
-        saveAction: SaveAction;
+        isNew: boolean;
         saveModelResult: {
             readonly modifiedState: Immutable<Partial<TState_2>>;
             readonly fullModel: Immutable<TModel_2>;

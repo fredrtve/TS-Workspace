@@ -9,7 +9,7 @@ Opens the specified model form as a form sheet
 <b>Signature:</b>
 
 ```typescript
-open<TModel extends StateModels<TState>, TForm extends object = TModel extends object ? TModel : never, TInputState extends object | null = null>(config: Immutable<ModelFormConfig<TState, TModel, TForm, TInputState>>, initialValue?: Immutable<Maybe<DeepPartial<TForm>>>, options?: Immutable<ModelFormServiceOptions<TState>>): BottomSheetRef;
+open<TModel extends StateModels<TState>, TForm extends object = TModel extends object ? TModel : never, TInputState extends object = {}>(config: Immutable<ModelFormConfig<TState, TModel, TForm, TInputState>>, initialValue?: Immutable<Maybe<DeepPartial<TModel>>>, options?: ModelFormServiceOptions<TInputState, TForm>): MatBottomSheetRef<FormSheetWrapperComponent, Immutable<NotNull<TForm>> | 'deleted'>;
 ```
 
 ## Parameters
@@ -17,12 +17,12 @@ open<TModel extends StateModels<TState>, TForm extends object = TModel extends o
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  config | Immutable&lt;[ModelFormConfig](./model-form.modelformconfig.md)<!-- -->&lt;TState, TModel, TForm, TInputState&gt;&gt; |  |
-|  initialValue | Immutable&lt;Maybe&lt;DeepPartial&lt;TForm&gt;&gt;&gt; |  |
-|  options | Immutable&lt;[ModelFormServiceOptions](./model-form.modelformserviceoptions.md)<!-- -->&lt;TState&gt;&gt; |  |
+|  initialValue | Immutable&lt;Maybe&lt;DeepPartial&lt;TModel&gt;&gt;&gt; |  |
+|  options | [ModelFormServiceOptions](./model-form.modelformserviceoptions.md)<!-- -->&lt;TInputState, TForm&gt; |  |
 
 <b>Returns:</b>
 
-BottomSheetRef
+MatBottomSheetRef&lt;FormSheetWrapperComponent, Immutable&lt;NotNull&lt;TForm&gt;&gt; \| 'deleted'&gt;
 
 A reference to the bottom sheet with the model form.
 

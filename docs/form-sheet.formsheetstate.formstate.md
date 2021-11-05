@@ -9,5 +9,5 @@ Form state required by the form
 <b>Signature:</b>
 
 ```typescript
-formState?: Partial<TFormState> | Observable<Immutable<Partial<TFormState>>>;
+formState?: TFormState | Observable<Immutable<TFormState>>;
 ```

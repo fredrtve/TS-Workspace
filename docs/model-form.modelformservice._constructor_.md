@@ -9,7 +9,7 @@ Constructs a new instance of the `ModelFormService` class
 <b>Signature:</b>
 
 ```typescript
-constructor(formService: FormService, facade: ModelFormFacade<TState, StateModels<TState>>);
+constructor(formService: FormService, formStore: ModelFormStore<TState, StateModels<TState>>);
 ```
 
 ## Parameters
@@ -17,5 +17,5 @@ constructor(formService: FormService, facade: ModelFormFacade<TState, StateModel
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  formService | FormService |  |
-|  facade | ModelFormFacade&lt;TState, StateModels&lt;TState&gt;&gt; |  |
+|  formStore | ModelFormStore&lt;TState, StateModels&lt;TState&gt;&gt; |  |
 

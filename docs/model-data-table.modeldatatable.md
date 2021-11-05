@@ -17,6 +17,6 @@ export interface ModelDataTable<TModel>
 |  Property | Type | Description |
 |  --- | --- | --- |
 |  [onUpdateActionConverter?](./model-data-table.modeldatatable.onupdateactionconverter.md) | (t: TModel) =&gt; StateAction | <i>(Optional)</i> A custom function used to convert the results of an update to a state action. By default the SaveModelAction is used. |
-|  [propertyColDefs](./model-data-table.modeldatatable.propertycoldefs.md) | { \[key in keyof TModel\]: [ModelPropertyColDef](./model-data-table.modelpropertycoldef.md)<!-- -->&lt;TModel&gt;; } | Definitions used to render a column for a property on the model. |
+|  [propertyColDefs](./model-data-table.modeldatatable.propertycoldefs.md) | { \[key in keyof TModel\]: [ModelPropertyColDef](./model-data-table.modelpropertycoldef.md)<!-- -->&lt;TModel, key&gt;; } | Definitions used to render a column for a property on the model. |
 |  [selectable?](./model-data-table.modeldatatable.selectable.md) | boolean | <i>(Optional)</i> If set to true, a checkbox column is rendered for selection. |
 

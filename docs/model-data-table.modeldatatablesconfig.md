@@ -18,4 +18,5 @@ export interface ModelDataTablesConfig<TState>
 |  --- | --- | --- |
 |  [baseColDef](./model-data-table.modeldatatablesconfig.basecoldef.md) | ColDef | Base column definition used on all columns |
 |  [tables](./model-data-table.modeldatatablesconfig.tables.md) | { \[key in keyof TState\]: [ModelDataTable](./model-data-table.modeldatatable.md)<!-- -->&lt;unknown&gt;; } | The table definitions for each model in state |
+|  [validationErrorClass](./model-data-table.modeldatatablesconfig.validationerrorclass.md) | string | A class for coloring validation error fields &amp; tooltip |
 

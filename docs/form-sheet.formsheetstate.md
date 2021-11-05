@@ -9,13 +9,13 @@ Represents configuration for opening a form with [FormService](./form-sheet.form
 <b>Signature:</b>
 
 ```typescript
-export interface FormSheetState<TForm extends object, TFormState extends object | null = null> 
+export interface FormSheetState<TForm extends object, TFormState extends object = never> 
 ```
 
 ## Properties
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [formState?](./form-sheet.formsheetstate.formstate.md) | Partial&lt;TFormState&gt; \| Observable&lt;Immutable&lt;Partial&lt;TFormState&gt;&gt;&gt; | <i>(Optional)</i> Form state required by the form |
-|  [initialValue?](./form-sheet.formsheetstate.initialvalue.md) | Maybe&lt;DeepPartial&lt;TForm&gt;&gt; | <i>(Optional)</i> the initial value of the form |
+|  [formState?](./form-sheet.formsheetstate.formstate.md) | TFormState \| Observable&lt;Immutable&lt;TFormState&gt;&gt; | <i>(Optional)</i> Form state required by the form |
+|  [initialValue?](./form-sheet.formsheetstate.initialvalue.md) | Maybe&lt;Immutable&lt;DeepPartial&lt;TForm&gt;&gt;&gt; | <i>(Optional)</i> the initial value of the form |
 

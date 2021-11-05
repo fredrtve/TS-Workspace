@@ -9,7 +9,7 @@ Defines a column for a property on a state model
 <b>Signature:</b>
 
 ```typescript
-export interface ModelPropertyColDef<TModel> 
+export interface ModelPropertyColDef<TModel, TProp extends keyof TModel> 
 ```
 
 ## Properties
@@ -18,5 +18,6 @@ export interface ModelPropertyColDef<TModel>
 |  --- | --- | --- |
 |  [boolean?](./model-data-table.modelpropertycoldef.boolean.md) | boolean | <i>(Optional)</i> Set to true if the property represents a boolean value. The column will render a select with "ja" or "nei" |
 |  [editable?](./model-data-table.modelpropertycoldef.editable.md) | boolean | <i>(Optional)</i> Set to true if the property should be editable |
+|  [validators?](./model-data-table.modelpropertycoldef.validators.md) | [PropertyValidatorFn](./model-data-table.propertyvalidatorfn.md)<!-- -->&lt;TModel\[TProp\]&gt;\[\] | <i>(Optional)</i> An array of synchronous validators functions for given property |
 |  [valueGetter?](./model-data-table.modelpropertycoldef.valuegetter.md) | (model: Immutable&lt;TModel&gt;) =&gt; unknown | <i>(Optional)</i> |
 

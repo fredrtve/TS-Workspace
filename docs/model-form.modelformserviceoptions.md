@@ -9,7 +9,7 @@ Represents a configuration object for the model form service.
 <b>Signature:</b>
 
 ```typescript
-export interface ModelFormServiceOptions<TInputState = object> 
+export interface ModelFormServiceOptions<TInputState extends object = {}, TForm extends object = object> 
 ```
 
 ## Properties
@@ -18,8 +18,8 @@ export interface ModelFormServiceOptions<TInputState = object>
 |  --- | --- | --- |
 |  [customTitle?](./model-form.modelformserviceoptions.customtitle.md) | string | <i>(Optional)</i> A custom title for the form sheet. |
 |  [deleteDisabled?](./model-form.modelformserviceoptions.deletedisabled.md) | boolean | <i>(Optional)</i> If set to false, the delete option will not be displayed. |
-|  [formState?](./model-form.modelformserviceoptions.formstate.md) | Immutable&lt;TInputState&gt; \| Observable&lt;Immutable&lt;TInputState&gt;&gt; | <i>(Optional)</i> Additional form state that should be merged with model state |
 |  [fullScreen?](./model-form.modelformserviceoptions.fullscreen.md) | boolean | <i>(Optional)</i> Set to true for full screen form. Default is true. |
-|  [submitCallback?](./model-form.modelformserviceoptions.submitcallback.md) | (val: SaveAction) =&gt; void | <i>(Optional)</i> A callback that gets executed when form is submitted. |
+|  [inputState?](./model-form.modelformserviceoptions.inputstate.md) | Immutable&lt;TInputState&gt; \| Observable&lt;Immutable&lt;TInputState&gt;&gt; | <i>(Optional)</i> Additional form state that should be merged with model state |
+|  [submitCallback?](./model-form.modelformserviceoptions.submitcallback.md) | (val: Immutable&lt;TForm&gt;) =&gt; void | <i>(Optional)</i> A callback that gets executed when form is submitted. |
 |  [useRouting?](./model-form.modelformserviceoptions.userouting.md) | boolean | <i>(Optional)</i> Enable to append a query param to the route when opened, making the form a part of the browser history. Default is true |
 

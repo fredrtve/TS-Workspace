@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-static forRoot<TState>(actionRequestMap: Maybe<ActionRequestMap<StateAction>>, optimisticStateProps?: Prop<TState>[]): ModuleWithProviders<OptimisticHttpModule>;
+static forRoot<TState>(actionRequestMap: Maybe<ActionRequestMap<StateAction>>, optimisticStateProps?: Prop<TState>[], baseUrl?: string): ModuleWithProviders<OptimisticHttpModule>;
 ```
 
 ## Parameters
@@ -16,6 +16,7 @@ static forRoot<TState>(actionRequestMap: Maybe<ActionRequestMap<StateAction>>, o
 |  --- | --- | --- |
 |  actionRequestMap | Maybe&lt;[ActionRequestMap](./optimistic-http.actionrequestmap.md)<!-- -->&lt;StateAction&gt;&gt; |  |
 |  optimisticStateProps | Prop&lt;TState&gt;\[\] |  |
+|  baseUrl | string |  |
 
 <b>Returns:</b>
 

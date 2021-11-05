@@ -12,11 +12,17 @@ Responsible for declaring components and exporting the [DynamicFormComponent](./
 export declare class DynamicFormsModule 
 ```
 
+## Constructors
+
+|  Constructor | Modifiers | Description |
+|  --- | --- | --- |
+|  [(constructor)()](./dynamic-forms.dynamicformsmodule._constructor_.md) |  | Constructs a new instance of the <code>DynamicFormsModule</code> class |
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [ɵfac](./dynamic-forms.dynamicformsmodule._fac.md) | <code>static</code> | i0.ɵɵFactoryDeclaration&lt;[DynamicFormsModule](./dynamic-forms.dynamicformsmodule.md)<!-- -->, never&gt; |  |
 |  [ɵinj](./dynamic-forms.dynamicformsmodule._inj.md) | <code>static</code> | i0.ɵɵInjectorDeclaration&lt;[DynamicFormsModule](./dynamic-forms.dynamicformsmodule.md)<!-- -->&gt; |  |
-|  [ɵmod](./dynamic-forms.dynamicformsmodule._mod.md) | <code>static</code> | i0.ɵɵNgModuleDeclaration&lt;[DynamicFormsModule](./dynamic-forms.dynamicformsmodule.md)<!-- -->, \[typeof i1.[DynamicFormComponent](./dynamic-forms.dynamicformcomponent.md)<!-- -->, typeof i2.DynamicControlGroupComponent, typeof i3.FormActionsComponent, typeof i4.DynamicHostDirective\], \[typeof i5.CommonModule, typeof i6.ReactiveFormsModule, typeof i7.MatButtonModule, typeof i8.MatFormFieldModule, typeof i9.MatProgressSpinnerModule\], \[typeof i1.[DynamicFormComponent](./dynamic-forms.dynamicformcomponent.md)<!-- -->\]&gt; |  |
+|  [ɵmod](./dynamic-forms.dynamicformsmodule._mod.md) | <code>static</code> | i0.ɵɵNgModuleDeclaration&lt;[DynamicFormsModule](./dynamic-forms.dynamicformsmodule.md)<!-- -->, \[typeof i1.[DynamicFormComponent](./dynamic-forms.dynamicformcomponent.md)<!-- -->, typeof i2.[DynamicHostDirective](./dynamic-forms.dynamichostdirective.md)<!-- -->\], \[typeof i3.CommonModule, typeof i4.ReactiveFormsModule\], \[typeof i1.[DynamicFormComponent](./dynamic-forms.dynamicformcomponent.md)<!-- -->, typeof i2.[DynamicHostDirective](./dynamic-forms.dynamichostdirective.md)<!-- -->\]&gt; |  |
 

@@ -9,7 +9,7 @@ Get a date range containing the start and end date of a specified month.
 <b>Signature:</b>
 
 ```typescript
-export declare function _getMonthRange(date?: Immutable<DateInput>, getISO?: boolean): Immutable<DateRange>;
+export declare function _getMonthRange<TAsIso extends boolean = false>(date?: Immutable<DateInput>, getISO?: TAsIso): Immutable<TAsIso extends true ? DateRange<string> : DateRange>;
 ```
 
 ## Parameters
@@ -17,9 +17,9 @@ export declare function _getMonthRange(date?: Immutable<DateInput>, getISO?: boo
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  date | Immutable&lt;DateInput&gt; | A date with the desired month |
-|  getISO | boolean | Set to true if you want the output as ISO strings |
+|  getISO | TAsIso | Set to true if you want the output as ISO strings |
 
 <b>Returns:</b>
 
-Immutable&lt;[DateRange](./date-time-helpers.daterange.md)<!-- -->&gt;
+Immutable&lt;TAsIso extends true ? [DateRange](./date-time-helpers.daterange.md)<!-- -->&lt;string&gt; : [DateRange](./date-time-helpers.daterange.md)<!-- -->&gt;
 

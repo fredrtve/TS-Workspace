@@ -9,5 +9,5 @@ Function that executes when form is submitted.
 <b>Signature:</b>
 
 ```typescript
-submitCallback?: Maybe<(val: TResult) => void>;
+submitCallback?: Maybe<(val: Immutable<NotNull<TForm>>) => void>;
 ```

@@ -21,6 +21,7 @@ AgGrid css must be loaded by consumer.
 
 |  Interface | Description |
 |  --- | --- |
+|  [DataTableValidationErrorMap](./model-data-table.datatablevalidationerrormap.md) | Represents a map of validation errors with accociated [ErrorDisplayFn](./model-data-table.errordisplayfn.md) Provided with the token [MODEL\_DATA\_TABLE\_VALIDATION\_ERROR\_MESSAGES](./model-data-table.model_data_table_validation_error_messages.md) |
 |  [ModelDataTable](./model-data-table.modeldatatable.md) | Defines a table used to render a AgGridTable for a given state model. |
 |  [ModelDataTablesConfig](./model-data-table.modeldatatablesconfig.md) | Represents a configuration object for all model data tables. Provided with token [MODEL\_DATA\_TABLES\_CONFIG](./model-data-table.model_data_tables_config.md) |
 |  [ModelPropertyColDef](./model-data-table.modelpropertycoldef.md) | Defines a column for a property on a state model |
@@ -29,5 +30,14 @@ AgGrid css must be loaded by consumer.
 
 |  Variable | Description |
 |  --- | --- |
+|  [MODEL\_DATA\_TABLE\_VALIDATION\_ERROR\_MESSAGES](./model-data-table.model_data_table_validation_error_messages.md) | A token for providing global validation error messages for all forms |
 |  [MODEL\_DATA\_TABLES\_CONFIG](./model-data-table.model_data_tables_config.md) |  |
+
+## Type Aliases
+
+|  Type Alias | Description |
+|  --- | --- |
+|  [DataTableValidationErrors](./model-data-table.datatablevalidationerrors.md) |  |
+|  [ErrorDisplayFn](./model-data-table.errordisplayfn.md) | Represents a function that converts an error to a readable error message |
+|  [PropertyValidatorFn](./model-data-table.propertyvalidatorfn.md) |  |
 

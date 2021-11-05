@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-start: Date | string | number;
+start: T;
 ```

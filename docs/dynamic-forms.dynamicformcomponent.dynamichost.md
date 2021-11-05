@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-dynamicHost: DynamicHostDirective;
+dynamicHost?: DynamicHostDirective;
 ```

@@ -9,17 +9,13 @@ Represents the configuration for [FormSheetWrapperComponent](./form-sheet.formsh
 <b>Signature:</b>
 
 ```typescript
-export interface FormSheetWrapperConfig<TFormConfig, TForm extends object, TInputState extends object | null, TResult> 
+export interface FormSheetWrapperConfig<TForm extends object, TInputState extends object = {}> extends FormSheetConfigurations<TForm, TInputState>, FormSheetState<TForm, TInputState> 
 ```
+<b>Extends:</b> [FormSheetConfigurations](./form-sheet.formsheetconfigurations.md)<!-- -->&lt;TForm, TInputState&gt;, [FormSheetState](./form-sheet.formsheetstate.md)<!-- -->&lt;TForm, TInputState&gt;
 
 ## Properties
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [formComponent](./form-sheet.formsheetwrapperconfig.formcomponent.md) | Type&lt;FormComponent&lt;TFormConfig, TForm, TInputState, TResult&gt;&gt; | The form component that should be rendered. |
-|  [formConfig?](./form-sheet.formsheetwrapperconfig.formconfig.md) | Maybe&lt;TFormConfig&gt; | <i>(Optional)</i> The form config passed to the provided form component |
-|  [formState$?](./form-sheet.formsheetwrapperconfig.formstate_.md) | Observable&lt;Maybe&lt;Immutable&lt;TInputState&gt;&gt;&gt; | <i>(Optional)</i> Form state required by the form |
-|  [initialValue?](./form-sheet.formsheetwrapperconfig.initialvalue.md) | Immutable&lt;Partial&lt;TForm&gt;&gt; | <i>(Optional)</i> the initial value of the form |
-|  [navConfig?](./form-sheet.formsheetwrapperconfig.navconfig.md) | Maybe&lt;[FormSheetNavConfig](./form-sheet.formsheetnavconfig.md)<!-- -->&gt; | <i>(Optional)</i> Configuration for the top navigation bar on bottom sheet |
-|  [submitCallback?](./form-sheet.formsheetwrapperconfig.submitcallback.md) | Maybe&lt;(val: TResult) =&gt; void&gt; | <i>(Optional)</i> Function that executes when form is submitted. |
+|  [submitCallback?](./form-sheet.formsheetwrapperconfig.submitcallback.md) | Maybe&lt;(val: Immutable&lt;NotNull&lt;TForm&gt;&gt;) =&gt; void&gt; | <i>(Optional)</i> Function that executes when form is submitted. |
 

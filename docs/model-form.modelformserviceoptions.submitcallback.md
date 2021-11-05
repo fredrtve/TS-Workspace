@@ -9,5 +9,5 @@ A callback that gets executed when form is submitted.
 <b>Signature:</b>
 
 ```typescript
-submitCallback?: (val: SaveAction) => void;
+submitCallback?: (val: Immutable<TForm>) => void;
 ```

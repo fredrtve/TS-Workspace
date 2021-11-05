@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-static ɵmod: i0.ɵɵNgModuleDeclaration<ModelFormModule, [typeof i1.ModelFormComponent], [typeof i2.CommonModule, typeof i3.DynamicFormsModule, typeof i4.FormSheetModule, typeof i5.ConfirmDialogModule], never>;
+static ɵmod: i0.ɵɵNgModuleDeclaration<ModelFormModule, never, [typeof i1.FormSheetModule], never>;
 ```

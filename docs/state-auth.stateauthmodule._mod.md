@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-static ɵmod: i0.ɵɵNgModuleDeclaration<StateAuthModule, [typeof i1.IfRoleDirective], [typeof i0.ApplicationModule], [typeof i1.IfRoleDirective]>;
+static ɵmod: i0.ɵɵNgModuleDeclaration<StateAuthModule, [typeof i1.IfRoleDirective], never, [typeof i1.IfRoleDirective]>;
 ```

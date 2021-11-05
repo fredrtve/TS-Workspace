@@ -9,5 +9,5 @@ Configure what relational state that will be mapped to entity and included in fo
 <b>Signature:</b>
 
 ```typescript
-includes: RelationInclude<TState, TModel>;
+includes?: (x: ModelQuery<TState, TModel, "", "">) => RestrictedQuery<TState, TModel, any, any>;
 ```
