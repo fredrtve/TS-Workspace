@@ -1,4 +1,3 @@
-import { HttpClient, HttpContext } from '@angular/common/http';
 import { Type } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, FormArray, FormControl, FormGroup, ValidatorFn } from '@angular/forms';
 import { DeepPropsObject, Immutable, Maybe, NotNull } from 'global-types';
@@ -79,7 +78,6 @@ export interface ReactiveSelector<TFormSlice extends string, TStateSlice extends
 export type FormStateSelectorFn<TForm, TInputState, TReturnValue> = (
     form: TForm,
     state: TInputState, 
-    http?: HttpClient
  ) => TReturnValue
 
 /** A union of eligible form state selectors  */
