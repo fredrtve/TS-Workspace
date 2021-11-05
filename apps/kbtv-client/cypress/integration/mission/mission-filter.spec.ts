@@ -12,7 +12,7 @@ describe('Mission Filter', () => {
     const datePipe = new DatePipe("nb-NO");
 
     const existingCriteria: MissionCriteria = { 
-        searchString: "test", employer: {id: "test", name: "test"}, missionType: {id: "test", name: "test"},
+        searchString: "test", employer: {id: "test", name: "test"},
         dateRange: { start: _getISO(new Date().setMonth(3)), end: _getISO(new Date().setMonth(5)) },
         finished: false
     }
@@ -34,7 +34,6 @@ describe('Mission Filter', () => {
         //Check that existing values are filled in
         cy.getCy('form-searchString','input').invoke('val').should('eq', existingCriteria.searchString)    
         cy.getCy('form-employer').should('contain', existingCriteria.employer!.name)  
-        cy.getCy('form-missionType').should('contain', existingCriteria.missionType!.name)  
         cy.getCy('form-end','input').invoke('val').should('eq', datePipe.transform(existingCriteria.dateRange!.end, "MMM d, y"));
         cy.getCy('form-start','input').invoke('val').should('eq', datePipe.transform(existingCriteria.dateRange!.start, "MMM d, y"));
         cy.getCy('form-finished','.mat-radio-checked').contains(finishTxt(existingCriteria.finished!)) 
@@ -60,7 +59,6 @@ describe('Mission Filter', () => {
 
         cy.getCy('form-searchString','input').invoke('val').should('be.empty')    
         cy.getCy('form-employer').should('not.contain', existingCriteria.employer!.name)  
-        cy.getCy('form-missionType').should('not.contain', existingCriteria.missionType!.name)  
         cy.getCy('form-end','input').invoke('val').should('be.empty');
         cy.getCy('form-start').click(); 
         cy.getCy('form-start','input').invoke('val').should('be.empty')

@@ -9,6 +9,5 @@ export const AppModelStatePropTranslations : ModelStatePropTranslations = {
     missiondocuments: { plural: "Dokumenter", singular: "Dokument" }, 
     missionimages: { plural: "Bilder", singular: "Bilde" }, 
     missionnotes: { plural: "Notater", singular: "Notat" },
-    missiontypes: { plural: "Oppdragstyper", singular: "Oppdragstype" },
     inboundemailpasswords: { plural: "Epostpassord", singular: "Epostpassord" },
 }

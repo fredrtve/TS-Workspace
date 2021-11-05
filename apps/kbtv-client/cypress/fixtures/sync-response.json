@@ -22,13 +22,6 @@
       ],
       "deletedEntities": []
     },
-    "missionTypes": {
-      "entities": [
-        { "id": "syaKz7k", "name": "gdfs", "createdAt": 1628425084000 },
-        { "id": "JTu345c", "name": "Oppbygging", "createdAt": 1625508287000 }
-      ],
-      "deletedEntities": []
-    },
     "userTimesheets": {
       "entities": [
         {
@@ -62,9 +55,7 @@
           "finished": false,
           "phoneNumber": "654654654",
           "description": "dfghfhfdghgfdhfgdhdfgh",
-          "missionTypeId": "JTu345c",
           "employerId": "SZ4sm6I",
-          "missionType": null,
           "employer": null,
           "fileName": null,
           "position": {
@@ -80,9 +71,7 @@
           "finished": false,
           "phoneNumber": null,
           "description": null,
-          "missionTypeId": null,
           "employerId": null,
-          "missionType": null,
           "employer": null,
           "fileName": null,
           "position": {

@@ -1,6 +1,6 @@
 import { ApiUrl } from "@core/api-url.enum";
 import { GlobalActions } from "@core/global-actions";
-import { Employer, Mission, MissionType, UserTimesheet } from "@core/models";
+import { Employer, Mission, UserTimesheet } from "@core/models";
 import { ModelState } from "@core/state/model-state.interface";
 import { StatePropByModel } from "model/core/model-core";
 
@@ -17,16 +17,14 @@ describe('Optimistic Http Error', () => {
         cy.intercept('POST', '**' + ApiUrl.Timesheet, { statusCode: 401 }).as("createTimesheet");
         cy.intercept('PUT', '**' + ApiUrl.Timesheet + '/**', { statusCode: 401 });
         cy.intercept('POST', '**' + ApiUrl.Employer, { statusCode: 401 });
-        cy.intercept('POST', '**' + ApiUrl.MissionType, { statusCode: 204 });
         cy.login('Leder', '/oppdrag', {});
     })
 
     it('Should fail subsequent requests & reset state to before request', { browser: '!firefox' }, () => {
         cy.goOffline();
         //First do one successful to ensure it does not reset
-        createEntity<MissionType>("missionTypes", {id: "1", name: "testtype"});
 
-        createEntity<UserTimesheet>("userTimesheets", { id: "1", missionId: "asdsad", comment: "asda" });  
+        createEntity<UserTimesheet>("userTimesheets", { id: "1", missionActivityId: "asdsad", comment: "asda" });  
         updateEntity<UserTimesheet>("userTimesheets", { id: "1", comment: "as2233da" });
         createEntity<Employer>("employers", { id: "1", name: "asda" });  
         createEntity<Mission>("missions", { id: "1", address: "asda" });  
@@ -35,7 +33,6 @@ describe('Optimistic Http Error', () => {
             expect(s.userTimesheets).to.have.lengthOf(1);
             expect(s.employers).to.have.lengthOf(1);
             expect(s.missions).to.have.lengthOf(1);
-            expect(s.missionTypes).to.have.lengthOf(1);
         })
 
         cy.goOnline(); 
@@ -44,7 +41,6 @@ describe('Optimistic Http Error', () => {
             expect(s.userTimesheets).to.be.undefined;
             expect(s.employers).to.be.undefined;
             expect(s.missions).to.be.undefined;
-            expect(s.missionTypes).to.have.lengthOf(1);
         })
     })
 

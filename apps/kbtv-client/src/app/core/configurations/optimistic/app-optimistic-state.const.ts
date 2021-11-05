@@ -9,7 +9,6 @@ export const AppOptimisticStateProps: Prop<State>[] =  [
     "missionDocuments",
     "missionImages",
     "missionNotes", 
-    "missionTypes", 
     "timesheets",
     "users",
     "employers",

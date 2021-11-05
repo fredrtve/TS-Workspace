@@ -7,7 +7,6 @@ export const ModelIdProps: {[key in keyof ModelState]: ModelState[key] extends V
     missionDocuments: 'id',
     missionImages: 'id',
     missionNotes: 'id',
-    missionTypes: 'id',
     timesheets: 'id',
     userTimesheets: 'id',
     inboundEmailPasswords: 'id',

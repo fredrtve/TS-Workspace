@@ -14,7 +14,6 @@ describe("Data Sync", () => {
             expect(state.missions!).to.have.lengthOf(2); 
             expect(state.missionImages!).to.have.lengthOf(2); 
             expect(state.employers!).to.have.lengthOf(2); 
-            expect(state.missionTypes!).to.have.lengthOf(2); 
             expect(state.userTimesheets!).to.have.lengthOf(2); 
             expect(state.missionDocuments!).to.be.undefined; 
             expect(state.missionNotes!).to.be.undefined; 

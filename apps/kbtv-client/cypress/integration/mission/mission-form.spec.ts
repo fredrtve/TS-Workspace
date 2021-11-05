@@ -1,6 +1,6 @@
 import { ApiUrl } from "@core/api-url.enum";
 import { Activity, Mission, MissionActivity } from "@core/models";
-import { StateActivities, StateEmployers, StateMissionActivities, StateMissions, StateMissionTypes } from "@core/state/global-state.interfaces";
+import { StateActivities, StateEmployers, StateMissionActivities, StateMissions } from "@core/state/global-state.interfaces";
 import { ValidationRules } from "@shared-app/constants/validation-rules.const";
 import { _stringGen } from "cypress/support";
 
@@ -9,12 +9,11 @@ describe('Mission Form', () => {
     const isSubmittable = () =>  cy.getCy('submit-form').should('not.be.disabled');
     const isNotSubmittable = () => cy.getCy('submit-form').should('be.disabled');
 
-    const missionType = {id: '1', name: 'type'};
     const employer = {id: '1', name: 'employer'};
     const activity : Activity = { id: '1', name: "testactivity1" };
     const activity2 : Activity = { name: "testactivity2" };
     const mission = { id: '1', address: "new", phoneNumber: "9234", description: "desc", 
-        employerId: employer.id, missionTypeId: missionType.id }
+        employerId: employer.id }
     const missionActivity :MissionActivity = { id: "1", missionId: mission.id, activityId: activity.id}
 
     beforeEach(() => {
@@ -24,7 +23,7 @@ describe('Mission Form', () => {
     })
 
     it('can fill in form and create mission', () => {  
-        cy.login('Leder', '/oppdrag', { missionTypes: [missionType], employers: [employer], activities: [activity]}); 
+        cy.login('Leder', '/oppdrag', { employers: [employer], activities: [activity]}); 
         cy.mainFabClick();
         cy.wait(600);
 
@@ -62,10 +61,6 @@ describe('Mission Form', () => {
         cy.wait(500);
         autoCompleteItems().should('have.length', 1).first().click();
 
-        cy.getCy('form-missionTypeInput').click();
-        cy.wait(500);
-        autoCompleteItems().should('have.length', 1).first().click();
-
         cy.getCy('form-missionActivitiesInput','input').wait(100).type(activity2.name+'{enter}').wait(100); 
         cy.getCy('form-missionActivitiesInput').click().wait(100);
         autoCompleteItems().should('have.length', 1).first().click();
@@ -84,7 +79,6 @@ describe('Mission Form', () => {
             expect(mission!.phoneNumber).to.equal(newModel.phoneNumber);
             expect(mission!.description).to.equal(newModel.description);
             expect(mission!.employerId).to.equal(employer.id);
-            expect(mission!.missionTypeId).to.equal(missionType.id);
             
             const missionActivities = state.missionActivities?.filter(x => x.missionId === mission.id);
             expect(missionActivities).to.have.lengthOf(2);
@@ -96,36 +90,31 @@ describe('Mission Form', () => {
         })
     });
 
-    it('can create mission with new employer & mission type', () => {  
+    it('can create mission with new employer', () => {  
         cy.login('Leder', '/oppdrag');   
         cy.mainFabClick();
         cy.wait(200);
 
-        const data = {address: 'createMissionTest2', missionTypeInput: 'newMissionType', employerInput: 'newEmployer'};
+        const data = {address: 'createMissionTest2', employerInput: 'newEmployer'};
         cy.getCy('form-address','input').type(data.address);   
 
-        cy.getCy('form-missionTypeInput','input').type(data.missionTypeInput);
         cy.getCy('form-employerInput','input').type(data.employerInput);
 
         cy.getCy('submit-form').click();
         cy.wait('@createMission');
-        cy.storeState<StateMissions & StateEmployers & StateMissionTypes>().then(state => {
+        cy.storeState<StateMissions & StateEmployers>().then(state => {
             const mission = state.missions?.filter(x => x.address === data.address)[0];
             const employers = state.employers!.filter(x => x.id === mission!.employerId);    
-            const types = state.missionTypes!.filter(x => x.id === mission!.missionTypeId);
 
             expect(employers).to.have.lengthOf(1);
             expect(employers[0].name).to.equal(data.employerInput);
-
-            expect(types).to.have.lengthOf(1);
-            expect(types[0].name).to.equal(data.missionTypeInput);
         })
 
     })
 
     it('shows current values on update & updates changed values', () => {
         cy.login('Leder', '/oppdrag/' + mission.id + '/detaljer' , { 
-            missionTypes: [missionType], employers: [employer], missions: [mission], activities: [activity], missionActivities: [missionActivity]
+            employers: [employer], missions: [mission], activities: [activity], missionActivities: [missionActivity]
         });  
         cy.contains('Mer').click();
         cy.contains('Rediger').click();
@@ -137,7 +126,6 @@ describe('Mission Form', () => {
         cy.getCy('form-phoneNumber','input').invoke('val').should('equal', mission.phoneNumber);   
         cy.getCy('form-description','textarea').invoke('val').should('equal', mission.description);        
         cy.getCy('form-employerInput','input').invoke('val').should('equal', employer.name);
-        cy.getCy('form-missionTypeInput','input').invoke('val').should('equal', missionType.name);
         cy.getCy('form-missionActivitiesInput').find('mat-chip').should('have.length', 1).should('contain', activity.name);
         cy.getCy('form-finished','input').should('not.be.checked');
 
@@ -145,7 +133,6 @@ describe('Mission Form', () => {
         cy.getCy('form-address','input').clear().type(updatedValues.address);
         cy.getCy('form-phoneNumber','input').clear().type(updatedValues.phoneNumber);
         cy.getCy('form-employerInput','input').clear();
-        cy.getCy('form-missionTypeInput','input').clear();
         cy.getCy('form-missionActivitiesInput', "input").type(updatedValues.activity.name+"{enter}");
 
         cy.getCy('submit-form').click();
@@ -156,7 +143,6 @@ describe('Mission Form', () => {
 
             expect(missions).to.have.lengthOf(1);
             expect(missions![0].phoneNumber).to.equal(updatedValues.phoneNumber);
-            expect(missions![0].missionTypeId).to.be.undefined;
             expect(missions![0].employerId).to.be.undefined;
 
             const missionActivities = state.missionActivities?.filter(x => x.missionId === missions![0].id);
@@ -170,7 +156,7 @@ describe('Mission Form', () => {
     })
 
     it('Can delete current mission', () => {
-        cy.login('Leder', '/oppdrag/' + mission.id + '/detaljer' , { missionTypes: [missionType], employers: [employer], missions: [mission]});  
+        cy.login('Leder', '/oppdrag/' + mission.id + '/detaljer' , { employers: [employer], missions: [mission]});  
         cy.getCy('bottom-bar-action').filter(":contains('Mer')").click();
         cy.contains('Rediger').click();
         cy.wait(200);

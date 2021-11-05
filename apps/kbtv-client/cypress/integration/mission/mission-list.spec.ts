@@ -11,13 +11,12 @@ describe('MissionList', () => {
     const chips = () => cy.getCy('bar-chip');
     const bottomActions = () => cy.getCy('bottom-bar-action');
     const topActions = () => cy.getCy('top-nav-action');
-    const missionType = { id: '1', name: 'typeName'}
     const employer = { id: '1', name: 'employerInput'};
     const missions : Mission[] = [
-        { id: '1', address: 'addr1', missionTypeId: missionType.id, finished: false, createdAt: new Date().getTime() },
+        { id: '1', address: 'addr1', finished: false, createdAt: new Date().getTime() },
         { id: '2', address: 'addr2', employerId: employer.id, finished: false, createdAt: new Date().getTime() - 1000 },    
         { id: '3', address: 'addr3', finished: true, createdAt: new Date().getTime() - 1000 },
-        { id: '4', address: 'addr4', employerId: employer.id, missionTypeId: missionType.id, finished: true, createdAt: new Date().getTime() - 1000 },    
+        { id: '4', address: 'addr4', employerId: employer.id, finished: true, createdAt: new Date().getTime() - 1000 },    
     ]
 
     it('should display existing missions in ascending order', () => {
@@ -82,12 +81,11 @@ describe('MissionList', () => {
     it('Filters mission on criteria', () => {  
         const missionCriteria : MissionCriteria = { 
             searchString: missions[3].address, 
-            missionType, employer,
             finished: true,  
             dateRange: { start: _getFirstDayOfMonth(), end: _getLastDayOfMonth() }
         }
 
-        cy.login('Leder', '/oppdrag', { missions, missionTypes: [missionType], employers: [employer], missionCriteria }); 
+        cy.login('Leder', '/oppdrag', { missions, employers: [employer], missionCriteria }); 
 
         listItems().should('have.length', 1);
         listItems().first().should('contain', missions[3].address)
@@ -96,15 +94,14 @@ describe('MissionList', () => {
     it('Displays removable chips for each criteria', () => {  
         const missionCriteria : MissionCriteria = { 
             searchString: missions[3].address, 
-            missionType, employer,
+            employer,
             finished: true,  
             dateRange: { start: _getFirstDayOfMonth(), end: _getLastDayOfMonth() }
         } 
         cy.login('Leder', '/oppdrag', { missionCriteria }); 
 
-        chips().should('have.length', 5);
+        chips().should('have.length', 4);
         chips().should('contain', missionCriteria.searchString);
-        chips().should('contain', missionType.name);
         chips().should('contain', employer.name);
         chips().should('contain', "Ferdig");
         chips().should('contain', _formatDateRange(missionCriteria.dateRange!, _formatShortDate));

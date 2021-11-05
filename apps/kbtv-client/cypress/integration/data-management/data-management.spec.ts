@@ -1,8 +1,8 @@
 import { registerLocaleData } from "@angular/common";
 import norwayLocale from '@angular/common/locales/nb';
 import { ApiUrl } from "@core/api-url.enum";
-import { Employer, InboundEmailPassword, Mission, MissionType } from "@core/models";
-import { StateEmployers, StateMissions, StateMissionTypes } from "@core/state/global-state.interfaces";
+import { Employer, InboundEmailPassword, Mission } from "@core/models";
+import { StateEmployers, StateMissions } from "@core/state/global-state.interfaces";
 import { ModelState } from "@core/state/model-state.interface";
 import { environment } from "src/environments/environment.e2e";
 
@@ -11,15 +11,14 @@ registerLocaleData(norwayLocale, 'nb-NO');
 describe('Data Management', () => {
     
     const defaultEmployer : Employer = { id: '1', name: "bsu", phoneNumber: "3434", address: "edsada", email: "342@bsu.no" }   
-    const defaultMissionType : MissionType = { id: '1', name: "testing" }   
     const defaultMission : Mission = { 
         id: '1', address: 'test', phoneNumber: "3213", 
-        employerId: defaultEmployer.id, missionTypeId: defaultMissionType.id 
+        employerId: defaultEmployer.id
     };
     const defaultEmailPw : InboundEmailPassword = { id: '1', password: "testpw" }   
 
     const defaultState : Partial<ModelState>  = { 
-        missions: [defaultMission], employers: [defaultEmployer], missionTypes: [defaultMissionType], inboundEmailPasswords: [defaultEmailPw]
+        missions: [defaultMission], employers: [defaultEmployer], inboundEmailPasswords: [defaultEmailPw]
     }
 
     const login = (state: Partial<ModelState>) => cy.login('Leder', '/data', state); 
@@ -39,7 +38,7 @@ describe('Data Management', () => {
         cy.getCy('bottom-bar-action').filter(':contains("Slett")').click().dialogConfirm();
     
     beforeEach(() => {
-        for(const url of [ApiUrl.Mission, ApiUrl.Employer, ApiUrl.MissionType, ApiUrl.InboundEmailPassword]) {
+        for(const url of [ApiUrl.Mission, ApiUrl.Employer, ApiUrl.InboundEmailPassword]) {
             cy.intercept('PUT', '**' + url + '/**', { statusCode: 200, delay: 200 }).as('update'+url);
             cy.intercept('GET', '**' + url + '**', { statusCode: 200 }, ).as('get'+url); 
             cy.intercept('POST', '**' + url + '/DeleteRange', { statusCode: 204, delay: 100 }).as('deleteMissionDoc').as('delete'+url);  
@@ -58,7 +57,6 @@ describe('Data Management', () => {
         getCol<Mission>("finished").should('contain', defaultMission.finished ? 'Ja' : 'Nei');
         assertSameValueCol<Mission>(defaultMission, "phoneNumber");
         getCol<Mission>("employerId").should('contain', defaultEmployer.name);
-        getCol<Mission>("missionTypeId").should('contain', defaultMissionType.name);
 
         //Assert that each property can update except ID (no validation), dropping select for now
         getCol<Mission>("address").type(newValues.address + "{enter}");
@@ -97,27 +95,6 @@ describe('Data Management', () => {
         })
     })
 
-    it('Should display mission type row correctly and update values', () => {
-        login(defaultState);
-        selectData("missionTypes");
-
-        getRow(0).should('exist');
-
-        //Assert existing values are correct
-        for(const key in defaultMissionType)
-            assertSameValueCol<Employer>(defaultMissionType, <any> key);
-
-        const newName = "newTypeName"; 
-    
-        //Assert that each property can update except ID (no validation)
-        getCol<MissionType>("name").type(newName + "{enter}");
-             
-        cy.storeState<StateMissionTypes>().then(state => {
-            const type = state.missionTypes?.find(x => x.id === defaultMissionType.id);
-            expect(type?.name).to.eq(newName);
-        })
-    })
-
     it('Should display email password row correctly', () => {
         login(defaultState);
         selectData("inboundEmailPasswords");
@@ -132,12 +109,11 @@ describe('Data Management', () => {
     })
 
     it('Should delete range for all models', () => {
-        const state : Partial<ModelState> = { missions: [], employers: [], missionTypes: [], inboundEmailPasswords: [] };
+        const state : Partial<ModelState> = { missions: [], employers: [], inboundEmailPasswords: [] };
 
         for(let i = 0; i < 10; i++){
             state.missions?.push({...defaultMission, id: i.toString()});
             state.employers?.push({...defaultEmployer, id: i.toString()});
-            state.missionTypes?.push({...defaultMissionType, id: i.toString()});
             state.inboundEmailPasswords?.push({...defaultEmailPw, id: i.toString()});
         }
 

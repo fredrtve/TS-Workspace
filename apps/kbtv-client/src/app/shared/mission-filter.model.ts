@@ -8,7 +8,7 @@ export class MissionFilter extends DataFilter<Mission, MissionCriteria>{
 
     protected get isCriteriaEmpty(): boolean{
         return !this.criteria || 
-            (this.criteria.finished == null && !this.criteria.searchString && !this.criteria.employer && !this.criteria.missionType)
+            (this.criteria.finished == null && !this.criteria.searchString && !this.criteria.employer)
     }
 
     private searchStringLower: Maybe<string>;
@@ -35,11 +35,6 @@ export class MissionFilter extends DataFilter<Mission, MissionCriteria>{
 
         if(this.criteria.employer?.id){
             exp = exp && mission.employerId === this.criteria.employer.id;
-            if(exp === false) return exp;
-        }
-
-        if(this.criteria.missionType?.id){
-            exp = exp && mission.missionTypeId === this.criteria.missionType.id;
             if(exp === false) return exp;
         }
 

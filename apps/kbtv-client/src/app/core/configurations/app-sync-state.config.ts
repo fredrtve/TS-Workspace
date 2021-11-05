@@ -8,7 +8,6 @@ export type SyncModelState = Partial<ModelState> & StateCurrentUser & StateLeade
 export const AppSyncStateConfig: {[key in keyof SyncModelState]: SyncStatePropConfig} = 
 {
     missions: {idProp: ModelIdProps.missions, type: "array"},
-    missionTypes: {idProp: ModelIdProps.missionTypes, type: "array"},
     missionImages: {idProp: ModelIdProps.missionImages, type: "array"},
     missionNotes: {idProp: ModelIdProps.missionNotes, type: "array"},
     missionActivities: {idProp: ModelIdProps.missionActivities, type: "array"},

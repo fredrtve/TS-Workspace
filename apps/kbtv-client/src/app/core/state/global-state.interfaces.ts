@@ -1,12 +1,11 @@
-import { Mission, Employer, MissionActivity, MissionType, MissionImage, MissionDocument, MissionNote, Timesheet, User, InboundEmailPassword, UserTimesheet, Activity } from '../models';
-import { LeaderSettings } from '../models/leader-settings.interface';
 import { Maybe } from 'global-types';
 import { CurrentUser } from 'state-auth';
+import { Activity, Employer, InboundEmailPassword, Mission, MissionActivity, MissionDocument, MissionImage, MissionNote, Timesheet, User, UserTimesheet } from '../models';
+import { LeaderSettings } from '../models/leader-settings.interface';
 
 export interface StateMissions { missions: Maybe<Mission[]> }  
 export interface StateEmployers { employers: Maybe<Employer[]> }
 export interface StateActivities { activities: Maybe<Activity[]> }
-export interface StateMissionTypes { missionTypes: Maybe<MissionType[]> }
 export interface StateMissionImages { missionImages: Maybe<MissionImage[]> }
 export interface StateMissionDocuments { missionDocuments: Maybe<MissionDocument[]> }
 export interface StateMissionNotes { missionNotes: Maybe<MissionNote[]> }

@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Mission } from "@core/models";
-import { StateEmployers, StateMissions, StateMissionTypes } from "@core/state/global-state.interfaces";
+import { StateEmployers, StateMissions } from "@core/state/global-state.interfaces";
 import { ModelState } from "@core/state/model-state.interface";
 import { AppChip } from "@shared-app/interfaces/app-chip.interface";
 import { MissionCriteria } from "@shared/interfaces";
@@ -25,7 +25,7 @@ export interface FilteredMissionsResponse {
 }
 
 export interface MissionFilterFacadeStoreState extends
-    StateMissions, StateEmployers, StateMissionTypes, StateSyncConfig, StateMissionCriteria {} 
+    StateMissions, StateEmployers, StateSyncConfig, StateMissionCriteria {} 
 
 type StoreState = MissionFilterFacadeStoreState;
 
@@ -64,7 +64,7 @@ export class MissionFilterFacade {
           MissionCriteriaFormSheet,
           {
             initialValue: <any>this.store.state.missionCriteria,
-            formState: this.store.select$(["missionTypes", "employers", "missions", "syncConfig"])
+            formState: this.store.select$(["employers", "missions", "syncConfig"])
           },
           (val) => this.addCriteria({
             ...val,

@@ -98,7 +98,7 @@ const DateTimeControlGroup = _createControlGroup<TimesheetDateTime>()({
 });
 
 const CommentControl = _createControlField({ 
-    viewComponent: TextAreaFieldComponent, required$: true,
+    viewComponent: TextAreaFieldComponent,
     viewOptions: { placeholder$: "Kommentar", rows$: 3 },
     validators$: [Validators.maxLength(ValidationRules.TimesheetCommentMaxLength)], 
 });

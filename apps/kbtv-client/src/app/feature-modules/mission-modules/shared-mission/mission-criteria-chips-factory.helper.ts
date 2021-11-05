@@ -24,7 +24,6 @@ function missionCriteriaChipsFactory(
       {
         finished: { valueFormatter: (val) => val ? "Ferdig" : undefined },
         employer: { valueFormatter: (val) => val ? modelCtx.getDisplayValue("employers", val) : undefined },
-        missionType: { valueFormatter: (val) => val ? modelCtx.getDisplayValue("missionTypes", val) : undefined },
         dateRange: { valueFormatter: (val) => val ? _formatDateRange(val, _formatShortDate) : undefined }, 
       },
     )

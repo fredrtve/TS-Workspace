@@ -61,9 +61,6 @@ export const translations: { [key: string]: string } = {
   missionnote: "Notat",
   missionnoteId: "Notat",
 
-  missiontype: "Oppdragstype",
-  missiontypeid: "Oppdragstype",
-
   inboundemailpassword: "Epostpassord",
   inboundemailpasswordid: "Epostpassord",
 

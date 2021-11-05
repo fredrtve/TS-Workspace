@@ -8,7 +8,7 @@ import { MissionForm } from "./save-mission-model-form.const";
 
 
 export const _missionFormToSaveModelConverter = (input: Immutable<ModelFormResult<ModelState, Mission, MissionForm>>) => {      
-    const {employerInput, missionTypeInput, missionActivitiesInput, ...rest} = input.formValue;
+    const {employerInput, missionActivitiesInput, ...rest} = input.formValue;
 
     let mission: Partial<Mission> = rest;
 
@@ -19,14 +19,6 @@ export const _missionFormToSaveModelConverter = (input: Immutable<ModelFormResul
     if(existingEmployer) mission.employerId = existingEmployer.id;
     else if(employerInput) mission.employer = {name: <string> employerInput};
     else mission.employerId = undefined;
-    
-    const existingType = (missionTypeInput && typeof missionTypeInput === "object") 
-        ? missionTypeInput 
-        : _find(input.options?.missionTypes, missionTypeInput, "name");
-
-    if(existingType) mission.missionTypeId = existingType.id;
-    else if(missionTypeInput) mission.missionType = {name: <string> missionTypeInput}
-    else mission.missionTypeId = undefined;
 
     if(missionActivitiesInput){
         const missionActivities: MissionActivity[] = [];

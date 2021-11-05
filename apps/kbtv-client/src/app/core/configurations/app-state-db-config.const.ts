@@ -1,11 +1,11 @@
-import { StateActivities, StateCurrentUser, StateEmployers, StateLeaderSettings, StateMissionActivities, StateMissionDocuments, StateMissionImages, StateMissionNotes, StateMissions, StateMissionTypes, StateUserTimesheets } from "../state/global-state.interfaces";
 import { StateRequestQueue } from "optimistic-http";
 import { StoreState } from "state-auth";
 import { StateDbConfig } from 'state-db';
 import { StateSyncConfig, StateSyncTimestamp } from "state-sync";
+import { StateActivities, StateCurrentUser, StateEmployers, StateLeaderSettings, StateMissionActivities, StateMissionDocuments, StateMissionImages, StateMissionNotes, StateMissions, StateUserTimesheets } from "../state/global-state.interfaces";
 
 type PersistedState = StateMissions & StateMissionDocuments & StateMissionImages & StateMissionNotes & StateMissionActivities & StateActivities &
-    StateMissionTypes & StateEmployers & StateUserTimesheets  & StateLeaderSettings & StateRequestQueue &
+    StateEmployers & StateUserTimesheets  & StateLeaderSettings & StateRequestQueue &
     StoreState & StateCurrentUser & StateSyncConfig & StateSyncTimestamp
 
 export const AppStateDbConfig: StateDbConfig<PersistedState> = {
@@ -13,7 +13,6 @@ export const AppStateDbConfig: StateDbConfig<PersistedState> = {
     missionDocuments: { storageType: "idb-keyval" },
     missionImages: { storageType: "idb-keyval" },
     missionNotes: { storageType: "idb-keyval" },
-    missionTypes: { storageType: "idb-keyval" },
     missionActivities: { storageType: "idb-keyval" },
     activities: { storageType: "idb-keyval" },
     employers: { storageType: "idb-keyval" },

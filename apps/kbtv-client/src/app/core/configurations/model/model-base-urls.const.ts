@@ -7,7 +7,6 @@ export const ModelBaseUrls: Partial<Record<keyof ModelState, string>> = {
     missionDocuments: ApiUrl.MissionDocument,
     missionNotes: ApiUrl.MissionNote,
     employers: ApiUrl.Employer,
-    missionTypes: ApiUrl.MissionType,
     timesheets: ApiUrl.Timesheet,
     userTimesheets: ApiUrl.Timesheet,
     users: ApiUrl.Users,

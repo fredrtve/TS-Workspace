@@ -29,16 +29,8 @@ export const ModelConfigMap: AppModelConfigMap = {
             missionActivities: {stateProp: "missionActivities", childKey: "missionId", cascadeDelete: true}, 
         }, 
         foreigns: {
-            missionType: {stateProp: "missionTypes", foreignKey: "missionTypeId"},
             employer: {stateProp: "employers", foreignKey: "employerId"}
         },       
-    },
-    missionTypes: {
-        stateProp: "missionTypes", 
-        idProp: ModelIdProps.missionTypes,
-        displayFn: (m) => m.name,
-        idGenerator: _idGenerator,
-        foreigns: {}, children: {}
     },
     employers: {
         stateProp: "employers",

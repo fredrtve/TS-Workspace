@@ -14,7 +14,7 @@ import { DataManagerActions, DataManagerLocalActions } from "./state/actions";
 export class DataManagerFacade  {
 
     properties: Prop<ModelState>[] = 
-        ["missions", "employers", "missionTypes", "inboundEmailPasswords"];
+        ["missions", "employers", "inboundEmailPasswords"];
 
     selectedProperty$ = this.componentStore.selectProperty$("selectedProperty");
 
