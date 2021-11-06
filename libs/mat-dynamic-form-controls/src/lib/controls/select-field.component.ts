@@ -103,6 +103,6 @@ export class SelectFieldComponent<T> extends SelectControlBase<T> {
     FuncModule
   ]
 })
-class SelectControlModule {}
+class SelectFieldModule {}
 
 

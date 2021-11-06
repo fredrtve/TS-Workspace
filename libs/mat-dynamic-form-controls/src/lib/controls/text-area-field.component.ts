@@ -62,4 +62,4 @@ export class TextAreaFieldComponent extends BaseFieldComponent<string, TextAreaO
     MatInputModule,    
   ]
 })
-class TextAreaControlModule {}
+class TextAreaFieldModule {}

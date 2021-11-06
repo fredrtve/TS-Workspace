@@ -64,4 +64,4 @@ export class CheckboxFieldComponent extends BaseFieldComponent<boolean, Checkbox
     MatCheckboxModule,
   ]
 })
-class CheckboxControlModule {}
+class CheckboxFieldModule {}

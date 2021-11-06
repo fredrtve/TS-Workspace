@@ -92,4 +92,4 @@ export class SliderFieldComponent extends BaseFieldComponent<number, SliderOptio
     MatSliderModule
   ]
 })
-class SliderControlModule {}
+class SliderFieldModule {}
