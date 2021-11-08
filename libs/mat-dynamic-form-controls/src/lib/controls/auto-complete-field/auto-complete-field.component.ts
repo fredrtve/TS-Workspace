@@ -78,4 +78,4 @@ export class AutoCompleteFieldComponent<T> extends AutoCompleteControlBase<T>  {
       FuncModule
     ]
   })
-  class AutoCompleteFieldModule {}
+  export class AutoCompleteFieldModule {}

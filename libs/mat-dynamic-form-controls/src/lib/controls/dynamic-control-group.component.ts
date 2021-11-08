@@ -65,4 +65,4 @@ export class DynamicControlGroupComponent implements ControlGroupComponent<any, 
     DynamicFormsModule,
   ],
 })
-class DynamicControlGroupModule {}
+export class DynamicControlGroupModule {}

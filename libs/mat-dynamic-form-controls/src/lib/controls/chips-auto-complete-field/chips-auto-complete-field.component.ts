@@ -128,4 +128,4 @@ export class ChipsAutocompleteFieldComponent<T> extends ChipsAutoCompleteFieldBa
       FuncModule
     ]
 })
-class ChipsAutocompleteFieldModule {}
+export class ChipsAutocompleteFieldModule {}

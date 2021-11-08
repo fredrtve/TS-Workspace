@@ -82,4 +82,4 @@ export class InputFieldComponent extends BaseFieldComponent<string, InputOptions
     MatButtonModule
   ]
 })
-class InputFieldModule {}
+export class InputFieldModule {}

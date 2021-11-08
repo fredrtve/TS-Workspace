@@ -68,4 +68,4 @@ export class FileFieldComponent extends BaseFieldComponent<FileList, FileOptions
     MatFormFieldModule 
   ]
 })
-class FileFieldModule {}
+export class FileFieldModule {}

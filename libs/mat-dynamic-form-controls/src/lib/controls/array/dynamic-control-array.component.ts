@@ -59,4 +59,4 @@ export class DynamicControlArrayComponent
         DynamicFormsModule
     ]
 })
-class DynamicArrayModule {}
+export class DynamicArrayModule {}

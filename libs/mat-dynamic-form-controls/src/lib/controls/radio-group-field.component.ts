@@ -72,4 +72,4 @@ export class RadioGroupFieldComponent<T> extends BaseFieldComponent<T, RadioGrou
     FuncModule
   ]
 })
-class RadioGroupFieldModule {}
+export class RadioGroupFieldModule {}
