@@ -1,0 +1,55 @@
+::ng-deep pre {
+    background-color: ghostwhite;
+    border: 1px solid silver;
+    padding: 10px 20px;
+    margin: 20px; 
+    width: 550px;
+    .json-key {
+        color: brown;
+    }
+    .json-value {
+        color: navy;
+    }
+    .json-string {
+        color: olive;
+    }
+ 
+}
+
+.title{
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0 20px;
+    padding-top: 20px; 
+}
+
+lib-dynamic-form{
+    display: flex;
+    flex-direction: column;
+    width: 550px;
+    padding: 10px;
+    background:ghostwhite;
+    border:1px solid silver;
+    margin:20px;
+}
+
+::ng-deep.app-control-field {
+    margin-top: 8px;
+}
+::ng-deep.app-control-array{
+    .app-control-field {
+        width:100%;
+    }
+}
+
+::ng-deep.location-control-group {
+    .app-control-field { width: 48%; }
+}
+
+::ng-deep.name-control-group{
+    .app-control-field { width: 48%; }
+}
+
+::ng-deep.hide-control{
+    display: none;
+}
