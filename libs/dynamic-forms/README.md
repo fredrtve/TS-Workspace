@@ -1,9 +1,10 @@
 [Root](../../README.md) &gt; [dynamic-forms](./README.md)
 
 # Dynamic Forms for Angular
+
 Create reusable and type safe dynamic forms in Angular. 
 
-Demo available on [StackBlitz](https://stackblitz.com/) using angular material control components.
+See [demo app](../../apps/dynamic-forms-demo/README.md).
 
 [API documentation](../../docs/dynamic-forms.md)
 
@@ -14,9 +15,7 @@ Demo available on [StackBlitz](https://stackblitz.com/) using angular material c
  - Uses Angular Reactive Forms. 
 
 ## Quick Start
- 1. Install dynamic-forms 
- 2. Install a suitable control component package, or create your own. 
- 3. Import `DynamicFormsModule` to an `NgModule`.
+ 1. Import `DynamicFormsModule` to an `NgModule`.
 ````
 @NgModule({
   imports: [
