@@ -24,7 +24,7 @@ export interface RadioGroupOptions<T> extends BaseFieldOptions {
 @Component({
   template: `
     <style> mat-radio-group > * { margin-right: 8px } </style>
-    <div class="pb-2" *ngIf="options$ | async; let options">
+    <div style="padding-bottom: 8px" *ngIf="options$ | async; let options">
         <div class="mat-body-2" *ngIf="options.label$">{{ options.label$ }}</div>
         <mat-radio-group [formControl]="formControl" [color]="options.color$ || 'accent'">
             <mat-radio-button *ngIf="options.defaultOption$"

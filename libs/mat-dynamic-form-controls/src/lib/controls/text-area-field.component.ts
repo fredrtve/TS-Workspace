@@ -18,7 +18,7 @@ type ViewModel = TextAreaOptions & { required$?: boolean }
 
 @Component({
   template: `
-    <mat-form-field *ngIf="vm$ | async; let vm" [color]="vm.color$ || 'accent'" class="w-100">
+    <mat-form-field *ngIf="vm$ | async; let vm" [color]="vm.color$ || 'accent'" style="width:100%">
         <mat-label *ngIf="vm.label$">{{ vm.label$ }}</mat-label>
         
         <textarea matInput 

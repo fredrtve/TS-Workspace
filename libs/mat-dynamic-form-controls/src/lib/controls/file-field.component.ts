@@ -20,9 +20,10 @@ type ViewModel = FileOptions & { required$?: boolean }
       flex-direction: column;
       box-sizing: border-box;
       display: flex;
+      margin: 12px 0;
     }
   </style>
-  <div class="mt-3 mb-3 container" *ngIf="vm$ | async; let vm">
+  <div class="container" *ngIf="vm$ | async; let vm">
     <div class="mat-body-2" *ngIf="vm.label$">{{ vm.$ }}</div>
     
     <input (change)="onFileChange($event, vm.multiple$)" type="file" [attr.multiple]="vm.multiple$" [attr.required]="vm.required$">
