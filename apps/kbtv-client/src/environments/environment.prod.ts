@@ -5,7 +5,7 @@ export const environment = {
   apiUrl: 'https://bjbyggapi.azurewebsites.net/api',
   companyName: "Bjørkelangen Bygg og Eiendom",
   baseUrl: '',
-  googleMapsKey: 'AIzaSyBUWZmwjGN92B3PoNS6x6qpOmc3xrP55d8', 
+  googleMapsKey: 'AIzaSyACiOV2PYH6Uv0K2DkCo10adgPeokKq9p8', 
   inboundEmailDomain: 'rapporter.bjbygg.no',
   resourceFolders: {
     baseUrl: 'https://bjbygg-assets.azureedge.net',
