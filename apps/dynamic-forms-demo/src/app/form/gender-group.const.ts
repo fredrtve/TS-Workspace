@@ -1,26 +1,26 @@
 import { DynamicFormBuilder } from "dynamic-forms";
-import { RadioGroupFieldComponent, InputFieldComponent } from "mat-dynamic-form-controls";
+import { InputFieldComponent, RadioGroupFieldComponent } from "mat-dynamic-form-controls";
 
 export interface GenderSelect { selected: string, other: string  };
 
-const genderBuilder = new DynamicFormBuilder<GenderSelect>();
+const builder = new DynamicFormBuilder<GenderSelect, {state1: string}>();
 
-export const GenderGroup = genderBuilder.group()({
+export const GenderGroup = builder.group()({
     viewComponent: null,
     viewOptions: {},
     controls:{
-        selected: genderBuilder.field<RadioGroupFieldComponent<string>>({ 
+        selected: builder.field<RadioGroupFieldComponent<string>>({ 
             viewComponent: RadioGroupFieldComponent, 
             viewOptions: { options$: [ "Male", "Female", "Other" ], label$: "Gender" }
         }),
-        other: genderBuilder.field({ 
+        other: builder.field({ 
             viewComponent: InputFieldComponent, 
             viewOptions: { placeholder$: "Specify gender" } 
         }),
     },
     overrides: {
         other: { 
-            controlClass$: genderBuilder.bindForm("selected", (gender) => gender === "Other" ? '' : 'hide-control')
+            controlClass$: builder.bindForm("selected", (gender) => gender === "Other" ? '' : 'hide-control')
         }
     }
 })

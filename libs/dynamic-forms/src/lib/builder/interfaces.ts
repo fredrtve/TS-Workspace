@@ -73,8 +73,8 @@ export interface ControlArraySchema<
 export interface ControlFieldSchema<
     TValueType, 
     TControlComponent extends Type<ControlFieldComponent<TValueType, any>> | undefined = undefined
-> extends DynamicControlField<never, {}, TValueType, TControlComponent>, 
-          ControlFieldOverridables<never, {}, GetViewOptionsFromComponent<TControlComponent>> {}
+> extends DynamicControlField<{}, {}, TValueType, TControlComponent>, 
+          ControlFieldOverridables<{}, {}, GetViewOptionsFromComponent<TControlComponent>> {}
 
 
 /** Represents a map of controls and their configurable properties, allowing form state selectors. */

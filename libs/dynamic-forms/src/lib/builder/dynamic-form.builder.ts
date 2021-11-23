@@ -7,7 +7,7 @@ import { AsyncValidatorSelector, FormStateObserverSelector, FormStateSelector, F
 import { ValidFormSlice } from "./interfaces";
 import { _createControlArray, _createControlField, _createControlGroup } from "./type.helpers";
 
-type PickOr<T, P extends keyof T, Else> = T extends never ? Else : P extends never ? Else : Pick<T, P>;
+type PickOr<T, P extends keyof T, Else> = [T] extends [never] ? Else : [P] extends [never] ? Else : Pick<T, P>;
 
 /** Responsible for constructing type safe forms for a given TForm and TInputState. 
  *  @remarks Does not perform runtime checks, primarily used for type safe compilation. 
@@ -18,9 +18,9 @@ export class DynamicFormBuilder<TForm extends object, TInputState extends object
     bind<TFormSlice extends string, TStateSlice extends keyof TInputState, TReturnValue>(
         formSlice: ValidFormSlice<DeepRequired<TForm>, TFormSlice>[],      
         stateSlice: TStateSlice[],
-        setter: FormStateSelectorFn<DeepPropsObject<ConstructSliceFromPath<TFormSlice, TForm>, TFormSlice>, Partial<PickOr<TInputState, TStateSlice, never>>, TReturnValue>,
+        setter: FormStateSelectorFn<DeepPropsObject<ConstructSliceFromPath<TFormSlice, TForm>, TFormSlice>, Partial<PickOr<TInputState, TStateSlice, any>>, TReturnValue>,
         onlyOnce?: boolean
-    ): FormStateSelector<ConstructSliceFromPath<TFormSlice, TForm>, PickOr<TInputState, TStateSlice, never>, TReturnValue, string, TStateSlice> {
+    ): FormStateSelector<ConstructSliceFromPath<TFormSlice, TForm>, PickOr<TInputState, TStateSlice, any>, TReturnValue, string, TStateSlice> {
         return { formSlice, stateSlice, setter, onlyOnce, selectorType: "regular" }
     } 
 
@@ -29,17 +29,17 @@ export class DynamicFormBuilder<TForm extends object, TInputState extends object
         slice: TSlice,
         setter?: null,
         onlyOnce?: boolean
-    ): FormStateSelector<never, PickOr<TInputState, TSlice, never>, TInputState[TSlice], string, TSlice>    
+    ): FormStateSelector<{}, PickOr<TInputState, TSlice, never>, TInputState[TSlice], string, TSlice>    
     bindState<TSlice extends keyof TInputState,  TReturnValue>(  
         slice: TSlice,
         setter: (state: TInputState[TSlice]) => TReturnValue,
         onlyOnce?: boolean
-    ): FormStateSelector<never, PickOr<TInputState, TSlice, never>, TReturnValue,  string, TSlice>
+    ): FormStateSelector<{}, PickOr<TInputState, TSlice, never>, TReturnValue,  string, TSlice>
     bindState<TSlice extends keyof TInputState, TReturnValue>(  
         slice: TSlice[],
         setter: (state: Pick<TInputState, TSlice>) => TReturnValue,
         onlyOnce?: boolean
-    ): FormStateSelector<never, PickOr<TInputState, TSlice, never>, TReturnValue,  string, TSlice>
+    ): FormStateSelector<{}, PickOr<TInputState, TSlice, never>, TReturnValue,  string, TSlice>
     bindState(slice: any, setter?: any, onlyOnce?: boolean): FormStateSelector<never, any, any,  string, any> {
         if(Array.isArray(slice))
             return { formSlice: [], stateSlice: slice, setter: (f: any, s: any) => setter(s), onlyOnce, selectorType: "regular" };
@@ -57,17 +57,17 @@ export class DynamicFormBuilder<TForm extends object, TInputState extends object
         slice: ValidFormSlice<DeepRequired<TForm>, TSlice>,
         setter?: null,
         onlyOnce?: boolean
-    ): FormStateSelector<ConstructSliceFromPath<TSlice, TForm>, never, DeepPropType<TForm, TSlice, never>, string, never>    
+    ): FormStateSelector<ConstructSliceFromPath<TSlice, TForm>, any, DeepPropType<TForm, TSlice, never>, string, never>    
     bindForm<TSlice extends string,  TReturnValue>(  
         slice: ValidFormSlice<DeepRequired<TForm>, TSlice>,
         setter: (state: DeepPropType<TForm, TSlice, never>) => TReturnValue,
         onlyOnce?: boolean
-    ): FormStateSelector<ConstructSliceFromPath<TSlice, TForm>, never, TReturnValue, string, never>
+    ): FormStateSelector<ConstructSliceFromPath<TSlice, TForm>, any, TReturnValue, string, never>
     bindForm<TSlice extends string, TReturnValue>(  
         slice: ValidFormSlice<DeepRequired<TForm>, TSlice>[],
         setter: (state: DeepPropsObject<ConstructSliceFromPath<TSlice, TForm>, TSlice>) => TReturnValue,
         onlyOnce?: boolean
-    ): FormStateSelector<ConstructSliceFromPath<TSlice, TForm>, never, TReturnValue, string, never>
+    ): FormStateSelector<ConstructSliceFromPath<TSlice, TForm>, any, TReturnValue, string, never>
     bindForm(slice: string | string[], setter?: any, onlyOnce?: boolean): FormStateSelector<object, never, any,  string, never> {
         if(Array.isArray(slice))
             return { stateSlice: [], formSlice:slice, setter, onlyOnce, selectorType: "regular" };
