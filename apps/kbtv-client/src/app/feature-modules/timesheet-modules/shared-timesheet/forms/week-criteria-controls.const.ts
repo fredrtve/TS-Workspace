@@ -1,10 +1,10 @@
 import { StateUsers } from '@core/state/global-state.interfaces';
 import { WeekCriteria } from '@shared-timesheet/interfaces';
 import { UserSelectControl } from '@shared/constants/common-controls.const';
-import { InputFieldComponent } from 'mat-dynamic-form-controls';
+import { InputFieldComponent } from '@fretve/mat-dynamic-form-controls';
 import { IonDateControlComponent } from '@shared/scam/dynamic-form-controls/ion-date-time-control.component';
 import { isWeekInRange } from '@shared/validators/is-week-in-range.validator';
-import { DynamicFormBuilder } from 'dynamic-forms';
+import { DynamicFormBuilder } from '@fretve/dynamic-forms';
 
 export type WeekCriteriaFormState = StateUsers;
 export interface WeekCriteriaForm extends Pick<WeekCriteria, "user" | "year"> { weekNr: string }

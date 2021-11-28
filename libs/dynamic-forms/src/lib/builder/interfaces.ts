@@ -1,5 +1,5 @@
 import { Type } from "@angular/core";
-import { DeepPropType, Maybe, NotNull } from "global-types";
+import { DeepPropType, Maybe, NotNull } from "@fretve/global-types";
 import { 
     AbstractDynamicControl, AllowFormStateSelectors, ControlArrayComponent, ControlComponent, 
     ControlFieldComponent, ControlGroupComponent, ControlOptions, DefaultControlArrayComponentOptions, 
@@ -13,7 +13,7 @@ type NotFound = "$$PROP_NOT_FOUND";
 /** Check if the given properties TSlice are found on TForm, also searching in nested objects. */
 export type ValidFormSlice<TForm, TSlice extends string> = keyof { 
     [ P in TSlice as DeepPropType<TForm, P, NotFound> extends NotFound ? NotFound  : never ]: true 
-} extends never ? TSlice : never;  
+} extends never ? TSlice : "";  
 
 /** Represents a map of properties from TForm with an associated control */
 export type ValidControlSchemaMap<TForm extends object, TInputState extends object> = { [P in keyof TForm]: ValidControlSchema<TForm[P], TInputState> }
@@ -83,12 +83,12 @@ export type ControlOverridesMap<
     TInputState extends object, 
     TControls extends ControlSchemaMap<any>> = {  
     [P in keyof TControls]?: //Dont replace with ControlOverrides type, casues TS error (excessively deep/infinite)
-        TControls[P] extends ControlFieldSchema<any, any> 
-            ? ControlFieldOverrides<TForm, TInputState, TControls[P]>
-        : TControls[P] extends ControlArraySchema<any,any> 
+        TControls[P] extends ControlArraySchema<any,any> 
             ? ControlArrayOverrides<TForm, TInputState, TControls[P]> 
         : TControls[P] extends ControlGroupSchema<any, any, any, any> 
             ? ControlGroupOverrides<TForm, TInputState, TControls[P]>
+        : TControls[P] extends ControlFieldSchema<any, any> 
+            ? ControlFieldOverrides<TForm, TInputState, TControls[P]>
         : ControlFieldOverrides<TForm, TInputState, any>
 }
 
@@ -97,13 +97,13 @@ export type ControlOverrides<
     TForm extends object, 
     TInputState extends object, 
     TControl extends  AbstractDynamicControl<any, any, any, any, any>
-> = TControl extends ControlFieldSchema<any, any>
-        ? ControlFieldOverrides<TForm, TInputState, TControl>
-    : TControl extends ControlArraySchema<any,any> 
+> = TControl extends ControlArraySchema<any,any> 
         ? ControlArrayOverrides<TForm, TInputState, TControl> 
     : TControl extends ControlGroupSchema<any, any, any, any> 
         ? ControlGroupOverrides<TForm, TInputState, TControl>
-    : ControlFieldOverrides<TForm, TInputState, any>
+    : TControl extends ControlFieldSchema<any, any>
+        ? ControlFieldOverrides<TForm, TInputState, TControl>
+    : ControlFieldOverrides<TForm, TInputState, any>;
 
 /** Represents an object of configurable properties on TGroup, allowing form state selectors. */
 export type ControlGroupOverrides<

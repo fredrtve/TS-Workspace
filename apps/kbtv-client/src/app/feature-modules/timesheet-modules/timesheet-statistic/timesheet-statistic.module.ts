@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { DynamicFormsModule } from 'dynamic-forms';
+import { DynamicFormsModule } from '@fretve/dynamic-forms';
 import { ModelStateFetcherModule } from 'model/state-fetcher';
 import { OptimisticHttpModule } from 'optimistic-http';
 import { AppAgGridModule } from 'src/app/app-ag-grid/app-ag-grid.module';

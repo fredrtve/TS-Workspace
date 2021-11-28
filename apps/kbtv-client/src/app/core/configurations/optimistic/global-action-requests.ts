@@ -1,5 +1,5 @@
 import { _idGenerator } from "@shared-app/helpers/id/id-generator.helper";
-import { UnknownState } from "global-types";
+import { UnknownState } from "@fretve/global-types";
 import { _entry } from "optimistic-http";
 import { ApiUrl } from "../../api-url.enum";
 import { GlobalActions } from "../../global-actions";

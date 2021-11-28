@@ -1,5 +1,5 @@
 import { Directive } from '@angular/core';
-import { Immutable, ImmutableArray } from 'global-types';
+import { Immutable, ImmutableArray } from '@fretve/global-types';
 import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
 import { catchError, first, takeUntil, tap } from 'rxjs/operators';
 import { ActionDispatcher } from '../action-dispatcher';

@@ -4,7 +4,7 @@ import { User } from './user.interface';
 import { IId } from './sub-interfaces/iid.interface';
 import { TimesheetStatus } from '@shared-app/enums/timesheet-status.enum';
 import { MissionActivity } from './mission-activity.interface';
-import { Maybe } from 'global-types';
+import { Maybe } from '@fretve/global-types';
 import { Model } from './base-entity.interface';
 
 

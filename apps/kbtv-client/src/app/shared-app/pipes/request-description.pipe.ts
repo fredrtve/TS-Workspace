@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Immutable } from 'global-types';
+import { Immutable } from '@fretve/global-types';
 import { OptimisticHttpRequest, SupportedContentTypes } from 'optimistic-http';
 import { RequestDescriberMap } from '../interfaces/request-describer-map.interface';
 

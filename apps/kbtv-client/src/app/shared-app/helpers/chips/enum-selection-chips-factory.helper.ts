@@ -1,6 +1,6 @@
 import { AppChip } from "../../interfaces/app-chip.interface";
 import { translations } from "../../constants/translations.const";
-import { Immutable } from "global-types";
+import { Immutable } from "@fretve/global-types";
 
 export function _enumSelectionChipsFactory<TEnum extends { [s: number]: string }>(
     _enum: TEnum, 

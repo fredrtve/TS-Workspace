@@ -9,7 +9,7 @@ import { TimesheetFormState, UserTimesheetForm, UserTimesheetModelForm } from '@
 import { _timesheetCriteriaChipsFactory } from "@shared-timesheet/helpers/timesheet-criteria-chips-factory.helper";
 import { UserTimesheetCriteriaFormService } from "@shared-timesheet/timesheet-criteria-form-service";
 import { BottomIconButtons } from "@shared/constants/bottom-icon-buttons.const";
-import { Immutable } from 'global-types';
+import { Immutable } from '@fretve/global-types';
 import { ModelFormService } from 'model/form';
 import { Observable } from "rxjs";
 import { map } from 'rxjs/operators';

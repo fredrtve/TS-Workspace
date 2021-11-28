@@ -4,7 +4,7 @@ import { StateMissions, StateTimesheets, StateUserTimesheets } from '@core/state
 import { TimesheetStatus } from '@shared-app/enums/timesheet-status.enum';
 import { TimesheetForm, UserTimesheetForm } from '@shared-timesheet/forms/save-timesheet-model-forms.const';
 import { _getTotalHours, _mergeDateAndTime } from 'date-time-helpers';
-import { Immutable } from 'global-types';
+import { Immutable } from '@fretve/global-types';
 import { ModelFormResult } from 'model/form';
 
 type FormState = StateUserTimesheets & StateTimesheets & StateMissions;

@@ -1,6 +1,6 @@
 import { AppSyncStateConfig } from "@core/configurations/app-sync-state.config";
 import { GlobalActions } from "@core/global-actions";
-import { Prop, UnknownState } from 'global-types';
+import { Prop, UnknownState } from '@fretve/global-types';
 import { FetchingStatus, StateFetchingStatus } from 'model/state-fetcher';
 import { _createReducers, _on } from "state-management";
 import { StateSyncTimestamp, SyncActions } from 'state-sync';

@@ -4,7 +4,7 @@
 
 Create reusable and type safe dynamic forms in Angular. 
 
-See [demo app](../../apps/dynamic-forms-demo/README.md).
+See [demo app on StackBlitz](https://stackblitz.com/edit/github-1em5k6).
 
 [API documentation](../../docs/dynamic-forms.md)
 

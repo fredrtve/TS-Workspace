@@ -1,5 +1,5 @@
 import { Input, ViewChild, Directive } from '@angular/core';
-import { Immutable, ImmutableArray, Maybe } from 'global-types';
+import { Immutable, ImmutableArray, Maybe } from '@fretve/global-types';
 import { AgGridAngular } from 'ag-grid-angular';
 import { ColDef } from 'ag-grid-community';
 import { AgGridConfig } from './ag-grid-config.interface';

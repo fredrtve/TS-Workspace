@@ -1,4 +1,4 @@
-import { Immutable } from "global-types";
+import { Immutable } from "@fretve/global-types";
 import { QueryChainFn, QueryActionHandlerMap, QueryActions, QueryFn, InferHandlerMapOptions, InferHandlerMapValue } from "./interfaces";
 
 export class QueryBuilder<THandlerMap extends QueryActionHandlerMap<any, any>> {

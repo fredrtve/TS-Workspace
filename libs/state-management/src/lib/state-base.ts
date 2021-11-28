@@ -1,4 +1,4 @@
-import { Immutable, Maybe } from 'global-types';
+import { Immutable, Maybe } from '@fretve/global-types';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { _deepFreeze } from './helpers/object-freezer.helper';
 

@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, Inject, NgModule, Optional } from '
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { FormStateResolver } from 'dynamic-forms';
+import { FormStateResolver } from '@fretve/dynamic-forms';
 import { Observable } from 'rxjs';
 import { BaseFieldComponent } from '../base-control/base-field.component';
 import { BaseFieldOptions } from '../base-control/base-field-options.interface';
@@ -62,6 +62,7 @@ export class CheckboxFieldComponent extends BaseFieldComponent<boolean, Checkbox
     ReactiveFormsModule,
     MatFormFieldModule,
     MatCheckboxModule,
-  ]
+  ],
+  exports: [CheckboxFieldComponent],
 })
 export class CheckboxFieldModule {}

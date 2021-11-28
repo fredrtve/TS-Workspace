@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http'
 import { Inject, Injectable, Optional } from '@angular/core'
-import { Immutable, UnknownState } from 'global-types'
+import { Immutable, UnknownState } from '@fretve/global-types'
 import { UnknownModelState, _getModelConfig } from 'model/core'
 import { merge, Observable, of } from 'rxjs'
 import { catchError, finalize, map, mergeMap, retryWhen } from 'rxjs/operators'

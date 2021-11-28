@@ -1,6 +1,6 @@
 import { AbstractControl } from '@angular/forms';
-import { Immutable, Maybe } from 'global-types';
-import { GenericAbstractControl } from 'dynamic-forms';
+import { Immutable, Maybe } from '@fretve/global-types';
+import { GenericAbstractControl } from '@fretve/dynamic-forms';
 import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 

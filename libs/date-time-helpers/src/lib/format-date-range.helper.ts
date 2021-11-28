@@ -1,4 +1,4 @@
-import { Immutable } from 'global-types';
+import { Immutable } from '@fretve/global-types';
 import { DateRange } from './interfaces';
 
 /**

@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { _getUnixTimeSeconds } from 'date-time-helpers';
-import { Immutable, Maybe } from 'global-types';
+import { Immutable, Maybe } from '@fretve/global-types';
 import { Observable } from 'rxjs';
 import { map, skip } from 'rxjs/operators';
 import { select, Store } from 'state-management';

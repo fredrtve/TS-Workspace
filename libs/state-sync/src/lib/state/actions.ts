@@ -1,4 +1,4 @@
-import { UnknownState } from 'global-types';
+import { UnknownState } from '@fretve/global-types';
 import { _createAction, _payload } from 'state-management';
 import { SyncConfig, SyncResponse, SyncStateConfig } from '../interfaces';
 

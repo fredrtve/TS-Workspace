@@ -1,6 +1,6 @@
 import { Inject, Injectable } from "@angular/core";
 import { ColDef } from "ag-grid-community";
-import { ImmutableArray, Maybe, UnknownState } from "global-types";
+import { ImmutableArray, Maybe, UnknownState } from "@fretve/global-types";
 import { UnknownModelState, _getModelConfig } from "model/core";
 import { ModelFetcherActions, StateFetchingStatus } from "model/state-fetcher";
 import { BehaviorSubject, combineLatest, Observable, of } from "rxjs";

@@ -1,6 +1,6 @@
 import { ComponentFactoryResolver, ComponentRef, Inject, Injectable, Injector, Optional, Renderer2, Type, ViewContainerRef } from "@angular/core";
 import { FormArray, FormControl, FormGroup } from "@angular/forms";
-import { Immutable, Maybe, NotNull } from "global-types";
+import { Immutable, Maybe, NotNull } from "@fretve/global-types";
 import { pairwise, startWith } from "rxjs/operators";
 import { _isControlArray, _isControlGroup, _isFormStateSelector, _isReactiveSelector } from "../helpers/type.helpers";
 import { DYNAMIC_FORM_DEFAULT_OPTIONS } from "../injection-tokens.const";

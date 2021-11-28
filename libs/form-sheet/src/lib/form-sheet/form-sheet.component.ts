@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ControlGroupSchema } from 'dynamic-forms';
-import { Immutable } from 'global-types';
-import { _hasSameState } from 'global-utils';
+import { ControlGroupSchema } from '@fretve/dynamic-forms';
+import { Immutable } from '@fretve/global-types';
+import { _hasSameState } from '@fretve/global-utils';
 import { Observable } from 'rxjs';
 import { debounceTime, map, startWith } from 'rxjs/operators';
 import { DeepPartial } from 'ts-essentials';

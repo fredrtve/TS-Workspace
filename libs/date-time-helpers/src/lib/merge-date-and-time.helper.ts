@@ -1,4 +1,4 @@
-import { DateInput, Immutable, ImmutableObject } from 'global-types';
+import { DateInput, Immutable, ImmutableObject } from '@fretve/global-types';
 
 /**
  * Merge a date value and a time value to a datetime value. 

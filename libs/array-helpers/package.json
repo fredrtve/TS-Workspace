@@ -1,5 +1,5 @@
 {
-  "name": "array-helpers",
+  "name": "@fretve/array-helpers",
   "version": "0.0.1",
   "sideEffects": false,
   "peerDependencies": {},

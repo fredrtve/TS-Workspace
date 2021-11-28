@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { DeviceInfoService } from '@core/services/device-info.service';
 import { StateMissions } from '@core/state/global-state.interfaces';
-import { _groupBy } from 'array-helpers';
-import { Immutable, ImmutableArray } from 'global-types';
+import { _groupBy } from '@fretve/array-helpers';
+import { Immutable, ImmutableArray } from '@fretve/global-types';
 import { CompletedCommand, QueuedCommand, StateRequestLog, StateRequestQueue } from 'optimistic-http';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';

@@ -1,5 +1,5 @@
-import { Immutable, ImmutableArray, Maybe, Prop } from 'global-types';
-import { _weakMemoizer } from 'global-utils';
+import { Immutable, ImmutableArray, Maybe, Prop } from '@fretve/global-types';
+import { _weakMemoizer } from '@fretve/global-utils';
 
 /**
  * Sort an array of objects by a date property

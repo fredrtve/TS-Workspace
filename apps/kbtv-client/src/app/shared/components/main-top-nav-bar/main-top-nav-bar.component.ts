@@ -5,7 +5,7 @@ import { DeviceInfoService } from '@core/services/device-info.service';
 import { ButtonTypes } from '@shared-app/enums/button-types.enum';
 import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { _trackByAppButton } from '@shared-app/track-by-app-button';
-import { Maybe } from 'global-types';
+import { Maybe } from '@fretve/global-types';
 import { MainSkeletonRouteData } from '../main-skeleton/main-skeleton-route-data.interface';
 import { MainTopNavConfig } from './main-top-nav.config';
 

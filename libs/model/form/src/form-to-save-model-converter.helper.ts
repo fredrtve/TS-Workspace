@@ -1,4 +1,4 @@
-import { Immutable } from "global-types";
+import { Immutable } from "@fretve/global-types";
 import { ModelCommands } from "model/state-commands";
 import { StateModels } from "model/core";
 import { ModelFormResult } from "./interfaces";

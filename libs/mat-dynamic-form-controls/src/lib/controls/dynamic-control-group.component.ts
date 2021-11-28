@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, NgModule, ViewChild } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { AllowFormStateSelectors, ControlComponentRenderer, ControlGroupComponent, DynamicControlMap, DynamicFormsModule, DynamicHostDirective, FormStateResolver } from 'dynamic-forms';
-import { Immutable } from 'global-types';
+import { AllowFormStateSelectors, ControlComponentRenderer, ControlGroupComponent, DynamicControlMap, DynamicFormsModule, DynamicHostDirective, FormStateResolver } from '@fretve/dynamic-forms';
+import { Immutable } from '@fretve/global-types';
 import { Observable } from 'rxjs';
 
 export interface DynamicFormGroupOptions { label$?: string }
@@ -64,5 +64,6 @@ export class DynamicControlGroupComponent implements ControlGroupComponent<any, 
     MatFormFieldModule,  
     DynamicFormsModule,
   ],
+  exports: [DynamicControlGroupComponent],
 })
 export class DynamicControlGroupModule {}

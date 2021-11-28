@@ -2,7 +2,7 @@ import { DeleteModelRequest } from "@core/configurations/model/model-requests.in
 import { Model } from "@core/models";
 import { ModelState } from "@core/state/model-state.interface";
 import { AppModelStatePropTranslations } from "@shared-app/constants/model-state-prop-translations.const";
-import { Immutable } from "global-types";
+import { Immutable } from "@fretve/global-types";
 import { _getModelConfig } from "model/core";
 import { translations } from "../../constants/translations.const";
 

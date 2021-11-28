@@ -4,8 +4,8 @@
   "lib": {
     "entryFile": "src/public-api.ts",
     "umdModuleIds": {
-      "global-types": "global-types",
-      "global-utils": "global-utils"
+      "@fretve/global-types": "@fretve/global-types",
+      "@fretve/global-utils": "@fretve/global-utils"
     }
   }
 }

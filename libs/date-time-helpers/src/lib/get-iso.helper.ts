@@ -1,4 +1,4 @@
-import { DateInput, Immutable } from 'global-types';
+import { DateInput, Immutable } from '@fretve/global-types';
 
 /**
  * Get an ISO date string from a {@link DateInput}

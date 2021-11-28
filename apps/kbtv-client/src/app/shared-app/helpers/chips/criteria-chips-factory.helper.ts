@@ -1,5 +1,5 @@
 import { AppChip } from "../../interfaces/app-chip.interface";
-import { Immutable, Prop } from "global-types";
+import { Immutable, Prop } from "@fretve/global-types";
 
 export interface CriteriaChipOptions<T> {
     valueFormatter?: ((val: T) => string | undefined | null) | string | undefined,

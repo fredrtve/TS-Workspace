@@ -1,4 +1,4 @@
-import { Maybe } from 'global-types';
+import { Maybe } from '@fretve/global-types';
 import { CurrentUser } from 'state-auth';
 import { Activity, Employer, InboundEmailPassword, Mission, MissionActivity, MissionDocument, MissionImage, MissionNote, Timesheet, User, UserTimesheet } from '../models';
 import { LeaderSettings } from '../models/leader-settings.interface';

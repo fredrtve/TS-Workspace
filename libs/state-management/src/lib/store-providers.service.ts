@@ -1,6 +1,6 @@
 import { Injector, Type } from "@angular/core";
-import { _groupBy } from "array-helpers";
-import { Immutable, ImmutableArray, Maybe } from "global-types";
+import { _groupBy } from "@fretve/array-helpers";
+import { Immutable, ImmutableArray, Maybe } from "@fretve/global-types";
 import { _applyMetaReducers } from "./helpers/apply-meta-reducers.helper";
 import { _flattenProviders } from "./helpers/flatten-nested-providers.helper";
 import { _mergeReducers } from "./helpers/merge-reducers.helper";

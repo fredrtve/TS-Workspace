@@ -1,4 +1,4 @@
-import { Immutable, ImmutableArray, Maybe } from 'global-types';
+import { Immutable, ImmutableArray, Maybe } from '@fretve/global-types';
 
 /**
  * Add a value to the start of an array without mutating it. 

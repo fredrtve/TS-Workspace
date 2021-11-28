@@ -1,7 +1,7 @@
 import { Mission } from '../core/models';
 import { MissionCriteria } from './interfaces';
 import { DataFilter } from './data.filter';
-import { Immutable, Maybe } from 'global-types';
+import { Immutable, Maybe } from '@fretve/global-types';
 import { _isDateInDateRange } from 'date-time-helpers';
 
 export class MissionFilter extends DataFilter<Mission, MissionCriteria>{

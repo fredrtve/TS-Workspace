@@ -4,9 +4,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { SharedModule } from '@shared/shared.module';
 import { _getISO, _getLastDayOfYear } from 'date-time-helpers';
-import { FormStateResolver } from 'dynamic-forms';
-import { Immutable } from 'global-types';
-import { BaseFieldComponent, BaseFieldOptions, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'mat-dynamic-form-controls';
+import { FormStateResolver } from '@fretve/dynamic-forms';
+import { Immutable } from '@fretve/global-types';
+import { BaseFieldComponent, BaseFieldOptions, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from '@fretve/mat-dynamic-form-controls';
 import { combineLatest, merge, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 

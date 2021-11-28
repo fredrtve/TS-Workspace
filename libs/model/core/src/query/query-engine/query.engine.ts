@@ -1,4 +1,4 @@
-import { Immutable, ShallowCopy } from "global-types";
+import { Immutable, ShallowCopy } from "@fretve/global-types";
 import { QueryActions, QueryActionHandlerMap, QueryAction, InferHandlerActionValue, InferHandlerMapValue, InferHandlerMapOptions } from "./interfaces";
 import { QueryBuilder } from "./query.builder";
 

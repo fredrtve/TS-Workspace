@@ -7,7 +7,7 @@ import { TimesheetStatus } from "@shared-app/enums/timesheet-status.enum";
 import { TimesheetSummary } from "@shared-timesheet/interfaces";
 import { TimesheetCriteria } from "@shared-timesheet/timesheet-filter/timesheet-criteria.interface";
 import { _getFirstDayOfMonth, _getFirstDayOfWeek, _getFirstDayOfYear, _getStartOfDayTime, _getWeekYear } from "date-time-helpers";
-import { Maybe } from "global-types";
+import { Maybe } from "@fretve/global-types";
 
 registerLocaleData(norwayLocale, 'nb-NO');
 

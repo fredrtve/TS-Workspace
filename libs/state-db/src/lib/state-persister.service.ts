@@ -1,5 +1,5 @@
 import { Inject, Injectable, Optional } from '@angular/core';
-import { Immutable, Maybe, UnknownState } from 'global-types';
+import { Immutable, Maybe, UnknownState } from '@fretve/global-types';
 import { filter } from 'rxjs/operators';
 import { StateChanges, Store } from 'state-management';
 import { STATE_DB_ACTION_FILTER, STATE_DB_CONFIG } from './injection-tokens.const';

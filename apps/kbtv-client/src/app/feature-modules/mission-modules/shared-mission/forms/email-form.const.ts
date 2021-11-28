@@ -1,5 +1,5 @@
 import { EmailControl } from '@shared/constants/common-controls.const';
-import { DynamicFormBuilder } from 'dynamic-forms';
+import { DynamicFormBuilder } from '@fretve/dynamic-forms';
 import { FormSheetViewConfig } from 'form-sheet';
 
 export interface EmailForm { email: string };

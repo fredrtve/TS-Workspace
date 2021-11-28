@@ -1,5 +1,5 @@
 import { DateRange, _getISO } from "date-time-helpers";
-import { Immutable } from "global-types";
+import { Immutable } from "@fretve/global-types";
 
 export function _getISODateRange(dateRange: Immutable<Partial<DateRange>>): Immutable<Partial<DateRange<string>>> {
     return {

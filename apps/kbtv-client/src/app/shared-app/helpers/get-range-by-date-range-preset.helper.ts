@@ -1,6 +1,6 @@
 import { DateRangePresets } from "../enums/date-range-presets.enum";
 import { DateRange, _getLastDayOfYear, _getMonthRange, _getWeekRange, _getYearRange } from 'date-time-helpers';
-import { DateInput, Immutable, Maybe } from 'global-types';
+import { DateInput, Immutable, Maybe } from '@fretve/global-types';
 
 export function _getRangeByDateRangePreset(preset: Maybe<DateRangePresets>, getISO?: boolean, lowerBound?: DateInput): Maybe<Immutable<DateRange>> {
     switch (preset) {

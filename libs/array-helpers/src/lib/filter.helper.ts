@@ -1,5 +1,5 @@
-import { Immutable, ImmutableArray, Maybe } from 'global-types';
-import { _weakMemoizer } from 'global-utils';
+import { Immutable, ImmutableArray, Maybe } from '@fretve/global-types';
+import { _weakMemoizer } from '@fretve/global-utils';
 
 /**
  * Filter an array of items, only returning the ones who pass the specified expression

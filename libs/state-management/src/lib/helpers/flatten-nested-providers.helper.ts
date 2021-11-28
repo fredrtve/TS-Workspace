@@ -1,4 +1,4 @@
-import { ImmutableArray } from "global-types";
+import { ImmutableArray } from "@fretve/global-types";
 
 export function _flattenProviders<T>(providers: ImmutableArray<T[]>): ImmutableArray<T> {
     let result: ImmutableArray<T> = [];

@@ -2,8 +2,8 @@ import { Employer } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
 import { _appFormToSaveModelConverter } from '@shared/app-form-to-save-model.converter';
 import { EmailControl, GoogleAddressControl, NameControl, PhoneNumberControl } from '@shared/constants/common-controls.const';
-import { DynamicFormBuilder } from 'dynamic-forms';
-import { Immutable } from 'global-types';
+import { DynamicFormBuilder } from '@fretve/dynamic-forms';
+import { Immutable } from '@fretve/global-types';
 import { ModelFormConfig } from 'model/form';
 
 export interface CreateEmployerForm extends Pick<Employer, "name" | "phoneNumber" | "address" | "email"> {}

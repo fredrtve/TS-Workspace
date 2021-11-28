@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
-import { Maybe } from 'global-types';
+import { Maybe } from '@fretve/global-types';
 import { FormSheetWrapperComponent } from '../form-sheet-wrapper.component';
 import { FormSheetNavConfig } from '../interfaces';
 

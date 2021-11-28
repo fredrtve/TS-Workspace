@@ -6,7 +6,7 @@ import { WeekCriteria } from '@shared-timesheet/interfaces/week-criteria.interfa
 import { TimesheetFilter } from '@shared-timesheet/timesheet-filter/timesheet-filter.model';
 import { filterRecords } from '@shared/operators/filter-records.operator';
 import { WeekYear, _getWeekYear } from 'date-time-helpers';
-import { Immutable, Maybe } from 'global-types';
+import { Immutable, Maybe } from '@fretve/global-types';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ComponentStore, Store } from 'state-management';

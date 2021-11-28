@@ -1,7 +1,7 @@
 import { User } from '@core/models';
 import { DateRangePresets } from '@shared-app/enums/date-range-presets.enum';
 import { DateRange, _getDateOfWeek, _getFirstDayOfWeek, _getLastDayOfWeek, _getWeekRange, _getWeeksInYear } from 'date-time-helpers';
-import { Immutable } from 'global-types';
+import { Immutable } from '@fretve/global-types';
 import { WeekCriteria } from '../interfaces/week-criteria.interface';
 import { TimesheetCriteria } from './timesheet-criteria.interface';
 

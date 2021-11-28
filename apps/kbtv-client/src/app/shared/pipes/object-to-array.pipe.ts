@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Maybe } from 'global-types';
+import { Maybe } from '@fretve/global-types';
 
 @Pipe({name: 'objectToArray'})
 export class ObjectToArrayPipe implements PipeTransform {

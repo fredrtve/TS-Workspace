@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { ConfirmDialogService } from 'confirm-dialog';
-import { Immutable, KeyVal } from 'global-types';
+import { Immutable, KeyVal } from '@fretve/global-types';
 import { ModelContext, ModelQuery, RelationInclude, StateModels, StatePropByModel, _getModelConfig, _getRelationIncludeStateProps } from 'model/core';
 import { ModelStatePropTranslations, MODEL_PROP_TRANSLATIONS, MODEL_STATE_PROP_TRANSLATIONS } from "model/shared";
 import { ModelCommands } from 'model/state-commands';

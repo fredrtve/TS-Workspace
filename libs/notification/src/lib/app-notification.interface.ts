@@ -1,4 +1,4 @@
-import { Maybe } from 'global-types';
+import { Maybe } from '@fretve/global-types';
 import { NotificationType } from './notification-type.enum';
 
 /** Represents an object with data required to display a notification */

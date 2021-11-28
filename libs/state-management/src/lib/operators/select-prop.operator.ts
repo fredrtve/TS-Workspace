@@ -1,4 +1,4 @@
-import { Prop, Immutable } from "global-types";
+import { Prop, Immutable } from "@fretve/global-types";
 import { Observable } from "rxjs";
 import { distinctUntilKeyChanged, map } from "rxjs/operators";
 

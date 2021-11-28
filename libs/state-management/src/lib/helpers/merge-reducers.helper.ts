@@ -1,4 +1,4 @@
-import { Immutable, ImmutableArray } from 'global-types';
+import { Immutable, ImmutableArray } from '@fretve/global-types';
 import { Reducer, StateAction } from '../interfaces';
 
 export function _mergeReducers(reducers: ImmutableArray<Reducer<{}, StateAction>>, type: string): Reducer<{}, StateAction> {

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Timesheet } from '@core/models';
-import { Immutable } from 'global-types';
+import { Immutable } from '@fretve/global-types';
 
 @Component({
   selector: 'app-admin-timesheet-card-dialog-wrapper',

@@ -1,4 +1,4 @@
-import { Immutable } from "global-types";
+import { Immutable } from "@fretve/global-types";
 
 export function _hasSameState<T extends Object>(state1: Immutable<T>, state2: Immutable<T>): boolean{
     const state: Immutable<T> = state1 || {};

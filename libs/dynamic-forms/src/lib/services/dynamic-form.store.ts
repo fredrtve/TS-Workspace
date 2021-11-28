@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Immutable, Maybe } from 'global-types';
+import { Immutable, Maybe } from '@fretve/global-types';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 /** Exposes form & state  */

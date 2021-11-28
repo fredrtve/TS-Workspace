@@ -2,7 +2,7 @@ import { Model, Timesheet } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
 import { DataFilter } from '@shared/data.filter';
 import { DateRange, _getStartOfDayTime, _isDateInDateRange } from 'date-time-helpers';
-import { Immutable, Maybe, Prop, UnknownState } from 'global-types';
+import { Immutable, Maybe, Prop, UnknownState } from '@fretve/global-types';
 import { ForeignRelation, ModelConfig, _getModelConfig } from 'model/core';
 import { TimesheetCriteria } from './timesheet-criteria.interface';
 

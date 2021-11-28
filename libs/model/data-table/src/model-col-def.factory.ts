@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@angular/core";
 import { ColDef, ValueGetterParams, ValueSetterParams } from "ag-grid-community";
-import { _convertArrayToObject } from "array-helpers";
-import { KeyVal, UnknownState } from "global-types";
+import { _convertArrayToObject } from "@fretve/array-helpers";
+import { KeyVal, UnknownState } from "@fretve/global-types";
 import { ForeignRelation, UnknownModelState, _getModelConfig } from "model/core";
 import { MODEL_PROP_TRANSLATIONS } from "model/shared";
 import { ModelCommands } from "model/state-commands";

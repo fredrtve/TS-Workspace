@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, Inject, NgModule, Optional } from '
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSliderModule } from '@angular/material/slider';
-import { FormStateResolver } from 'dynamic-forms';
+import { FormStateResolver } from '@fretve/dynamic-forms';
 import { combineLatest, merge, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { BaseFieldComponent } from '../base-control/base-field.component';
@@ -90,6 +90,7 @@ export class SliderFieldComponent extends BaseFieldComponent<number, SliderOptio
     ReactiveFormsModule,
     MatFormFieldModule,
     MatSliderModule
-  ]
+  ],
+  exports: [SliderFieldComponent],
 })
 export class SliderFieldModule {}

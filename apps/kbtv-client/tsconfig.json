@@ -15,7 +15,7 @@
         "../../dist/date-time-helpers/date-time-helpers",
         "../../dist/date-time-helpers"
       ],
-      "global-types": [
+      "@fretve/global-types": [
         "../../dist/global-types/global-types",
         "../../dist/global-types"
       ],
@@ -23,7 +23,7 @@
         "../../dist/state-management/state-management",
         "../../dist/state-management"
       ],
-      "array-helpers": [
+      "@fretve/array-helpers": [
         "../../dist/array-helpers/array-helpers",
         "../../dist/array-helpers"
       ],
@@ -47,7 +47,7 @@
         "../../dist/confirm-dialog/confirm-dialog",
         "../../dist/confirm-dialog"
       ],
-      "dynamic-forms": [
+      "@fretve/dynamic-forms": [
         "../../dist/dynamic-forms/dynamic-forms",
         "../../dist/dynamic-forms"
       ],
@@ -68,11 +68,11 @@
         "../../dist/google-places-autocomplete"
       ],        
       "model/*": ["../../dist/model/*"],
-      "global-utils": [
+      "@fretve/global-utils": [
         "../../dist/global-utils/global-utils",
         "../../dist/global-utils"
       ],
-      "mat-dynamic-form-controls": [
+      "@fretve/mat-dynamic-form-controls": [
         "../../dist/mat-dynamic-form-controls/mat-dynamic-form-controls",
         "../../dist/mat-dynamic-form-controls"
       ],

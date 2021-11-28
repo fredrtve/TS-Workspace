@@ -1,4 +1,4 @@
-import { DateInput, Immutable } from 'global-types';
+import { DateInput, Immutable } from '@fretve/global-types';
 
 /**
  * Get a UNIX timestamp for a specified date in seconds. 

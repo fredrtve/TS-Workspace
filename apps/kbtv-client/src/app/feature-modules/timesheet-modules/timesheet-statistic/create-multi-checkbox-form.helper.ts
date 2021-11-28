@@ -1,6 +1,6 @@
-import { CheckboxFieldComponent } from 'mat-dynamic-form-controls';
-import { ControlGroupSchema, DynamicFormBuilder, _createControlField } from 'dynamic-forms';
-import { Immutable, Prop, UnknownState } from 'global-types';
+import { CheckboxFieldComponent } from '@fretve/mat-dynamic-form-controls';
+import { ControlGroupSchema, DynamicFormBuilder, _createControlField } from '@fretve/dynamic-forms';
+import { Immutable, Prop, UnknownState } from '@fretve/global-types';
 
 export interface MultiCheckboxForm<TState> { selections: Record<Prop<TState>, boolean> }
 

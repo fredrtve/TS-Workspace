@@ -1,5 +1,5 @@
 {
-  "name": "global-utils",
+  "name": "@fretve/global-utils",
   "version": "0.0.1",
   "peerDependencies": {
     "rxjs": "~6.5.5"

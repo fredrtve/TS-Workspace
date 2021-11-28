@@ -1,8 +1,8 @@
 import { ConfirmPasswordControl, NewPasswordControl, UserNameControl } from "@shared/constants/common-controls.const";
 import { isSamePasswordsValidator } from "@shared/validators/is-same-passwords.validator";
-import { DynamicFormBuilder } from "dynamic-forms";
+import { DynamicFormBuilder } from "@fretve/dynamic-forms";
 import { FormSheetViewConfig } from "form-sheet";
-import { Immutable } from "global-types";
+import { Immutable } from "@fretve/global-types";
 
 export interface UserPasswordForm { userName: string, newPassword: string, confirmPassword: string }
 

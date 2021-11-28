@@ -1,5 +1,5 @@
-import { _convertArrayToObject, _groupBy } from "array-helpers";
-import { Immutable } from "global-types";
+import { _convertArrayToObject, _groupBy } from "@fretve/array-helpers";
+import { Immutable } from "@fretve/global-types";
 import { ModelChildrenMap, ModelForeignsMap, StateModels, UnknownModelState, ValidRelationProps } from "../interfaces";
 import { _getModelConfig } from "../model-state-config-helpers";
 import { ModelQueryHandlerOptions, QueryIncludeFn } from "./interfaces";

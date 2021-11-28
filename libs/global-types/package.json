@@ -1,5 +1,5 @@
 {
-  "name": "global-types",
+  "name": "@fretve/global-types",
   "version": "0.0.1",
   "sideEffects": false,
   "dependencies": {

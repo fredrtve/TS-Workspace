@@ -4,7 +4,7 @@ import { Timesheet } from '@core/models';
 import { ApiService } from '@core/services/api.service';
 import { _isCriteriaContainedInCache } from '@shared-app/helpers/is-criteria-contained-in-cache';
 import { _timesheetCriteriaQueryParamsFactory } from '@shared-timesheet/timesheet-criteria-query-params.factory';
-import { Immutable, ImmutableArray, Maybe } from 'global-types';
+import { Immutable, ImmutableArray, Maybe } from '@fretve/global-types';
 import { merge, of } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
 import { DispatchedActions, Effect, listenTo } from 'state-management';

@@ -1,6 +1,6 @@
 import { Directive } from '@angular/core';
-import { AllowFormStateSelectors, FormStateResolver, FormStateSelector, GenericAbstractControl, ControlFieldComponent, ReactiveSelector, AllowedFormStateSelector } from 'dynamic-forms';
-import { Immutable, Maybe } from 'global-types';
+import { AllowFormStateSelectors, FormStateResolver, FormStateSelector, GenericAbstractControl, ControlFieldComponent, ReactiveSelector, AllowedFormStateSelector } from '@fretve/dynamic-forms';
+import { Immutable, Maybe } from '@fretve/global-types';
 import { Observable } from 'rxjs';
 import { _getValidationErrorMessage } from '../get-validation-error-message.helper';
 import { ValidationErrorMap } from '../interfaces';

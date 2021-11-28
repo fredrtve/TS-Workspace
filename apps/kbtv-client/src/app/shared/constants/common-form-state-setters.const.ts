@@ -1,5 +1,5 @@
 import { DateRange, _getISO } from "date-time-helpers";
-import { DynamicFormBuilder } from "dynamic-forms";
+import { DynamicFormBuilder } from "@fretve/dynamic-forms";
 import { StateSyncConfig } from "state-sync";
 
 const builder = new DynamicFormBuilder<{dateRange: DateRange<string>}, StateSyncConfig>();

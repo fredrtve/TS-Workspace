@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { _appFileUrl } from '@shared-app/helpers/app-file-url.helper';
 import { _isBlobUrl } from '@shared-app/helpers/is-blob-url.helper';
-import { Maybe } from 'global-types';
+import { Maybe } from '@fretve/global-types';
 
 @Pipe({name: 'appFileUrl'})
 export class AppFileUrlPipe implements PipeTransform {

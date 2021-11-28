@@ -1,5 +1,5 @@
 import { DataFilterConstructor } from "@shared/data.filter";
-import { Immutable, ImmutableArray, Maybe } from "global-types";
+import { Immutable, ImmutableArray, Maybe } from "@fretve/global-types";
 
 export function _isCriteriaContainedInCache<TCriteria>(
     criteria: Maybe<Immutable<TCriteria>>, 

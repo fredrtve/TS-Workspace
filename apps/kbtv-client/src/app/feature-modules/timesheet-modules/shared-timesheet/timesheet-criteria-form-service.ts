@@ -3,7 +3,7 @@ import { MatBottomSheetRef } from "@angular/material/bottom-sheet";
 import { StateActivities, StateMissionActivities, StateMissions, StateUsers } from "@core/state/global-state.interfaces";
 import { TimesheetCriteriaForm, TimesheetCriteriaFormSheet, TimesheetCriteriaFormState, UserTimesheetCriteriaForm, UserTimesheetCriteriaFormSheet, UserTimesheetCriteriaFormState, _criteriaFormToTimesheetCriteria, _timesheetCriteriaToForm } from "@shared-timesheet/forms/timesheet-criteria-form.const";
 import { FormService } from "form-sheet";
-import { Immutable } from "global-types";
+import { Immutable } from "@fretve/global-types";
 import { map } from "rxjs/operators";
 import { Store } from "state-management";
 import { StateSyncConfig } from "state-sync";

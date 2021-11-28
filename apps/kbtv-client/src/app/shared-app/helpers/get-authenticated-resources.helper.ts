@@ -1,5 +1,5 @@
 import { User } from "@core/models";
-import { Immutable } from "global-types";
+import { Immutable } from "@fretve/global-types";
 
 export function _getAuthenticatedResources<T extends {allowedRoles?: string[]}>(resources: T[], user: Immutable<User>): T[] {
     if(!resources) return [];

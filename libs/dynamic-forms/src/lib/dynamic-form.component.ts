@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, ViewChild, ViewContainerRef } from "@angular/core";
 import { FormGroup } from "@angular/forms";
-import { Immutable, Maybe } from "global-types";
+import { Immutable, Maybe } from "@fretve/global-types";
 import { DeepPartial } from "ts-essentials";
 import { ControlGroupSchema, ValidControlSchemaMap } from "./builder/interfaces";
 import { _mergeOverridesWithControls } from "./builder/merge-overrides-with-controls.helper";

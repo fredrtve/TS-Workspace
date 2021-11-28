@@ -17,7 +17,7 @@
         "model/shared": "model/shared",
         "model/state-commands": "model/state-commands",
         "model/state-fetcher": "model/state-fetcher",
-        "global-types": "global-types"
+        "@fretve/global-types": "@fretve/global-types"
       }
     }
   }

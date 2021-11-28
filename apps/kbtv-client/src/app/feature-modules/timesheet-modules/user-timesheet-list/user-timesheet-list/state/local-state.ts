@@ -2,7 +2,7 @@ import { DateRangePresets } from "@shared-app/enums/date-range-presets.enum";
 import { _getRangeByDateRangePreset } from "@shared-app/helpers/get-range-by-date-range-preset.helper";
 import { TimesheetCriteria } from "@shared-timesheet/timesheet-filter/timesheet-criteria.interface";
 import { DateRange } from "date-time-helpers";
-import { DateInput } from "global-types";
+import { DateInput } from "@fretve/global-types";
 import { _createAction, _createReducers, _on, _payload } from "state-management";
 import { UserTimesheetListState } from "./user-timesheet-list.state";
 

@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { Maybe } from 'global-types';
+import { Maybe } from '@fretve/global-types';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AUTH_COMMAND_API_MAP } from '../injection-tokens.const';

@@ -1,6 +1,6 @@
 
 import { Pipe, PipeTransform } from '@angular/core';
-import { Maybe } from 'global-types';
+import { Maybe } from '@fretve/global-types';
 
 @Pipe({name: 'appImageUrlRatio'})
 export class AppImageUrlRatioPipe implements PipeTransform {

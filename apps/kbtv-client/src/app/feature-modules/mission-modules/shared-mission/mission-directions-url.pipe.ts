@@ -1,7 +1,7 @@
 
 import { Pipe, PipeTransform } from '@angular/core';
 import { Mission } from '@core/models';
-import { Immutable } from 'global-types';
+import { Immutable } from '@fretve/global-types';
 
 @Pipe({name: 'appMissionDirectionsUrl'})
 export class MissionDirectionsUrlPipe implements PipeTransform {

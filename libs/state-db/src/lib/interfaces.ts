@@ -1,4 +1,4 @@
-import { Immutable } from "global-types";
+import { Immutable } from "@fretve/global-types";
 import { StateAction } from "state-management";
 
 /** Represents a key/value object with configurations of the db properties. */

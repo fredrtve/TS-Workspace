@@ -5,8 +5,8 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatDividerModule } from "@angular/material/divider";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from "@angular/material/icon";
-import { AbstractDynamicControl, AllowFormStateSelectors, ControlArrayComponent, ControlFactory, DynamicFormsModule, FormStateResolver } from "dynamic-forms";
-import { Immutable } from "global-types";
+import { AbstractDynamicControl, AllowFormStateSelectors, ControlArrayComponent, ControlFactory, DynamicFormsModule, FormStateResolver } from "@fretve/dynamic-forms";
+import { Immutable } from "@fretve/global-types";
 import { Observable } from "rxjs";
 import { DynamicControlArrayEntryComponent } from "./dynamic-control-array-entry.component";
 
@@ -57,6 +57,10 @@ export class DynamicControlArrayComponent
         MatDividerModule,
         MatFormFieldModule,
         DynamicFormsModule
-    ]
+    ],
+    exports:[       
+        DynamicControlArrayComponent,
+        DynamicControlArrayEntryComponent
+    ],
 })
 export class DynamicArrayModule {}

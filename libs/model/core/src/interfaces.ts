@@ -1,4 +1,4 @@
-import { Immutable, ImmutableArray, Maybe, PickByValueType, Prop, UnknownState } from 'global-types';
+import { Immutable, ImmutableArray, Maybe, PickByValueType, Prop, UnknownState } from '@fretve/global-types';
 import { DeepRequired, PickProperties } from 'ts-essentials';
 
 export type ValidStateModel<TModel> = Maybe<Immutable<TModel>>;

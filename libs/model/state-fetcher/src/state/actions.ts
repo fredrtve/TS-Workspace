@@ -1,4 +1,4 @@
-import { Immutable, Prop } from "global-types";
+import { Immutable, Prop } from "@fretve/global-types";
 import { UnknownModelState } from "model/core";
 import { _createAction, _payload } from "state-management";
 import { FetchingStatusMap } from "../interfaces";

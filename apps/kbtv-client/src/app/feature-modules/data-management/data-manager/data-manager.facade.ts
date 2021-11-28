@@ -3,7 +3,7 @@ import { AppConfirmDialogService } from "@core/services/app-confirm-dialog.servi
 import { ModelState } from '@core/state/model-state.interface';
 import { AppModelStatePropTranslations } from "@shared-app/constants/model-state-prop-translations.const";
 import { _confirmDeleteDialogFactory } from "@shared-app/helpers/confirm-delete-dialog.factory";
-import { Prop } from "global-types";
+import { Prop } from "@fretve/global-types";
 import { ModelFormService } from 'model/form';
 import { ComponentStore, Store } from 'state-management';
 import { ComponentState } from '../interfaces/component-state.interface';

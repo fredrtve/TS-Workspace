@@ -1,4 +1,4 @@
-import { Maybe } from 'global-types';
+import { Maybe } from '@fretve/global-types';
 import { User } from '../user.interface';
 
 export interface UserForeign {

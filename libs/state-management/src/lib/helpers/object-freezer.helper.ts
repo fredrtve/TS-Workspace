@@ -1,4 +1,4 @@
-import { Immutable } from "global-types";
+import { Immutable } from "@fretve/global-types";
 
 export function _deepFreeze<T extends {}>(obj: Immutable<T>): Immutable<T> {
     if(typeof obj !== "object") return obj;

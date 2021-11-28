@@ -2,7 +2,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { Injectable } from '@angular/core';
 import { PreloadingStrategy } from '@angular/router';
 import { CustomRoute } from '@shared-app/interfaces/custom-route.interface';
-import { Maybe } from 'global-types';
+import { Maybe } from '@fretve/global-types';
 import { EMPTY, Observable, timer } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { AuthRouteData, AuthService } from 'state-auth';

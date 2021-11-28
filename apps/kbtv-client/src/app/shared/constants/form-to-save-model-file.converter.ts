@@ -1,7 +1,7 @@
 import { GlobalActions } from '@core/global-actions';
 import { ModelFile } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
-import { Immutable, UnknownState } from 'global-types';
+import { Immutable, UnknownState } from '@fretve/global-types';
 import { _getModelConfig } from 'model/core';
 import { ModelFormResult } from 'model/form';
 

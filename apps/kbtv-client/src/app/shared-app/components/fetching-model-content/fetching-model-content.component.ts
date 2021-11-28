@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { DeviceInfoService } from '@core/services/device-info.service';
 import { ModelState } from '@core/state/model-state.interface';
-import { Prop } from 'global-types';
+import { Prop } from '@fretve/global-types';
 import { combineLatest } from 'rxjs';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';

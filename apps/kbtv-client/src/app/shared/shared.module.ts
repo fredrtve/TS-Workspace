@@ -3,10 +3,10 @@ import { AppDynamicFormOptions } from '@core/configurations/app-dynamic-form-opt
 import { ValidationErrorMessages } from '@core/configurations/validation-error-messages.const';
 import { CdkSelectableModule } from 'cdk-selectable';
 import { ConfirmDialogModule } from 'confirm-dialog';
-import { DYNAMIC_FORM_DEFAULT_OPTIONS } from 'dynamic-forms';
+import { DYNAMIC_FORM_DEFAULT_OPTIONS } from '@fretve/dynamic-forms';
 import { FormSheetModule } from 'form-sheet';
 import 'hammerjs';
-import { DynamicFormGroupOptions, VALIDATION_ERROR_MESSAGES } from 'mat-dynamic-form-controls';
+import { DynamicFormGroupOptions, VALIDATION_ERROR_MESSAGES } from '@fretve/mat-dynamic-form-controls';
 import { SharedAppModule } from '../shared-app/shared-app.module';
 import { AngularMaterialModule } from './angular-material.module';
 import { BottomSheetMenuComponent } from './bottom-sheet-menu/bottom-sheet-menu.component';
@@ -96,6 +96,6 @@ import { TransformButtonsPipe } from './pipes/transform-buttons.pipe';
 })
 export class SharedModule {}
 
-declare module "dynamic-forms" {
+declare module "@fretve/dynamic-forms" {
   interface DefaultControlGroupComponentOptions extends DynamicFormGroupOptions { }
 }

@@ -3,7 +3,7 @@ import { _idGenerator } from "@shared-app/helpers/id/id-generator.helper";
 import { AgGridAngular } from "ag-grid-angular";
 import { ValueFormatterParams } from "ag-grid-community";
 import { FormService } from "form-sheet";
-import { Immutable } from "global-types";
+import { Immutable } from "@fretve/global-types";
 import { KeyOptions, MultiCheckboxForm, _createMultiCheckboxForm } from "./create-multi-checkbox-form.helper";
 
 @Injectable({providedIn: "any"})

@@ -1,5 +1,5 @@
 import { FormGroup } from "@angular/forms";
-import { DeepPropsObject, Immutable, UnknownState } from "global-types";
+import { DeepPropsObject, Immutable, UnknownState } from "@fretve/global-types";
 import { asapScheduler, combineLatest, Observable } from "rxjs";
 import { debounceTime, distinctUntilChanged, map, startWith } from "rxjs/operators";
 

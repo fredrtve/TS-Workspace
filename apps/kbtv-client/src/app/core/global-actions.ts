@@ -1,6 +1,6 @@
 import { ModelFile } from "@core/models";
 import { ModelState } from "@core/state/model-state.interface";
-import { Immutable } from "global-types";
+import { Immutable } from "@fretve/global-types";
 import { StateModels } from "model/core";
 import { DeleteModelPayload, ModelCommandPayload, ModelCommands, SaveModelPayload, SetSaveModelStatePayload } from "model/state-commands";
 import { _createAction, _payload } from "state-management";

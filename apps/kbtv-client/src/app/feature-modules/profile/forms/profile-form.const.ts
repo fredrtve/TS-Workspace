@@ -3,9 +3,9 @@ import { User } from '@core/models';
 import { IContactable } from '@core/models/sub-interfaces/icontactable.interface';
 import { IFullName } from '@core/models/sub-interfaces/ifullname.interface';
 import { EmailControl, FirstNameControl, LastNameControl, PhoneNumberControl, UserNameControl } from '@shared/constants/common-controls.const';
-import { DynamicFormBuilder } from 'dynamic-forms';
+import { DynamicFormBuilder } from '@fretve/dynamic-forms';
 import { FormSheetViewConfig } from 'form-sheet';
-import { Immutable } from 'global-types';
+import { Immutable } from '@fretve/global-types';
 
 export interface ProfileForm extends Pick<User, "userName">, IContactable, IFullName {}
 

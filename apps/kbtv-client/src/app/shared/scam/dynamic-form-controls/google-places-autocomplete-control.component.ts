@@ -6,10 +6,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { GoogleMapsLoader } from '@core/services/google-maps.loader';
-import { FormStateResolver } from 'dynamic-forms';
-import { Immutable } from 'global-types';
+import { FormStateResolver } from '@fretve/dynamic-forms';
+import { Immutable } from '@fretve/global-types';
 import { Address, GooglePlacesAutocompleteModule, Options } from 'google-places-autocomplete';
-import { BaseFieldComponent, BaseFieldOptions, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'mat-dynamic-form-controls';
+import { BaseFieldComponent, BaseFieldOptions, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from '@fretve/mat-dynamic-form-controls';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 

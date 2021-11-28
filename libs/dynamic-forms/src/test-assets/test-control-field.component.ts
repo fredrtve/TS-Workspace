@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { Immutable } from "global-types";
+import { Immutable } from "@fretve/global-types";
 import { Observable } from "rxjs";
 import { AllowedFormStateSelector, AllowFormStateSelectors, ControlFieldComponent, FormStateSelector, GenericAbstractControl, ReactiveSelector } from "../lib/interfaces";
 

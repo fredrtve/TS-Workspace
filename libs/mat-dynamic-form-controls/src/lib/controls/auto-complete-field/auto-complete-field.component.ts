@@ -7,9 +7,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { FormStateResolver } from 'dynamic-forms';
-import { Immutable } from 'global-types';
-import { applyMixins } from 'global-utils';
+import { FormStateResolver } from '@fretve/dynamic-forms';
+import { Immutable } from '@fretve/global-types';
+import { applyMixins } from '@fretve/global-utils';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map, startWith, tap } from 'rxjs/operators';
 import { BaseFieldComponent } from '../../base-control/base-field.component';
@@ -76,6 +76,7 @@ export class AutoCompleteFieldComponent<T> extends AutoCompleteControlBase<T>  {
       MatButtonModule,
       MatAutocompleteModule,
       FuncModule
-    ]
+    ],
+    exports: [AutoCompleteFieldComponent],
   })
   export class AutoCompleteFieldModule {}

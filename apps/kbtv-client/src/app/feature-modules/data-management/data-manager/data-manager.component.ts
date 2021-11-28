@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { ModelState } from '@core/state/model-state.interface';
 import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { BottomIconButtons } from '@shared/constants/bottom-icon-buttons.const';
-import { Prop } from 'global-types';
+import { Prop } from '@fretve/global-types';
 import { ModelDataTableComponent } from 'model/data-table';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';

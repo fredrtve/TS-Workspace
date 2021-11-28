@@ -1,5 +1,5 @@
 import { InjectFlags, InjectionToken, Injector, ModuleWithProviders, NgModule, Optional, Provider, Self, Type } from '@angular/core';
-import { Maybe } from 'global-types';
+import { Maybe } from '@fretve/global-types';
 import { ActionDispatcher } from './action-dispatcher';
 import { ComponentStore } from './component.store';
 import { STORE_ACTION_INTERCEPTORS, STORE_DEFAULT_STATE, STORE_EFFECTS, STORE_META_REDUCERS, STORE_REDUCERS } from './constants/injection-tokens.const';

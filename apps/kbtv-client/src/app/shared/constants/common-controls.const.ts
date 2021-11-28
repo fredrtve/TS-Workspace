@@ -4,8 +4,8 @@ import { _compareProp } from '@shared-app/helpers/compare-with-prop.helper';
 import { IonDateControlComponent } from '@shared/scam/dynamic-form-controls/ion-date-time-control.component';
 import { isObjectValidator } from '@shared/validators/is-object.validator';
 import { DateRange } from 'date-time-helpers';
-import { DynamicFormBuilder, _createControlField, _createControlGroup } from 'dynamic-forms';
-import { AutoCompleteFieldComponent, InputFieldComponent, SelectFieldComponent } from 'mat-dynamic-form-controls';
+import { DynamicFormBuilder, _createControlField, _createControlGroup } from '@fretve/dynamic-forms';
+import { AutoCompleteFieldComponent, InputFieldComponent, SelectFieldComponent } from '@fretve/mat-dynamic-form-controls';
 import { ValidationRules } from '../../shared-app/constants/validation-rules.const';
 import { GooglePlacesAutoCompleteControlComponent } from '../scam/dynamic-form-controls/google-places-autocomplete-control.component';
 

@@ -8,7 +8,7 @@ import { Activity, Mission, User } from "@core/models";
 import { Roles } from "@core/roles.enum";
 import { DateRangePresets } from "@shared-app/enums/date-range-presets.enum";
 import { ApiUrl } from "@core/api-url.enum";
-import { Maybe } from "global-types";
+import { Maybe } from "@fretve/global-types";
 import { StoreState } from "src/app/feature-modules/timesheet-modules/timesheet-statistic/state/store-state";
 
 registerLocaleData(norwayLocale, 'nb-NO');

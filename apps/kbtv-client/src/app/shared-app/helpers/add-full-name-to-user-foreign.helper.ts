@@ -1,7 +1,7 @@
-import { _convertArrayToObject } from 'array-helpers';
+import { _convertArrayToObject } from '@fretve/array-helpers';
 import { User } from '@core/models';
 import { UserForeign } from '@core/models/relationships/user-foreign.interface';
-import { Immutable, ImmutableArray, Maybe } from 'global-types';
+import { Immutable, ImmutableArray, Maybe } from '@fretve/global-types';
 
 export function _setFullNameOnUserForeigns<TEntity extends UserForeign>(
     entities: Maybe<ImmutableArray<TEntity>>,

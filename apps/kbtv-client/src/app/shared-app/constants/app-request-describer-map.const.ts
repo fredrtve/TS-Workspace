@@ -5,7 +5,7 @@ import { _deleteModelRangeRequestDescriber } from "@shared-app/helpers/request-d
 import { _deleteModelRequestDescriber } from "@shared-app/helpers/request-describers/delete-model-request-describer.helper";
 import { _saveModelRequestDescriber } from "@shared-app/helpers/request-describers/save-model-request-describer.helper";
 import { RequestDescriberMap } from "@shared-app/interfaces/request-describer-map.interface";
-import { _find } from "array-helpers";
+import { _find } from "@fretve/array-helpers";
 
 type Requests = SaveModelRequest<Model> | SaveModelFileRequest<ModelFile> | DeleteModelRangeRequest<Model> | DeleteModelRequest<Model> |
     UpdateTimesheetStatusesRequest | CreateUserRequest | UpdateCurrentUserRequest | DeleteMissionHeaderImageRequest;

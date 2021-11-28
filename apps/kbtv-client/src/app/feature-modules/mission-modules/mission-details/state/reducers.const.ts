@@ -1,5 +1,5 @@
 import { StateMissions } from '@core/state/global-state.interfaces';
-import { _update } from 'array-helpers';
+import { _update } from '@fretve/array-helpers';
 import { _createReducers, _on } from 'state-management';
 import { MissionDetailsActions } from './actions.const';
 

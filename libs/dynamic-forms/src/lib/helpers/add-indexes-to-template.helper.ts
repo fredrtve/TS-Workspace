@@ -1,4 +1,4 @@
-import { UnknownState } from "global-types";
+import { UnknownState } from "@fretve/global-types";
 import { AbstractDynamicControl, DynamicControlGroup } from "../interfaces";
 import { _isControlArray, _isControlGroup, _isReactiveSelector } from "./type.helpers";
 

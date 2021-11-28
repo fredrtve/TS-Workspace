@@ -1,6 +1,6 @@
 import { Mission } from "@core/models";
 import { IPosition } from "@core/models/sub-interfaces/iposition.interface";
-import { Immutable } from "global-types";
+import { Immutable } from "@fretve/global-types";
 
 export function _getClosestMission(
     position: Immutable<IPosition>,

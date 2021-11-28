@@ -1,5 +1,5 @@
-import { Immutable } from "global-types";
-import { _weakMemoizer } from "global-utils";
+import { Immutable } from "@fretve/global-types";
+import { _weakMemoizer } from "@fretve/global-utils";
 import { _isReactiveSelector } from "../helpers/type.helpers";
 import { AbstractDynamicControl } from "../interfaces";
 import { ControlArrayOverridables, ControlGroupOverridables, ControlOverridables, ControlOverridesMap, DynamicControlMapFromSchema, ValidControlSchemaMap } from "./interfaces";

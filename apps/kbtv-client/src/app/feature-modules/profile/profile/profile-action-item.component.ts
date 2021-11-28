@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { _tryWithLogging } from "global-utils";
+import { _tryWithLogging } from "@fretve/global-utils";
 import { ProfileAction } from './profile-action.interface';
 
 @Component({

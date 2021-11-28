@@ -1,6 +1,6 @@
-import { ControlGroupSchema } from 'dynamic-forms';
+import { ControlGroupSchema } from '@fretve/dynamic-forms';
 import { FormActionsOptions } from 'form-sheet';
-import { Immutable, Maybe } from 'global-types';
+import { Immutable, Maybe } from '@fretve/global-types';
 import { RelationInclude, StateModels, StatePropByModel, ModelQuery, RestrictedQuery } from 'model/core';
 import { Observable } from 'rxjs';
 import { StateAction } from 'state-management';

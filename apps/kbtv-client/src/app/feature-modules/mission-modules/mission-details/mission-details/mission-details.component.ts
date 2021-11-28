@@ -14,7 +14,7 @@ import { ImageViewerDialogService } from '@shared-mission/components/image-viewe
 import { MissionModelForm } from '@shared-mission/forms/save-mission-model-form.const';
 import { BottomIconButtons } from '@shared/constants/bottom-icon-buttons.const';
 import { MissionPositionPickerSheetService } from '@shared/scam/mission-position-picker/mission-position-picker-sheet.service';
-import { Immutable, Maybe } from 'global-types';
+import { Immutable, Maybe } from '@fretve/global-types';
 import { ModelFormService } from 'model/form';
 import { interval, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';

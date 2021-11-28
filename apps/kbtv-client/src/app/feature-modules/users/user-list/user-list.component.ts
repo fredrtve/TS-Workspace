@@ -6,7 +6,7 @@ import { ButtonTypes } from '@shared-app/enums/button-types.enum';
 import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
 import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { FormService } from 'form-sheet';
-import { Maybe } from 'global-types';
+import { Maybe } from '@fretve/global-types';
 import { ModelFormService } from 'model/form';
 import { Observable } from 'rxjs';
 import { UserModelForm } from '../forms/save-user-model-form.const';

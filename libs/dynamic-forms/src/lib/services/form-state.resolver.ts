@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { AsyncValidatorFn } from "@angular/forms";
-import { DeepPropsObject, Immutable, UnknownState } from "global-types";
+import { DeepPropsObject, Immutable, UnknownState } from "@fretve/global-types";
 import { asapScheduler, combineLatest, Observable, of, Subject } from "rxjs";
 import { debounceTime, distinctUntilChanged, map, take, takeUntil } from "rxjs/operators";
 import { _formControlsChanges$ } from "../helpers/form-control-changes.helper";

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { ModelFile } from '@core/models';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
-import { Maybe } from 'global-types';
+import { Maybe } from '@fretve/global-types';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { debounceTime, distinctUntilKeyChanged } from 'rxjs/operators';
 

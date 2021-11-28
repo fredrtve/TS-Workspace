@@ -1,5 +1,5 @@
 
-import { Immutable, Maybe } from 'global-types';
+import { Immutable, Maybe } from '@fretve/global-types';
 import { BaseFieldOptions } from '../../base-control/base-field-options.interface';
 import { FilterConfig } from '../../helpers/filter.config';
 import { LazySelectOption } from '../../mixins/lazy-options.mixin';

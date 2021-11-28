@@ -1,8 +1,8 @@
 import { Mission, MissionActivity } from "@core/models";
 import { ModelState } from "@core/state/model-state.interface";
 import { _appFormToSaveModelConverter } from "@shared/app-form-to-save-model.converter";
-import { _convertArrayToObject, _find } from "array-helpers";
-import { Immutable } from "global-types";
+import { _convertArrayToObject, _find } from "@fretve/array-helpers";
+import { Immutable } from "@fretve/global-types";
 import { ModelFormResult } from "model/form";
 import { MissionForm } from "./save-mission-model-form.const";
 

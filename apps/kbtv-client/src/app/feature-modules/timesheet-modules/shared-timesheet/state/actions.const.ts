@@ -1,6 +1,6 @@
 import { Timesheet } from "@core/models";
 import { TimesheetCriteria } from "@shared-timesheet/timesheet-filter/timesheet-criteria.interface";
-import { Immutable, Prop, UnknownState } from "global-types";
+import { Immutable, Prop, UnknownState } from "@fretve/global-types";
 import { _createAction, _payload } from "state-management";
 
 export const SharedTimesheetActions = {

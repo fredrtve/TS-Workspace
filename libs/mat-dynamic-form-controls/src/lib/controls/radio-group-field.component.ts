@@ -4,8 +4,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatRadioModule } from '@angular/material/radio';
-import { FormStateResolver } from 'dynamic-forms';
-import { Immutable } from 'global-types';
+import { FormStateResolver } from '@fretve/dynamic-forms';
+import { Immutable } from '@fretve/global-types';
 import { Observable } from 'rxjs';
 import { BaseFieldComponent } from '../base-control/base-field.component';
 import { BaseFieldOptions } from '../base-control/base-field-options.interface';
@@ -70,6 +70,7 @@ export class RadioGroupFieldComponent<T> extends BaseFieldComponent<T, RadioGrou
     MatFormFieldModule,
     MatRadioModule,
     FuncModule
-  ]
+  ],
+  exports: [RadioGroupFieldComponent],
 })
 export class RadioGroupFieldModule {}

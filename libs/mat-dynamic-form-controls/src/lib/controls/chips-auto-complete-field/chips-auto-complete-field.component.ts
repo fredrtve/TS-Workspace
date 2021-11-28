@@ -9,8 +9,8 @@ import { MatChipInputEvent, MatChipsModule } from "@angular/material/chips";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
-import { FormStateResolver } from "dynamic-forms";
-import { applyMixins } from "global-utils";
+import { FormStateResolver } from "@fretve/dynamic-forms";
+import { applyMixins } from "@fretve/global-utils";
 import { BehaviorSubject, combineLatest, Observable } from "rxjs";
 import { map, startWith } from "rxjs/operators";
 import { BaseFieldComponent } from "../../base-control/base-field.component";
@@ -112,9 +112,7 @@ export class ChipsAutocompleteFieldComponent<T> extends ChipsAutoCompleteFieldBa
 
 }
 @NgModule({
-    declarations:[       
-        ChipsAutocompleteFieldComponent,
-    ],
+    declarations:[ChipsAutocompleteFieldComponent],
     imports: [
       CommonModule,       
       ReactiveFormsModule,
@@ -126,6 +124,7 @@ export class ChipsAutocompleteFieldComponent<T> extends ChipsAutoCompleteFieldBa
       MatAutocompleteModule,
       MatChipsModule,
       FuncModule
-    ]
+    ],
+    exports:[ChipsAutocompleteFieldComponent],
 })
 export class ChipsAutocompleteFieldModule {}

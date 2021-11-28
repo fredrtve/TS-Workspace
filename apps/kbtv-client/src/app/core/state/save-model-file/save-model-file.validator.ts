@@ -3,7 +3,7 @@ import { GlobalActions, SaveModelFilePayload } from "@core/global-actions";
 import { AppNotificationService } from "@core/services/app-notification.service";
 import { AppNotifications } from "@shared-app/constants/app-notifications.const";
 import { ValidationRules } from "@shared-app/constants/validation-rules.const";
-import { Immutable, Maybe } from "global-types";
+import { Immutable, Maybe } from "@fretve/global-types";
 import { ActionInterceptor, StateAction } from "state-management";
 
 @Injectable()

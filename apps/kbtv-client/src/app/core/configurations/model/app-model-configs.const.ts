@@ -1,6 +1,6 @@
 import { ModelState } from '../../state/model-state.interface';
 import { _idGenerator } from '@shared-app/helpers/id/id-generator.helper';
-import { Immutable } from 'global-types';
+import { Immutable } from '@fretve/global-types';
 import { StateModels, ValidStateModelArray, ModelChildrenMap } from 'model/core';
 import { ModelFetcherConfig } from 'model/state-fetcher';
 import { ApiUrl } from '../../api-url.enum';

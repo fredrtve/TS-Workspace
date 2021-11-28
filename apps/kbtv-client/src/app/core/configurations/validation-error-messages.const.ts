@@ -1,6 +1,6 @@
 import { translations } from '@shared-app/constants/translations.const';
 import { _formatMb } from '@shared-app/helpers/format-mb.helper';
-import { ValidationErrorMap } from 'mat-dynamic-form-controls';
+import { ValidationErrorMap } from '@fretve/mat-dynamic-form-controls';
 
 export const ValidationErrorMessages: ValidationErrorMap = {
     required: () => "Dette feltet er obligatorisk.",

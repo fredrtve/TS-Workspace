@@ -1,6 +1,6 @@
-import { _filter } from "array-helpers";
-import { Immutable, Maybe } from "global-types";
-import { _weakMemoizer } from "global-utils";
+import { _filter } from "@fretve/array-helpers";
+import { Immutable, Maybe } from "@fretve/global-types";
+import { _weakMemoizer } from "@fretve/global-utils";
 import { FilterConfig } from "./filter.config";
 
 function filterRecord<TRecord, TCriteria>(

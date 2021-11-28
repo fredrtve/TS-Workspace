@@ -1,4 +1,4 @@
-import { Immutable, Prop, UnknownState } from "global-types";
+import { Immutable, Prop, UnknownState } from "@fretve/global-types";
 import { StateSlice } from "../interfaces";
 
 export function _selectSlice<TState, TProps extends Prop<TState>[] = Prop<TState>[]>(

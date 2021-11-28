@@ -1,4 +1,4 @@
-import { Immutable, Maybe } from 'global-types';
+import { Immutable, Maybe } from '@fretve/global-types';
 import { TimesheetSummary, WeekCriteria } from '../../shared-timesheet/interfaces';
 
 export interface ViewModel{ 

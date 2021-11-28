@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { awaitOnline } from 'global-utils';
+import { awaitOnline } from '@fretve/global-utils';
 import { exhaustMap, map, switchMap } from 'rxjs/operators';
 import { DispatchedActions, Effect, listenTo, Store } from 'state-management';
 import { SYNC_HTTP_FETCHER, SYNC_STATE_CONFIG } from '../injection-tokens.const';

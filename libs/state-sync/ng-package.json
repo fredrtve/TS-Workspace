@@ -5,9 +5,9 @@
     "entryFile": "src/public-api.ts",
     "umdModuleIds": { 
       "state-management": "state-management",
-      "array-helpers": "array-helpers",
-      "global-utils": "global-utils",
-      "global-types": "global-types"
+      "@fretve/array-helpers": "@fretve/array-helpers",
+      "@fretve/global-utils": "@fretve/global-utils",
+      "@fretve/global-types": "@fretve/global-types"
     }
   }
 }

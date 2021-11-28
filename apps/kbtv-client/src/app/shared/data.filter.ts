@@ -1,4 +1,4 @@
-import { Immutable } from 'global-types';
+import { Immutable } from '@fretve/global-types';
 
 export type DataFilterConstructor<TCriteria>  = 
     new (criteria: Immutable<Partial<TCriteria>>, ...args: unknown[]) => DataFilter<unknown, TCriteria>;

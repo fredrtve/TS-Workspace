@@ -5,10 +5,10 @@ import { ValidationRules } from '@shared-app/constants/validation-rules.const';
 import { _timesheetFormToSaveModelConverter, _userTimesheetFormToSaveModelConverter } from '@shared-timesheet/forms/timesheet-form-to-save-model.converter';
 import { MissionAutoCompleteControl, UserSelectControl } from '@shared/constants/common-controls.const';
 import { IonDateControlComponent } from '@shared/scam/dynamic-form-controls/ion-date-time-control.component';
-import { SelectFieldComponent, TextAreaFieldComponent } from 'mat-dynamic-form-controls';
+import { SelectFieldComponent, TextAreaFieldComponent } from '@fretve/mat-dynamic-form-controls';
 import { _getISO } from 'date-time-helpers';
-import { DynamicFormBuilder, _createControlField, _createControlGroup } from 'dynamic-forms';
-import { Immutable, Maybe } from 'global-types';
+import { DynamicFormBuilder, _createControlField, _createControlGroup } from '@fretve/dynamic-forms';
+import { Immutable, Maybe } from '@fretve/global-types';
 import { Converter, ModelFormConfig } from 'model/form';
 import{ _compareProp } from '@shared-app/helpers/compare-with-prop.helper'
 import { modelCtx } from '@core/configurations/model/app-model-context';

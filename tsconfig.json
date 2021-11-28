@@ -6,6 +6,7 @@
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
+    "strict": false,
     "noFallthroughCasesInSwitch": true,
     "strictNullChecks": true,
     "sourceMap": false,
@@ -24,7 +25,7 @@
       "dom"
     ],
     "paths": {
-      "global-types": [
+      "@fretve/global-types": [
         "dist/global-types/global-types",
         "dist/global-types"
       ],
@@ -32,7 +33,7 @@
         "dist/state-management/state-management",
         "dist/state-management"
       ],
-      "array-helpers": [
+      "@fretve/array-helpers": [
         "dist/array-helpers/array-helpers",
         "dist/array-helpers"
       ],
@@ -52,7 +53,7 @@
         "dist/optimistic-http/optimistic-http",
         "dist/optimistic-http"
       ],
-      "global-utils": [
+      "@fretve/global-utils": [
         "dist/global-utils/global-utils",
         "dist/global-utils"
       ],
@@ -60,7 +61,7 @@
         "dist/google-places-autocomplete/google-places-autocomplete",
         "dist/google-places-autocomplete"
       ],
-      "mat-dynamic-form-controls": [
+      "@fretve/mat-dynamic-form-controls": [
         "dist/mat-dynamic-form-controls/mat-dynamic-form-controls",
         "dist/mat-dynamic-form-controls"
       ],
@@ -72,7 +73,7 @@
         "dist/confirm-dialog/confirm-dialog",
         "dist/confirm-dialog"
       ],
-      "dynamic-forms": [
+      "@fretve/dynamic-forms": [
         "dist/dynamic-forms/dynamic-forms",
         "dist/dynamic-forms"
       ],

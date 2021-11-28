@@ -1,5 +1,5 @@
-import { Immutable, ImmutableArray, Maybe, Prop } from 'global-types';
-import { _weakMemoizer } from 'global-utils';
+import { Immutable, ImmutableArray, Maybe, Prop } from '@fretve/global-types';
+import { _weakMemoizer } from '@fretve/global-utils';
 
 /**
  * Find an object in an array of objects

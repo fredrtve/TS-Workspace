@@ -7,7 +7,7 @@ import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { _getSummariesByType } from '@shared-timesheet/helpers/get-summaries-by-type.helper';
 import { AgGridConfig } from '@shared/components/abstracts/ag-grid-config.interface';
 import { filterRecords } from '@shared/operators/filter-records.operator';
-import { Immutable, ImmutableArray, Maybe } from 'global-types';
+import { Immutable, ImmutableArray, Maybe } from '@fretve/global-types';
 import { FetchingStatus } from 'model/state-fetcher';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';

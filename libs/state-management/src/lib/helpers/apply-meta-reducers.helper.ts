@@ -1,5 +1,5 @@
 import { Reducer, MetaReducer, StateAction } from '../interfaces';
-import { ImmutableArray } from 'global-types';
+import { ImmutableArray } from '@fretve/global-types';
 
 export function _applyMetaReducers(
     reducer: Reducer<{}, StateAction>, 

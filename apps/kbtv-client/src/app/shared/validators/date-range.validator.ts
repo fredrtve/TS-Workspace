@@ -1,5 +1,5 @@
 import { ValidatorFn, AbstractControl } from '@angular/forms';
-import { UnknownState } from 'global-types';
+import { UnknownState } from '@fretve/global-types';
 
 export function dateRangeValidator(allowNull?: boolean): ValidatorFn{ 
     return (control: AbstractControl): UnknownState | null => {

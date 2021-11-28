@@ -1,7 +1,7 @@
 import { ModelState } from '@core/state/model-state.interface';
 import { DateRangePresets } from '@shared-app/enums/date-range-presets.enum';
 import { _getRangeByDateRangePreset } from '@shared-app/helpers/get-range-by-date-range-preset.helper';
-import { _addOrUpdateRange } from 'array-helpers';
+import { _addOrUpdateRange } from '@fretve/array-helpers';
 import { DateRange } from 'date-time-helpers';
 import { _createReducers, _on } from 'state-management';
 import { SharedTimesheetActions } from './actions.const';

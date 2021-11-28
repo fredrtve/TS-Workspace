@@ -1,6 +1,6 @@
 import { Timesheet } from "@core/models";
 import { TimesheetSummary } from "../interfaces";
-import { Immutable, ImmutableArray, Maybe } from "global-types";
+import { Immutable, ImmutableArray, Maybe } from "@fretve/global-types";
 import { _addHoursToSummary } from "./add-hours-to-summary.helper";
 
 export function _getDailySummaries(t: Maybe<ImmutableArray<Timesheet>>): Maybe<Immutable<TimesheetSummary>[]> {

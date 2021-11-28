@@ -1,5 +1,5 @@
 import { HttpParams } from "@angular/common/http";
-import { Immutable } from "global-types";
+import { Immutable } from "@fretve/global-types";
 import { TimesheetCriteria } from "./timesheet-filter/timesheet-criteria.interface";
 
 export function _timesheetCriteriaQueryParamsFactory(criteria: Immutable<TimesheetCriteria>): HttpParams {

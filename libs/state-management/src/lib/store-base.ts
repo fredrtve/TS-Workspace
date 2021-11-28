@@ -1,5 +1,5 @@
-import { Immutable, Prop, UnionTupleType } from 'global-types';
-import { _tryWithLogging } from "global-utils";
+import { Immutable, Prop, UnionTupleType } from '@fretve/global-types';
+import { _tryWithLogging } from "@fretve/global-utils";
 import { Observable, Subject } from 'rxjs';
 import { ActionDispatcher } from './action-dispatcher';
 import { _applyInterceptors } from './helpers/apply-interceptors.helper';

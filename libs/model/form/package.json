@@ -12,7 +12,7 @@
     "lib": {
       "entryFile": "public-api.ts",
       "umdModuleIds": {
-        "dynamic-forms": "dynamic-forms",
+        "@fretve/dynamic-forms": "@fretve/dynamic-forms",
         "form-sheet": "form-sheet",
         "confirm-dialog": "confirm-dialog",
         "model/core": "model/core",

@@ -5,7 +5,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from "@angular/material/icon";
 import { MatToolbarModule } from "@angular/material/toolbar";
-import { DynamicFormsModule } from "dynamic-forms";
+import { DynamicFormsModule } from "@fretve/dynamic-forms";
 import { FormActionsComponent } from "./form-actions/form-actions.component";
 import { FormSheetNavBarComponent } from "./form-sheet-nav-bar/form-sheet-nav-bar.component";
 import { FormSheetWrapperComponent } from "./form-sheet-wrapper.component";

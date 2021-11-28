@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject, NgModule, Optional } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { FormStateResolver } from 'dynamic-forms';
+import { FormStateResolver } from '@fretve/dynamic-forms';
 import { Observable } from 'rxjs';
 import { BaseFieldComponent } from '../base-control/base-field.component';
 import { BaseFieldOptions } from '../base-control/base-field-options.interface';
@@ -67,6 +67,7 @@ export class FileFieldComponent extends BaseFieldComponent<FileList, FileOptions
     CommonModule,    
     ReactiveFormsModule,
     MatFormFieldModule 
-  ]
+  ],
+  exports: [FileFieldComponent]
 })
 export class FileFieldModule {}

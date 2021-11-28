@@ -1,4 +1,4 @@
-import { Immutable, DateInput, Maybe } from "global-types";
+import { Immutable, DateInput, Maybe } from "@fretve/global-types";
 import { _getStartOfDayTime } from "./get-start-of-day.helper";
 import { DateRange } from "./interfaces";
 

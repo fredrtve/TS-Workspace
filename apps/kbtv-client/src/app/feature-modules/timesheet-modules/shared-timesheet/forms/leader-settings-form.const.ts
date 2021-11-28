@@ -1,8 +1,8 @@
 import { LeaderSettings } from '@core/models/leader-settings.interface';
-import { CheckboxFieldComponent } from 'mat-dynamic-form-controls';
-import { DynamicFormBuilder } from 'dynamic-forms';
+import { CheckboxFieldComponent } from '@fretve/mat-dynamic-form-controls';
+import { DynamicFormBuilder } from '@fretve/dynamic-forms';
 import { FormSheetViewConfig } from 'form-sheet';
-import { Immutable } from 'global-types';
+import { Immutable } from '@fretve/global-types';
 
 const builder = new DynamicFormBuilder<LeaderSettings>();
 

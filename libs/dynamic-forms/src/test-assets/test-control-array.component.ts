@@ -1,6 +1,6 @@
 import { Component, Directive } from "@angular/core";
 import { FormArray } from "@angular/forms";
-import { Immutable } from "global-types";
+import { Immutable } from "@fretve/global-types";
 import { AbstractDynamicControl, AllowFormStateSelectors, ControlArrayComponent } from "../lib/interfaces";
 
 export interface TestControlArrayOptions { someOption$: string } ;

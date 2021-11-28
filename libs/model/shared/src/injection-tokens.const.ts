@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
-import { KeyVal } from 'global-types';
+import { KeyVal } from '@fretve/global-types';
 
 /** Used to inject translations for model properties. */
 export const MODEL_PROP_TRANSLATIONS = new InjectionToken<KeyVal<string>>('ModelPropTranslations')

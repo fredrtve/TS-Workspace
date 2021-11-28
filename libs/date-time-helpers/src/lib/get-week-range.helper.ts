@@ -1,7 +1,7 @@
 import { DateRange } from './interfaces';;
 import { _getFirstDayOfWeek } from './get-first-day-of-week.helper';
 import { _getLastDayOfWeek } from './get-last-day-of-week.helper';
-import { Immutable } from 'global-types';
+import { Immutable } from '@fretve/global-types';
 
 /**
  * Get a date range containing the start and end date of a specified week.

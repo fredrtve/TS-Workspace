@@ -1,4 +1,4 @@
-import { Immutable, Maybe, UnknownState } from 'global-types';
+import { Immutable, Maybe, UnknownState } from '@fretve/global-types';
 import { StateAction } from 'state-management';
 
 export interface QueuedCommand { 

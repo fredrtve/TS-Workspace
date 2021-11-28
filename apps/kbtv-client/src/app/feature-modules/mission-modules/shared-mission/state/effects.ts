@@ -4,7 +4,7 @@ import { AppNotifications } from "@shared-app/constants/app-notifications.const"
 import { ValidationRules } from "@shared-app/constants/validation-rules.const";
 import { _validateFileExtension } from "@shared-app/helpers/validate-file-extension.helper";
 import { ModelFileForm, _formToSaveModelFileConverter } from "@shared/constants/form-to-save-model-file.converter";
-import { Immutable } from "global-types";
+import { Immutable } from "@fretve/global-types";
 import { of } from "rxjs";
 import { mergeMap } from "rxjs/operators";
 import { DispatchedActions, Effect, listenTo, StateAction } from "state-management";

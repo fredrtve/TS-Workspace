@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from "@angular/common/http";
-import { Immutable } from "global-types";
+import { Immutable } from "@fretve/global-types";
 import { _createAction, _payload } from "state-management";
 import { CompletedCommand, OptimisticHttpRequest, QueuedCommand } from "../interfaces";
 

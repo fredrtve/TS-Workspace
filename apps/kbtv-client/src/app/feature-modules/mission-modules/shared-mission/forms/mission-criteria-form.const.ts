@@ -4,10 +4,10 @@ import { DateRangeControlGroup, EmployerSelectControl } from '@shared/constants/
 import { SyncModelDateRangeOptions } from '@shared/constants/common-form-state-setters.const';
 import { MissionCriteria } from '@shared/interfaces';
 import { DateRange } from 'date-time-helpers';
-import { DynamicFormBuilder } from 'dynamic-forms';
+import { DynamicFormBuilder } from '@fretve/dynamic-forms';
 import { FormSheetViewConfig } from 'form-sheet';
-import { Immutable } from 'global-types';
-import { AutoCompleteFieldComponent, RadioGroupFieldComponent } from 'mat-dynamic-form-controls';
+import { Immutable } from '@fretve/global-types';
+import { AutoCompleteFieldComponent, RadioGroupFieldComponent } from '@fretve/mat-dynamic-form-controls';
 import { StateSyncConfig } from 'state-sync';
 
 export type MissionCriteriaFormState = StateMissions & StateEmployers & StateSyncConfig;

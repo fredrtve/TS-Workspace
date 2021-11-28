@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AppDialogService } from '@core/services/app-dialog.service';
-import { Immutable } from 'global-types';
+import { Immutable } from '@fretve/global-types';
 import { OptimisticActions, OptimisticHttpErrorPayload } from 'optimistic-http';
 import { forkJoin, from, Observable } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';

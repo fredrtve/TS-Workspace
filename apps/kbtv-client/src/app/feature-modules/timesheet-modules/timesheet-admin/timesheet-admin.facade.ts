@@ -11,8 +11,8 @@ import { WeekCriteriaFormState } from '@shared-timesheet/forms/week-criteria-con
 import { _getSummariesByType } from '@shared-timesheet/helpers/get-summaries-by-type.helper';
 import { _noEmployersFilter } from '@shared-timesheet/no-employers-filter.helper';
 import { filterRecords } from '@shared/operators/filter-records.operator';
-import { _find } from 'array-helpers';
-import { Immutable, ImmutableArray, Maybe } from 'global-types';
+import { _find } from '@fretve/array-helpers';
+import { Immutable, ImmutableArray, Maybe } from '@fretve/global-types';
 import { ModelFormService } from 'model/form';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';

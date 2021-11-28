@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Immutable } from "global-types";
+import { Immutable } from "@fretve/global-types";
 import { AuthService } from "state-auth";
 import { Store } from 'state-management';
 import { SyncConfig } from 'state-sync';

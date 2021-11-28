@@ -1,5 +1,5 @@
-import { _addOrUpdate, _convertArrayToObject } from 'array-helpers';
-import { Immutable, ImmutableArray, UnknownState } from 'global-types';
+import { _addOrUpdate, _convertArrayToObject } from '@fretve/array-helpers';
+import { Immutable, ImmutableArray, UnknownState } from '@fretve/global-types';
 import { ChildRelation, ExtractedModelState, ForeignRelation, ModelConfig, SaveModelResult, StateModels, StatePropByModel } from '../interfaces';
 import { _getModelConfig } from '../model-state-config-helpers';
 

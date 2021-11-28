@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { AbstractControl, AsyncValidatorFn, FormArray, FormControl, FormGroup, ValidatorFn, Validators } from "@angular/forms";
-import { Immutable } from "global-types";
+import { Immutable } from "@fretve/global-types";
 import { combineLatest } from "rxjs";
 import { skip } from "rxjs/operators";
 import { _isControlArray, _isControlGroup } from "../helpers/type.helpers";

@@ -6,7 +6,7 @@ import { AgGridTableComponent } from '@shared/components/abstracts/ag-grid-table
 import { TimesheetSummary } from '@shared-timesheet/interfaces';
 import { _isTimesheetSummary } from '@shared-timesheet/helpers/is-timesheet-summary.helper';
 import { ColDefsFactoryService } from './col-defs-factory.service';
-import { Immutable } from 'global-types';
+import { Immutable } from '@fretve/global-types';
 
 @Component({
   selector: 'app-timesheet-statistic-table',

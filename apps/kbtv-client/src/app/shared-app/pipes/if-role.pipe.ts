@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { ImmutableArray, Maybe } from 'global-types';
+import { ImmutableArray, Maybe } from '@fretve/global-types';
 import { CurrentUser, StateCurrentUser } from 'state-auth';
 import { Store } from 'state-management';
 

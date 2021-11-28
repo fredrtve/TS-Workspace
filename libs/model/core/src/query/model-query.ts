@@ -1,4 +1,4 @@
-import { Immutable, ShallowCopy, UnionOmit } from "global-types";
+import { Immutable, ShallowCopy, UnionOmit } from "@fretve/global-types";
 import { StateModels, StatePropByModel, ValidRelationProps } from "../interfaces";
 import { _getModelConfig } from "../model-state-config-helpers";
 import { ModelQueryHandlerMap, QueryIncludeValue } from "./handlers";

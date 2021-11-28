@@ -1,4 +1,4 @@
-import { Maybe } from "global-types";
+import { Maybe } from "@fretve/global-types";
 
 /**
  * Get the number of weeks for a specified year

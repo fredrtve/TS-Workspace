@@ -1,5 +1,5 @@
 import { Type } from "@angular/core";
-import { Maybe } from "global-types";
+import { Maybe } from "@fretve/global-types";
 import { UnionToIntersection } from "ts-essentials";
 import { AbstractDynamicControl, ControlArrayComponent, ControlFieldComponent, ControlGroupComponent, GetControlFieldReturnValue } from "../interfaces";
 import { ControlArrayOverridables, ControlArraySchema, ControlFieldSchema, ControlGroupOverridables, ControlGroupSchema, ValidControlSchemaMap } from "./interfaces";

@@ -5,8 +5,8 @@ import { CriteriaChipOptions, _criteriaChipsFactory } from "@shared-app/helpers/
 import { AppChip } from "@shared-app/interfaces/app-chip.interface"
 import { TimesheetCriteria } from "@shared-timesheet/timesheet-filter/timesheet-criteria.interface"
 import { _formatDateRange, _formatShortDate } from "date-time-helpers"
-import { Immutable, Maybe } from "global-types"
-import { _weakMemoizer } from "global-utils"
+import { Immutable, Maybe } from "@fretve/global-types"
+import { _weakMemoizer } from "@fretve/global-utils"
 
 const TimesheetCriteriaChipOptions: {[key in keyof TimesheetCriteria]: CriteriaChipOptions<TimesheetCriteria[key]> } = {
     user: { valueFormatter: (val) => val ? (val.lastName + ', ' + val.firstName) : undefined }, 

@@ -1,6 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
-import { Maybe } from 'global-types';
+import { Maybe } from '@fretve/global-types';
 import { from } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 

@@ -1,12 +1,11 @@
 {
-  "name": "dynamic-forms",
-  "version": "0.0.1",
+  "name": "@fretve/dynamic-forms",
+  "version": "0.0.2",
   "sideEffects": false,
   "peerDependencies": {
     "@angular/common": "^12.0.2",
     "@angular/core": "^12.0.2",
     "@angular/forms": "^12.0.2",
-    "@angular/material": "^12.0.2",
     "rxjs": "~6.5.5"
   },
   "dependencies": {

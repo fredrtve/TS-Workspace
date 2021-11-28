@@ -3,9 +3,9 @@ import { MissionNote } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
 import { ValidationRules } from '@shared-app/constants/validation-rules.const';
 import { _appFormToSaveModelConverter } from '@shared/app-form-to-save-model.converter';
-import { TextAreaFieldComponent, InputFieldComponent } from 'mat-dynamic-form-controls';
-import { DynamicFormBuilder } from 'dynamic-forms';
-import { Immutable } from 'global-types';
+import { TextAreaFieldComponent, InputFieldComponent } from '@fretve/mat-dynamic-form-controls';
+import { DynamicFormBuilder } from '@fretve/dynamic-forms';
+import { Immutable } from '@fretve/global-types';
 import { ModelFormConfig } from 'model/form';
 import { StateMissionNotes } from '@core/state/global-state.interfaces';
 

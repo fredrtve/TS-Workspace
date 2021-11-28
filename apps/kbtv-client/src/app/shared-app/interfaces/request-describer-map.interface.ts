@@ -1,4 +1,4 @@
-import { Immutable } from "global-types";
+import { Immutable } from "@fretve/global-types";
 import { OptimisticHttpRequest, SupportedContentTypes } from "optimistic-http";
 import { FilterRequestByType } from "./filter-request-by-type.interface";
 

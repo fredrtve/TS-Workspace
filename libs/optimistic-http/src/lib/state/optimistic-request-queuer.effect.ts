@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Immutable, UnknownState } from 'global-types';
+import { Immutable, UnknownState } from '@fretve/global-types';
 import { map } from 'rxjs/operators';
 import { ActionCreator, DispatchedAction, DispatchedActions, Effect, StateAction } from 'state-management';
 import { ActionRequestConverterFn, OptimisticHttpRequest } from '../interfaces';

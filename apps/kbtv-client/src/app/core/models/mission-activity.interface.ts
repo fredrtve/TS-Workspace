@@ -1,5 +1,5 @@
 
-import { Maybe } from 'global-types';
+import { Maybe } from '@fretve/global-types';
 import { Activity } from './activity.interface';
 import { Model } from './base-entity.interface';
 import { MissionChild } from './relationships/mission-child.interface';

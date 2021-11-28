@@ -3,8 +3,8 @@ import { Model } from "@core/models";
 import { StateMissions } from "@core/state/global-state.interfaces";
 import { ModelState } from "@core/state/model-state.interface";
 import { AppModelStatePropTranslations } from "@shared-app/constants/model-state-prop-translations.const";
-import { _find } from "array-helpers";
-import { Immutable, Prop, UnknownState } from "global-types";
+import { _find } from "@fretve/array-helpers";
+import { Immutable, Prop, UnknownState } from "@fretve/global-types";
 import { ForeignRelation, _getModelConfig } from "model/core";
 import { translations } from "../../constants/translations.const";
 

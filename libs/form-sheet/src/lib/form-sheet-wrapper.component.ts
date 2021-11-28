@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, ComponentFactoryResolver, Inject, Renderer2, ViewChild, ViewContainerRef } from '@angular/core';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
-import { DynamicHostDirective } from 'dynamic-forms';
+import { DynamicHostDirective } from '@fretve/dynamic-forms';
 import { isObservable, Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { FormCanceledByUserEvent } from './form-canceled-by-user-event.const';

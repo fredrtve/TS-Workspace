@@ -1,6 +1,6 @@
 
 import { WeekToTimesheetCriteriaAdapter } from "@shared-timesheet/timesheet-filter/week-to-timesheet-criteria.adapter";
-import { _addOrUpdateRange } from "array-helpers";
+import { _addOrUpdateRange } from "@fretve/array-helpers";
 import { _createReducers, _on } from "state-management";
 import { StoreState } from "../store-state";
 import { TimesheetAdminActions } from "./actions.const";

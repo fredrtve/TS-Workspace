@@ -1,6 +1,6 @@
 import { ModelState } from "@core/state/model-state.interface";
 import { TimesheetStatus } from "@shared-app/enums/timesheet-status.enum";
-import { Immutable } from "global-types";
+import { Immutable } from "@fretve/global-types";
 import { StatePropByModel } from "model/core";
 import { OptimisticHttpRequest, SupportedContentTypes } from "optimistic-http";
 import { ApiUrl } from "../../api-url.enum";

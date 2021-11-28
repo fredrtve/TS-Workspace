@@ -1,4 +1,4 @@
-import { Immutable, ImmutableArray, Maybe, Prop } from 'global-types';
+import { Immutable, ImmutableArray, Maybe, Prop } from '@fretve/global-types';
 
 /**
  * Remove a range  of objects from an array of objects

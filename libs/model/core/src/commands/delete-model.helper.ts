@@ -1,5 +1,5 @@
-import { _convertArrayToObject, _removeById, _removeRangeById } from 'array-helpers';
-import { Immutable, ImmutableArray, Maybe, Prop, UnknownState } from 'global-types';
+import { _convertArrayToObject, _removeById, _removeRangeById } from '@fretve/array-helpers';
+import { Immutable, ImmutableArray, Maybe, Prop, UnknownState } from '@fretve/global-types';
 import { ChildRelation, StateModels, StatePropByModel } from '../interfaces';
 import { _getModelConfig } from '../model-state-config-helpers';
 

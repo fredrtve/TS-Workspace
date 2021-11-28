@@ -1,6 +1,6 @@
 import { Component, Directive } from "@angular/core";
 import { FormGroup } from "@angular/forms";
-import { Immutable } from "global-types";
+import { Immutable } from "@fretve/global-types";
 import { AllowFormStateSelectors, ControlGroupComponent, DynamicControlMap } from "../lib/interfaces";
 
 export interface TestControlGroupOptions { someOption$: string } ;

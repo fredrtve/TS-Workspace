@@ -1,4 +1,4 @@
-import { Prop } from 'global-types';
+import { Prop } from '@fretve/global-types';
 import { StateSyncTimestamp } from 'state-sync';
 import { StateCurrentUser } from '../../state/global-state.interfaces';
 import { ModelState } from '../../state/model-state.interface';

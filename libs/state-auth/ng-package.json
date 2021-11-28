@@ -4,10 +4,10 @@
   "lib": {
     "entryFile": "src/public-api.ts",
     "umdModuleIds": { 
-      "array-helpers": "array-helpers",
+      "@fretve/array-helpers": "@fretve/array-helpers",
       "state-management": "state-management",
       "date-time-helpers": "date-time-helpers",
-      "global-types": "global-types"
+      "@fretve/global-types": "@fretve/global-types"
     }
   }
 }

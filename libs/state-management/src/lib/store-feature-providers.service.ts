@@ -1,5 +1,5 @@
 import { Injector, Type } from "@angular/core";
-import { ImmutableArray, Maybe } from "global-types";
+import { ImmutableArray, Maybe } from "@fretve/global-types";
 import { EffectsSubscriber } from "./effects/effects.subscriber";
 import { ActionInterceptor, Effect, MetaReducer, Reducer, StateAction } from "./interfaces";
 import { Store } from "./store";

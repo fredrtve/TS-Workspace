@@ -1,5 +1,5 @@
 import { FormControl, FormGroup } from "@angular/forms";
-import { Immutable } from "global-types";
+import { Immutable } from "@fretve/global-types";
 import { asapScheduler, combineLatest } from "rxjs";
 import { bufferCount, debounceTime, finalize, map, take, tap } from "rxjs/operators";
 import { DynamicFormBuilder } from "../builder/dynamic-form.builder";

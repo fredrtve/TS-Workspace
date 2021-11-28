@@ -1,6 +1,6 @@
 import { Type } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, FormArray, FormControl, FormGroup, ValidatorFn } from '@angular/forms';
-import { DeepPropsObject, Immutable, Maybe, NotNull } from 'global-types';
+import { DeepPropsObject, Immutable, Maybe, NotNull } from '@fretve/global-types';
 import { Observable } from 'rxjs';
 import { DeepPartial } from 'ts-essentials';
 

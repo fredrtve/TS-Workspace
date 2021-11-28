@@ -1,6 +1,6 @@
 import { ValidationErrors } from "@angular/forms";
 import { ColDef } from "ag-grid-community";
-import { Immutable } from "global-types";
+import { Immutable } from "@fretve/global-types";
 import { StateAction } from "state-management";
 
 /** Represents a configuration object for all model data tables.

@@ -4,9 +4,9 @@
   "lib": {
     "entryFile": "src/public-api.ts",
     "umdModuleIds": {
-      "global-types": "global-types",      
-      "global-utils": "global-utils",  
-      "dynamic-forms": "dynamic-forms"
+      "@fretve/global-types": "@fretve/global-types",      
+      "@fretve/global-utils": "@fretve/global-utils",  
+      "@fretve/dynamic-forms": "@fretve/dynamic-forms"
     }
   }
 }

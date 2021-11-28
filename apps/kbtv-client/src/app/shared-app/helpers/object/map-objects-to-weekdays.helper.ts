@@ -1,4 +1,4 @@
-import { Immutable, ImmutableArray, Maybe, Prop } from 'global-types';
+import { Immutable, ImmutableArray, Maybe, Prop } from '@fretve/global-types';
 
 export function _mapObjectsToWeekdays<T>(
   objects: Maybe<ImmutableArray<T>>, 

@@ -1,5 +1,5 @@
 import { Inject, Injectable, Optional, Self } from "@angular/core";
-import { Immutable, ImmutableArray } from "global-types";
+import { Immutable, ImmutableArray } from "@fretve/global-types";
 import { StateAction } from "state-management";
 import { ACTION_REQUEST_MAP, OPTIMISTIC_STATE_PROPS } from "./constants/injection-tokens.const";
 import { ActionRequestMap } from "./interfaces";

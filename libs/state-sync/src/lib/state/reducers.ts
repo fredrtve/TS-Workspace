@@ -1,5 +1,5 @@
-import { _addOrUpdateRange, _removeRangeById } from "array-helpers";
-import { Immutable, ImmutableArray, UnknownState } from "global-types";
+import { _addOrUpdateRange, _removeRangeById } from "@fretve/array-helpers";
+import { Immutable, ImmutableArray, UnknownState } from "@fretve/global-types";
 import { _createReducers, _on } from "state-management";
 import { SyncStatePropConfig } from "../interfaces";
 import { StoreState } from "../store-state.interface";

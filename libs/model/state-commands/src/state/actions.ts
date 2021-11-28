@@ -1,5 +1,5 @@
 
-import { Immutable } from "global-types";
+import { Immutable } from "@fretve/global-types";
 import { SaveModelResult, StateModels, StatePropByModel } from "model/core";
 
 export const ModelCommands = {

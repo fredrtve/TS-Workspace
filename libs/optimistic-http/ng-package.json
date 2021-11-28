@@ -5,8 +5,8 @@
     "entryFile": "src/public-api.ts",    
     "umdModuleIds": {
       "state-management": "state-management",
-      "global-utils": "global-utils",
-      "global-types": "global-types"
+      "@fretve/global-utils": "@fretve/global-utils",
+      "@fretve/global-types": "@fretve/global-types"
     }
   }
 }

@@ -1,5 +1,5 @@
 import { ModuleWithProviders, NgModule, Optional, Provider, Self } from '@angular/core';
-import { Maybe, Prop } from 'global-types';
+import { Maybe, Prop } from '@fretve/global-types';
 import { StateAction, STORE_EFFECTS, STORE_REDUCERS } from 'state-management';
 import { ACTION_REQUEST_MAP, OPTIMISTIC_BASE_API_URL, OPTIMISTIC_STATE_PROPS } from './constants/injection-tokens.const';
 import { ActionRequestMap } from './interfaces';

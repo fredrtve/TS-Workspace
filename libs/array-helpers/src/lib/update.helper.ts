@@ -1,4 +1,4 @@
-import { Immutable, ImmutableArray, Maybe, Prop } from 'global-types';
+import { Immutable, ImmutableArray, Maybe, Prop } from '@fretve/global-types';
 
 /**
  * Update a object in an object array 

@@ -1,4 +1,4 @@
-import { Immutable } from 'global-types';
+import { Immutable } from '@fretve/global-types';
 import { _deleteModel } from 'model/core';
 import { _createReducers, _on } from 'state-management';
 import { DeleteModelPayload, ModelCommands } from './actions';

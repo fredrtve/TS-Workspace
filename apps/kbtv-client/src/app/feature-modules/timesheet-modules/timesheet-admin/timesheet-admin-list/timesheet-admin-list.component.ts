@@ -10,7 +10,7 @@ import { TimesheetForm } from '@shared-timesheet/forms/save-timesheet-model-form
 import { WeekCriteriaForm, WeekCriteriaFormState } from '@shared-timesheet/forms/week-criteria-controls.const';
 import { BottomIconButtons } from '@shared/constants/bottom-icon-buttons.const';
 import { FormService } from 'form-sheet';
-import { Immutable, Maybe } from 'global-types';
+import { Immutable, Maybe } from '@fretve/global-types';
 import { combineLatest, Observable } from 'rxjs';
 import { map, takeUntil, tap } from 'rxjs/operators';
 import { AdminTimesheetCardDialogWrapperComponent } from '../components/admin-timesheet-card-dialog-wrapper.component';

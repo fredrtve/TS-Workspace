@@ -1,7 +1,7 @@
 import { User } from '@core/models';
 import { Roles } from '@core/roles.enum';
 import { ModelState } from '@core/state/model-state.interface';
-import { Immutable } from 'global-types';
+import { Immutable } from '@fretve/global-types';
 import { ModelFormResult } from 'model/form';
 import { UserActions } from '../state/actions.const';
 import { SaveUserForm } from './save-user-model-form.const';

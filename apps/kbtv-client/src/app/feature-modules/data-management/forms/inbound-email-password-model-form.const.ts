@@ -3,9 +3,9 @@ import { InboundEmailPassword } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
 import { ValidationRules } from '@shared-app/constants/validation-rules.const';
 import { _appFormToSaveModelConverter } from '@shared/app-form-to-save-model.converter';
-import { InputFieldComponent } from 'mat-dynamic-form-controls';
-import { DynamicFormBuilder } from 'dynamic-forms';
-import { Immutable } from 'global-types';
+import { InputFieldComponent } from '@fretve/mat-dynamic-form-controls';
+import { DynamicFormBuilder } from '@fretve/dynamic-forms';
+import { Immutable } from '@fretve/global-types';
 import { ModelFormConfig } from 'model/form';
 
 export interface CreateInboundEmailPasswordForm extends Pick<InboundEmailPassword, "password"> {}

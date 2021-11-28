@@ -1,6 +1,6 @@
 import { _getDateOfWeek, _getFirstDayOfWeek } from 'date-time-helpers';
-import { Immutable } from 'global-types';
-import { _weakMemoizer } from 'global-utils';
+import { Immutable } from '@fretve/global-types';
+import { _weakMemoizer } from '@fretve/global-utils';
 
 export const _getDateByDateParams = _weakMemoizer(getDateByDateParams)
 

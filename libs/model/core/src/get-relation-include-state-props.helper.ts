@@ -1,4 +1,4 @@
-import { Immutable, Prop } from "global-types";
+import { Immutable, Prop } from "@fretve/global-types";
 import { ChildRelation, ForeignRelation, RelationInclude, StateModels } from "./interfaces";
 import { _getModelConfig } from "./model-state-config-helpers";
 

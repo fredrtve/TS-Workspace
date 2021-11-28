@@ -9,7 +9,7 @@ import { TimesheetForm } from '@shared-timesheet/forms/save-timesheet-model-form
 import { WeekCriteriaForm, WeekCriteriaFormState } from '@shared-timesheet/forms/week-criteria-controls.const';
 import { BottomIconButtons } from '@shared/constants/bottom-icon-buttons.const';
 import { FormService } from 'form-sheet';
-import { Immutable, Maybe } from 'global-types';
+import { Immutable, Maybe } from '@fretve/global-types';
 import { map, takeUntil, tap } from 'rxjs/operators';
 import { TimesheetAdminListWeekNrQueryParam } from '../timesheet-admin-list/timesheet-admin-list-route-params.const';
 import { TimesheetAdminFacade } from '../timesheet-admin.facade';

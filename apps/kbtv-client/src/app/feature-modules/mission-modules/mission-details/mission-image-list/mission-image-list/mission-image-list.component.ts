@@ -13,7 +13,7 @@ import { EmailForm, _emailFormFactory } from '@shared-mission/forms/email-form.c
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { CdkSelectableContainerDirective } from "cdk-selectable";
 import { FormService } from "form-sheet";
-import { Immutable, ImmutableArray, Maybe } from 'global-types';
+import { Immutable, ImmutableArray, Maybe } from '@fretve/global-types';
 import { tap } from "rxjs/operators";
 import { MissionDetailsFacade } from "../../mission-details.facade";
 

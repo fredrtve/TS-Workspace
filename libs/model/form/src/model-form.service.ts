@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { MatBottomSheetRef } from "@angular/material/bottom-sheet";
 import { FormService, FormSheetViewConfig, FormSheetWrapperComponent } from 'form-sheet';
-import { Immutable, Maybe, NotNull } from "global-types";
+import { Immutable, Maybe, NotNull } from "@fretve/global-types";
 import { ModelContext, ModelQuery, StateModels, _getModelConfig } from "model/core";
 import { combineLatest, isObservable, Observable, of } from "rxjs";
 import { map } from "rxjs/operators";

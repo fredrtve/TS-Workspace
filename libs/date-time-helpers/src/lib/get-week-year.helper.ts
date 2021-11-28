@@ -1,4 +1,4 @@
-import { DateInput, Immutable } from 'global-types';
+import { DateInput, Immutable } from '@fretve/global-types';
 import { WeekYear } from './interfaces';
 
 /**

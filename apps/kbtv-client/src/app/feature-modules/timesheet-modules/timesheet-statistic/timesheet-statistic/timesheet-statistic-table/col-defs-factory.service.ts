@@ -9,8 +9,8 @@ import { WithUnsubscribe } from "@shared-app/mixins/with-unsubscribe.mixin";
 import { _isTimesheetSummary } from "@shared-timesheet/helpers/is-timesheet-summary.helper";
 import { TimesheetSummary } from '@shared-timesheet/interfaces';
 import { ColDef, ValueFormatterParams } from "ag-grid-community";
-import { _convertArrayToObject } from "array-helpers";
-import { Immutable, Maybe, UnknownState } from "global-types";
+import { _convertArrayToObject } from "@fretve/array-helpers";
+import { Immutable, Maybe, UnknownState } from "@fretve/global-types";
 import { takeUntil } from "rxjs/operators";
 import { Store } from "state-management";
 

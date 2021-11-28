@@ -1,10 +1,10 @@
 import { Validators } from '@angular/forms';
 import { DefaultState } from '@core/configurations/default-state.const';
-import { SliderFieldComponent } from 'mat-dynamic-form-controls';
+import { SliderFieldComponent } from '@fretve/mat-dynamic-form-controls';
 import { _getISO } from 'date-time-helpers';
-import { DynamicFormBuilder } from 'dynamic-forms';
+import { DynamicFormBuilder } from '@fretve/dynamic-forms';
 import { FormSheetViewConfig } from 'form-sheet';
-import { Immutable } from 'global-types';
+import { Immutable } from '@fretve/global-types';
 import { SyncConfig } from 'state-sync';
 import { IonDateControlComponent } from '@shared/scam/dynamic-form-controls/ion-date-time-control.component';
 

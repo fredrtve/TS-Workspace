@@ -2,7 +2,7 @@ import { Location } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Immutable, NotNull } from 'global-types';
+import { Immutable, NotNull } from '@fretve/global-types';
 import { FormSheetWrapperComponent } from './form-sheet-wrapper.component';
 import { FormSheetState, FormSheetViewConfig, FormSheetWrapperConfig } from './interfaces';
 

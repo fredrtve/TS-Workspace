@@ -1,7 +1,7 @@
 import { DateRange } from './interfaces';;
 import { _getFirstDayOfYear } from './get-first-day-of-year.helper';
 import { _getLastDayOfYear } from './get-last-day-of-year.helper';
-import { Immutable } from 'global-types';
+import { Immutable } from '@fretve/global-types';
 
 /**
  * Get a date range containing the start and end date of a specified year.

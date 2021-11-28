@@ -1,5 +1,5 @@
 import { ValidationErrors } from '@angular/forms';
-import { Maybe } from 'global-types';
+import { Maybe } from '@fretve/global-types';
 import { ValidationErrorMap } from './interfaces';
 
  /** Responsible for getting the validation error message based on errors on the control */

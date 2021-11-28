@@ -1,5 +1,5 @@
 /*
- * Public API Surface of mat-dynamic-form-controls
+ * Public API Surface of @fretve/mat-dynamic-form-controls
  */
 export * from './lib/get-validation-error-message.helper';
 export * from './lib/injection-tokens.const';

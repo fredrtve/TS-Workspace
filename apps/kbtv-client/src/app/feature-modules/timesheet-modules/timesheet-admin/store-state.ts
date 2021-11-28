@@ -1,5 +1,5 @@
 import { StateActivities, StateLeaderSettings, StateMissionActivities, StateMissions, StateTimesheets, StateUsers } from '@core/state/global-state.interfaces';
-import { Maybe } from 'global-types';
+import { Maybe } from '@fretve/global-types';
 import { WeekCriteria } from '../shared-timesheet/interfaces';
 import { TimesheetCriteria } from '../shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 

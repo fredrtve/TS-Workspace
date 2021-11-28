@@ -4,7 +4,7 @@ import { Mission } from '@core/models';
 import { IPosition } from '@core/models/sub-interfaces/iposition.interface';
 import { DeviceInfoService } from '@core/services/device-info.service';
 import { GoogleMapsMarkerIcons } from '@shared-app/constants/google-maps-marker-icons.const';
-import { Immutable } from 'global-types';
+import { Immutable } from '@fretve/global-types';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 

@@ -1,7 +1,7 @@
 import { DateRange } from './interfaces';;
 import { _getFirstDayOfMonth } from './get-first-day-of-month.helper';
 import { _getLastDayOfMonth } from './get-last-day-of-month.helper';
-import { DateInput, Immutable } from 'global-types';
+import { DateInput, Immutable } from '@fretve/global-types';
 
 /**
  * Get a date range containing the start and end date of a specified month.

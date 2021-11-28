@@ -1,5 +1,5 @@
 import { ValidatorFn, AbstractControl } from '@angular/forms';
-import { UnknownState } from 'global-types';
+import { UnknownState } from '@fretve/global-types';
 import { _validateFileExtension } from '@shared-app/helpers/validate-file-extension.helper';
 
 export function fileExtensionValidator(allowedExtensions: string[]): ValidatorFn{ 

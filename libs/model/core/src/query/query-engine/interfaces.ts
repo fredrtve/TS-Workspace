@@ -1,4 +1,4 @@
-import { Immutable, ShallowCopy, ValueOf } from "global-types";
+import { Immutable, ShallowCopy, ValueOf } from "@fretve/global-types";
 
 export interface QueryAction<TType, TValueType>{ 
     type: TType,

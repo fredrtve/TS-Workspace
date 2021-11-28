@@ -1,4 +1,4 @@
-import { Immutable } from "global-types";
+import { Immutable } from "@fretve/global-types";
 import { ActionCreator } from "../interfaces";
 
 /** Represents a function that creates an {@link ActionCreator}

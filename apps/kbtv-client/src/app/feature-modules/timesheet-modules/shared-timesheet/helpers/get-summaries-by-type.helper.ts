@@ -1,12 +1,12 @@
 import { Timesheet } from "@core/models";
 import { TimesheetSummary } from "../interfaces";
 import { GroupByPeriod } from "@shared-app/enums/group-by-period.enum";
-import { Immutable, ImmutableArray, Maybe } from "global-types";
+import { Immutable, ImmutableArray, Maybe } from "@fretve/global-types";
 import { _getDailySummaries } from "./get-daily-summaries.helper";
 import { _getMonthlySummaries } from "./get-monthly-summaries.helper";
 import { _getWeeklySummaries } from "./get-weekly-summaries.helper";
 import { _getYearlySummaries } from "./get-yearly-summaries.helper";
-import { _weakMemoizer } from "global-utils";
+import { _weakMemoizer } from "@fretve/global-utils";
 
 const getSummariesByType = (
   type: Maybe<GroupByPeriod>, 

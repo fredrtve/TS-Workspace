@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { Timesheet } from '@core/models';
-import { Maybe } from 'global-types';
+import { Maybe } from '@fretve/global-types';
 import { TimesheetSummary } from '@shared-timesheet/interfaces';
 
 @Component({

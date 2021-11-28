@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { ButtonTypes } from '@shared-app/enums/button-types.enum';
-import { _tryWithLogging } from "global-utils";
+import { _tryWithLogging } from "@fretve/global-utils";
 import { AppButton } from '@shared-app/interfaces/app-button.interface';
 
 @Component({

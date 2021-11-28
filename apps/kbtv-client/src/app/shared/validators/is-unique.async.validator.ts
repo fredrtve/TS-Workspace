@@ -1,5 +1,5 @@
 import { AbstractControl, AsyncValidatorFn } from '@angular/forms';
-import { Immutable, ImmutableArray, Maybe, UnknownState } from 'global-types';
+import { Immutable, ImmutableArray, Maybe, UnknownState } from '@fretve/global-types';
 import { Observable } from 'rxjs';
 import { first, map } from 'rxjs/operators';
 

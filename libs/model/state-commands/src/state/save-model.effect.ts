@@ -1,4 +1,4 @@
-import { UnknownState } from "global-types";
+import { UnknownState } from "@fretve/global-types";
 import { _getModelConfig, _saveModel } from "model/core";
 import { map } from "rxjs/operators";
 import { DispatchedActions, Effect, listenTo } from "state-management";

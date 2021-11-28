@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Inject, NgModule, Optional } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { FormStateResolver } from 'dynamic-forms';
+import { FormStateResolver } from '@fretve/dynamic-forms';
 import { Observable } from 'rxjs';
 import { BaseFieldOptions } from '../base-control/base-field-options.interface';
 import { BaseFieldComponent } from '../base-control/base-field.component';
@@ -60,6 +60,7 @@ export class TextAreaFieldComponent extends BaseFieldComponent<string, TextAreaO
     ReactiveFormsModule,  
     MatFormFieldModule,
     MatInputModule,    
-  ]
+  ],
+  exports: [TextAreaFieldComponent],
 })
 export class TextAreaFieldModule {}

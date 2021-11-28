@@ -8,6 +8,7 @@ interface TestState { state1: string, state2: string }
 const builder = new DynamicFormBuilder<TestForm, TestState>();
 const builder2 = new DynamicFormBuilder<{}, {state1: string, state2: string}>();
 const iBuilder = new DynamicFormBuilder<{ nest1: string, nest2: string, nest3: string}, {state1: string, nostate: number}>();
+const binding = builder.bindObserver([], ["state1"], (f,s) => s);
 
 const stringControl = builder.field<TestFieldComponent<string>>({
   required$: true,

@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable, Optional } from "@angular/core";
-import { Immutable, Maybe, UnknownState } from 'global-types';
+import { Immutable, Maybe, UnknownState } from '@fretve/global-types';
 import { Observable } from 'rxjs';
 import { OPTIMISTIC_BASE_API_URL } from './constants/injection-tokens.const';
 import { OptimisticHttpHeaders, OptimisticHttpRequest, SupportedContentTypes } from './interfaces';

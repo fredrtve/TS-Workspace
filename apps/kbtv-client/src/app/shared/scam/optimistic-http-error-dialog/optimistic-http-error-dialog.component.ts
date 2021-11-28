@@ -4,7 +4,7 @@ import { StateMissions } from '@core/state/global-state.interfaces';
 import { AppRequestDescriberMap } from '@shared-app/constants/app-request-describer-map.const';
 import { FormattedHttpError, _httpErrorResponseFormatter } from '@shared-app/helpers/http-error-response-formatter.helper';
 import { SharedAppModule } from '@shared-app/shared-app.module';
-import { Immutable } from 'global-types';
+import { Immutable } from '@fretve/global-types';
 import { CompletedCommand, OptimisticHttpErrorPayload, OptimisticHttpRequest } from 'optimistic-http';
 import { Store } from 'state-management';
 import { FailedCommandListComponent } from './failed-command-list/failed-command-list.component';

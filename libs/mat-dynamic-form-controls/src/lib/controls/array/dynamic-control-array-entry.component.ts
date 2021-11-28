@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, Type, ViewChild } from "@angular/core";
-import { AbstractDynamicControl, ControlArrayEntryProviders, ControlComponent, ControlComponentRenderer, ControlFactory, DynamicHostDirective, FormControlType, _addIndexesToTemplate } from "dynamic-forms";
-import { Immutable, Maybe } from "global-types";
+import { AbstractDynamicControl, ControlArrayEntryProviders, ControlComponent, ControlComponentRenderer, ControlFactory, DynamicHostDirective, FormControlType, _addIndexesToTemplate } from "@fretve/dynamic-forms";
+import { Immutable, Maybe } from "@fretve/global-types";
 
 @Component({    
     selector: 'lib-dynamic-control-array-entry',

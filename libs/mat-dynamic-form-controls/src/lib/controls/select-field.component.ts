@@ -4,9 +4,9 @@ import { ChangeDetectionStrategy, Component, Inject, NgModule, Optional } from '
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { FormStateResolver } from 'dynamic-forms';
-import { Immutable, Maybe, Prop } from 'global-types';
-import { applyMixins } from 'global-utils';
+import { FormStateResolver } from '@fretve/dynamic-forms';
+import { Immutable, Maybe, Prop } from '@fretve/global-types';
+import { applyMixins } from '@fretve/global-utils';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { BaseFieldComponent } from '../base-control/base-field.component';
@@ -101,7 +101,8 @@ export class SelectFieldComponent<T> extends SelectControlBase<T> {
     MatFormFieldModule, 
     MatSelectModule,
     FuncModule
-  ]
+  ],
+  exports: [SelectFieldComponent],
 })
 export class SelectFieldModule {}
 

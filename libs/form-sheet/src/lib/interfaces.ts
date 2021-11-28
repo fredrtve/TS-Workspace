@@ -1,8 +1,8 @@
 import { EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
-import { ControlGroupSchema } from 'dynamic-forms';
-import { Immutable, Maybe, NotNull } from 'global-types';
+import { ControlGroupSchema } from '@fretve/dynamic-forms';
+import { Immutable, Maybe, NotNull } from '@fretve/global-types';
 import { Observable } from 'rxjs';
 import { DeepPartial } from 'ts-essentials';
 import { FormSheetWrapperComponent } from './form-sheet-wrapper.component';

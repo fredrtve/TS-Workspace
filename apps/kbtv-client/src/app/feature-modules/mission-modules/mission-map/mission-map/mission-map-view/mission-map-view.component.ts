@@ -4,7 +4,7 @@ import { Mission } from '@core/models';
 import { DeviceInfoService } from '@core/services/device-info.service';
 import { GoogleMapsLoader } from '@core/services/google-maps.loader';
 import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
-import { Immutable, Maybe } from 'global-types';
+import { Immutable, Maybe } from '@fretve/global-types';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MissionMapInfoWindowComponent } from '../mission-map-info-window.component';

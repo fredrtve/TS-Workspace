@@ -4,9 +4,9 @@ import { ModelState } from '@core/state/model-state.interface';
 import { ValidationRules } from '@shared-app/constants/validation-rules.const';
 import { _missionFormToSaveModelConverter } from '@shared-mission/forms/mission-form-to-save-model.converter';
 import { GoogleAddressControl, PhoneNumberControl } from '@shared/constants/common-controls.const';
-import { DynamicFormBuilder, _createControlField } from 'dynamic-forms';
-import { Immutable, Maybe } from 'global-types';
-import { AutoCompleteFieldComponent, CheckboxFieldComponent, ChipsAutocompleteFieldComponent, TextAreaFieldComponent } from 'mat-dynamic-form-controls';
+import { DynamicFormBuilder, _createControlField } from '@fretve/dynamic-forms';
+import { Immutable, Maybe } from '@fretve/global-types';
+import { AutoCompleteFieldComponent, CheckboxFieldComponent, ChipsAutocompleteFieldComponent, TextAreaFieldComponent } from '@fretve/mat-dynamic-form-controls';
 import { Converter, ModelFormConfig } from 'model/form';
 
 export interface MissionForm extends Pick<Mission, "address" | "phoneNumber" | "description" | "id" | "finished"> {

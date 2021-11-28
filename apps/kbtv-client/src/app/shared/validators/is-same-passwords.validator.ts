@@ -1,5 +1,5 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
-import { Prop } from 'global-types';
+import { Prop } from '@fretve/global-types';
 
 export function isSamePasswordsValidator<TForm>(controlName1: Prop<TForm>, controlName2: Prop<TForm>): ValidatorFn {
     return (group: AbstractControl): ValidationErrors | null => { 

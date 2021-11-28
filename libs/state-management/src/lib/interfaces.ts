@@ -1,5 +1,5 @@
 import { Type } from '@angular/core'
-import { Immutable, Maybe, Prop, UnionTupleType } from 'global-types'
+import { Immutable, Maybe, Prop, UnionTupleType } from '@fretve/global-types'
 import { Observable } from 'rxjs'
 
 export interface StateAction<TActionType extends string = string> {

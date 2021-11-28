@@ -1,4 +1,4 @@
-import { Immutable, ImmutableArray, Prop, UnionTupleType, UnknownState } from "global-types";
+import { Immutable, ImmutableArray, Prop, UnionTupleType, UnknownState } from "@fretve/global-types";
 import { Observable } from "rxjs";
 import { distinctUntilChanged, map } from "rxjs/operators";
 

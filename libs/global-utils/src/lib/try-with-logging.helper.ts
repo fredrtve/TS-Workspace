@@ -1,4 +1,4 @@
-import { Maybe } from "global-types";
+import { Maybe } from "@fretve/global-types";
 
 /** An higher order function that writes errors from an function to the console. 
  * @param func - The function that should be executed

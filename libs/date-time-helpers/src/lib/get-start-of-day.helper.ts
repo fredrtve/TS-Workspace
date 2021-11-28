@@ -1,4 +1,4 @@
-import { DateInput, Immutable } from "global-types";
+import { DateInput, Immutable } from "@fretve/global-types";
 
 /** Get the time in milliseconds at the start of a given day 
  *  @param date - A date input for the given day

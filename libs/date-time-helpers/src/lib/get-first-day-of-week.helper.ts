@@ -1,4 +1,4 @@
-import { Immutable } from 'global-types';
+import { Immutable } from '@fretve/global-types';
 
 /**
  * Get the first day of a specified week

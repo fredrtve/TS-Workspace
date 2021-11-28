@@ -1,9 +1,9 @@
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { _filter } from 'array-helpers';
+import { _filter } from '@fretve/array-helpers';
 import { DataFilterConstructor } from '@shared/data.filter';
 import { FilteredResponse } from '@shared/interfaces';
-import { Immutable, ImmutableArray, Maybe } from 'global-types';
+import { Immutable, ImmutableArray, Maybe } from '@fretve/global-types';
 
 type Response<TRecord, TCriteria> = FilteredResponse<Immutable<TCriteria>, Immutable<TRecord>>;
 

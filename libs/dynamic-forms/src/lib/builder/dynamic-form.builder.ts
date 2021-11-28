@@ -1,5 +1,5 @@
 import { AsyncValidatorFn } from "@angular/forms";
-import { ConstructSliceFromPath, DeepPropsObject, DeepPropType, UnknownState } from "global-types";
+import { ConstructSliceFromPath, DeepPropsObject, DeepPropType, UnknownState } from "@fretve/global-types";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { DeepRequired } from "ts-essentials";

@@ -12,7 +12,7 @@ import { WeekCriteria } from '@shared-timesheet/interfaces';
 import { BottomIconButtons } from "@shared/constants/bottom-icon-buttons.const";
 import { _getDateOfWeek, _getWeekRange } from 'date-time-helpers';
 import { FormService } from "form-sheet";
-import { Maybe } from "global-types";
+import { Maybe } from "@fretve/global-types";
 import { ModelFormService } from 'model/form';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from "rxjs/operators";

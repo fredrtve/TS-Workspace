@@ -3,7 +3,7 @@ import { Model } from "@core/models";
 import { ModelState } from "@core/state/model-state.interface";
 import { _googleAddressFormatter } from "@shared-app/helpers/google-address-formatter.helper";
 import { _isAddressEntity } from "@shared-app/helpers/is-address-entity.helper";
-import { Immutable, UnknownState } from "global-types";
+import { Immutable, UnknownState } from "@fretve/global-types";
 import { StateModels, _getModelConfig } from "model/core";
 import { ModelFormResult } from "model/form";
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { awaitOnline } from 'global-utils';
+import { awaitOnline } from '@fretve/global-utils';
 import { BehaviorSubject } from 'rxjs';
 import { filter, map, switchMap, tap } from 'rxjs/operators';
 import { Store } from 'state-management';

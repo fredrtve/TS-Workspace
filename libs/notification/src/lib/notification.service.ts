@@ -1,6 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Maybe } from 'global-types';
+import { Maybe } from '@fretve/global-types';
 import { AppNotification } from './app-notification.interface';
 import { NotificationType } from './notification-type.enum';
 import { NotificationComponent } from './notification.component';

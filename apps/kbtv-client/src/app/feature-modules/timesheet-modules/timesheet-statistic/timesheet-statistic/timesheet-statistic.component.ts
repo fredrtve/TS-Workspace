@@ -11,7 +11,7 @@ import { TimesheetCriteria } from '@shared-timesheet/timesheet-filter/timesheet-
 import { AgGridConfig } from '@shared/components/abstracts/ag-grid-config.interface';
 import { BottomBarIconButton } from '@shared/components/bottom-action-bar/bottom-bar-icon-button.interface';
 import { BottomIconButtons } from '@shared/constants/bottom-icon-buttons.const';
-import { Immutable, ImmutableArray, Maybe } from 'global-types';
+import { Immutable, ImmutableArray, Maybe } from '@fretve/global-types';
 import { FetchingStatus } from 'model/state-fetcher';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';

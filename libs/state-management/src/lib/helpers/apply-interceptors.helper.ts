@@ -1,4 +1,4 @@
-import { Immutable, ImmutableArray, Maybe } from 'global-types';
+import { Immutable, ImmutableArray, Maybe } from '@fretve/global-types';
 import { ActionInterceptor, StateAction } from '../interfaces';
 
 export function _applyInterceptors(

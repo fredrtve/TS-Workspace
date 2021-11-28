@@ -3,7 +3,7 @@ import { ModelByStateProp, StateModels } from "../interfaces";
 import { modelQueryHandlers } from "./handlers";
 import { ModelQuery } from "./model-query";
 import { QueryEngine } from "./query-engine/query.engine";
-import { Immutable } from "global-types";
+import { Immutable } from "@fretve/global-types";
 
 export class ModelContext<TState> {
     /**

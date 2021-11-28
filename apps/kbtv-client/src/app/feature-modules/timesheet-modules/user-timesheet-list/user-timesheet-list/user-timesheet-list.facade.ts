@@ -7,7 +7,7 @@ import { DateRangePresets } from '@shared-app/enums/date-range-presets.enum';
 import { TimesheetCriteria } from '@shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { TimesheetFilter } from '@shared-timesheet/timesheet-filter/timesheet-filter.model';
 import { filterRecords } from '@shared/operators/filter-records.operator';
-import { Immutable, Maybe } from 'global-types';
+import { Immutable, Maybe } from '@fretve/global-types';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ComponentStore, Store } from 'state-management';

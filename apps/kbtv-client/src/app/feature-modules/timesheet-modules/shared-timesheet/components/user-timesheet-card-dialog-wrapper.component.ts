@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { _find } from 'array-helpers';
+import { _find } from '@fretve/array-helpers';
 import { Timesheet } from '@core/models';
-import { Immutable, Maybe } from 'global-types';
+import { Immutable, Maybe } from '@fretve/global-types';
 import { Store } from 'state-management'
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';

@@ -1,5 +1,5 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms";
-import { Prop } from "global-types";
+import { Prop } from "@fretve/global-types";
 import { _getWeeksInYear } from "date-time-helpers";
 
 export function isWeekInRange<TForm>(weekControlName: Prop<TForm>, yearControlName?: Prop<TForm>): ValidatorFn {

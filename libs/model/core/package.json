@@ -8,8 +8,8 @@
     "lib": {
       "entryFile": "public-api.ts",
       "umdModuleIds": {
-        "global-types":"global-types",
-        "array-helpers":"array-helpers"
+        "@fretve/global-types":"@fretve/global-types",
+        "@fretve/array-helpers":"@fretve/array-helpers"
       }
     }
   }

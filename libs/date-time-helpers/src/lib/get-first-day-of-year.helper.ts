@@ -1,4 +1,4 @@
-import { DateInput, Immutable } from 'global-types';
+import { DateInput, Immutable } from '@fretve/global-types';
 
 /**
  * Get the first day of a specified year

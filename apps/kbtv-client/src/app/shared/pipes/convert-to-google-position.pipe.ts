@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { IPosition } from '@core/models/sub-interfaces/iposition.interface';
-import { Maybe } from 'global-types';
+import { Maybe } from '@fretve/global-types';
 
 @Pipe({name: 'appConvertToGooglePosition'})
 export class ConvertToGooglePositionPipe implements PipeTransform {

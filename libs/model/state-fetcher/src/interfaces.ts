@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from "@angular/common/http";
-import { Maybe, Prop, UnknownState } from "global-types";
+import { Maybe, Prop, UnknownState } from "@fretve/global-types";
 import { ModelConfig, StateModels } from "model/core";
 import { Observable } from "rxjs";
 

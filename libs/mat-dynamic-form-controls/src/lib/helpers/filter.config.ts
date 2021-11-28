@@ -1,4 +1,4 @@
-import { Immutable, Maybe } from "global-types";
+import { Immutable, Maybe } from "@fretve/global-types";
 
 export interface FilterConfig<TRecord, TCriteria>{
     criteriaFormatter?: (t: Maybe<Partial<TCriteria>>) => Maybe<Partial<TCriteria>>;

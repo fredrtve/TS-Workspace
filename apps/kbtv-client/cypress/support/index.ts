@@ -14,7 +14,7 @@
 // ***********************************************************
 
 // When a command from ./commands is ready to use, import with `import './commands'` syntax
-import { Immutable } from 'global-types';
+import { Immutable } from '@fretve/global-types';
 import { StateAction } from 'state-management';
 import './commands';
 

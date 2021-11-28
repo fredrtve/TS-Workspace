@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Mission } from '@core/models';
 import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
-import { ImmutableArray } from 'global-types';
+import { ImmutableArray } from '@fretve/global-types';
 
 @Component({
   selector: 'app-home-mission-card',

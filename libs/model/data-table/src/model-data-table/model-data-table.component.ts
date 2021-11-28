@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, ViewChild } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
-import { UnknownState } from 'global-types';
+import { UnknownState } from '@fretve/global-types';
 import { Observable } from 'rxjs';
 import { ValidationTooltipComponent } from '../validation-tooltip.component';
 import { ModelDataTableFacade, ViewModel } from './model-data-table.facade';

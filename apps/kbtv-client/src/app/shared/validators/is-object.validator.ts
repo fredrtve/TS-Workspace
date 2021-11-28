@@ -1,6 +1,6 @@
 import { ValidatorFn, AbstractControl } from '@angular/forms';
 import { _isNullOrEmpty } from '@shared-app/helpers/is-null-or-empty.helper';
-import { UnknownState } from 'global-types';
+import { UnknownState } from '@fretve/global-types';
 
 export function isObjectValidator(name?: string): ValidatorFn{ 
     return (control: AbstractControl): UnknownState | null => {

@@ -1,4 +1,4 @@
-import { Immutable, Prop, UnknownState } from "global-types";
+import { Immutable, Prop, UnknownState } from "@fretve/global-types";
 import { Observable } from "rxjs";
 import { distinctUntilChanged, map } from "rxjs/operators";
 import { _selectSlice } from "../helpers/select-slice.helper";

@@ -10,9 +10,9 @@
     "lib": {
       "entryFile": "public-api.ts",
       "umdModuleIds": { 
-        "array-helpers": "array-helpers",
+        "@fretve/array-helpers": "@fretve/array-helpers",
         "state-management": "state-management",
-        "global-types": "global-types",
+        "@fretve/global-types": "@fretve/global-types",
         "model/core": "model/core"
       }
     }

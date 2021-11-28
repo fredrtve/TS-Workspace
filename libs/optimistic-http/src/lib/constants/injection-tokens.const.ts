@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
-import { Prop } from 'global-types';
+import { Prop } from '@fretve/global-types';
 import { StateAction } from 'state-management';
 import { ActionRequestMap } from '../interfaces';
 

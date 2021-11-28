@@ -5,8 +5,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { ControlFieldComponent, FormStateResolver } from 'dynamic-forms';
-import { Maybe } from 'global-types';
+import { ControlFieldComponent, FormStateResolver } from '@fretve/dynamic-forms';
+import { Maybe } from '@fretve/global-types';
 import { Observable } from 'rxjs';
 import { BaseFieldComponent } from '../base-control/base-field.component';
 import { BaseFieldOptions } from '../base-control/base-field-options.interface';
@@ -80,6 +80,7 @@ export class InputFieldComponent extends BaseFieldComponent<string, InputOptions
     MatInputModule,  
     MatIconModule,
     MatButtonModule
-  ]
+  ],
+  exports: [InputFieldComponent],
 })
 export class InputFieldModule {}

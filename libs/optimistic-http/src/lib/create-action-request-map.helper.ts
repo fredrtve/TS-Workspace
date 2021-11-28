@@ -1,4 +1,4 @@
-import { UnknownState } from "global-types";
+import { UnknownState } from "@fretve/global-types";
 import { ActionCreator, InferCreatorAction, InferCreatorType, StateAction } from "state-management";
 import { ActionRequestConverterFn, ActionRequestMap } from "./interfaces";
 

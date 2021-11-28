@@ -1,5 +1,5 @@
 import { Inject, Injectable, Optional } from '@angular/core';
-import { Immutable, UnknownState } from 'global-types';
+import { Immutable, UnknownState } from '@fretve/global-types';
 import { ActionDispatcher } from './action-dispatcher';
 import { STORE_DEFAULT_STATE, STORE_SETTINGS } from './constants/injection-tokens.const';
 import { StoreSettings } from './interfaces';

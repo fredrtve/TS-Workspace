@@ -1,5 +1,5 @@
 import { Inject, Injectable, Optional, Self } from '@angular/core';
-import { ImmutableArray } from 'global-types';
+import { ImmutableArray } from '@fretve/global-types';
 import { ActionDispatcher } from '../action-dispatcher';
 import { ComponentStore } from '../component.store';
 import { STORE_EFFECTS } from '../constants/injection-tokens.const';

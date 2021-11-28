@@ -4,8 +4,8 @@
   "lib": {
     "entryFile": "src/public-api.ts",
     "umdModuleIds": {
-      "dynamic-forms": "dynamic-forms",
-      "array-helpers":"array-helpers"
+      "@fretve/dynamic-forms": "@fretve/dynamic-forms",
+      "@fretve/array-helpers":"@fretve/array-helpers"
     }
   }
 }

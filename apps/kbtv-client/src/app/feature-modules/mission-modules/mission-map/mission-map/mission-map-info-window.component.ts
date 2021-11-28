@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Mission } from '@core/models';
-import { Immutable } from 'global-types';
+import { Immutable } from '@fretve/global-types';
 
 @Component({
   selector: 'app-mission-map-info-window',

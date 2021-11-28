@@ -1,7 +1,7 @@
 import { LeaderSettings } from "@core/models/leader-settings.interface";
 import { TimesheetStatus } from "@shared-app/enums/timesheet-status.enum";
 import { WeekCriteria } from "@shared-timesheet/interfaces";
-import { Maybe } from "global-types";
+import { Maybe } from "@fretve/global-types";
 import { ModelFetcherActions } from "model/state-fetcher";
 import { _createAction, _payload } from "state-management";
 
