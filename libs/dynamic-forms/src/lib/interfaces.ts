@@ -34,12 +34,20 @@ export interface FormStateSelector<
     TReturnValue, 
     TFormSlice extends string, 
     TStateSlice extends keyof TInputState> extends ReactiveSelector<TFormSlice, TStateSlice> {
-    setter: FormStateSelectorFn<DeepPropsObject<TForm, TFormSlice>, Partial<TInputState>, TReturnValue>;
+    setter: FormStateSelectorFn<DeepPropsObject<TForm, TFormSlice>, Partial<TInputState>, TReturnValue | Observable<TReturnValue>>;
     selectorType: "regular";
-    onlyOnce?: boolean,
+    options?: FormStateSelectorOptions,
     ɵform?: TForm,
     ɵstate?: TInputState
 } 
+
+/** Represents configuration options for an {@link FormStateSelector} */
+export interface FormStateSelectorOptions {
+    /** Only emit value once */
+    onlyOnce?: boolean;
+    /** Only emit unique values. Defaults to true */
+    distinct?: boolean;
+}
 
 /** Represents a selector for an observable slice of form and state  */
 export interface FormStateObserverSelector<

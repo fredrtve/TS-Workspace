@@ -41,7 +41,7 @@ const PasswordControl = builder.field({
     ] 
 });
 
-const hasUserNameBinding = builder.bindForm("userName", (name) => name != null, true);
+const hasUserNameBinding = builder.bindForm("userName", (name) => name != null, {onlyOnce: true});
 
 export const UserModelForm: Immutable<ModelFormConfig<FormState, User,  SaveUserForm, FormState>> = {
     stateProp: "users",
@@ -64,8 +64,8 @@ export const UserModelForm: Immutable<ModelFormConfig<FormState, User,  SaveUser
             firstName: { required$: true },
             lastName: { required$: true },
             password: { 
-                controlClass$: builder.bindForm("userName", (name) => name != null ? "display-none" : "", true), 
-                disabled$: builder.bindForm("userName", (name) => name != null, true) 
+                controlClass$: builder.bindForm("userName", (name) => name != null ? "display-none" : "", {onlyOnce: true}), 
+                disabled$: builder.bindForm("userName", (name) => name != null, {onlyOnce: true}) 
             },
             userName: { 
                 disabled$: hasUserNameBinding,

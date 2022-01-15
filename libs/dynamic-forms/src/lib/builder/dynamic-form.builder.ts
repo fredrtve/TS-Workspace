@@ -1,9 +1,8 @@
 import { AsyncValidatorFn } from "@angular/forms";
 import { ConstructSliceFromPath, DeepPropsObject, DeepPropType, UnknownState } from "@fretve/global-types";
 import { Observable } from "rxjs";
-import { map } from "rxjs/operators";
 import { DeepRequired } from "ts-essentials";
-import { AsyncValidatorSelector, FormStateObserverSelector, FormStateSelector, FormStateSelectorFn } from "../interfaces";
+import { AsyncValidatorSelector, FormStateObserverSelector, FormStateSelector, FormStateSelectorFn, FormStateSelectorOptions } from "../interfaces";
 import { ValidFormSlice } from "./interfaces";
 import { _createControlArray, _createControlField, _createControlGroup } from "./type.helpers";
 
@@ -18,34 +17,34 @@ export class DynamicFormBuilder<TForm extends object, TInputState extends object
     bind<TFormSlice extends string, TStateSlice extends keyof TInputState, TReturnValue>(
         formSlice: ValidFormSlice<DeepRequired<TForm>, TFormSlice>[],      
         stateSlice: TStateSlice[],
-        setter: FormStateSelectorFn<DeepPropsObject<ConstructSliceFromPath<TFormSlice, TForm>, TFormSlice>, Partial<PickOr<TInputState, TStateSlice, any>>, TReturnValue>,
-        onlyOnce?: boolean
+        setter: FormStateSelectorFn<DeepPropsObject<ConstructSliceFromPath<TFormSlice, TForm>, TFormSlice>, Partial<PickOr<TInputState, TStateSlice, any>>, TReturnValue | Observable<TReturnValue>>,
+        options?: FormStateSelectorOptions
     ): FormStateSelector<ConstructSliceFromPath<TFormSlice, TForm>, PickOr<TInputState, TStateSlice, any>, TReturnValue, string, TStateSlice> {
-        return { formSlice, stateSlice, setter, onlyOnce, selectorType: "regular" }
+        return { formSlice, stateSlice, setter, options, selectorType: "regular" }
     } 
 
     /** Constructs selectors for TState that resolve to reactive observables. Used to bind options to state. */
     bindState<TSlice extends keyof TInputState>(  
         slice: TSlice,
         setter?: null,
-        onlyOnce?: boolean
+        options?: FormStateSelectorOptions
     ): FormStateSelector<{}, PickOr<TInputState, TSlice, never>, TInputState[TSlice], string, TSlice>    
     bindState<TSlice extends keyof TInputState,  TReturnValue>(  
         slice: TSlice,
-        setter: (state: TInputState[TSlice]) => TReturnValue,
-        onlyOnce?: boolean
+        setter: (state: TInputState[TSlice]) => TReturnValue | Observable<TReturnValue>,
+        options?: FormStateSelectorOptions
     ): FormStateSelector<{}, PickOr<TInputState, TSlice, never>, TReturnValue,  string, TSlice>
     bindState<TSlice extends keyof TInputState, TReturnValue>(  
         slice: TSlice[],
-        setter: (state: Pick<TInputState, TSlice>) => TReturnValue,
-        onlyOnce?: boolean
+        setter: (state: Pick<TInputState, TSlice>) => TReturnValue | Observable<TReturnValue>,
+        options?: FormStateSelectorOptions
     ): FormStateSelector<{}, PickOr<TInputState, TSlice, never>, TReturnValue,  string, TSlice>
-    bindState(slice: any, setter?: any, onlyOnce?: boolean): FormStateSelector<never, any, any,  string, any> {
+    bindState(slice: any, setter?: any, options?: FormStateSelectorOptions): FormStateSelector<never, any, any,  string, any> {
         if(Array.isArray(slice))
-            return { formSlice: [], stateSlice: slice, setter: (f: any, s: any) => setter(s), onlyOnce, selectorType: "regular" };
+            return { formSlice: [], stateSlice: slice, setter: (f: any, s: any) => setter(s), options, selectorType: "regular" };
 
         return { 
-            formSlice: [], stateSlice: [slice], onlyOnce, selectorType: "regular", 
+            formSlice: [], stateSlice: [slice], options, selectorType: "regular", 
             setter: (setter === undefined || setter === null)
                 ? (f: any, s: UnknownState) => s[slice] 
                 : (f: any, s: UnknownState) => setter(s[slice])
@@ -56,24 +55,24 @@ export class DynamicFormBuilder<TForm extends object, TInputState extends object
     bindForm<TSlice extends string>(  
         slice: ValidFormSlice<DeepRequired<TForm>, TSlice>,
         setter?: null,
-        onlyOnce?: boolean
+        options?: FormStateSelectorOptions
     ): FormStateSelector<ConstructSliceFromPath<TSlice, TForm>, any, DeepPropType<TForm, TSlice, never>, string, never>    
     bindForm<TSlice extends string,  TReturnValue>(  
         slice: ValidFormSlice<DeepRequired<TForm>, TSlice>,
-        setter: (state: DeepPropType<TForm, TSlice, never>) => TReturnValue,
-        onlyOnce?: boolean
+        setter: (state: DeepPropType<TForm, TSlice, never>) => TReturnValue | Observable<TReturnValue>,
+        options?: FormStateSelectorOptions
     ): FormStateSelector<ConstructSliceFromPath<TSlice, TForm>, any, TReturnValue, string, never>
     bindForm<TSlice extends string, TReturnValue>(  
         slice: ValidFormSlice<DeepRequired<TForm>, TSlice>[],
-        setter: (state: DeepPropsObject<ConstructSliceFromPath<TSlice, TForm>, TSlice>) => TReturnValue,
-        onlyOnce?: boolean
+        setter: (state: DeepPropsObject<ConstructSliceFromPath<TSlice, TForm>, TSlice>) => TReturnValue | Observable<TReturnValue>,
+        options?: FormStateSelectorOptions
     ): FormStateSelector<ConstructSliceFromPath<TSlice, TForm>, any, TReturnValue, string, never>
-    bindForm(slice: string | string[], setter?: any, onlyOnce?: boolean): FormStateSelector<object, never, any,  string, never> {
+    bindForm(slice: string | string[], setter?: any, options?: FormStateSelectorOptions): FormStateSelector<object, never, any,  string, never> {
         if(Array.isArray(slice))
-            return { stateSlice: [], formSlice:slice, setter, onlyOnce, selectorType: "regular" };
+            return { stateSlice: [], formSlice:slice, setter, options, selectorType: "regular" };
 
         return { 
-            stateSlice: [], formSlice: [slice], onlyOnce, selectorType: "regular", 
+            stateSlice: [], formSlice: [slice], options, selectorType: "regular", 
             setter: (setter === undefined || setter === null)
                 ? (f: UnknownState) => f[slice] 
                 : (f: UnknownState) => setter(f[slice])

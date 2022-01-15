@@ -82,7 +82,7 @@ export const MissionModelForm: Immutable<ModelFormConfig<ModelState, Mission, Mi
         },
         overrides: {
             address: { required$: true, },
-            finished: { controlClass$: builder.bindForm("id", (id) => id == null ? 'display-none' : '', true)},
+            finished: { controlClass$: builder.bindForm("id", (id) => id == null ? 'display-none' : '', {onlyOnce: true})},
             employerInput: { viewOptions: { options$: builder.bindState("employers") } },
             missionActivitiesInput: { viewOptions: { 
                 options$: builder.bindState("activities"), 

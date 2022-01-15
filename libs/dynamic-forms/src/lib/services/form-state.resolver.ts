@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { AsyncValidatorFn } from "@angular/forms";
 import { DeepPropsObject, Immutable, UnknownState } from "@fretve/global-types";
-import { asapScheduler, combineLatest, Observable, of, Subject } from "rxjs";
-import { debounceTime, distinctUntilChanged, map, take, takeUntil } from "rxjs/operators";
+import { asapScheduler, combineLatest, isObservable, Observable, of, Subject } from "rxjs";
+import { debounceTime, distinctUntilChanged, map, switchMap, take, takeUntil } from "rxjs/operators";
 import { _formControlsChanges$ } from "../helpers/form-control-changes.helper";
 import { selectState } from "../helpers/select-state.operator";
 import { _isAsyncValidatorSelector, _isFormStateObserverSelector, _isFormStateSelector } from "../helpers/type.helpers";
@@ -40,18 +40,26 @@ export class FormStateResolver {
         setter: Immutable<AllowedFormStateSelector<T, any, any>>
     ): Observable<Immutable<T>> {
         if(_isFormStateSelector(setter)){         
-            const observer =  combineLatest([
+            let observer =  combineLatest([
                 this._resolveFormSlice$(setter.formSlice, setter.baseFormPath), 
                 this._resolveStateSlice$(setter.stateSlice)
             ]).pipe(
-                map(x => setter.setter(x[0], x[1])),
-                distinctUntilChanged(),
+                switchMap(x => {
+                    const value = setter.setter(x[0], x[1]);
+                    return isObservable(value) ? value : of(value);
+                }),
+            );
+ 
+            if(setter.options?.onlyOnce === true) 
+                observer = observer.pipe(take(1));
+                
+            if(setter.options?.distinct === undefined || setter.options.distinct === true) 
+                observer = observer.pipe(distinctUntilChanged());    
+            
+            return observer.pipe(
                 debounceTime(0, asapScheduler), 
                 takeUntil(this.unsubscribeAll$)
-            );
-
-            if(setter.onlyOnce === true) return observer.pipe(take(1));
-            else return observer;    
+            );    
         } 
         if(_isFormStateObserverSelector(setter)){
             return setter.setter(
@@ -80,7 +88,7 @@ export class FormStateResolver {
     };
 
     ngOnDestroy(): void {
-        this.unsubscribeAllSubject.next();      
+        this.unsubscribeAllSubject.next(null);      
     }
 
     private _resolveStateSlice$<T = DeepPropsObject<object | null, string>>(stateSlice: string[]) {
